@@ -1,0 +1,54 @@
+mixin product-grid(products)
+    .row.box-product
+        each item in products 
+            a(href=`/products/detail/${item.slug}`)
+                .col-xl-3.col-md-4.col-6.mb-3
+                    .product-item
+                        .inner-image
+                            img(src=item.thumbnail, alt=item.title)
+                            if item.featured == "1"
+                                .inner-featured Trending
+                            .overlay-product
+                                form(
+                                    action=`/cart/add/${item.id}`
+                                    method="POST"
+                                    class ="formCartLayout"
+                                )
+                                    input(
+                                        class="form-control mb-2 quantityInput"
+                                        type="number"
+                                        name="quantity"
+                                        value="1"
+                                        min="1"
+                                        max=item.listSize[0].stock
+                                        style="display: none"
+                                    )
+                                    input(
+                                        class="sizeInput d-none"
+                                        type = "text"
+                                        name="sizeId"
+                                        value=item.listSize[0].id
+                                        )
+                                    button(
+                                        type="submit"
+                                        class="btn btn-success btn-block"
+                                    ) <i class="fa-solid fa-cart-plus"></i>
+                                
+                        .inner-content
+                            h3.inner-title
+                                a(href=`/products/detail/${item.slug}`) #{item.title}
+                            .inner-price
+                                if item.listSize[0]
+                                    .inner-price-new.formatMoney #{item.listSize[0].priceNew}đ
+                                    .inner-price-old #{item.listSize[0].price}đ
+                            .size-layout
+                                each size in item.listSize
+                                    button.button-size-layout(id=size.id stock=size.stock price=size.price priceNew=size.priceNew) #{size.size}
+                            .inner-discount -#{item.discountPercentage}%
+                            .wrap(style="display: flex;align-item: center; justify-content: space-between")
+                                .inner-rating.mt-2 <i class="fa-solid fa-star"></i> #{item.ratingNumber}/5
+                                .inner-sales.m-0.mt-2 
+                                    p.m-0 Đã bán: #{item.sales}
+
+
+            

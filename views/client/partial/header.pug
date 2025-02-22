@@ -1,0 +1,93 @@
+include ../mixins/sub-menu.pug
+
+header.header 
+    .container-fluid 
+        .row.align-items-center
+            .col-2 
+                .inner-logo
+                    a(href="/") 
+                        img(src=settingsGeneral.logo, alt="" )
+            .col-2(style = "padding: 0") 
+                form(
+                    action="/search"
+                    method="GET"
+                ) 
+                    div(class="form-group d-flex mb-0")
+                        input(
+                            type="text"
+                            placeholder="Search"
+                            class="form-control"
+                            name="keyword"
+                            value=keyword
+                        )
+                        button(
+                            type="submit"
+                            class="btn btn-primary"
+                        ) <i class="fa-solid fa-magnifying-glass"></i>
+            .col-5.nav_bar_pc 
+                .inner-menu 
+                    ul 
+                        li 
+                            a(href="/") <b>HOME</b>    
+                        li(class="sub-menu")
+                            -const pathProduct = "/products"
+                            a(href=pathProduct) 
+                                <b>CATEGORY</b> <i class="fa-solid fa-caret-down"></i> 
+                            +sub-menu(layoutProductsCategory, pathProduct) 
+                        
+                        li
+                            a(href="/about") <b>ABOUT</b>
+
+                        li
+                            a(href="/contact") <b>CONTACT</b>
+
+                        li
+                            a(href="/cart") <i class="fa-solid fa-cart-shopping"></i>(#{minicart ? minicart.totalQuantity:0}) 
+            .col-3.nav_bar_pc 
+                .inner-menu 
+                    ul
+                        if(user)
+                            li
+                                a(href="/user/info")
+                                    <i class="fa-regular fa-user"></i> #{name}
+                            li
+                                a(href="/user/logout") 
+                                    <i class="fa-solid fa-right-from-bracket"></i> <b>logout</b>
+                        else 
+                            li
+                                a(href="/user/login") 
+                                    <i class="fa-solid fa-lock-open"></i> <b>Login</b>
+        
+            .nav-bar-btn.col-8 
+                <i class="fa-solid fa-bars"></i>
+
+            .nav_mobile 
+                ul.nav_mobile_list 
+                    .nav-mobile-close
+                        <i class="fa-solid fa-xmark"></i>
+                    li 
+                        a(href="/" class="nav_mobile_link") <b>HOME</b>   
+                    li(class="sub-menu")
+                        a(href=pathProduct class="nav_mobile_link") 
+                            <b>CATEGORY</b>
+                        +sub-menu(layoutProductsCategory, pathProduct) 
+                    li 
+                        a(href="/about" class="nav_mobile_link") <b>ABOUT</b>
+                    li 
+                        a(href="/contact" class="nav_mobile_link") <b>CONTACT</b>
+                    li 
+                        a(href="/cart" class="nav_mobile_link") <i class="fa-solid fa-cart-shopping"></i>(#{minicart ? minicart.totalQuantity:0}) 
+                    if(user)
+                        li
+                            a(href="#" class="nav_mobile_link")
+                                <i class="fa-regular fa-user"></i> #{name}
+                        li
+                            a(href="/user/logout" class="nav_mobile_link") 
+                                <i class="fa-solid fa-right-from-bracket"></i> <b>logout</b>
+                    else 
+                        li
+                            a(href="/user/login" class="nav_mobile_link") 
+                                <i class="fa-solid fa-lock-open"></i> <b>Login</b>
+            .nav-overlay
+
+            

@@ -1,0 +1,13 @@
+mixin sort()
+    div(sort class="sort")
+        select(
+            class="form-control"
+            name="sort"
+            sort-select
+        )
+            option(value="position-desc" class="option") Position_desc - Defaut
+            option(value="position-asc" class="option") Position_asc
+            option(value="title-asc" class="option") Title A - Z
+            option(value="title-desc" class="option") Title Z - A
+            option(value="sales-desc" class="option") Revenue_desc
+            option(value="sales-asc" class="option") Revenue_asc

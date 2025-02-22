@@ -1,0 +1,17 @@
+mixin alert-success(time)
+    - if (messages.success)
+        .message.info
+            div(
+                class="alert alert-success"
+                show-alert 
+                data-time=time
+            ) <i class="fa-regular fa-circle-check"></i> #{messages.success} <span close-alert style="color: black"> X <span> 
+
+mixin alert-error(time)
+    - if (messages.error)
+        .message.info
+            div(
+                class="alert alert-danger"
+                show-alert 
+                data-time=time
+            ) <i class="fa-solid fa-circle-exclamation"></i> #{messages.error} <span close-alert style="color: black"> X <span> 

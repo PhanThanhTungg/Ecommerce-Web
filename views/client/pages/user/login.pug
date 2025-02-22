@@ -1,0 +1,54 @@
+extends ../../layout/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-error(5000)
+
+  .login-page
+    .form
+      .container.my-5
+        .row.justify-content-center
+          .col-8
+            h1(class="text-center") LOGIN
+            form(
+              action="/user/login"
+              method="POST"
+            )
+              div(class="form-group")
+                label(for="email") <i class="fa-regular fa-envelope"></i>       Email
+                input(
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  name="email"
+                  required
+                )
+              div(class="form-group form-group-password")
+                label(for="password") <i class="fa-solid fa-key"></i>           Password
+                input(
+                  type="password"
+                  class="form-control input-password"
+                  id="password"
+                  name="password"
+                  required
+                )
+                <span class="show-btn show-password"><i class="fa-regular fa-eye"></i>
+              div(class="form-group")
+                button(
+                  class = "button"
+                  type="submit"
+                  class="btn btn-primary btn-block"
+                ) Login
+              div(class="form-group")
+                a(
+                  class = "button"
+                  class="btn btn-primary btn-block"
+                  href=`${prefixAdmin}/auth/login`
+                ) Login as administrator
+            .bar
+              a(href="/user/password/forgot") Forgot password?
+              a(href="/user/register") Register >>
+            
+            hr
+            
+            

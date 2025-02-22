@@ -1,0 +1,17 @@
+mixin form-change-multi-order(productId,optionSelected,orderId)
+    div()
+        select(
+            class="form-control"
+            name="button-status-order"
+            button-status-order
+            product-id = productId
+            optionSelected = optionSelected
+            orderId = orderId
+        )
+            option(value="xacNhan" ) Pending 
+            option(value="daXacNhan" ) Processing 
+            option(value="dangVanChuyen" ) Shipped
+            option(value="daGiao" ) Delivered
+            option(value="daThanhToan") Paid
+            option(value="daHuy") Canceled
+            option(value="biBom") Rejected

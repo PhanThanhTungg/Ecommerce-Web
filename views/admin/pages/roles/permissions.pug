@@ -1,0 +1,199 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+
+    if(role.permissions.includes("roles_permissions"))
+        if(records)
+            div(data-records = records)
+            table(
+                class="table-hover table-sm mt-5"
+                style = "margin-top:0; margin-bottm: 0"
+                table-permissions
+            )
+                thead
+                    tr
+                        th Permission
+                            each item in records
+                                th(class="text-center") #{item.title}
+                tbody
+                    //- danh muc san pham
+                    tr(data-name="id" class="d-none")
+                        td
+                        each item in records
+                            td(class="text-center")
+                                input(type="text" value=item.id)
+                    tr
+                        td(colspan="4")
+                            | CATEGORY MANAGEMENT
+                    tr(data-name="products-category_view")
+                        td -----View
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+                    tr(data-name="products-category_create")
+                        td -----Create
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+                    tr(data-name="products-category_edit")
+                        td -----Edit
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+                    tr(data-name="products-category_delete")
+                        td -----Delete
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+
+                    //- danh sach san pham
+                    tr
+                        td(colspan="4")
+                            | PRODUCT MANAGEMENT
+                    tr(data-name="products_view")
+                        td -----View
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+                    tr(data-name="products_create")
+                        td -----Create
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+                    tr(data-name="products_edit")
+                        td -----Edit
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+                    tr(data-name="products_delete")
+                        td -----Delete
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+
+                    //- quan ly don hang
+                    tr
+                        td(colspan="4")
+                            | ORDER MANAGEMENT
+                    tr(data-name="orders_view")
+                        td -----View
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+                    tr(data-name="orders_edit")
+                        td -----Edit
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+                    //- Nhóm quyền
+                    tr
+                        td(colspan="4")
+                            | ROLE MANAGEMENT
+                    tr(data-name="roles_view")
+                        td -----View 
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+                    tr(data-name="roles_create")
+                        td -----Create
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+                    tr(data-name="roles_edit")
+                        td -----Edit
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+                    tr(data-name="roles_delete")
+                        td -----Delete
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+                    tr(data-name="roles_permissions")
+                        td -----Permission
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+
+
+                    //- danh sach tai khoan admin
+                    tr
+                        td(colspan="4")
+                            | CUSTOMER ACCOUNT MANAGEMENT
+                    tr(data-name="accounts_view")
+                        td -----View
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+                    tr(data-name="accounts_create")
+                        td -----Create
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+                    tr(data-name="accounts_edit")
+                        td -----Edit
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+                    tr(data-name="accounts_delete")
+                        td -----Delete
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+
+
+                    //- danh sach tai khoan client
+                    tr
+                        td(colspan="4")
+                            | ADMIN ACCOUNT MANAGEMENT
+                    tr(data-name="users_view")
+                        td -----View 
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+                    tr(data-name="users_edit")
+                        td -----Edit 
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+                    tr(data-name="users_delete")
+                        td -----Delete
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+
+                    //- cai dat chung
+                    tr
+                        td(colspan="4")
+                            | SETTING
+                    tr(data-name="settings_view")
+                        td -----View
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+                    tr(data-name="settings_edit")
+                        td -----Edit
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+
+            button(
+                type="submit"
+                class="btn btn-primary mb-3 button-1 mt-3"
+                button-submit
+            ) Update
+        form(
+            id="form-change-permissions"
+            method="POST"
+            action=`${prefixAdmin}/roles/permissions?_method=PATCH`
+            class = "d-none"
+        )
+            div(class="form-group")
+                input(
+                    type="text"
+                    class="form-control"
+                    name="permissions"
+                )
+
+        script(src="/admin/js/role.js") 

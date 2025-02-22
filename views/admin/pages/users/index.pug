@@ -1,0 +1,98 @@
+extends ../../layouts/default.pug
+include ../../mixins/search.pug
+include ../../mixins/filter-status.pug
+include ../../mixins/sort-user.pug
+include ../../mixins/pagination.pug
+block main
+
+  if(role.permissions.includes("users_view"))
+    .card.mb-3.filter-status-search.mt-4
+        .card-body
+            .row
+                .col-6
+                    +filter-status(filterStatus)
+                .col-6
+                    +search(keyword)
+    .card.mb-3.sort
+      .card-body
+          .row
+              .col-4
+                  +sortUser()
+    .card.wrap-table
+      .card-body
+        table(
+          class="table table-hover table-sm"
+        )
+          thead
+            tr
+              th 
+              th Avatar
+              th Name
+              th Email
+              th Total Orders
+              th Unreceived Orders 
+              th Total Purchase Value
+              th Rank
+              if(role.permissions.includes("users_edit"))
+                th Status
+              if(role.permissions.includes("users_delete"))
+                th Delete
+
+          tbody
+            each item, index in records
+              tr 
+                td #{index+1}
+                td
+                  img(
+                    src=item.thumbnail
+                    alt=item.fullName
+                    width="100px"
+                    height="auto"
+                  )
+                td #{item.fullName}
+                td #{item.email}
+                td #{item.cntSuccess}
+                td #{item.cntFail}
+                td #{item.totalValue}
+                td #{item.rank}
+                if(role.permissions.includes("users_edit"))
+                  td
+                    if (item.status === "active")
+                      a(
+                        href="javascript:;"
+                        class="status-badge status-badge-active"
+                        data-status= item.status
+                        data-id = item.id
+                        button-change-status 
+                      ) Active
+                    else
+                      a(
+                        href="javascript:;"
+                        class="status-badge status-badge-inactive"
+                        data-status= item.status
+                        data-id = item.id
+                        button-change-status
+                      ) Inactive
+                    form(
+                        action="" 
+                        method="POST"
+                        id = "form-change-status"
+                        data-path = `${prefixAdmin}/users/change-status`
+                    ) 
+                if(role.permissions.includes("users_delete"))
+                  td 
+                    a(
+                      class="button-delete"
+                      button-delete 
+                      data-id= item.id
+                    ) <i class="fa-solid fa-trash"></i>
+                    form(
+                      action="" 
+                      method="POST"
+                      id = "form-delete-item"
+                      data-path = `${prefixAdmin}/users/delete`
+                    ) 
+    +pagination(pagination)
+  
+  script(src="/admin/js/product.js")   
+  script(src="/admin/js/order-user.js")  

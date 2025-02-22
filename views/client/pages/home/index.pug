@@ -1,0 +1,70 @@
+extends ../../layout/default.pug
+include ../../mixins/box-head.pug
+include ../../mixins/product-layout.pug
+include ../../mixins/product-layout-slide.pug
+include ../../mixins/alert.pug
+include ../../mixins/sort.pug
+include ../../mixins/pagination.pug
+
+block main
+    .home 
+        .section-0
+            #carouselExampleCaptions.carousel.slide(data-ride='carousel')
+                ol.carousel-indicators
+                    li.active(data-target='#carouselExampleCaptions' data-slide-to='0')
+                    li(data-target='#carouselExampleCaptions' data-slide-to='1')
+                    li(data-target='#carouselExampleCaptions' data-slide-to='2')
+                .carousel-inner
+                    .carousel-item.active
+                        img.d-block.w-100(src='https://png.pngtree.com/thumb_back/fh260/background/20230706/pngtree-d-render-of-geometric-cosmetic-products-on-a-sleek-black-podium-image_3785653.jpg' alt='...')
+                        .carousel-caption.d-none.d-md-block
+                            h5 Sản phẩm chất lượng
+                            p Chúng tôi nói không với hàng lậu, hàng kém chất lượng
+                    .carousel-item
+                        img.d-block.w-100(src='https://png.pngtree.com/thumb_back/fh260/background/20230630/pngtree-d-rendering-of-sleek-black-podium-for-displaying-cosmetic-products-with-image_3693434.jpg' alt='...')
+                        .carousel-caption.d-none.d-md-block
+                            h5 Giao hàng nhanh chóng
+                            p Sản phẩm được đóng gói cẩn thận, chỉn chu, giao hàng nhanh chóng
+                    .carousel-item
+                        img.d-block.w-100(src='https://png.pngtree.com/thumb_back/fw800/background/20230717/pngtree-sleek-black-granite-backdrop-with-geometric-podium-showcase-for-3d-cosmetic-image_3893669.jpg' alt='...')
+                        .carousel-caption.d-none.d-md-block
+                            h5 Hệ thống hotline: 0328456156
+                            p Nhân viên trực tư vấn 24/7
+                button.carousel-control-prev(type='button' data-target='#carouselExampleCaptions' data-slide='prev')
+                    span.carousel-control-prev-icon(aria-hidden='true')
+                    span.sr-only Previous
+                button.carousel-control-next(type='button' data-target='#carouselExampleCaptions' data-slide='next')
+                    span.carousel-control-next-icon(aria-hidden='true')
+                    span.sr-only Next
+
+
+        .section-products-featured.my-5
+            .container
+                +box-head("BEST-SELLING")
+                .row
+                    .col-12
+                        #demo
+                            #indemo
+                                #demo1
+                                    +product-grid-slide(topProduct)
+                                #demo2
+        .section-products-featured.my-5.wrap-trending
+            .container
+                +box-head("TRENDING")
+            .container.box-trending
+                +product-grid(productsFeatured)
+        
+        .section-products-featured.my-5
+            .container
+                .row
+                    .col-6
+                        +box-head("ALL PRODUCTS")
+                    .col-6
+                        +sort()
+
+                +product-grid(productsNew)
+        
+                +pagination(pagination)
+    
+    script(src="/js/product.js") 
+    script(src="/js/format.js") 

@@ -1,0 +1,21 @@
+header.header
+  .container-fluid
+    .row.align-items-center
+      .col-3
+      .col-9
+        div(class="text-right header__user")
+          a(
+            href=`${prefixAdmin}/my-account`
+            class="btn btn-primary btn-sm mr-2 name"
+          )
+            span #{user.fullName}
+            img(src=`${user.avatar}`, alt="")
+          ul.header__user--drop-down
+            li 
+              a.text-white(href=`${prefixAdmin}/my-account`)
+                <i class="fa-solid fa-user-pen"></i> User Profile  
+            li 
+              a.text-white(href=`${prefixAdmin}/auth/logout`)
+                <i class="fa-solid fa-right-from-bracket"></i> Logout 
+          
+        

@@ -1,0 +1,44 @@
+extends ../../layouts/auth.pug
+include ../../mixins/alert.pug
+
+block main
+    +alert-error(5000)
+    .login-page.login-page-admin
+        .form
+            .container
+                .row.justify-content-center
+                    .col-8
+                        h1(class="text-center") LOGIN AS ADMIN
+                        form(
+                            class= "form-admin"
+                            action=`${prefixAdmin}/auth/login`
+                            method="POST"
+                        )
+                            div(class="form-group")
+                                label(for="email") Email
+                                input(
+                                    type="email"
+                                    class="form-control"
+                                    id="email"
+                                    name="email"
+                                    required
+                                )
+                            div(class="form-group form-group-password")
+                                label(for="password") Mật khẩu
+                                input(
+                                    type="password"
+                                    class="form-control input-password"
+                                    id="password"
+                                    name="password"
+                                    required
+                                )
+                                <span class="show-btn show-password"><i class="fa-regular fa-eye"></i>
+                            div(class="form-group")
+                                button(
+                                    class = "button"
+                                    type="submit"
+                                    class="btn btn-primary btn-block"
+                                ) Đăng nhập
+                            div 
+                            
+    script(src="/admin/js/script.js") 

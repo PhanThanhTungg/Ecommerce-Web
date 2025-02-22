@@ -1,0 +1,13 @@
+mixin sortOrder()
+    div(sort-order class="sort-order")
+        select(
+            class="form-control"
+            name="sort"
+            sort-select-order
+        )   
+            option(value="time-desc" class="option") Time - Desc - Default
+            option(value="time-asc" class="option") Time - Asc
+            option(value="price-desc" class="option") Total Price - Desc
+            option(value="price-asc" class="option") Total Price - Asc
+            option(value="title-asc" class="option") Title A - Z
+            option(value="title-desc" class="option") Title Z - A

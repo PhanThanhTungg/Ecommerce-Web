@@ -1,0 +1,66 @@
+extends ../../layout/default.pug
+include ../../mixins/box-head.pug
+
+block main
+  .page-format
+    .container.my-3
+      .row
+        .col-12
+          div(class="alert alert-success")
+            | Chúc mừng bạn đã đặt hàng thành công! Chúng tôi sẽ xử lý đơn hàng trong thời gian sớm nhất.
+
+      if(order)
+        .row
+          .col-12
+            h4(class="mb-2 table-cart") Thông tin cá nhân
+            table(class="table table-bordered")
+              tbody
+                tr
+                  td Họ tên
+                  td
+                    b #{order.userInfo.fullName}
+                tr
+                  td Số điện thoại
+                  td
+                    b #{order.userInfo.phone}
+                tr
+                  td Địa chỉ
+                  td
+                    b #{order.userInfo.address}
+        .row 
+          .col-12
+            h4(class="mb-2 table-cart") Thông tin đơn hàng
+            .button-history
+              a(href="/history") << Lịch sử mua hàng
+            table(class="table table-bordered")
+              thead
+                tr
+                  th STT
+                  th Ảnh
+                  th Tên
+                  th Loại
+                  th Giá
+                  th Số lượng
+                  th Tổng tiền
+              tbody
+                if(order.products.length > 0)
+                  each item, index in order.products
+                    tr
+                      td #{index + 1}
+                      td
+                        img(
+                          src=item.thumbnail
+                          alt=item.title
+                          width="80px"
+                        )
+                      td #{item.title}
+                      td #{item.sizeInfo.size}
+                      td.formatMoney #{item.sizeInfo.priceNew} 
+                      td #{item.quantity}
+                      td.formatMoney #{item.totalPrice} 
+
+
+            if(order.products.length > 0)
+              h3(class="text-right table-cart") Tổng đơn hàng: <span class="formatMoney"> #{order.totalPrice} </span>  
+  
+  script(src="/js/format.js") 

@@ -1,0 +1,198 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+include ../../mixins/select-tree.pug
+
+block main
+    if(role.permissions.includes("products_edit"))
+        
+        h1(class="mb-4 page-title") Edit product
+
+        form(
+            action=`${prefixAdmin}/products/edit/${product.id}?_method=PATCH`
+            id="form-edit-product"
+            method="POST"
+            enctype="multipart/form-data"   
+        )
+            //- enctype="multipart/form-data" : khai báo để gửi tệp(ảnh, video,...) lên server
+            div(class="form-group")
+                label(for="title") Title
+                input(
+                    type="text"
+                    class="form-control"
+                    id="title"
+                    name="title"
+                    required
+                    value=product.title
+                )
+            div(class="form-group")
+                label(for="product_category_id") Category 
+                select(
+                    name="product_category_id"
+                    id="product_category_id"
+                    class="form-control"
+                )
+                    option(value="") -- Choose category --
+                    if(category)
+                        +select-tree(category, 1, product.product_category_id)
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    class="form-check-input"
+                    id="featured1"
+                    name="featured"
+                    value="1"
+                    checked = (product.featured=="1" ? true: false)
+                )
+                label(for="featured1" class="form-check-label") Featured
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    class="form-check-input"
+                    id="featured0"
+                    name="featured"
+                    value="0"
+                    checked = (product.featured=="0" ? true: false)
+                )
+                label(for="featured0" class="form-check-label") Normal
+            div(class="form-group")
+                label(for="desc") Description
+                textarea(
+                    class="form-control textarea-mce"
+                    id="desc"
+                    name="description"
+                    rows="5"
+                    value = product.description
+                ) #{product.description}
+            div(class="form-group")
+                table.tableSize 
+                    thead
+                        tr 
+                            th size 
+                            th price 
+                            th stock
+                    tbody
+                        if product.listSize.length == 0
+                            tr
+                                td 
+                                    input(
+                                        type="text"
+                                        class="form-control"
+                                        id="size"
+                                        name="size"
+                                        required
+                                    )
+                                td 
+                                    input(
+                                        type="text"
+                                        class="form-control"
+                                        id="price"
+                                        name="price"
+                                        required
+                                    )
+                                td 
+                                    input(
+                                        type="text"
+                                        class="form-control"
+                                        id="stock"
+                                        name="stock"
+                                        required
+                                    )
+                        else 
+                            each size in product.listSize
+                                tr
+                                    td
+                                        input(
+                                            type="text"
+                                            class="form-control"
+                                            id="size"
+                                            name="size"
+                                            value = size.size
+                                            required
+                                        )
+                                    td 
+                                        input(
+                                            type="text"
+                                            class="form-control"
+                                            id="price"
+                                            name="price"
+                                            value = size.price
+                                            required
+                                        )
+                                    td 
+                                        input(
+                                            type="text"
+                                            class="form-control"
+                                            id="stock"
+                                            name="stock"
+                                            value = size.stock
+                                            required
+                                        )
+                .button-1.btn.btn-primary.mt-3.buttonAddSize.mr-3 + size
+                .button-1.btn.btn-primary.mt-3.buttonDelSize - size
+            div(class="form-group")
+                label(for="discount") % Discount
+                input(
+                    type="number"
+                    class="form-control"
+                    id="discount"
+                    name="discountPercentage"
+                    value=product.discountPercentage
+                    min="0"
+                )
+            div(
+                class="form-group"
+                upload-image
+            )
+                label(for="thumbnail") Thumbnail
+                input(
+                    type="file"
+                    class="form-control-file"
+                    id="thumbnail"
+                    name="thumbnail"
+                    accept = "image/*"
+                    upload-image-input
+                )
+                img(
+                    src=product.thumbnail
+                    upload-image-preview
+                    class="image-preview"
+                )
+            div(class="form-group")
+                label(for="position") Position
+                input(
+                    type="number"
+                    class="form-control"
+                    id="position"
+                    name="position"
+                    placeholder="Tự động tăng"
+                    min="1"
+                    value = product.position
+                )
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    class="form-check-input"
+                    id="statusActive"
+                    name="status"
+                    value="active"
+                    checked = (product.status=="active" ? true: false)
+                )
+                label(for="statusActive" class="form-check-label") Active
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    class="form-check-input"
+                    id="statusInActive"
+                    name="status"
+                    value="inactive"
+                    checked = (product.status=="inactive" ? true: false)
+                )
+                label(for="statusInActive" class="form-check-label") Inactive
+            div(class="form-group" style="margin-bottom: 0; padding-bottom:20px")
+                button(
+                    type="submit"
+                    class="btn btn-primary button-1 button-1-2"
+                ) Update
+
+
+        script(src="/admin/js/product.js")

@@ -1,0 +1,40 @@
+.sider
+    .inner-menu
+        ul
+            li
+                a(href="/admin/dashboard") <img src="/image/logo.png">
+            li.mt-4(sider="Sider-Dashboard")
+                a(href=`${prefixAdmin}/dashboard`) 
+                    <i class="fa-solid fa-chart-line"></i> <span>Dashboard</span>
+            if(role.permissions.includes("products_view"))
+                li(sider="Sider-Product")
+                    a(href=`${prefixAdmin}/products`) 
+                        <i class="fa-solid fa-gift"></i> <span>Products</span>
+            if(role.permissions.includes("products-category_view"))
+                li(sider="Sider-Category")
+                    a(href=`${prefixAdmin}/products-category`) 
+                        <i class="fa-solid fa-layer-group"></i> <span>Categories</span>
+            if(role.permissions.includes("orders_view"))
+                li(sider="Sider-Order")
+                    a(href=`${prefixAdmin}/orders`) 
+                        <i class="fa-solid fa-cart-shopping"></i> <span>Orders</span>
+            if(role.permissions.includes("roles_view"))
+                li(sider="Sider-Role")
+                    a(href=`${prefixAdmin}/roles`) 
+                        <i class="fa-solid fa-address-book"></i> <span>Roles</span>
+            if(role.permissions.includes("roles_permissions"))
+                li(sider="Sider-Permission")
+                    a(href=`${prefixAdmin}/roles/permissions`) 
+                        <i class="fa-brands fa-critical-role"></i> <span>Permissions</span>
+            if(role.permissions.includes("accounts_view"))
+                li(sider="Sider-Account")
+                    a(href=`${prefixAdmin}/accounts`) 
+                        <i class="fa-solid fa-user-tie"></i> <span>Admin Accounts</span>
+            if(role.permissions.includes("accounts_view"))
+                li(sider="Sider-User")
+                    a(href=`${prefixAdmin}/users`) 
+                        <i class="fa-solid fa-users"></i> <span>Client Accounts</span>
+            if(role.permissions.includes("settings_view"))
+                li(sider="Sider-Setting")
+                    a(href=`${prefixAdmin}/settings/general`) 
+                        <i class="fa-solid fa-gears"></i> <span>Settings</span>

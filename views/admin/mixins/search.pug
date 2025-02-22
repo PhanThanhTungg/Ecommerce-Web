@@ -1,0 +1,12 @@
+mixin search(keyword)
+    form(id="form-search")
+        .input-group
+            input(
+                type="text"
+                placeholder="Search"
+                name="keyword"
+                class="form-control"
+                value = keyword    
+            )
+            //- value = keyword ~~ value = `${keyword}`
+            <i class="fa-solid fa-magnifying-glass"></i>

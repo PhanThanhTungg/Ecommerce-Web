@@ -1,0 +1,120 @@
+extends ../../layout/default-user.pug
+include ../../mixins/box-head.pug
+
+block main
+  .content-user
+    .header-user Hồ sơ cá nhân
+    .box-user
+      .content-user-wrap
+        form(
+            action=`/user/info/edit/${infoUser.id}?_method=PATCH`
+            id="form-edit-product"
+            method="POST"
+            enctype="multipart/form-data"   
+        )
+          div(
+              class="form-group"
+              upload-image
+          )
+              label(for="thumbnail") Ảnh
+              input.mb-2.text-white(
+                  type="file"
+                  class="form-control-file"
+                  id="thumbnail"
+                  name="thumbnail"
+                  accept = "image/*"
+                  upload-image-input
+              )
+              img(
+                  src=infoUser.thumbnail
+                  upload-image-preview
+                  class="image-preview"
+              )
+          div(class="form-group")
+              label(for="name") Tên
+              input(
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  required
+                  value=infoUser.fullName
+              )
+          div(class="form-group")
+              label(for="email") Email
+              input(
+                  type="text"
+                  class="form-control"
+                  id="email"
+                  name="email"
+                  disabled
+                  value=infoUser.email
+              )
+          div(class="form-group")
+              label(for="phone") Phone
+              input(
+                  type="text"
+                  class="form-control"
+                  id="phone"
+                  name="phone"
+                  value=infoUser.phone
+              )
+          div(class="form-group")
+              label(for="sex") Giới tính
+              select(
+                  name="sex"
+                  id="sex"
+                  class="form-control"
+                  optionSelected = infoUser.sex
+              )
+                option(value="default") -Không xác định-
+                option(value="male") Nam 
+                option(value="female") Nữ
+                option(value="diff") Khác
+          div(class="form-group")
+              label(for="total-order") Tổng giá trị
+              input(
+                  type="text"
+                  class="form-control"
+                  id="total-order"
+                  name="total-order"
+                  disabled
+                  value= `${infoUser.totalValue} đ`
+              )
+          div(class="form-group")
+              label(for="total-success") Số đơn thành công
+              input(
+                  type="text"
+                  class="form-control"
+                  id="total-success"
+                  name="total-success"
+                  disabled
+                  value= infoUser.cntSuccess
+              )
+          div(class="form-group")
+              label(for="total-fail") Số đơn bạn bom
+              input(
+                  type="text"
+                  class="form-control"
+                  id="total-fail"
+                  name="total-fail"
+                  disabled
+                  value= infoUser.cntFail
+              )
+          div(class="form-group")
+              label(for="rank") Xếp hạng
+              input(
+                  type="text"
+                  class="form-control"
+                  id="rank"
+                  name="rank"
+                  disabled
+                  value=infoUser.rank
+              )
+          div(class="form-group" style="margin-bottom: 0; padding-bottom:20px")
+              button(
+                  type="submit"
+                  class="btn btn-primary button-1"
+              ) Cập nhật 
+    script(src="/js/info.js") 
+    script(src="/js/script.js") 

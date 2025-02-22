@@ -1,0 +1,17 @@
+mixin sortOrder()
+    div(sort-order class="sort-order")
+        select(
+            class="form-control"
+            name="sort"
+            sort-select-order
+        )   
+            option(value="time-desc" class="option") Thời gian gần nhất - Mặc định
+            option(value="time-asc" class="option") Thời gian lâu nhất
+            option(value="price-desc" class="option") Tổng tiền giảm dần
+            option(value="price-asc" class="option") Tổng tiền tăng dần
+            option(value="title-asc" class="option") Tiêu đề A - Z
+            option(value="title-desc" class="option") Tiêu đề Z - A
+        button(
+            class="btn btn-danger mt-2"
+            sort-clear-order
+        ) Clear
