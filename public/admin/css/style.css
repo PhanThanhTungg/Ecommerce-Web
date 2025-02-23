@@ -555,40 +555,26 @@ table td .delete-button {
 /* end-pagnaiton */
 
 /* dashboard admin */
-.dashboard-admin {
-  background-color: #32323292;
-  margin: 0;
+.dashboard-admin{
+  margin-top: 15px;
 }
-
-.dashboard-admin .row {
-  padding-top: 40px;
-  background-color: #323232;
-}
-
-.dashboard-admin .card {
-  box-shadow: 5px 5px 5px 0 rgba(216, 214, 214, 0.544);
-}
-
-.dashboard-admin .card-header {
-  background-color: #0e0d0d;
+.dashboard-admin .chart-wrapper-1{
+  background-color: rgba(0, 0, 0, 0.18);
   color: white;
-  border: none
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.dashboard-admin .chart-wrapper-1 .title{
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+.dashboard-admin .chart-wrapper-1 canvas{
+  padding: 40px;
 }
 
-.dashboard-admin .card-body {
-  background-color: #000000bd;
-  color: rgba(255, 255, 255, 0.749);
-  border: none
-}
 
-.dashboard-admin .avatar {
-  width: 500px;
-  height: auto;
-}
 
-.dashboard-admin img {
-  border-radius: 5px;
-}
+
 
 
 /*End dashboard admin */
