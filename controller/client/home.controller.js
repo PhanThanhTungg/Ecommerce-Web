@@ -1,10 +1,16 @@
 const Product = require("../../model/product.model")
+const Category = require("../../model/product-category.model");
 const paginationHelper = require("../../helpers/pagination")
 module.exports.index = async (req, res) => {
   const find = {
     status: "active",
     deleted: false
   }
+
+  const featuredCategory = await Category.find({
+    ...find,
+    featured: true
+  })
 
   const topProduct = await Product.find({
     status: "active",
@@ -70,7 +76,8 @@ module.exports.index = async (req, res) => {
     productsFeatured: productsFeatured,
     productsNew: productsNew,
     pagination: objectPagination,
-    topProduct: topProduct
+    topProduct: topProduct,
+    featuredCategory: featuredCategory
   })
 }
 

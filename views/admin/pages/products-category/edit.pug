@@ -31,7 +31,26 @@ block main
             option(value="") -- Chọn danh mục cha
               if(records)
                 +select-tree(records, 1, product.parent_id)
-
+        div(class="form-group form-check form-check-inline")
+          input(
+              type="radio"
+              class="form-check-input"
+              id="featured1"
+              name="featured"
+              value="1"
+              checked = (product.featured==true ? true: false)
+          )
+          label(for="featured1" class="form-check-label") Featured
+        div(class="form-group form-check form-check-inline")
+          input(
+              type="radio"
+              class="form-check-input"
+              id="featured0"
+              name="featured"
+              value="0"
+              checked = (product.featured==false ? true: false)
+          )
+          label(for="featured0" class="form-check-label") Normal
         div(class="form-group")
           label(for="desc") Mô tả
           textarea(
