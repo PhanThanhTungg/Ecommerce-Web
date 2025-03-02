@@ -206,13 +206,22 @@ if (showAlert) {
 const uploadImage = document.querySelector("[upload-image]");
 if (uploadImage) {
   const uploadImageInput = document.querySelector("[upload-image-input]");
-  const uploadImagePreview = document.querySelector("[upload-image-preview]");
-
   uploadImageInput.addEventListener("change", (e) => {
-    console.log(e);
-    const file = e.target.files[0];
-    if (file) {
-      uploadImagePreview.src = URL.createObjectURL(file);
+    const uploadImagePreviews = document.querySelectorAll("[upload-image-preview]");
+    [...uploadImagePreviews].forEach(item=>{
+      console.log(item.parentElement.removeChild(item));
+    })
+    const files = e.target.files;
+    if (files) {
+      for(const file of files){
+        uploadImageInput.insertAdjacentHTML("afterend", 
+        `
+          <img class="image-preview" 
+          src="${URL.createObjectURL(file)}" 
+          upload-image-preview="upload-image-preview" 
+          />
+        `)
+      }
     }
   });
 }

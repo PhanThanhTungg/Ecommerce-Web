@@ -48,8 +48,7 @@ header.header
               a(href="/") Home   
             li(class="sub-menu")
               -const pathProduct = "/products"
-              a(href=pathProduct) 
-                <span>Category</span>
+              a(href=pathProduct) Category
               +sub-menu(layoutProductsCategory, pathProduct) 
 
             li

@@ -28,7 +28,32 @@
 .header .header-1 .inner-nav ul li i{
   color: var(--secondary-color-text);
   font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  position: relative;
+  z-index: 999;
 }
+.header .header-1 .inner-nav ul li i::after{
+  content:"";
+  width: 100%;
+  height: 100%;
+  background: var(--accent-color);
+  transform: scale(1);
+  display: block;
+  position: absolute; top:0; left: 0;
+  border-radius: 50%;
+  z-index: 998;
+  opacity: 0;
+  transition: all 0.3s linear;
+}
+.header .header-1 .inner-nav ul li i:hover::after{
+  opacity: 0.5;
+  transform: scale(2.5);
+}
+
 .header .header-2{
   background-color: white;
 }
@@ -37,13 +62,33 @@
   justify-content: center;
 }
 .header .header-2 ul.inner-menu > li{
-  padding: 16px 30px;
+  padding: 15px 30px;
+}
+.header .header-2 ul.inner-menu li{
+  position: relative;
+}
+.header .header-2 ul.inner-menu li::before{
+  content: "";
+  display: inline-block;
+  height: 3px;
+  background-color: var(--accent-color);
+  position: absolute;
+  width: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0 auto;
+  transition: all 0.3s linear;
+}
+.header .header-2 ul.inner-menu li:hover::before{
+  width: 70%;
 }
 .header .header-2 ul.inner-menu a{
   color: var(--secondary-color-text);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 100%;
 }
+
 
 /* End Header */
 
@@ -55,23 +100,29 @@
 
 .sub-menu ul {
   position: absolute;
-  left: 50px;
   top: 100%;
+  left: 0;
   list-style: none;
-  padding:0;
+  padding: 0;
   margin: 0;
-  background: #1d1d1dad;
-  min-width: 180px;
-  display: none;
+  background: #fff;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  min-width: 150px;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s linear;
 }
 
 .sub-menu ul li {
-  padding: 10px;
-  border-bottom: 1px solid rgba(221, 221, 221, 0.17);
+  padding: 15px 30px;
+  border-bottom: 1px solid rgba(221, 221, 221, 0.146);
 }
 
-.sub-menu:hover > ul {
-  display: block;
+.sub-menu:hover > ul {  
+  visibility: visible;
+  transform: translateY(0);
+  opacity: 1;
 }
 
 .sub-menu ul li {
@@ -81,10 +132,16 @@
 .sub-menu ul li ul {
   left: 100%;
   top: 0;
+  visibility: hidden;
+  transform: translateX(15px);
+  opacity: 0;
+  transition: all 0.3s linear;
 }
 
 .sub-menu ul li:hover > ul {
-  display: block;
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
 }
 /* End sub-menu */
 
@@ -121,23 +178,61 @@ swiper-slide .inner-content .inner-box-1{
 swiper-slide .inner-content .inner-sub-title{
   color: var(--secondary-color-text);
   margin-bottom: 15px;
+  animation: sub-title-move 1s ease-in-out;
+}
+
+@keyframes sub-title-move {
+  from{
+    transform: translateY(40px) ;
+  }to{
+    transform: translateY(0);
+  }
 }
 swiper-slide .inner-content .inner-title{
   font-size: 60px;
   margin-bottom: 20px;
+  animation: title-move 1s ease-in-out;
+}
+@keyframes title-move {
+  from{
+    transform: translateX(-40px) ;
+  }to{
+    transform: translate(0);
+  }
 }
 swiper-slide .inner-content .button-slide{
-  border: none;
+  border: 3px solid black;
   color: white;
   background-color: black;
   padding: 15px 55px;
   border-radius: 5px;
   font-weight: bold;
+  transition: all 0.3s linear;
+  animation: button-slide-move 1s ease-in-out;
+}
+@keyframes button-slide-move {
+  from{
+    transform: translateX(40px) ;
+  }to{
+    transform: translate(0);
+  }
+}
+swiper-slide .inner-content .button-slide:hover{
+  background-color: transparent;
+  color: black;
 }
 swiper-slide .inner-content .inner-box-2 img{
   width: 70%;
   height: auto;
   object-fit: cover;
+  animation: imgScale 1s ease-in-out;
+}
+@keyframes imgScale {
+  from{
+    transform: scale(1.6) translate(50px,50px);
+  }to{
+    transform: scale(1)  translate(0);
+  }
 }
 /* end slide */
 

@@ -156,7 +156,15 @@ module.exports.create = async (req, res) => {
     category: newCategory
   })
 }
-
+const cloudinary = require('cloudinary').v2
+const streamifier = require('streamifier')
+//cloudinary
+cloudinary.config({ 
+  cloud_name: process.env.CLOUD_NAME, 
+  api_key: process.env.CLOUD_KEY, 
+  api_secret: process.env.CLOUD_SECRET
+});
+//end cloudinary
 module.exports.createPost = async (req, res) => {
   const sizes = req.body.size
   const prices = req.body.price

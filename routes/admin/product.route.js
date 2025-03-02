@@ -25,8 +25,8 @@ router.get("/create", controller.create) // giao diện
 
 router.post(
     "/create",
-    upload.single("thumbnail"), 
-    uploadCloud.upload,
+    upload.fields([{name:"images", maxCount:4}]), 
+    uploadCloud.uploadMutiple,
     validate.createPost,
     controller.createPost
 ) // post sp
