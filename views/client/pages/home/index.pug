@@ -72,33 +72,33 @@ block main
               .title Money Back Guarantee
             .inner-content Lorem Ipsum is simply dummy text of the printing and typeset ting industry lorem Ipsum
 
-    section.featuredCategory-section
-      .container
-        .inner-title Featured Collection
-        .inner-subtitle Top picks just for You
-        .inner-content.row
-          each item in featuredCategory
-            .col-4
-              .inner-box.text-center
-                .inner-image
-                  img(src=item.thumbnail)
-                a.inner-button(href=`/products/${item.slug}`) #{item.title}
+    //- section.featuredCategory-section
+    //-   .container
+    //-     .inner-title Featured Collection
+    //-     .inner-subtitle Top picks just for You
+    //-     .inner-content.row
+    //-       each item in featuredCategory
+    //-         .col-4
+    //-           .inner-box.text-center
+    //-             .inner-image
+    //-               img(src=item.thumbnail)
+    //-             a.inner-button(href=`/products/${item.slug}`) #{item.title}
 
-    .section-products-featured.my-5
-      .container
-        +box-head("BEST-SELLING")
-        .row
-          .col-12
-            #demo
-              #indemo
-                #demo1
-                  +product-grid-slide(topProduct)
-                #demo2
-    .section-products-featured.my-5.wrap-trending
-      .container
-        +box-head("TRENDING")
-      .container.box-trending
-        +product-grid(productsFeatured)
+    //- .section-products-featured.my-5
+    //-   .container
+    //-     +box-head("BEST-SELLING")
+    //-     .row
+    //-       .col-12
+    //-         #demo
+    //-           #indemo
+    //-             #demo1
+    //-               +product-grid-slide(topProduct)
+    //-             #demo2
+    //- .section-products-featured.my-5.wrap-trending
+    //-   .container
+    //-     +box-head("TRENDING")
+    //-   .container.box-trending
+    //-     +product-grid(productsFeatured)
 
     .section-products-featured.my-5
       .container
@@ -113,5 +113,6 @@ block main
         +pagination(pagination)
 
   script(src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js")
+  script(src="/js/rating.js")
   script(src="/js/product.js") 
   script(src="/js/format.js") 
