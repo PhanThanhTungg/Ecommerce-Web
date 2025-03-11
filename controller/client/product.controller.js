@@ -57,7 +57,7 @@ module.exports.index = async (req, res) => {
     })
   }
 
-
+  console.log(products)
   res.render("client/pages/products/index.pug", {
     pageTitle: "TRANG SẢN PHẨM",
     Products: products,
@@ -172,15 +172,7 @@ module.exports.category = async (req, res) => {
   }
 
   //Pagigation
-  const countProduct = await Product.countDocuments(find) // đếm số sản phẩm theo bộ lọc find
-  let objectPagination = paginationHelper(
-    {
-      currentPage: 1,
-      limit: 12
-    },
-    req.query,
-    countProduct
-  )
+  let objectPagination = await paginationHelper(req, await Product.countDocuments(find), 1, 12);
   //End pagigation
 
   const products = await Product.find(find).sort(sort).limit(objectPagination.limit).skip(objectPagination.skip);
