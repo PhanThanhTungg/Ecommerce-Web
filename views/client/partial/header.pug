@@ -15,14 +15,14 @@ header.header
                 a(href="#")
                   <i class="fa-solid fa-magnifying-glass"></i>
               li 
-                a(href="#")
+                a(href="/user/login")
                   <i class="fa-regular fa-user"></i> 
               li 
                 a(href="#")
                   <i class="fa-solid fa-clock-rotate-left"></i>
               li 
-                a(href="#")
-                  <i class="fa-solid fa-cart-shopping"></i>
+                a(href="/cart")
+                  <i class="fa-solid fa-cart-shopping"></i>(#{minicart ? minicart.totalQuantity:0}) 
   .header-2
     .container
         //- .col-2(style = "padding: 0") 
