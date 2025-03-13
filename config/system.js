@@ -1,5 +1,6 @@
 const pathAdmin = "/admin"
 
 module.exports = {
-    prefixAdmin: pathAdmin
+    prefixAdmin: pathAdmin,
+    prefixApi: "/api"
 }

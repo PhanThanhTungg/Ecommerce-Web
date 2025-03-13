@@ -57,7 +57,6 @@ module.exports.index = async (req, res) => {
     })
   }
 
-  console.log(products)
   res.render("client/pages/products/index.pug", {
     pageTitle: "TRANG SẢN PHẨM",
     Products: products,
@@ -118,8 +117,6 @@ module.exports.detail = async (req, res) => {
     res.redirect(`/products`) //chuyen huong den url
   }
 }
-
-
 
 module.exports.category = async (req, res) => {
   //sort
@@ -225,4 +222,5 @@ module.exports.feedback = async (req, res) => {
   req.flash("success", `Đánh giá thành công`)
   res.redirect("back")
 }
+
 

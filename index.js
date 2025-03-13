@@ -47,6 +47,8 @@ app.use(flash());
 
 route(app) //gọi đến route
 routeAdmin(app)
+const clientApiRoute = require("./routes/client/api/index.route.api");
+clientApiRoute(app);
 
 app.get("*", (req, res) => {
     res.render("client/pages/errors/404", {
