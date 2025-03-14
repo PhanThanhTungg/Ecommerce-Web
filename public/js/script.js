@@ -36,39 +36,39 @@ if (uploadImage) {
 
 
 //sort
-const sort = document.querySelector("[sort]")
-if (sort) {
-  let url = new URL(window.location.href)
-  const sortSelect = sort.querySelector("[sort-select]")
-  const sortClear = sort.querySelector("[sort-clear")
+// const sort = document.querySelector("[sort]")
+// if (sort) {
+//   let url = new URL(window.location.href)
+//   const sortSelect = sort.querySelector("[sort-select]")
+//   const sortClear = sort.querySelector("[sort-clear")
 
-  sortSelect.addEventListener("change", (e) => {
-    const value = e.target.value
-    const [sortKey, sortValue] = value.split("-")
+//   sortSelect.addEventListener("change", (e) => {
+//     const value = e.target.value
+//     const [sortKey, sortValue] = value.split("-")
 
-    url.searchParams.set("sortKey", sortKey)
-    url.searchParams.set("sortValue", sortValue)
+//     url.searchParams.set("sortKey", sortKey)
+//     url.searchParams.set("sortValue", sortValue)
 
-    window.location.href = url.href
-  })
-  // xoa sap xep
-  sortClear.addEventListener("click", () => {
-    url.searchParams.delete("sortKey")
-    url.searchParams.delete("sortValue")
+//     window.location.href = url.href
+//   })
+//   // xoa sap xep
+//   sortClear.addEventListener("click", () => {
+//     url.searchParams.delete("sortKey")
+//     url.searchParams.delete("sortValue")
 
-    window.location.href = url.href
-  })
+//     window.location.href = url.href
+//   })
 
-  // them selected cho option
-  const sortKey = url.searchParams.get("sortKey")
-  const sortValue = url.searchParams.get("sortValue")
+//   // them selected cho option
+//   const sortKey = url.searchParams.get("sortKey")
+//   const sortValue = url.searchParams.get("sortValue")
 
-  if (sortKey && sortValue) {
-    const stringSort = `${sortKey}-${sortValue}`
-    const optionSelected = document.querySelector(`option[value='${stringSort}']`)
-    optionSelected.selected = true
-  }
-}
+//   if (sortKey && sortValue) {
+//     const stringSort = `${sortKey}-${sortValue}`
+//     const optionSelected = document.querySelector(`option[value='${stringSort}']`)
+//     optionSelected.selected = true
+//   }
+// }
 //end sort
 
 //pagination
