@@ -16,13 +16,7 @@ const settingMiddleWare = require("../../middlewares/client/setting.middleware.j
 const session = require("express-session");
 
 module.exports = (app) => {
-  app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    cookie: { maxAge: 1000 } 
-  }));
-  app.use(userMiddleWare.refreshOneTime);
+  // app.use(userMiddleWare.refreshToken);
   app.use(categoryMiddleWare.category)
   app.use(userMiddleWare.infoUser);
   app.use(cartMiddleWare.cartId);

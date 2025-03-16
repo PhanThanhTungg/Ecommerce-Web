@@ -1,11 +1,3 @@
-if(!sessionStorage.getItem("check")){
-  window.onload = ()=>{
-    sessionStorage.setItem("check", "true");
-    location.reload();
-  }
-}
-
-
 const refreshToken = ()=>{
   fetch("/api/user/refresh",{
     method: "POST"

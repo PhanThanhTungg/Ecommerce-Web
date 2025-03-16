@@ -84,6 +84,7 @@ module.exports.loginPost = async (req, res) => {
 
 module.exports.logout = async (req, res) => {
   res.clearCookie("accessToken");
+  res.clearCookie("refreshToken");
   res.redirect("/")
 }
 

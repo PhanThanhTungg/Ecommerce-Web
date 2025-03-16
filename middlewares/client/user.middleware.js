@@ -11,23 +11,34 @@ module.exports.infoUser = async (req, res, next) => {
     }
   } catch (error) {
     console.log(error);
+    if (error.name === "TokenExpiredError") {
+      if (req.cookies.refreshToken) {
+        try {
+          const decoded = jwt.verify(req.cookies.refreshToken, process.env.REFRESH_TOKEN_SECRET);
+          const user = await User.findOne({ _id: decoded.id });
+          if (!user) return next();
+          const accessToken = genTokenHelper.genAccessToken(user.id);
+          res.locals.user = user;
+          res.cookie("accessToken", accessToken);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
   }
   next();
 }
-module.exports.refreshOneTime = async(req,res,next)=>{
-  console.log("refresh");
-  // if(!req.session.hasRun && req.cookies.refreshToken){
-  //   console.log(req.session.hasRun);
-  //   req.session.hasRun = true;
-  //   try {
-  //     const decoded = jwt.verify(req.cookies.refreshToken, process.env.REFRESH_TOKEN_SECRET);
-  //     const user = await User.findOne({_id: decoded.id});
-  //     if(!user) return next();
-  //     const accessToken = genTokenHelper.genAccessToken(user.id);
-  //     res.cookie("accessToken", accessToken);
-  //   } catch (error) {
-  //     console.log(error); 
-  //   }
-  // }
+module.exports.refreshToken = async (req, res, next) => {
+  if (req.cookies.refreshToken) {
+    try {
+      const decoded = jwt.verify(req.cookies.refreshToken, process.env.REFRESH_TOKEN_SECRET);
+      const user = await User.findOne({ _id: decoded.id });
+      if (!user) return next();
+      const accessToken = genTokenHelper.genAccessToken(user.id);
+      res.cookie("accessToken", accessToken);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   next();
 }
