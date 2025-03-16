@@ -1,0 +1,33 @@
+mixin filter()
+  .inner-filter
+    .filter-header
+      .title.d-flex.align-items-center
+        i.fi.fi-rr-settings-sliders
+        p FILTER BY
+      .filter-content
+        .filter-availability(onclick="deleteAvailabilityFilter()")
+        .filter-price(onclick="deletePriceFilter()")
+    .clear-button
+      button.d-flex.align-items-center(onclick="clearFilter()")
+        span Clear all
+        i.fi.fi-rr-trash-xmark
+    .collapseAvailability.collapse-filter-product
+      a(data-toggle="collapse" href="#collapseAvailability" role="button" aria-expanded="false" aria-controls="collapseAvailability")
+        i#icon-availability.fi.fi-rr-angle-up
+        span Availability
+      .collapse#collapseAvailability.show
+        select.availability 
+          option(selected value="") All 
+          option(value="inStock") In stock 
+          option(value="outOfStock") Out of stock
+    .collapsePrice.collapse-filter-product
+      a(data-toggle="collapse" href="#collapsePrice" role="button" aria-expanded="false" aria-controls="collapsePrice")
+        i#icon-price.fi.fi-rr-angle-up
+        span Price
+      .collapse#collapsePrice.show
+        .slider-range
+        .input-value
+          input(type="number" id="min-price" min="0" max="30" value="0")
+          span 
+            <i class="fi fi-rr-minus"></i>
+          input(type="number" id="max-price" min="0" max="500" value="500")

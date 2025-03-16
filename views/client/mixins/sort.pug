@@ -1,18 +1,51 @@
 mixin sort()
-    div(class ="sort-form" sort)
-        select(
-            class="form-control select-css"
-            name="sort"
-            sort-select
-        )
-            option(value="default" class="css-option") Mặc định
-            option(value="price-desc" class="css-option") Giá giảm dần
-            option(value="price-asc" class="css-option") Giá tăng dần
-            option(value="title-asc" class="css-option") Tiêu đề A - Z
-            option(value="title-desc" class="css-option") Tiêu đề Z - A
-            option(value="sales-asc" class="css-option") Lượt bán tăng dần
-            option(value="sales-desc" class="css-option") Lượt bán giảm dần
-        button(
-            class="btn btn-danger mt-2 sort-clear"
-            sort-clear
-        ) Clear
+    .dropdown.sort-form
+        a(href="#" role="button" data-toggle="dropdown" aria-expanded="false") Sort by 
+            span Feature
+        .dropdown-menu
+            .form-check
+                label.d-flex.align-items-center
+                    input(type="radio" name="sort-form" checked value="-featured" class="css-option")
+                    div Feature
+            .form-check
+                label.d-flex.align-items-center
+                    input(type="radio" name="sort-form" value="-best_selling" class="css-option")
+                    div Best selling
+            .form-check
+                label.d-flex.align-items-center
+                    input(type="radio" name="sort-form" value="price-desc" class="css-option")
+                    div Price, high to low
+            .form-check
+                label.d-flex.align-items-center
+                    input(type="radio" name="sort-form" value="price-asc" class="css-option")
+                    div Price, low to high
+            .form-check
+                label.d-flex.align-items-center
+                    input(type="radio" name="sort-form" value="title-asc" class="css-option")
+                    div Title, A - Z
+            .form-check
+                label.d-flex.align-items-center
+                    input(type="radio" name="sort-form" value="title-desc" class="css-option")
+                    div Title, Z - A
+            .form-check
+                label.d-flex.align-items-center
+                    input(type="radio" name="sort-form" value="sales-asc" class="css-option")
+                    div Sales, low to high
+            .form-check
+                label.d-flex.align-items-center
+                    input(type="radio" name="sort-form" value="sales-desc" class="css-option")
+                    div Sales, high to low
+    //- div(class ="sort-form" sort)
+    //-     select(
+    //-         class="form-control select-css"
+    //-         name="sort"
+    //-         sort-select
+    //-     )
+    //-         option(value="-featured" class="css-option") Featured
+    //-         option(value="-best_selling" class="css-option") Best selling
+    //-         option(value="price-desc" class="css-option") Price, high to low
+    //-         option(value="price-asc" class="css-option") Price, low to high
+    //-         option(value="title-asc" class="css-option") Title, A - Z
+    //-         option(value="title-desc" class="css-option") Title, Z - A
+    //-         option(value="sales-asc" class="css-option") Sales, low to high
+    //-         option(value="sales-desc" class="css-option") Sales, high to low

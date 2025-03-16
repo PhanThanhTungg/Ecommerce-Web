@@ -3,7 +3,7 @@ mixin product-grid(products)
   .row.box-product
     each item in products 
       a(href=`/products/detail/${item.slug}`)
-        .col-xl-3.col-md-4.col-6.mb-3
+        .col-xl-4.col-md-4.col-6.mb-3
           .product-item
             .inner-image    
               img.img-product-1(src=item.images[0], alt=item.title)

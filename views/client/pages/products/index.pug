@@ -3,19 +3,24 @@ include ../../mixins/box-head.pug
 include ../../mixins/product-layout.pug 
 include ../../mixins/sort.pug 
 include ../../mixins/pagination.pug
+include ../../mixins/filter.pug
 block main 
     .page-format
         .container.my-3
+            //- .row
+            //-     .col-6
+            //-         +box-head(pageTitle)
             .row
-                .col-6
-                    +box-head(pageTitle)
-                .col-6
+                .col-3
+                    +filter()
+                .col
                     +sort()
-
-            +product-grid(Products)
-        
-            +pagination(pagination)
+                    +product-grid(Products)
+                    
+                    +pagination()
     
     script(src="/js/format.js") 
     script(src="/js/product.js") 
     script(src="/js/rating.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.8.1/nouislider.min.js")
+    script(src="/js/filter.js")
