@@ -2,7 +2,6 @@ const User = require("../../model/user.model");
 const jwt = require('jsonwebtoken');
 module.exports.requireAuth = (req, res, next) => {
   const accessToken = req.cookies.accessToken;
-  console.log(1);
   if(!accessToken) {
     res.redirect("/user/login");
     return;
@@ -17,22 +16,8 @@ module.exports.requireAuth = (req, res, next) => {
         res.redirect("/user/login");
         return;
       }
-      res.locals.infoUser = user;
+      res.locals.user = user;
     })
-
-    // const user = await User.findOne({
-    //   tokenUser: req.cookies.tokenUser,
-    //   deleted: false,
-    // }).select("-password");
-
-    // if(!user) {
-    //   res.redirect("/user/login");
-    // } else {
-    //   res.locals.infoUser = user;
-      
-    //   next();
-    // }
   }
-  console.log(2);
   next();
 }

@@ -1,23 +1,15 @@
-// lay ra thong tin ca nhan
-
 const User = require("../../model/user.model");
-
+const jwt = require('jsonwebtoken');
 module.exports.infoUser = async (req, res, next) => {
-  if(req.cookies.tokenUser) {
-    const user = await User.findOne({
-      tokenUser: req.cookies.tokenUser,
-      deleted: false,
-      status: "active"
-    }).select("-password");
-
-    if(user) {
-      res.locals.user = user;
-      const fullname = user.fullName
-      const a = fullname.split(" ")
-      res.locals.name = a[a.length-1].toUpperCase()
-
+  try {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+      const user = await User.findOne({ _id: decoded.id, status: "active", deleted: false });
+      if (user) res.locals.user = user;
     }
+  } catch (error) {
+    console.log(error);
   }
-  
   next();
 }

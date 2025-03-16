@@ -1,8 +1,6 @@
-const md5 = require("md5")
 const User = require("../../model/user.model")
 const ForgotPassword = require("../../model/forgot-password.model")
 const Cart = require("../../model/cart.model");
-const bcrypt = require("bcrypt");
 
 const generateHelper = require("../../helpers/generate")
 const sendMailHelper = require("../../helpers/send-mail")
@@ -11,7 +9,14 @@ const Order = require("../../model/order.model")
 const Product = require("../../model/product.model")
 
 const genTokenHelper = require("../../helpers/genToken.helper");
+const bcrypt = require("bcrypt");
+
 module.exports.register = async (req, res) => {
+  if(res.locals.user){
+    res.redirect("/");
+    return;
+  }
+
   res.render("client/pages/user/register", {
     pageTitle: "Đăng ký tài khoản",
   })
@@ -19,85 +24,67 @@ module.exports.register = async (req, res) => {
 
 
 module.exports.registerPost = async (req, res) => {
+  if(res.locals.user){
+    res.redirect("/");
+    return;
+  }
   let {fullName, email, password} = req.body;
-  password = bcrypt.hash(password, 12)+"";
+  password = await bcrypt.hash(password, 12)+"";
 
   const user = new User({fullName, email, password});
   const [accessToken, refreshToken] = [genTokenHelper.genAccessToken(user.id), genTokenHelper.genRefreshToken(user.id)];
   user.refreshToken = refreshToken;
   await user.save();
-  res.cookie("accessToken", accessToken, {httpOnly: true, maxAge: process.env.ACCESS_TOKEN_SECRET_EXPIRE*1000});
-  res.cookie("refreshToken", refreshToken, {httpOnly: true, maxAge: process.env.REFRESH_TOKEN_SECRET_EXPIRE*1000});
-  res.cookie("tokenUser", user.tokenUser)
+  res.cookie("accessToken", accessToken, {httpOnly: true, maxAge: 60*1000});
+  res.cookie("refreshToken", refreshToken, {httpOnly: true, maxAge: 7*24*60*60*1000});
+  res.cookie("tokenUser", user.tokenUser);
 
+  await Cart.create({user_id: user.id});
   res.redirect("/")
 }
 
 module.exports.login = async (req, res) => {
-  res.render("client/pages/user/login", {
-    pageTitle: "Đăng nhập",
-  })
+  if(res.locals.user){
+    console.log(res.locals.user)
+    res.redirect("/");
+  }
+  else{
+    res.render("client/pages/user/login", {
+      pageTitle: "Đăng nhập",
+    })
+  }
 }
 
 module.exports.loginPost = async (req, res) => {
-  const email = req.body.email
-  const password = req.body.password
+  if(res.locals.user){
+    res.redirect("/");
+    return;
+  }
 
+  const email = req.body.email
   const user = await User.findOne({
     email: email,
     deleted: false,
   })
+  const [accessToken, refreshToken] = [genTokenHelper.genAccessToken(user.id), genTokenHelper.genRefreshToken(user.id)];
+  await User.updateOne({email},{refreshToken});
 
-  if (!user) {
-    req.flash("error", "Email không tồn tại!")
-    res.redirect("back")
-    return
-  }
+  res.cookie("accessToken", accessToken, {httpOnly: true, maxAge: 60*1000});
+  res.cookie("refreshToken", refreshToken, {httpOnly: true, maxAge: 7*24*60*60*1000});
 
-  if (md5(password) !== user.password) {
-    req.flash("error", "Sai mật khẩu!")
-    res.redirect("back")
-    return
-  }
-
-  if (user.status !== "active") {
-    req.flash("error", "Tài khoản đang bị khóa!")
-    res.redirect("back")
-    return
-  }
-
-  if (user.deleted == "true") {
-    req.flash("error", "Tài khoản hiện đang bị vô hiệu hóa!")
-    res.redirect("back")
-    return
-  }
-
-  res.cookie("tokenUser", user.tokenUser)
-
-
-  
   const cart = await Cart.findOne({
     user_id: user.id
   })
 
-  if(cart){
-    res.cookie("cartId", cart.id)
-  }
-  else{
-    await Cart.updateOne({
-      _id: req.cookies.cartId
-    }, {
-      user_id: user.id
-    })  
+  if(!cart){
+    await Cart.create({user_id: user.id});
   }
   
-
   res.redirect("/")
 }
 
 module.exports.logout = async (req, res) => {
-  res.clearCookie("tokenUser")
-  res.clearCookie("cartId")
+  res.clearCookie("accessToken");
   res.redirect("/")
 }
 

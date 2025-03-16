@@ -73,7 +73,7 @@ module.exports.productApiGetData = async (req, res) => {
     const [priceBegin, priceEnd] = [req.query.priceBegin, req.query.priceEnd];
     if (priceBegin && priceEnd) {
       exprConditions.push(
-        { "$egt": [{ "$arrayElemAt": ["$listSize.price", 0] }, Number(priceBegin)] },
+        { "$gte": [{ "$arrayElemAt": ["$listSize.price", 0] }, Number(priceBegin)] },
         { "$lte": [{ "$arrayElemAt": ["$listSize.price", 0] }, Number(priceEnd)] }
       );
     }
