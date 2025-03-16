@@ -1,13 +1,16 @@
 const md5 = require("md5")
 const User = require("../../model/user.model")
 const ForgotPassword = require("../../model/forgot-password.model")
-const Cart = require("../../model/cart.model")
+const Cart = require("../../model/cart.model");
+const bcrypt = require("bcrypt");
 
 const generateHelper = require("../../helpers/generate")
 const sendMailHelper = require("../../helpers/send-mail")
 
 const Order = require("../../model/order.model")
 const Product = require("../../model/product.model")
+
+const genTokenHelper = require("../../helpers/genToken.helper");
 module.exports.register = async (req, res) => {
   res.render("client/pages/user/register", {
     pageTitle: "Đăng ký tài khoản",
@@ -16,27 +19,15 @@ module.exports.register = async (req, res) => {
 
 
 module.exports.registerPost = async (req, res) => {
-  const existUser = await User.findOne({
-    email: req.body.email
-  })
+  let {fullName, email, password} = req.body;
+  password = bcrypt.hash(password, 12)+"";
 
-  if(existUser) {
-    req.flash("error", "Email đã tồn tại!")
-    res.redirect("back")
-    return
-  }
-  
-  req.body.password = md5(req.body.password)
-  // const infoUser = {
-  //   fullName: req.body.fullName,
-  //   email: req.body.email,
-  //   password: md5(req.body.password),
-  //   tokenUser: generateHelper.generateRandomString(30)
-  // }
-
-  const user = new User(req.body)
-  await user.save()
-
+  const user = new User({fullName, email, password});
+  const [accessToken, refreshToken] = [genTokenHelper.genAccessToken(user.id), genTokenHelper.genRefreshToken(user.id)];
+  user.refreshToken = refreshToken;
+  await user.save();
+  res.cookie("accessToken", accessToken, {httpOnly: true, maxAge: process.env.ACCESS_TOKEN_SECRET_EXPIRE*1000});
+  res.cookie("refreshToken", refreshToken, {httpOnly: true, maxAge: process.env.REFRESH_TOKEN_SECRET_EXPIRE*1000});
   res.cookie("tokenUser", user.tokenUser)
 
   res.redirect("/")

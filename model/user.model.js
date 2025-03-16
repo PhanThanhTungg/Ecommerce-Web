@@ -8,8 +8,9 @@ const userSchema = new mongoose.Schema(
     password: String,
     tokenUser:{
       type: String,
-      default: generate.generateRandomString(20)
+      default: ()=>generate.generateRandomString(20)
     },
+    refreshToken: String,
     phone: String,
     thumbnail:{
       type: String,
