@@ -52,3 +52,45 @@ ul {
   margin: 0;
 }
 
+i {
+  line-height: 0;
+  vertical-align: middle;
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  border: none;
+}
+
+select {
+  cursor: pointer;
+}
+
+input {
+  border: none;
+}
+
+select:focus-visible {
+  outline: none;
+}
+
+.dropdown-menu {
+  display: block;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.2rem 0;
+  transform: translateY(-10px);
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+.show .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}

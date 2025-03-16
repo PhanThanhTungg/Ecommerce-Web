@@ -13,7 +13,7 @@ module.exports.index = async (req, res) => {
     for (const item of cart.products) {
       const product = await Product.findOne({
         _id: item.product_id
-      }).select("thumbnail title slug listSize discountPercentage")
+      }).select("images thumbnail title slug listSize discountPercentage")
 
       const sizeInfo = product.listSize.find(i=>{
         return i.id == item.sizeId

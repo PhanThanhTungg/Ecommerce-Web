@@ -6,38 +6,36 @@ block main
   +alert-error(3000)
   .page-format
     .container.my-3
+      .cart-title YOUR SHOPPING CART
       .button-history
         a(href="/history") << Lịch sử mua hàng 
       .row
-        .col-12
+        .col-xl-8.col-md-12
           table(class="table table-bordered" table-cart)
             thead
               tr
-                th STT
-                th Ảnh
-                th Tên
-                th Loại
-                th Giá
-                th Số lượng
-                th Tổng tiền
-                if(cartDetail.products.length > 0)
-                  th Xóa
+                th PRODUCT
+                th 
+                th PRICE
+                th QUANTITY
+                th TOTAL
+                th 
             tbody
               if(cartDetail.products.length > 0)
                 each item, index in cartDetail.products
-                  tr
-                    td #{index+1}
+                  tr                    
                     td
                       img(
-                        src=item.productInfo.thumbnail
+                        src=item.productInfo.images[0]
                         alt=item.productInfo.title
                         width="80px"
                       )
                     td
-                      a(
-                        href=`/products/detail/${item.productInfo.slug}`
-                      ) #{item.productInfo.title}
-                    td #{item.sizeInfo.size}
+                      .product-info                      
+                        a(
+                          href=`/products/detail/${item.productInfo.slug}`
+                        ) #{item.productInfo.title}
+                        p.product-size Size: #{item.sizeInfo.size}                     
                     td.formatMoney #{item.sizeInfo.priceNew}$
                     td
                       input(
@@ -49,19 +47,46 @@ block main
                         item-id=item.product_id
                         style="width: 60px"
                       )
-                    td.formatMoney #{item.totalPrice}đ
+                    td.formatMoney #{item.totalPrice}$
                     td
                       a(
                         href=`/cart/delete/${item.product_id}/${item.sizeInfo.id}`
                         class="btn btn-danger delete-button"
-                      ) Xóa
+                      )
+                        i.fi.fi-rr-trash-xmark
               else
                 tr
                   td(colspan="7") Chưa có sản phẩm nào!
+        .col-4.bill
+          .inner-title
+            | THERE ARE
+            span.total-quantity 0 ITEM
+            | IN YOUR CART
+          .inner-content
+            .total-price
+              span TOTAL:
+              span.money $
+            .shipping-info
+              span SHIPPING:
+              p
+                if (cartDetail.totalPrice > 200)
+                  | Free
+                else
+                  | Shipping and taxes calculated at checkout
+            .free-shipping-condition
+              if (cartDetail.totalPrice > 200)
+                .inner-notice
+                  p.notice Congratulations! You've got free shipping!
+                  i.fi.fi-rr-truck-check
+                p.condition-info
+                  | Free shipping for any orders above
+                  span $200
+            .input-note 
+              .note-title ADD A NOTE TO YOUR ORDER:
+              textarea(rows="8" placeholder="ADD YOUR NOTE HERE")
+        h3(class="text-right table-cart") Tổng đơn hàng: <span class="formatMoney">#{cartDetail.totalPrice}$</span>
           
-          h3(class="text-right table-cart") Tổng đơn hàng: <span class="formatMoney">#{cartDetail.totalPrice}$</span>
-          
-          div(class="text-right mt-3")
-            a(href="/checkout" class="btn btn-success thanhToan") THANH TOÁN
+        div(class="text-right mt-3")
+          a(href="/checkout" class="btn btn-success thanhToan") THANH TOÁN
     script(src="/js/cart.js") 
     script(src="/js/format.js")

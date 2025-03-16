@@ -1,0 +1,31 @@
+/* table cart */
+
+
+/* end table cart */
+
+
+
+/* responsive cho table */
+@media only screen and (max-width: 700px) {
+
+  /* Table full chiều rộng màn hình, cách đều trái phải 10px */
+  table {
+    margin: 0 10px;
+    width: auto;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+
+  table th,
+  table td {
+    display: block;
+    border-bottom: none;
+  }
+
+  table tr:last-child td {
+    border-bottom: 1px solid #ccc;
+  }
+}
+
+/* end-responsive cho table */
