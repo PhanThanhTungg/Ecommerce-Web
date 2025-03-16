@@ -7,10 +7,10 @@ module.exports.requireAuth = async (req, res, next) => {
   } else {
     try {
       const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
-      const user = await User.findOne({_id: decodedToken.id, status: "active", deleted: false});
+      const user = await User.findOne({_id: decoded.id, status: "active", deleted: false});
       if(!user) return res.redirect("/user/login");
       res.locals.user = user;
-      next();
+      return next();
     } catch (error) {
       console.log(error);
       return res.redirect("/user/login");

@@ -1,3 +1,25 @@
+if(!sessionStorage.getItem("check")){
+  window.onload = ()=>{
+    sessionStorage.setItem("check", "true");
+    location.reload();
+  }
+}
+
+
+const refreshToken = ()=>{
+  fetch("/api/user/refresh",{
+    method: "POST"
+  }).then(res=>res.json())
+  .then(data=>{
+    console.log(data);
+  }).catch(err=>{
+    console.log(err);
+  })
+}
+refreshToken();
+setInterval(refreshToken, 25000);
+
+
 
 //show alert cập nhật trạng thái thành công
 const showAlert = document.querySelector("[show-alert]")

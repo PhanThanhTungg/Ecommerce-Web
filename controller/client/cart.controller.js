@@ -2,10 +2,9 @@ const Cart = require("../../model/cart.model");
 const Product = require("../../model/product.model");
 module.exports.index = async (req, res) => {
   const cartId = res.locals.miniCart.id;
-
   const cart = await Cart.findOne({
     _id: cartId
-  });
+  }).lean();
 
   cart.totalPrice = 0;
 

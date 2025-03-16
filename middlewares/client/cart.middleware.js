@@ -34,7 +34,7 @@ module.exports.cartId = async (req, res, next) => {
   if(cart){
     const totalQuantity = cart.products.reduce((quantity,val)=>quantity+val.quantity,0)
     cart.totalQuantity = totalQuantity
-    res.locals.miniCart = cart
+    res.locals.miniCart = cart;
   }
   next();
 }

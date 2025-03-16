@@ -45,7 +45,6 @@ module.exports.registerPost = async (req, res) => {
 
 module.exports.login = async (req, res) => {
   if(res.locals.user){
-    console.log(res.locals.user)
     res.redirect("/");
   }
   else{
@@ -87,6 +86,7 @@ module.exports.logout = async (req, res) => {
   res.clearCookie("accessToken");
   res.redirect("/")
 }
+
 
 
 module.exports.forgotPassword = async (req, res) => {
