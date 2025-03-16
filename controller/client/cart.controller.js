@@ -1,7 +1,7 @@
 const Cart = require("../../model/cart.model");
 const Product = require("../../model/product.model");
 module.exports.index = async (req, res) => {
-  const cartId = req.cookies.cartId;
+  const cartId = res.locals.miniCart.id;
 
   const cart = await Cart.findOne({
     _id: cartId
@@ -40,9 +40,7 @@ module.exports.addPost = async (req, res) => {
   const productId = req.params.productId
   const sizeId = req.body.sizeId
   const quantity = parseInt(req.body.quantity)
-  const cartId = req.cookies.cartId
-
-
+  const cartId = res.locals.miniCart.id;
   try {
     const cart = await Cart.findOne({
       _id: cartId
@@ -90,7 +88,7 @@ module.exports.addPost = async (req, res) => {
 }
 
 module.exports.delete = async (req, res) => {
-  const cartId = req.cookies.cartId
+  const cartId = res.locals.miniCart.id;
   const productId = req.params.productId
   const sizeId = req.params.sizeId
 
@@ -108,7 +106,7 @@ module.exports.delete = async (req, res) => {
 
 
 module.exports.update = async (req, res) => {
-  const cartId = req.cookies.cartId
+  const cartId = res.locals.miniCart.id;
   const productId = req.params.productId
   const quantity = req.params.quantity
   const sizeId = req.params.sizeId

@@ -15,8 +15,8 @@ const settingMiddleWare = require("../../middlewares/client/setting.middleware.j
 
 module.exports =(app)=>{
     app.use(categoryMiddleWare.category)
-    app.use(cartMiddleWare.cartId)
     app.use(userMiddleWare.infoUser)
+    app.use(cartMiddleWare.cartId)
     app.use(settingMiddleWare.settingsGeneral)
 
     app.use("/",homeRoutes)

@@ -1,23 +1,19 @@
 const User = require("../../model/user.model");
 const jwt = require('jsonwebtoken');
-module.exports.requireAuth = (req, res, next) => {
+module.exports.requireAuth = async (req, res, next) => {
   const accessToken = req.cookies.accessToken;
   if(!accessToken) {
-    res.redirect("/user/login");
-    return;
+    return res.redirect("/user/login");
   } else {
-    jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, async (error, decodedToken)=>{
-      if(error){
-        res.redirect("/user/login");
-        return;
-      }
+    try {
+      const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
       const user = await User.findOne({_id: decodedToken.id, status: "active", deleted: false});
-      if(!user){
-        res.redirect("/user/login");
-        return;
-      }
+      if(!user) return res.redirect("/user/login");
       res.locals.user = user;
-    })
+      next();
+    } catch (error) {
+      console.log(error);
+      return res.redirect("/user/login");
+    }
   }
-  next();
 }
