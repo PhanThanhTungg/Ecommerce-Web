@@ -7,11 +7,6 @@ block main
   .page-format
     .container.my-3
       .cart-title YOUR SHOPPING CART
-      .inner-button
-        a.continue-shopping(href="/products")
-          i.fi.fi-rr-angle-double-small-left
-          |  Continue shopping
-        a.history.d-none.d-sm-block(href="/history") Purchase History
       if(cartDetail.products.length > 0)
         .row
           .col-xl-8.col-md-12
@@ -24,11 +19,15 @@ block main
                   th(scope="col") PRICE
                   th(scope="col") QUANTITY
                   th(scope="col") TOTAL
-                  th(scope="col") 
               tbody
                 each item, index in cartDetail.products
                   tr
-                    th.align-middle.text-center(scope="row") #{index + 1}                  
+                    td.align-middle.text-center
+                      a(
+                        href=`/cart/delete/${item.product_id}/${item.sizeInfo.id}`
+                        class="delete-button"
+                      )
+                        i.fi.fi-rr-trash-xmark(style="font-size: 17px")                 
                     td.align-middle.inner-image
                       img(
                         src=item.productInfo.images[0]
@@ -39,7 +38,7 @@ block main
                           href=`/products/detail/${item.productInfo.slug}`
                         ) #{item.productInfo.title}
                         p.product-size Size: #{item.sizeInfo.size}                     
-                    td.formatMoney.align-middle #{item.sizeInfo.priceNew}$
+                    td.align-middle $#{item.sizeInfo.priceNew}
                     td.align-middle.text-center
                       input(
                         type="number"
@@ -50,13 +49,16 @@ block main
                         item-id=item.product_id
                         style="width: 60px"
                       )
-                    td.formatMoney.align-middle #{item.totalPrice}$
-                    td.align-middle
-                      a(
-                        href=`/cart/delete/${item.product_id}/${item.sizeInfo.id}`
-                        class="delete-button"
-                      )
-                        i.fi.fi-rr-trash-xmark
+                    td.align-middle $#{item.totalPrice}
+            .row.button-after-cart
+              .col-xl-6
+                .inner-button
+                  a.history.d-sm-block(href="/products") Continue shopping
+              .col-xl-6
+                .inner-button.button-3
+                  a.history.d-sm-block(href="/checkout") Checkout
+
+
           .col-xl-4.col-md-12.bill
             .inner-title
               | THERE ARE 
@@ -87,8 +89,6 @@ block main
               .input-note 
                 .note-title ADD A NOTE TO YOUR ORDER:
                 textarea(rows="8" placeholder="ADD YOUR NOTE HERE")
-            .inner-button
-              a.thanhToan(href="/checkout") Checkout
       else
         .cart-empty-notification
           .title YOU HAVE NO PRODUCT IN YOUR CART

@@ -15,18 +15,17 @@ module.exports.infoUser = async (req, res, next) => {
         const decoded = jwt.verify(req.cookies.refreshToken, process.env.REFRESH_TOKEN_SECRET);
         const user = await User.findOne({ _id: decoded.id });
         if (!user) return next();
-        console.log("next");
         res.locals.user = user;
         const accessToken = genTokenHelper.genAccessToken(user.id);
         const refreshToken = genTokenHelper.genRefreshToken(user.id);
         res.cookie("accessToken", accessToken, {httpOnly: true, maxAge: 60*1000});
         res.cookie("refreshToken",refreshToken,{httpOnly: true, maxAge: 7*24*60*60*1000})
       } catch (error) {
-        console.log(error);
+        
       }
     }
   } catch (error) {
-    console.log(error.name);
+    
     // if (error.name === "TokenExpiredError") {
     //   if (req.cookies.refreshToken) {
     //     try {
