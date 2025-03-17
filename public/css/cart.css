@@ -1,9 +1,210 @@
-/* table cart */
+.cart-title {
+  width: fit-content;
+  margin: 0 auto;
+  font-size: clamp(20px, calc(1.5vw + 1.5rem), 35px);
+  font-weight: 500;
+}
 
+.inner-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px 0;
+}
+
+.inner-button .continue-shopping {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  color: var(--secondary-color-text);
+  border-bottom: 1px solid transparent;
+  font-size: clamp(12px, calc(1vw + 1rem), 20px);
+  transition: all 0.3s ease;
+}
+
+.inner-button .continue-shopping:hover {
+  color: var(--color-text);
+  border-color: var(--color-text);
+}
+
+.inner-button .history {
+  background-color: transparent;
+  border: 1px solid var(--color-text);
+  padding: max(0.8vw, 6px) max(1.3vw, 10px);
+  border-radius: 5px;
+  color: var(--color-text);
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.inner-button .history:hover {
+  background-color: var(--color-text);
+  color: var(--color-one);
+}
+
+/* table cart */
+.table-cart {
+  border: 1px solid var(--color-one);
+}
+
+.table-cart thead {
+  background-color: var(--color-one);
+  font-size: 1.4rem;
+}
+
+.table-cart tbody tr {
+  height: 150px;
+}
+
+.table-cart tbody tr .inner-image {
+  width: clamp(100px, calc(7vw + 3rem), 130px);
+
+}
+
+.table-cart tbody tr .inner-image img {
+  width: 100%;
+  object-fit: contain;
+  aspect-ratio: 3/4;
+}
+
+.table-cart tbody tr .product-info a {
+  color: var(--color-text);
+  transition: all 0.3s ease;
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+.table-cart tbody tr .product-info a:hover {
+  color: var(--secondary-color-text);
+}
+
+.table-cart tbody tr .product-info .product-size {
+  text-transform: uppercase;
+  color: var(--secondary-bg-color);
+  font-size: 1.3rem;
+}
+
+.table-cart tbody tr:nth-last-child(-n+4) {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.table-cart tbody tr td .delete-button {
+  background-color: transparent;
+  color: var(--secondary-color-text);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.table-cart tbody tr td .delete-button:hover {
+  color: var(--danger-color);
+}
+
+.table-cart tbody tr td .delete-button i {
+  font-size: 20px
+}
 
 /* end table cart */
 
+/* cart info  */
+.bill .inner-title {
+  background-color: white;
+  padding: 10px 20px;
+  border: 1px solid var(--color-one);
+  border-bottom: none;
+  border-radius: 3px 3px 0 0;
+  color: var(--secondary-color-text);
+  font-size: 1.2rem;
+  font-weight: 500;
+}
 
+.bill .inner-content {
+  background-color: var(--color-one);
+  padding: 15px 20px;
+}
+
+.bill .inner-content .cart-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.bill .inner-content .cart-info p {
+  font-size: 1.5em;
+}
+
+.bill .inner-content .cart-info .noti {
+  font-weight: 400;
+  color: var(--secondary-color-text);
+  font-size: 1.2rem;
+}
+
+.bill .inner-content .free-shipping-condition .inner-notice {
+  color: var(--color-green);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.bill .inner-content .free-shipping-condition .inner-notice i {
+  font-size: 1.3em;
+}
+
+.bill .inner-content .free-shipping-condition .condition-info {
+  color: var(--secondary-color-text);
+  margin-bottom: 25px;
+}
+
+.bill .inner-content .free-shipping-condition .condition-info span {
+  color: var(--color-green);
+  font-weight: 500;
+}
+
+.bill .inner-content .input-note .note-title {
+  color: var(--color-text);
+  font-weight: 500;
+  font-size: 1em;
+  margin-bottom: 15px;
+}
+
+.bill .inner-content .input-note textarea {
+  width: 100%;
+  padding: 15px;
+}
+
+.bill .inner-button a {
+  background-color: var(--color-green);
+  color: white;
+  width: auto;
+  padding: 10px clamp(20px, calc(1.5vw + 10px), 35px);
+  border: 2px solid var(--color-green);
+  border-radius: 5px;
+  margin-left: auto;
+  font-weight: 600;
+  font-size: 1.2em;
+  transition: all 0.3s ease;
+}
+
+.bill .inner-button a:hover {
+  color: var(--color-green);
+  background-color: white;
+}
+/* end cart info  */
+.cart-empty-notification .title {
+  font-weight: 500;
+}
+
+.others-product {
+  margin-top: 70px;
+  color: var(--color-text);
+  font-size: clamp(15px, calc(1vw + 10px), 30px);
+  font-weight: 500;
+}
 
 /* responsive cho table */
 @media only screen and (max-width: 700px) {
@@ -21,10 +222,6 @@
   table td {
     display: block;
     border-bottom: none;
-  }
-
-  table tr:last-child td {
-    border-bottom: 1px solid #ccc;
   }
 }
 

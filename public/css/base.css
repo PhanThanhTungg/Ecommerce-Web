@@ -7,6 +7,8 @@
   --color-one: #EFEFEF;
   --accent-color: #E2DEC3;
   --main-bg-color: #f0f0f0;
+  --danger-color: rgb(252, 124, 124);
+  --color-green: #30b94d;
 }
 
 * {
@@ -74,6 +76,15 @@ input {
 }
 
 select:focus-visible {
+  outline: none;
+}
+
+textarea {
+  border: none;
+  outline: none;
+}
+
+textarea:focus-visible {
   outline: none;
 }
 

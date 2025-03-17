@@ -7,37 +7,40 @@ block main
   .page-format
     .container.my-3
       .cart-title YOUR SHOPPING CART
-      .button-history
-        a(href="/history") << Lịch sử mua hàng 
-      .row
-        .col-xl-8.col-md-12
-          table(class="table table-bordered" table-cart)
-            thead
-              tr
-                th PRODUCT
-                th 
-                th PRICE
-                th QUANTITY
-                th TOTAL
-                th 
-            tbody
-              if(cartDetail.products.length > 0)
+      .inner-button
+        a.continue-shopping(href="/products")
+          i.fi.fi-rr-angle-double-small-left
+          |  Continue shopping
+        a.history.d-none.d-sm-block(href="/history") Purchase History
+      if(cartDetail.products.length > 0)
+        .row
+          .col-xl-8.col-md-12
+            table(class="table table-cart table-borderless" table-cart)
+              thead
+                tr
+                  th(scope="col")
+                  th(scope="col") PRODUCT
+                  th(scope="col") 
+                  th(scope="col") PRICE
+                  th(scope="col") QUANTITY
+                  th(scope="col") TOTAL
+                  th(scope="col") 
+              tbody
                 each item, index in cartDetail.products
-                  tr                    
-                    td
+                  tr
+                    th.align-middle.text-center(scope="row") #{index + 1}                  
+                    td.align-middle.inner-image
                       img(
                         src=item.productInfo.images[0]
                         alt=item.productInfo.title
-                        width="80px"
                       )
-                    td
-                      .product-info                      
+                    td.align-middle.product-info                      
                         a(
                           href=`/products/detail/${item.productInfo.slug}`
                         ) #{item.productInfo.title}
                         p.product-size Size: #{item.sizeInfo.size}                     
-                    td.formatMoney #{item.sizeInfo.priceNew}$
-                    td
+                    td.formatMoney.align-middle #{item.sizeInfo.priceNew}$
+                    td.align-middle.text-center
                       input(
                         type="number"
                         name="quantity"
@@ -47,46 +50,52 @@ block main
                         item-id=item.product_id
                         style="width: 60px"
                       )
-                    td.formatMoney #{item.totalPrice}$
-                    td
+                    td.formatMoney.align-middle #{item.totalPrice}$
+                    td.align-middle
                       a(
                         href=`/cart/delete/${item.product_id}/${item.sizeInfo.id}`
-                        class="btn btn-danger delete-button"
+                        class="delete-button"
                       )
                         i.fi.fi-rr-trash-xmark
-              else
-                tr
-                  td(colspan="7") Chưa có sản phẩm nào!
-        .col-4.bill
-          .inner-title
-            | THERE ARE
-            span.total-quantity 0 ITEM
-            | IN YOUR CART
-          .inner-content
-            .total-price
-              span TOTAL:
-              span.money $
-            .shipping-info
-              span SHIPPING:
-              p
-                if (cartDetail.totalPrice > 200)
-                  | Free
+          .col-xl-4.col-md-12.bill
+            .inner-title
+              | THERE ARE 
+              span.total-quantity
+                if (cartDetail.totalQuantity < 2)
+                  | #{cartDetail.totalQuantity} ITEM
                 else
-                  | Shipping and taxes calculated at checkout
-            .free-shipping-condition
-              if (cartDetail.totalPrice > 200)
-                .inner-notice
-                  p.notice Congratulations! You've got free shipping!
-                  i.fi.fi-rr-truck-check
+                  | #{cartDetail.totalQuantity} ITEMS
+              |  IN YOUR CART
+            .inner-content
+              .cart-info
+                span TOTAL:
+                p.formatMoney #{cartDetail.totalPrice}$
+              .cart-info
+                span SHIPPING:                
+                if (cartDetail.totalPrice > 200)
+                  p Free
+                else
+                  .noti Shipping and taxes calculated at checkout
+              .free-shipping-condition
+                if (cartDetail.totalPrice > 200)
+                  .inner-notice
+                    p.notice Congratulations! You've got free shipping!
+                    i.fi.fi-rr-truck-check
                 p.condition-info
-                  | Free shipping for any orders above
-                  span $200
-            .input-note 
-              .note-title ADD A NOTE TO YOUR ORDER:
-              textarea(rows="8" placeholder="ADD YOUR NOTE HERE")
-        h3(class="text-right table-cart") Tổng đơn hàng: <span class="formatMoney">#{cartDetail.totalPrice}$</span>
-          
-        div(class="text-right mt-3")
-          a(href="/checkout" class="btn btn-success thanhToan") THANH TOÁN
+                  | Free shipping for any orders above 
+                  span.formatMoney 200$
+              .input-note 
+                .note-title ADD A NOTE TO YOUR ORDER:
+                textarea(rows="8" placeholder="ADD YOUR NOTE HERE")
+            .inner-button
+              a.thanhToan(href="/checkout") Checkout
+      else
+        .cart-empty-notification
+          .title YOU HAVE NO PRODUCT IN YOUR CART
+          .detail Before proceeding to checkout you must add some products to your shopping cart.
+      
+      .others-product
+        .title YOU MAY ALSO LIKE THESE PRODUCT
+
     script(src="/js/cart.js") 
     script(src="/js/format.js")

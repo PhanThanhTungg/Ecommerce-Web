@@ -7,6 +7,7 @@ module.exports.index = async (req, res) => {
   }).lean();
 
   cart.totalPrice = 0;
+  cart.totalQuantity = 0;
 
   if(cart.products.length > 0) {
     for (const item of cart.products) {
@@ -26,6 +27,7 @@ module.exports.index = async (req, res) => {
       item.totalPrice = item.quantity * sizeInfo.priceNew
 
       cart.totalPrice += item.totalPrice
+      cart.totalQuantity += item.quantity
     }
   }
 
