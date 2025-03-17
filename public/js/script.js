@@ -9,7 +9,7 @@ const refreshToken = ()=>{
   })
 }
 refreshToken();
-setInterval(refreshToken, 25000);
+setInterval(refreshToken, 50000);
 
 
 
