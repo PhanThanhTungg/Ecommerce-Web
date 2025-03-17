@@ -9,20 +9,24 @@ module.exports.index = async (req, res) => {
   cart.totalPrice = 0;
   cart.totalQuantity = 0;
 
-  if(cart.products.length > 0) {
+  let listCategory = [];
+
+  if (cart.products.length > 0) {
     for (const item of cart.products) {
       const product = await Product.findOne({
         _id: item.product_id
-      }).select("images thumbnail title slug listSize discountPercentage")
+      }).select("images thumbnail title slug listSize discountPercentage product_category_id")
 
-      const sizeInfo = product.listSize.find(i=>{
+      const sizeInfo = product.listSize.find(i => {
         return i.id == item.sizeId
       })
 
-      sizeInfo.priceNew = (sizeInfo.price * (100 - product.discountPercentage)/100).toFixed(0)
+      sizeInfo.priceNew = (sizeInfo.price * (100 - product.discountPercentage) / 100).toFixed(0)
 
       item.sizeInfo = sizeInfo
       item.productInfo = product
+
+      listCategory.push(product.product_category_id)
 
       item.totalPrice = item.quantity * sizeInfo.priceNew
 
@@ -31,9 +35,24 @@ module.exports.index = async (req, res) => {
     }
   }
 
+  const relatedProducts = await Product.find({
+    product_category_id: { $in: listCategory },
+    status: "active",
+    deleted: false
+  }).sort({ sales: "desc" });
+
+  for (const item of relatedProducts) {
+    for (const size of item.listSize) {
+      size.priceNew = (size.price * (100 - item.discountPercentage) / 100).toFixed(0);
+    }
+  }
+
+
+
   res.render("client/pages/cart/index", {
     pageTitle: "Giỏ hàng",
-    cartDetail: cart
+    cartDetail: cart,
+    relatedProducts: relatedProducts
   })
 }
 
@@ -97,7 +116,7 @@ module.exports.delete = async (req, res) => {
   await Cart.updateOne({
     _id: cartId
   }, {
-    $pull: { products: { product_id: productId, sizeId: sizeId} }  //$pull: xóa đi
+    $pull: { products: { product_id: productId, sizeId: sizeId } }  //$pull: xóa đi
   })
 
   req.flash("success", "Đã xóa sản phẩm khỏi giỏ hàng!")

@@ -1,6 +1,8 @@
 extends ../../layout/default.pug
 include ../../mixins/box-head.pug
 include ../../mixins/alert.pug
+include ../../mixins/product-item-template.pug
+include ../../mixins/product-layout-slide.pug
 
 block main
   +alert-error(3000)
@@ -21,7 +23,7 @@ block main
                   th(scope="col") TOTAL
               tbody
                 each item, index in cartDetail.products
-                  tr
+                  tr(data-category-id = item.productInfo.product_category_id)
                     td.align-middle.text-center
                       a(
                         href=`/cart/delete/${item.product_id}/${item.sizeInfo.id}`
@@ -96,6 +98,18 @@ block main
       
       .others-product
         .title YOU MAY ALSO LIKE THESE PRODUCT
+        .wrap-related-product
+          .row.box-product.mr-5
+            .col-12
+              #demo
+                #indemo
+                  #demo1
+                    +product-grid-slide(relatedProducts)
+                  #demo2
+            
+      
+
 
     script(src="/js/cart.js") 
     script(src="/js/format.js")
+    script(src="/js/productSlide.js")

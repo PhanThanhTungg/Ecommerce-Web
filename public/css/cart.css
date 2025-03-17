@@ -219,11 +219,10 @@
   font-weight: 500;
 }
 
-.others-product {
-  margin-top: 70px;
-  color: var(--color-text);
-  font-size: clamp(15px, calc(1vw + 10px), 30px);
+.others-product .title {
+  font-size: 15px;
   font-weight: 500;
+  margin-bottom: 15px;
 }
 
 /* responsive cho table */

@@ -1,0 +1,78 @@
+include ./rating.pug
+mixin product-item-template-1(item)
+  a(href=`/products/detail/${item.slug}`)
+    .col-xl-4.col-md-4.col-6.mb-3
+      .product-item
+        .inner-image    
+          img.img-product-1(src=item.images[0], alt=item.title)
+          img.img-product-2(src=(item.images.length>1?item.images[1]:item.images[0]), alt=item.title)
+          if item.featured == "1"
+            .inner-featured Trending
+          //- .overlay-product
+          //-   form(
+          //-     action=`/cart/add/${item.id}`
+          //-     method="POST"
+          //-     class ="formCartLayout"
+          //-   )
+          //-     input(
+          //-       class="form-control mb-2 quantityInput"
+          //-       type="number"
+          //-       name="quantity"
+          //-       value="1"
+          //-       min="1"
+          //-       max=item.listSize[0].stock
+          //-       style="display: none"
+          //-     )
+          //-     input(
+          //-       class="sizeInput d-none"
+          //-       type = "text"
+          //-       name="sizeId"
+          //-       value=item.listSize[0].id
+          //-       )
+          //-     button(
+          //-       type="submit"
+          //-       class="btn btn-success btn-block"
+          //-     ) <i class="fa-solid fa-cart-plus"></i>
+        .inner-content
+          .inner-rating(data-rating=item.ratingNumber)
+            +rating-1
+          .inner-title
+            a(href=`/products/detail/${item.slug}`) #{item.title}
+          .inner-price
+            if item.listSize[0]
+              .inner-price-new $#{item.listSize[0].priceNew}
+              .inner-price-old $#{item.listSize[0].price}
+          //- .size-layout
+          //-   each size in item.listSize
+          //-     button.button-size-layout(id=size.id stock=size.stock price=size.price priceNew=size.priceNew) #{size.size}
+          .inner-discount 
+            <i class="fa-solid fa-bolt"></i> -#{item.discountPercentage}%
+          //- .wrap(style="display: flex;align-item: center; justify-content: space-between")
+          //-   .inner-sales.m-0.mt-2 
+          //-     p.m-0 Đã bán: #{item.sales}
+
+
+include ./rating.pug
+mixin product-item-template-cart(item)
+  a(href=`/products/detail/${item.slug}`)
+    .product-item(style="width: 20rem; height: auto; margin-right:30px")
+      .inner-image    
+        img.img-product-1(src=item.images[0], alt=item.title)
+        img.img-product-2(src=(item.images.length>1?item.images[1]:item.images[0]), alt=item.title)
+        if item.featured == "1"
+          .inner-featured Trending
+      .inner-content
+        .inner-rating(data-rating=item.ratingNumber)
+          +rating-1
+        .inner-title
+          a(href=`/products/detail/${item.slug}`) #{item.title}
+        .inner-price
+          if item.listSize[0]
+            .inner-price-new $#{item.listSize[0].priceNew}
+            .inner-price-old $#{item.listSize[0].price}
+        .inner-discount 
+          <i class="fa-solid fa-bolt"></i> -#{item.discountPercentage}%
+
+
+
+

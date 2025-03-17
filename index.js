@@ -25,6 +25,9 @@ app.use(express.static(`${__dirname}/public`))  // nhúng file tĩnh
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 
+app.use(express.json()); // Middleware để parse JSON body
+app.use(express.urlencoded({ extended: true })); // Nếu có dữ liệu form
+
 app.locals.prefixAdmin = require("./config/system.js").prefixAdmin // Khai báo biến toàn cục prefixAdmin
 app.locals.moment = moment
 //li thuyết express: app.locals dùng để tạo biến toàn cục mà file pug nào cũng dùng được

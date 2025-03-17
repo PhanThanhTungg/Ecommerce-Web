@@ -16,3 +16,24 @@ if(tableCart) {
 
 //end-Cập nhật số lượng sản phẩm trong giỏ hàng
 
+//call api to get related products
+const getRelatedProducts = ()=>{
+  const trs = document.querySelectorAll(".table-cart tbody tr");
+  const listCategory = [...trs].map(item=>{
+    return item.dataset.categoryId;
+  })
+  fetch("/api/cart/getRelatedProductByCategory",{
+    method:"POST",
+    headers:{
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({listCategory})
+  }).then(res=>res.json()).then(data=>{
+    console.log(data);
+  })
+}
+getRelatedProducts();
+
+
+//end - call api to get related products
+
