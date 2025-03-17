@@ -66,6 +66,7 @@
 
 .header .header-2 {
   background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
 }
 
 .header .header-2 ul.inner-menu {
@@ -103,6 +104,26 @@
   color: var(--secondary-color-text);
   font-weight: 400;
   line-height: 100%;
+}
+.header a[href="/cart"]{
+  position: relative;
+}
+
+.header a[href="/cart"] span{
+  top:-10px;
+  right: -20px;
+  font-size: 12px;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  padding: 5px;
+  border-radius: 50%;
+  background-color: #000000be;
+  color: white;
 }
 
 

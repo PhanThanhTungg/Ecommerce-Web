@@ -22,7 +22,8 @@ header.header
                   <i class="fa-solid fa-clock-rotate-left"></i>
               li 
                 a(href="/cart")
-                  <i class="fa-solid fa-cart-shopping"></i>(#{miniCart ? miniCart.totalQuantity:0}) 
+                  <i class="fa-solid fa-cart-shopping"></i> 
+                  span #{miniCart ? miniCart.totalQuantity:0}
   .header-2
     .container
         //- .col-2(style = "padding: 0") 
