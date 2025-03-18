@@ -1,2 +1,45 @@
 footer.footer
-    p #{settingsGeneral.copyright}
+  .container
+    .main-footer.row
+      .col-xl-3.col-md-6.contact
+        .logo
+          img(src="https://res.cloudinary.com/ddr3axv38/image/upload/v1740645295/apbcdnbiey0h41wh6mxn.png" alt="logo")
+        .address
+          i.fi.fi-rr-marker
+          p Ha Noi, Viet Nam
+        .phone
+          i.fi.fi-rr-phone-call
+          a(href="#") 012 345 6789
+        .email
+          i.fi.fi-rr-envelope
+          a(href="#") phantungpt03@gmail.com
+      .col-xl-2.col-md-3.info
+        .title Navigation
+        a(href="/") Home
+        a(href="/product") Products
+        a(href="#") Best seller
+      .col-xl-2.col-md-3.info
+        .title About us
+        a(href="#") Our team
+        a(href="#") Front-end
+        a(href="#") Back-end
+      .col-xl-2.col-md-3.info
+        .title Support
+        a(href="#") Orders
+        a(href="#") Shipping
+        a(href="#") Promotion
+      .col-3.d-block.d-xl-none
+      .col-xl-3.col-md-6
+        .title Newsletter
+        form
+          input(type="text" name="email" placeholder="Your email...")
+          button(type="submit") Submit
+        .social
+          a(href="#")
+            i.fi.fi-brands-facebook
+          a(href="#")
+            i.fi.fi-brands-github
+          a(href="#")
+            i.fi.fi-brands-linkedin
+    .end-footer.row
+      p.col #{settingsGeneral.copyright}
