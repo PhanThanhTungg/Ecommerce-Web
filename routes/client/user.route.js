@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-
 const controller = require("../../controller/client/user.controller")
 
 const validate = require("../../validate/client/user.validate")
@@ -29,6 +28,26 @@ router.post(
   validate.loginPost,
   controller.loginPost
 )
+
+const passport = require("../../config/passport");
+const session = require("express-session");
+router.use(passport.initialize());
+router.use(
+  session({ secret: "secret", resave: false, saveUninitialized: true })
+);
+passport.serializeUser((user, done) => done(null, user));
+passport.deserializeUser((obj, done) => done(null, obj));
+router.use(passport.session());
+
+router.post(
+  "/login-google",
+  passport.authenticate("google", { scope: ["profile", "email"] }),
+)
+
+router.get("/google/callback", 
+  passport.authenticate("google", { failureRedirect: "/user/login" }),
+  controller.googleCallback
+);
 
 router.get("/logout", controller.logout);
 

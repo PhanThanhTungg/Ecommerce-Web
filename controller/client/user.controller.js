@@ -81,13 +81,25 @@ module.exports.loginPost = async (req, res) => {
   res.redirect("/")
 }
 
+module.exports.googleCallback = async(req,res)=>{
+  console.log(req.user._json);
+  // {
+  //   sub: '115783213458694311484',
+  //   name: 'Giàu Lương',
+  //   given_name: 'Giàu',
+  //   family_name: 'Lương',
+  //   picture: 'https://lh3.googleusercontent.com/a/ACg8ocJ8SFer5iVIElBQBSv21Iffv7g0SdMahUscmy74RHPT_FdpGQ=s96-c',
+  //   email: 'quanggiau3344@gmail.com',
+  //   email_verified: true
+  // }
+  res.redirect("/");
+}
+
 module.exports.logout = async (req, res) => {
   res.clearCookie("accessToken");
   res.clearCookie("refreshToken");
   res.redirect("/")
 }
-
-
 
 module.exports.forgotPassword = async (req, res) => {
   res.render("client/pages/user/forgot-password", {

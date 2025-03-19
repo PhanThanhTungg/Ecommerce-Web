@@ -48,7 +48,12 @@ block main
             .bar
               a(href="/user/password/forgot") Forgot password?
               a(href="/user/register") Register >>
-            
+            div.wrap-login-social
+              form(
+                action="/user/login-google"
+                method="POST"
+              )
+                button(type="submit") Google  
             hr
             
             

@@ -19,10 +19,8 @@ if(headerSearchLabel){
   headerSearchLabel.addEventListener("click", ()=>{
     headerSearchInput.classList.remove("d-none");
     headerSearchLabel.classList.add("d-none");
-    console.log(1)
   })
   document.addEventListener("click", (e)=>{
-    console.log(2);
     if(!headerSearchInput.contains(e.target) && !headerSearchLabel.contains(e.target) && !headerSearchInput.classList.contains("d-none")){
       headerSearchInput.classList.add("d-none");
       headerSearchLabel.classList.remove("d-none");
