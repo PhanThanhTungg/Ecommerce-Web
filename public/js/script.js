@@ -13,6 +13,19 @@ setInterval(refreshToken, 50000);
 
 
 
+const headerSearchIcon = document.querySelector(".header-search-icon");
+if(headerSearchIcon){
+  const headerSearch = document.querySelector(".header-search");
+  headerSearchIcon.addEventListener("click", ()=>{
+    headerSearch.style.display = "block";
+  })
+  const headerSearchClose = document.querySelector(".header-search-close");
+  console.log(headerSearchClose);
+  headerSearchClose.addEventListener("click", ()=>{
+    headerSearch.style.display = "none";
+  })
+}
+
 //show alert cập nhật trạng thái thành công
 const showAlert = document.querySelector("[show-alert]")
 if (showAlert) {

@@ -1,4 +1,37 @@
 /* Header */
+.header-search{
+  background-color: #fffffffb;
+  width: 100vw;
+  height: 30vh;
+  position: fixed;
+  top: 0; right: 0; left: 0;
+  z-index: 1001;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  display: block;
+  animation: moveHeaderSearch 0.5s linear;
+}
+@keyframes moveHeaderSearch {
+  from{
+    transform: translateY(40px);
+    opacity: 0;
+  }to{
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.header-search-close{
+  position: absolute;
+  right: 30px;
+  top: 10px;
+  padding: 10px;
+  transition: all 0.3s linear;
+  border-radius: 50%;
+}
+.header-search-close:hover{
+  background-color: var(--accent-color);
+}
+
+
 .header .header-1 {
   padding: 14px 0;
   background-color: var(--main-bg-color);
@@ -63,6 +96,25 @@
   opacity: 0.5;
   transform: scale(2.5);
 }
+
+
+.header .header-1 li:has(>a.userInfo){
+  position: relative;
+}
+ 
+.header .header-1 .afterLogin{
+  position: absolute;
+  top: 28px;
+  left: 15px;
+  right:0;
+  z-index: 1000;
+  background-color: white;
+}
+
+.header .header-1 .afterLogin{
+  color: var(--secondary-color-text)
+}
+
 
 .header .header-2 {
   background-color: white;

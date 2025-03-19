@@ -193,7 +193,7 @@ module.exports.resetPasswordPost = async (req, res) => {
 
 module.exports.info = async (req, res) => {
   if (res.locals.user) {
-    const tokenUser = req.cookies.tokenUser
+    const tokenUser = res.locals.user.tokenUser;
     //update rank of user
     let totalValue = 0
     let cntFail = 0
