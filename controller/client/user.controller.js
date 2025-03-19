@@ -12,7 +12,7 @@ const genTokenHelper = require("../../helpers/genToken.helper");
 const bcrypt = require("bcrypt");
 
 module.exports.register = async (req, res) => {
-  if(res.locals.user){
+  if (res.locals.user) {
     res.redirect("/");
     return;
   }
@@ -22,32 +22,31 @@ module.exports.register = async (req, res) => {
   })
 }
 
-
 module.exports.registerPost = async (req, res) => {
-  if(res.locals.user){
+  if (res.locals.user) {
     res.redirect("/");
     return;
   }
-  let {fullName, email, password} = req.body;
-  password = await bcrypt.hash(password, 12)+"";
+  let { fullName, email, password } = req.body;
+  password = await bcrypt.hash(password, 12) + "";
 
-  const user = new User({fullName, email, password});
+  const user = new User({ fullName, email, password });
   const [accessToken, refreshToken] = [genTokenHelper.genAccessToken(user.id), genTokenHelper.genRefreshToken(user.id)];
   user.refreshToken = refreshToken;
   await user.save();
-  res.cookie("accessToken", accessToken, {httpOnly: true, maxAge: 60*1000});
-  res.cookie("refreshToken", refreshToken, {httpOnly: true, maxAge: 7*24*60*60*1000});
+  res.cookie("accessToken", accessToken, { httpOnly: true, maxAge: 60 * 1000 });
+  res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
   res.cookie("tokenUser", user.tokenUser);
 
-  await Cart.create({user_id: user.id});
+  await Cart.create({ user_id: user.id });
   res.redirect("/")
 }
 
 module.exports.login = async (req, res) => {
-  if(res.locals.user){
+  if (res.locals.user) {
     res.redirect("/");
   }
-  else{
+  else {
     res.render("client/pages/user/login", {
       pageTitle: "Đăng nhập",
     })
@@ -55,7 +54,7 @@ module.exports.login = async (req, res) => {
 }
 
 module.exports.loginPost = async (req, res) => {
-  if(res.locals.user){
+  if (res.locals.user) {
     res.redirect("/");
     return;
   }
@@ -66,19 +65,19 @@ module.exports.loginPost = async (req, res) => {
     deleted: false,
   })
   const [accessToken, refreshToken] = [genTokenHelper.genAccessToken(user.id), genTokenHelper.genRefreshToken(user.id)];
-  await User.updateOne({email},{refreshToken});
+  await User.updateOne({ email }, { refreshToken });
 
-  res.cookie("accessToken", accessToken, {httpOnly: true, maxAge: 60*1000});
-  res.cookie("refreshToken", refreshToken, {httpOnly: true, maxAge: 7*24*60*60*1000});
+  res.cookie("accessToken", accessToken, { httpOnly: true, maxAge: 60 * 1000 });
+  res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
 
   const cart = await Cart.findOne({
     user_id: user.id
   })
 
-  if(!cart){
-    await Cart.create({user_id: user.id});
+  if (!cart) {
+    await Cart.create({ user_id: user.id });
   }
-  
+
   res.redirect("/")
 }
 
@@ -100,7 +99,7 @@ module.exports.forgotPassword = async (req, res) => {
 module.exports.forgotPasswordPost = async (req, res) => {
   const email = req.body.email;
 
-	const user = await User.findOne({
+  const user = await User.findOne({
     email: email,
     deleted: false,
   })
@@ -153,7 +152,7 @@ module.exports.otpPasswordPost = async (req, res) => {
 
   const result = await ForgotPassword.findOne(find)
 
-  if(!result) {
+  if (!result) {
     req.flash("error", "OTP không hợp lệ!")
     res.redirect("back")
     return
@@ -193,77 +192,79 @@ module.exports.resetPasswordPost = async (req, res) => {
 
 
 module.exports.info = async (req, res) => {
-  const tokenUser = req.cookies.tokenUser
-  //update rank of user
-  let totalValue = 0
-  let cntFail = 0
-  let cntSuccess = 0
-  const orders= await Order.find({tokenUser: tokenUser})
-  for (const order of orders){
-    for (const product of order.products){
-      const productItem = await Product.findOne({
-        _id: product.product_id, 
-        status: "active",
-        deleted: false,
-      })
+  if (res.locals.user) {
+    const tokenUser = req.cookies.tokenUser
+    //update rank of user
+    let totalValue = 0
+    let cntFail = 0
+    let cntSuccess = 0
+    const orders = await Order.find({ tokenUser: tokenUser })
+    for (const order of orders) {
+      for (const product of order.products) {
+        const productItem = await Product.findOne({
+          _id: product.product_id,
+          status: "active",
+          deleted: false,
+        })
 
-      const sizeInfo = productItem.listSize.find(i=>{
-        return i.id == product.size_id
-      })
+        const sizeInfo = productItem.listSize.find(i => {
+          return i.id == product.size_id
+        })
 
-      let priceNew = (sizeInfo.price * (100 - productItem.discountPercentage)/100).toFixed(0)
-      if(product.status == "biBom") cntFail+=product.quantity
-      if(product.status == "daThanhToan"){
-        cntSuccess += product.quantity
-        totalValue += priceNew*product.quantity
-      } 
+        let priceNew = (sizeInfo.price * (100 - productItem.discountPercentage) / 100).toFixed(0)
+        if (product.status == "biBom") cntFail += product.quantity
+        if (product.status == "daThanhToan") {
+          cntSuccess += product.quantity
+          totalValue += priceNew * product.quantity
+        }
+      }
     }
-  }
-  const rank = totalValue >= 100000000?"Chiến tướng":(
-    totalValue >=50000000? "Cao thủ":(
-      totalValue >=10000000?"Kim cương":( 
-        totalValue >=5000000?"Vàng":(
-          totalValue >=1000000?"Bạc":(
-            totalValue >=500000?"Đồng": "Vô hạng"
+    const rank = totalValue >= 100000000 ? "Chiến tướng" : (
+      totalValue >= 50000000 ? "Cao thủ" : (
+        totalValue >= 10000000 ? "Kim cương" : (
+          totalValue >= 5000000 ? "Vàng" : (
+            totalValue >= 1000000 ? "Bạc" : (
+              totalValue >= 500000 ? "Đồng" : "Vô hạng"
+            )
           )
         )
       )
     )
-  )
-  await User.updateOne({tokenUser: tokenUser},{rank:rank})
-  const infoUser = await User.findOne({
-    tokenUser: tokenUser
-  }).select("-password")
+    await User.updateOne({ tokenUser: tokenUser }, { rank: rank })
+    const infoUser = await User.findOne({
+      tokenUser: tokenUser
+    }).select("-password")
 
-  infoUser.totalValue = totalValue
-  infoUser.cntFail = cntFail
-  infoUser.cntSuccess = cntSuccess
+    infoUser.totalValue = totalValue
+    infoUser.cntFail = cntFail
+    infoUser.cntSuccess = cntSuccess
 
-  res.render("client/pages/user/info", {
-    pageTitle: "Thông tin tài khoản",
-    infoUser: infoUser 
-  })
+    res.render("client/pages/user/info", {
+      pageTitle: "Thông tin tài khoản",
+      infoUser: infoUser
+    })
+  }
 }
 
-module.exports.editPatch = async(req, res) =>{
+module.exports.editPatch = async (req, res) => {
 
-    // if(req.file){
-    //     req.body.thumbnail = `/uploads/${req.file.filename}` // cap nhat anh o local
-    // }
-    // //req.file tra ve object file anh 
-    try {
-        await User.updateOne({
-            _id: req.params.id,
-            deleted: false
-        }, {
-          thumbnail: req.body.thumbnail,
-          phone: req.body.phone,
-          sex: req.body.sex
-        });
-        req.flash('success', 'Cập nhật thành công!')
-    } catch (error) {
-        req.flash('error', 'Cập nhật Thất bại!')
-    }
+  // if(req.file){
+  //     req.body.thumbnail = `/uploads/${req.file.filename}` // cap nhat anh o local
+  // }
+  // //req.file tra ve object file anh 
+  try {
+    await User.updateOne({
+      _id: req.params.id,
+      deleted: false
+    }, {
+      thumbnail: req.body.thumbnail,
+      phone: req.body.phone,
+      sex: req.body.sex
+    });
+    req.flash('success', 'Cập nhật thành công!')
+  } catch (error) {
+    req.flash('error', 'Cập nhật Thất bại!')
+  }
 
-    res.redirect(`back`) //chuyen huong den url
+  res.redirect(`back`) //chuyen huong den url
 }

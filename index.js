@@ -18,7 +18,7 @@ const routeAdmin = require('./routes/admin/index.route.js')
 database.connect() // connect toi dtb
 
 const app = express()
-const port = process.env.PORT 
+const port = process.env.PORT
 
 app.use(express.static(`${__dirname}/public`))  // nhúng file tĩnh
 
@@ -45,7 +45,7 @@ app.use(methodOverride('_method'))
 
 //Cấu hình express-flash
 app.use(cookieParser('Tung cookie'));
-app.use(session({ cookie: { maxAge: 60000 }}));
+app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
 
 route(app) //gọi đến route
@@ -54,12 +54,12 @@ const clientApiRoute = require("./routes/client/api/index.route.api");
 clientApiRoute(app);
 
 app.get("*", (req, res) => {
-    res.render("client/pages/errors/404", {
-      pageTitle: "404 Not Found",
-    });
+  res.render("client/pages/errors/404", {
+    pageTitle: "404 Not Found",
+  });
 });
 
-  
+
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+  console.log(`Example app listening on port ${port}`)
 })

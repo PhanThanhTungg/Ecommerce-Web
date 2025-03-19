@@ -756,6 +756,7 @@ h1 {
 /* footer */
 .footer {
   background-color: var(--main-bg-color);
+  margin-top: 100px;
 }
 
 .footer .main-footer {
