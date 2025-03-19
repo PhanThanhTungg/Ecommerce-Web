@@ -13,18 +13,24 @@ setInterval(refreshToken, 50000);
 
 
 
-const headerSearchIcon = document.querySelector(".header-search-icon");
-if(headerSearchIcon){
-  const headerSearch = document.querySelector(".header-search");
-  headerSearchIcon.addEventListener("click", ()=>{
-    headerSearch.style.display = "block";
+const headerSearchLabel = document.querySelector(".header-search__label");
+if(headerSearchLabel){
+  const headerSearchInput = document.querySelector(".header-search__input");
+  headerSearchLabel.addEventListener("click", ()=>{
+    headerSearchInput.classList.remove("d-none");
+    headerSearchLabel.classList.add("d-none");
+    console.log(1)
   })
-  const headerSearchClose = document.querySelector(".header-search-close");
-  console.log(headerSearchClose);
-  headerSearchClose.addEventListener("click", ()=>{
-    headerSearch.style.display = "none";
+  document.addEventListener("click", (e)=>{
+    console.log(2);
+    if(!headerSearchInput.contains(e.target) && !headerSearchLabel.contains(e.target) && !headerSearchInput.classList.contains("d-none")){
+      headerSearchInput.classList.add("d-none");
+      headerSearchLabel.classList.remove("d-none");
+    }
+      
   })
 }
+
 
 //show alert cập nhật trạng thái thành công
 const showAlert = document.querySelector("[show-alert]")
