@@ -72,17 +72,17 @@ block main
               .title Money Back Guarantee
             .inner-content Lorem Ipsum is simply dummy text of the printing and typeset ting industry lorem Ipsum
 
-    //- section.featuredCategory-section
-    //-   .container
-    //-     .inner-title Featured Collection
-    //-     .inner-subtitle Top picks just for You
-    //-     .inner-content.row
-    //-       each item in featuredCategory
-    //-         .col-4
-    //-           .inner-box.text-center
-    //-             .inner-image
-    //-               img(src=item.thumbnail)
-    //-             a.inner-button(href=`/products/${item.slug}`) #{item.title}
+    section.featuredCategory-section
+      .container
+        .inner-title Featured Collection
+        .inner-subtitle Top picks just for You
+        .inner-content.row
+          each item in featuredCategory
+            .col-4
+              .inner-box.text-center
+                .inner-image
+                  img(src=item.thumbnail)
+                a.inner-button(href=`/products/${item.slug}`) #{item.title}
     //- .section-products-featured.my-5
     //-   .container
     //-     +box-head("BEST-SELLING")
