@@ -1,6 +1,7 @@
 /* auth  */
 .auth-page{
   margin-top: 100px;
+  color: var(--secondary-color-text)
 }
 .auth-page label{
   font-weight: 500;
@@ -39,6 +40,39 @@
 .auth-page .register-box{
   text-align: center;
 }
+
+.auth-page .wrap-login-social{
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+.auth-page .wrap-login-social form:nth-child(2){
+  margin: 0 10px;
+}
+.auth-page .wrap-login-social button{
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.698);
+  position: relative;
+}
+.auth-page .wrap-login-social button::before{
+  content:"";
+  position: absolute;
+  top: 0; left: 100%; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.327);
+  border-radius: 10px;
+  opacity: 0;
+  transition: all 0.3s linear;
+}
+.auth-page .wrap-login-social button:hover::before{
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 1;
+}
+
+
 
 
 
@@ -1307,7 +1341,7 @@ h1 {
 }
 
 .button-1 {
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.762);
   font-weight: 600;
   font-size: 1.6rem;
   color: white;

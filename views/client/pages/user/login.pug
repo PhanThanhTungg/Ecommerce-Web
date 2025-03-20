@@ -61,7 +61,17 @@ block main
                 action="/user/login-google"
                 method="POST"
               )
-                button(type="submit") Google  
-            hr
+                button(type="submit") <i class="fa-brands fa-google mr-2"></i> Google  
+              form(
+                action="/user/login-facebook"
+                method="POST"
+              )
+                button(type="submit") <i class="fa-brands fa-facebook-f mr-2"></i> Facebook 
+              form(
+                action="/user/login-github"
+                method="POST"
+              )
+                button(type="submit") <i class="fa-brands fa-github mr-2"></i> Github  
+
             
             
