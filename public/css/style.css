@@ -175,7 +175,6 @@
   color: var(--secondary-color-text)
 }
 
-
 .header .header-2 {
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
@@ -222,19 +221,18 @@
 }
 
 .header a[href="/cart"] span{
-  top:-10px;
-  right: -20px;
+  top:-5px;
+  right: -10px;
   font-size: 12px;
   z-index: 999;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   position: absolute;
-  padding: 5px;
   border-radius: 50%;
-  background-color: #000000be;
+  background-color: #000000;
   color: white;
 }
 

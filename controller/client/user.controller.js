@@ -32,11 +32,9 @@ module.exports.registerPost = async (req, res) => {
 
   const user = new User({ fullName, email, password });
   const [accessToken, refreshToken] = [genTokenHelper.genAccessToken(user.id), genTokenHelper.genRefreshToken(user.id)];
-  user.refreshToken = refreshToken;
   await user.save();
   res.cookie("accessToken", accessToken, { httpOnly: true, maxAge: 60 * 1000 });
   res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
-  res.cookie("tokenUser", user.tokenUser);
 
   await Cart.create({ user_id: user.id });
   res.redirect("/")
@@ -64,8 +62,7 @@ module.exports.loginPost = async (req, res) => {
     email: email,
     deleted: false,
   })
-  const [accessToken, refreshToken] = [genTokenHelper.genAccessToken(user.id), genTokenHelper.genRefreshToken(user.id)];
-  await User.updateOne({ email }, { refreshToken });
+  const [accessToken, refreshToken] = [genTokenHelper.genAccessToken(user.id), genTokenHelper.genRefreshToken(user.id)];  
 
   res.cookie("accessToken", accessToken, { httpOnly: true, maxAge: 60 * 1000 });
   res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
@@ -81,13 +78,55 @@ module.exports.loginPost = async (req, res) => {
   res.redirect("/")
 }
 
+module.exports.googleCallback = async(req,res)=>{
+  // console.log(req.user._json);
+  // {
+  //   sub: '115783213458694311484',
+  //   name: 'Giàu Lương',
+  //   given_name: 'Giàu',
+  //   family_name: 'Lương',
+  //   picture: 'https://lh3.googleusercontent.com/a/ACg8ocJ8SFer5iVIElBQBSv21Iffv7g0SdMahUscmy74RHPT_FdpGQ=s96-c',
+  //   email: 'quanggiau3344@gmail.com',
+  //   email_verified: true
+  // }
+  const userData = req.user._json;
+  const user = await User.findOne({
+    googleId: userData.sub,
+  })
+  if(user){
+    if (user.status !== "active") {
+      req.flash("error", "Your acccount is imactive!")
+      return res.redirect("back")
+    }
+  
+    if (user.deleted == "true") {
+      req.flash("error", "Your account is being locked!")
+      return res.redirect("back")
+    }
+    const [accessToken, refreshToken] = [genTokenHelper.genAccessToken(user.id), genTokenHelper.genRefreshToken(user.id)];
+    res.cookie("accessToken", accessToken, { httpOnly: true, maxAge: 60 * 1000 });
+    res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
+    return res.redirect("/");
+  }
+  const newUser = new User({
+    email: userData.email,
+    fullName: userData.name,
+    googleId: userData.sub,
+    thumbnail: userData.picture
+  })
+
+  await newUser.save();
+  const [accessToken, refreshToken] = [genTokenHelper.genAccessToken(newUser.id), genTokenHelper.genRefreshToken(newUser.id)];
+  res.cookie("accessToken", accessToken, { httpOnly: true, maxAge: 60 * 1000 });
+  res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
+  return res.redirect("/");
+}
+
 module.exports.logout = async (req, res) => {
   res.clearCookie("accessToken");
   res.clearCookie("refreshToken");
   res.redirect("/")
 }
-
-
 
 module.exports.forgotPassword = async (req, res) => {
   res.render("client/pages/user/forgot-password", {

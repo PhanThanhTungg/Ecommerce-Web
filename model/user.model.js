@@ -3,6 +3,7 @@ const generate = require("../helpers/generate")
 
 const userSchema = new mongoose.Schema(
   {
+    googleId: String,
     fullName: String,
     email: String,
     password: String,
