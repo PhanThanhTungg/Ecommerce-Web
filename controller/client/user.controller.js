@@ -62,7 +62,7 @@ module.exports.loginPost = async (req, res) => {
     email: email,
     deleted: false,
   })
-  const [accessToken, refreshToken] = [genTokenHelper.genAccessToken(user.id), genTokenHelper.genRefreshToken(user.id)];  
+  const [accessToken, refreshToken] = [genTokenHelper.genAccessToken(user.id), genTokenHelper.genRefreshToken(user.id)];
 
   res.cookie("accessToken", accessToken, { httpOnly: true, maxAge: 60 * 1000 });
   res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
@@ -78,7 +78,7 @@ module.exports.loginPost = async (req, res) => {
   res.redirect("/")
 }
 
-module.exports.googleCallback = async(req,res)=>{
+module.exports.googleCallback = async (req, res) => {
   // console.log(req.user._json);
   // {
   //   sub: '115783213458694311484',
@@ -93,12 +93,12 @@ module.exports.googleCallback = async(req,res)=>{
   const user = await User.findOne({
     googleId: userData.sub,
   })
-  if(user){
+  if (user) {
     if (user.status !== "active") {
       req.flash("error", "Your acccount is imactive!")
       return res.redirect("back")
     }
-  
+
     if (user.deleted == "true") {
       req.flash("error", "Your account is being locked!")
       return res.redirect("back")
@@ -113,6 +113,55 @@ module.exports.googleCallback = async(req,res)=>{
     fullName: userData.name,
     googleId: userData.sub,
     thumbnail: userData.picture
+  })
+
+  await newUser.save();
+  const [accessToken, refreshToken] = [genTokenHelper.genAccessToken(newUser.id), genTokenHelper.genRefreshToken(newUser.id)];
+  res.cookie("accessToken", accessToken, { httpOnly: true, maxAge: 60 * 1000 });
+  res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
+  return res.redirect("/");
+}
+
+module.exports.facebookCallback = async (req, res) => {
+  // console.log(req.user._json);
+  // {
+  //   id: '1836971063736854',
+  //   name: 'Phan Thanh Tùng',
+  //   picture: {
+  //     data: {
+  //       height: 50,
+  //       is_silhouette: false,
+  //       url: 'https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=1836971063736854&height=50&width=50&ext=1745080053&hash=Abb_FfyCFPPy9mhHfDMRoSDt',
+  //       width: 50
+  //     }
+  //   },
+  //   email: 'quanggiau3344@gmail.com'
+  // }
+
+  const userData = req.user._json;
+  const user = await User.findOne({
+    facebookId: userData.id,
+  })
+  if (user) {
+    if (user.status !== "active") {
+      req.flash("error", "Your acccount is imactive!")
+      return res.redirect("back")
+    }
+
+    if (user.deleted == "true") {
+      req.flash("error", "Your account is being locked!")
+      return res.redirect("back")
+    }
+    const [accessToken, refreshToken] = [genTokenHelper.genAccessToken(user.id), genTokenHelper.genRefreshToken(user.id)];
+    res.cookie("accessToken", accessToken, { httpOnly: true, maxAge: 60 * 1000 });
+    res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
+    return res.redirect("/");
+  }
+  const newUser = new User({
+    email: userData.email,
+    fullName: userData.name,
+    facebookId: userData.id,
+    thumbnail: userData.picture.data.url
   })
 
   await newUser.save();
