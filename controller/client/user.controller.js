@@ -112,7 +112,7 @@ module.exports.googleCallback = async (req, res) => {
   const checkEmailUser = await User.findOne({ email: userData.email });
   if (checkEmailUser) {
     req.flash("error", "Your email existed!")
-    return res.redirect("back")
+    return res.redirect("/user/login")
   }
 
   const newUser = new User({
@@ -168,7 +168,7 @@ module.exports.facebookCallback = async (req, res) => {
   const checkEmailUser = await User.findOne({ email: userData.email });
   if (checkEmailUser) {
     req.flash("error", "Your email existed!")
-    return res.redirect("back")
+    return res.redirect("/user/login")
   }
 
   const newUser = new User({
@@ -249,7 +249,7 @@ module.exports.githubCallback = async (req, res) => {
   const checkEmailUser = await User.findOne({ email});
   if (checkEmailUser) {
     req.flash("error", "Your email existed!")
-    return res.redirect("back")
+    return res.redirect("/user/login")
   }
 
   const newUser = new User({
