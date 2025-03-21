@@ -25,11 +25,10 @@ block main
                 each item, index in cartDetail.products
                   tr(data-category-id = item.productInfo.product_category_id)
                     td.align-middle.text-center
-                      a(
-                        href=`/cart/delete/${item.product_id}/${item.sizeInfo.id}`
-                        class="delete-button"
-                      )
-                        i.fi.fi-rr-trash-xmark(style="font-size: 17px")                 
+                      i.fi.fi-rr-trash-xmark.icon-delete(
+                        style="font-size: 17px",
+                        data-api = `/cart/delete/${item.product_id}/${item.sizeInfo.id}`
+                      )                 
                     td.align-middle.inner-image
                       img(
                         src=item.productInfo.images[0]
@@ -49,6 +48,7 @@ block main
                           name="quantity"
                           value=item.quantity
                           min="1"
+                          max=item.sizeInfo.stock
                           sizeId = item.sizeInfo.id
                           item-id=item.product_id
                         )

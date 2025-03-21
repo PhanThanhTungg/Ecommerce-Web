@@ -138,25 +138,10 @@ if (buttonStatus.length > 0) {
 // end button status
 
 
-//input number event
-const inputNumber = document.querySelector(".input__number");
-if(inputNumber){
-  const subSpan = inputNumber.querySelector(".sub");
-  const addSpan = inputNumber.querySelector(".add");
-  const inputValue = inputNumber.querySelector("input");
-  const productId = inputValue.getAttribute("item-id")
-  const sizeId = inputValue.getAttribute("sizeId")
-  subSpan.addEventListener("click", ()=>{
-    inputValue.value = +inputValue.value-1;
-    fetch(`/cart/update/${productId}/${sizeId}/${inputValue.value}`).then(res=>res.json())
-    .then(data=>console.log(data));
-  })
-  addSpan.addEventListener("click", ()=>{
-    inputValue.value = +inputValue.value+1;
-    fetch(`/cart/update/${productId}/${sizeId}/${inputValue.value}`).then(res=>res.json())
-    .then(data=>console.log(data));
-  })
-}
+
+
+  
+
 
 
 

@@ -1,20 +1,50 @@
-//Cập nhật số lượng sản phẩm trong giỏ hàng
-// const tableCart = document.querySelector("[table-cart]")
-// if(tableCart) {
-//   const inputsQuantity = tableCart.querySelectorAll("input[name='quantity']")
+//input number event
+const inputNumbers = document.querySelectorAll(".input__number");
+if(inputNumbers){
+  inputNumbers.forEach(inputNumber=>{
+    const subSpan = inputNumber.querySelector(".sub");
+    const addSpan = inputNumber.querySelector(".add");
+    const inputValue = inputNumber.querySelector("input");
+    const productId = inputValue.getAttribute("item-id")
+    const sizeId = inputValue.getAttribute("sizeId");
+    const stock = +inputValue.getAttribute("max");
 
-//   inputsQuantity.forEach(input => {
-//     input.addEventListener("change", () => {
-//       const productId = input.getAttribute("item-id")
-//       const quantity = input.value
-//       const sizeId = input.getAttribute("sizeId")
+    inputValue.addEventListener("change", ()=>{
+      inputValue.value = Math.max(1,+inputValue.value);
+      inputValue.value = Math.min(+inputValue.value, stock);
+      fetch(`/cart/update/${productId}/${sizeId}/${inputValue.value}`).then(res=>res.json())
+      .then(data=>console.log(data));
+    })
+    subSpan.addEventListener("click", ()=>{
+      inputValue.value = Math.max(1,+inputValue.value-1);
+      fetch(`/cart/update/${productId}/${sizeId}/${inputValue.value}`).then(res=>res.json())
+      .then(data=>console.log(data));
+    })
+    addSpan.addEventListener("click", ()=>{
+      inputValue.value = Math.min(+inputValue.value+1,stock);
+      fetch(`/cart/update/${productId}/${sizeId}/${inputValue.value}`).then(res=>res.json())
+      .then(data=>console.log(data));
+    })
+  })
+}
 
-//       window.location.href = `/cart/update/${productId}/${sizeId}/${quantity}`;
-//     })
-//   })
-// }
+//delete item
+const deleteIcons = document.querySelectorAll("[table-cart] .icon-delete");
+if(deleteIcons){
+  deleteIcons.forEach(deleteIcon=>{
+    deleteIcon.addEventListener("click", ()=>{
+      const api = deleteIcon.dataset.api;
+      fetch(api).then(res=>res.json())
+      .then(data=>{
+        if(data.code==200){
+          const rowDelete = deleteIcon.closest("tr");
+          rowDelete.parentElement.removeChild(rowDelete);
+        }
+      })
+    })
+  })
+}
 
-//end-Cập nhật số lượng sản phẩm trong giỏ hàng
 
 //call api to get related products
 const getRelatedProducts = ()=>{

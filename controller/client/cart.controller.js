@@ -119,17 +119,24 @@ module.exports.delete = async (req, res) => {
     $pull: { products: { product_id: productId, sizeId: sizeId } }  //$pull: xóa đi
   })
 
-  req.flash("success", "Đã xóa sản phẩm khỏi giỏ hàng!")
-
-  res.redirect("back")
+  res.json({
+    code : 200,
+    mess: "delete successfully"
+  })
 }
 
 
 module.exports.update = async (req, res) => {
   const cartId = res.locals.miniCart.id;
   const productId = req.params.productId
-  const quantity = req.params.quantity
+  let quantity = req.params.quantity
   const sizeId = req.params.sizeId
+
+  const productItem = await Product.findOne({_id: productId});
+  const size = productItem.listSize.find(item=>item.id == sizeId);
+  quantity = Math.max(1,quantity);
+  quantity = Math.min(quantity, size.stock);
+  
 
   await Cart.updateOne({
     _id: cartId,
