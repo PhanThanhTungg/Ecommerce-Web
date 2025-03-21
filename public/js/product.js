@@ -66,6 +66,9 @@ if(buttonSize){
         }
       })
 
+      const sizeValue = document.getElementById("size-value");
+      sizeValue.innerText = item.innerText.charAt(0).toUpperCase() + item.innerText.slice(1).toLowerCase();
+
       const CartInput = document.querySelector(".formCart .sizeInput")
       const stockInput = document.querySelector(".formCart .stockInput")
       CartInput.setAttribute("value", item.getAttribute("id"))

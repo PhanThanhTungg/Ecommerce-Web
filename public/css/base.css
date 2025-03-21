@@ -4,11 +4,13 @@
 :root {
   --color-text: #232323;
   --secondary-color-text: #778082;
-  --color-one: #EFEFEF;
+  --color-one: #f6f6f6;
   --accent-color: #E2DEC3;
   --main-bg-color: #f0f0f0;
   --danger-color: rgb(252, 124, 124);
   --color-green: #30b94d;
+  --color-orange: #ff6400;
+  --color-gray: #d5d5d5;
   --color-hover: #095e41;
 }
 
