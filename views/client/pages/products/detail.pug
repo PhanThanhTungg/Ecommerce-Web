@@ -7,7 +7,7 @@ include ../../mixins/rating.pug
 block main
   .product-detail
     .container
-      .row  
+      .row.mb-5
         .col-md-7.col-sm-12.product-images
           .swiper.image-detail
             .swiper-wrapper
@@ -23,39 +23,69 @@ block main
               each item in product.images
                 .swiper-slide
                   img(src=item)
-        .col-md-5
+        .col-md-5.product-info
           h3(class="inner-title") #{product.title}
           .d-flex.align-items-center
             .inner-rating.mr-5(data-rating=product.ratingNumber)
               +rating-1
-            a(href="#") VIEW ALL COMMENT
-          
-          //- if(product.listSize)
-          //-   each item in product.listSize
-
-          if (product.category)
-            div(class="inner-category") 
-              span.text Danh mục: 
-              a(href=`/products/${product.category.slug}`) #{product.category.title}
+            a(href="#") VIEW ALL COMMENTS
+          .inner-price
+            if (product.listSize && product.discountPercentage > 0)
+              del(class="inner-price-old formatMoney") #{product.listSize[0].price}$
+              span.inner-price-old |
+            if (product.listSize)
+              div(class="inner-price-new") <span class= "formatMoney"> #{product.listSize[0].priceNew}$</span>
+            if (product.discountPercentage)
+              div(class="inner-percent text")
+                span 
+                  i.fa-solid.fa-bolt
+                  |   -#{product.discountPercentage}%
+          table.inner-info.table.table-borderless
+            tbody              
+              if (product.category)
+                tr
+                  td.name.text-left(style="width: 30%;")            
+                    span.text Category
+                  td.text-left(style="width: fit-content;")
+                    a(href=`/products/${product.category.slug}`) #{product.category.title}
+              if (product.listSize)
+                tr
+                  td.name.text-left(style="width: 30%;")
+                    span.text In stock
+                  td.value.text-left
+                    div(class="inner-stock text")
+                      <span class="stock">#{product.listSize[0].stock}</span>
+                      span
+                        if(product.listSize[0].stock > 1) 
+                          |  items
+                        else 
+                          |  item
+                tr
+                  td.name.text-left(style="width: 30%;")
+                    span.text Sold
+                  td.value.text-left
+                    div(class="inner-stock text")
+                      <span>#{product.sales}</span>
+                      span
+                        if(product.sales > 1) 
+                          |  items
+                        else 
+                          |  item
+              if (product.listSize)
+                tr
+                  td.name.text-left(style="width: 30%;")
+                    span.text Size
+                  td.value.text-left
+                    span.text#size-value small
           if(product.listSize)
-            each item in product.listSize 
-              button.button-size.mt-3.mb-3.mr-3(id=item.id price=item.price priceNew=item.priceNew stock=item.stock) #{item.size}
-          if (product.listSize)
-            div(class="inner-price-new") <i class="fa-solid fa-coins"></i> <span class= "formatMoney"> #{product.listSize[0].priceNew}đ</span>
-          if (product.listSize)
-            div(class="inner-price-old formatMoney") #{product.listSize[0].price} đ
-          if (product.discountPercentage)
-            div(class="inner-percent text") <i class="fa-solid fa-arrow-trend-down"></i> Giảm tới <span>#{product.discountPercentage} %</span>
-
-          if (product.listSize)
-            div(class="inner-stock text") Còn lại <span class="stock">#{product.listSize[0].stock}</span> sản phẩm
-          
-          div(class="inner-stock text") Đã bán <span>#{product.sales}</span>
-
-          
+            .btn-size
+              each item in product.listSize 
+                button.button-size(id=item.id price=item.price priceNew=item.priceNew stock=item.stock) #{item.size}
+                
 
           form(
             action=`/cart/add/${product.id}`
+            onSubmit="disableButton()"
             method="POST"
             class = "formCart"
           ) 
@@ -65,18 +95,20 @@ block main
               name="sizeId"
               value=product.listSize[0].id
             )
-            input(
-              class="form-control stockInput"
-              type="number"
-              name="quantity"
-              value="1"
-              min="1"
-              max=product.listSize[0].stock
-            )
+            .input-qty
+              i.fi.fi-rr-minus-small.sub
+              input(
+                class="form-control stockInput"
+                type="number"
+                name="quantity"
+                value="1"
+                min="1"
+                max=product.listSize[0].stock
+              )
+              i.fi.fi-rr-plus-small.add
             button(
               type="submit"
-              class="btn btn-success btn-block"
-            ) Thêm vào giỏ hàng
+            ) ADD TO CART
     .box-feedback
       .container
         .row  

@@ -1536,79 +1536,7 @@ h1 {
   padding: 40px 0;
 }
 
-.button-size {
-  background-color: transparent !important;
-  border-bottom: 1px solid white !important;
-  border-right: 1px solid white !important;
-  color: white;
-  border-radius: 5px;
-}
-
-.button-size:hover {
-  background-color: rgba(255, 166, 0, 0.81) !important;
-  border: none;
-  color: black
-}
-
-.button-size-active {
-  color: rgba(255, 166, 0, 0.738) !important;
-  border-bottom: 1px solid rgba(255, 166, 0, 0.673) !important;
-  border-right: 1px solid rgba(255, 166, 0, 0.64) !important;
-  font-weight: bolder;
-}
-
-.button-size-layout {
-  background: transparent !important;
-  color: white;
-  font-size: 12px;
-  padding: 2px 5px;
-  margin: 10px 5px;
-  border-bottom: 1px solid white !important;
-  border-right: 1px solid white !important;
-  border-radius: 10%;
-}
-
-.button-size-layout:hover {
-  color: #0ebcbf !important;
-  border-bottom: 1px solid #0ebcbf !important;
-  border-right: 1px solid #0ebcbf !important;
-  font-weight: bolder;
-}
-
-.button-size-layout-active {
-  border-bottom: 1px solid rgba(255, 166, 0, 0.673) !important;
-  border-right: 1px solid rgba(255, 166, 0, 0.64) !important;
-  color: rgba(255, 166, 0, 0.738);
-  font-weight: 700;
-}
-
-.formCart {
-  display: flex;
-  align-items: center;
-
-}
-
-.formCart .stockInput {
-  width: 10%;
-  text-align: center;
-  background-color: black;
-  color: white;
-  border-radius: 0;
-  margin-right: 5px;
-  height: 40px;
-}
-
-.formCart button {
-  width: 200px;
-  border-radius: 0;
-  height: 40px;
-  background-color: #0ebcbf5b;
-}
-
 .formCart .stockInput:focus {
-  color: white;
-  background-color: black;
-  border-color: rgba(255, 166, 0, 0.847);
   outline: 0;
   box-shadow: none;
 }

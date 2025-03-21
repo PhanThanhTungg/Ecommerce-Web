@@ -104,3 +104,149 @@
 .product-detail .thumbnail-detail .swiper-slide.swiper-slide-thumb-active::after {
   width: 100%;
 }
+
+.product-detail .product-info {
+  width: max-content;
+}
+
+.product-detail .product-info .inner-title {
+  font-size: clamp(20px, calc(2vw + 10px), 30px);
+  margin-bottom: 20px;
+}
+
+.product-detail .product-info .inner-price {
+  display: flex;
+  gap: 23px;
+  align-items: center;
+}
+
+.product-detail .product-info .inner-price .inner-percent {
+  display: flex;
+  background-color: var(--color-orange);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+}
+
+.product-detail .product-info .inner-price {
+  margin: 20px 0;
+}
+
+.product-detail .product-info .inner-price .inner-price-old {
+  font-size: 23px;
+  font-weight: 600;
+  color: var(--color-gray);
+}
+
+.product-detail .product-info .inner-price .inner-price-new {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.product-detail .product-info table td {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+@media (max-width: 480px) {
+  .product-detail .product-info table td {
+    display: table-cell !important;
+    width: auto !important;
+  }
+}
+
+.product-detail .product-info table .name {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+}
+
+.product-detail .product-info table .value {
+  color: var(--secondary-color-text);
+  text-transform: capitalize;
+  font-size: 14px;
+}
+
+.product-detail .product-info .btn-size {
+  display: flex;
+  gap: 20px;
+}
+
+.product-detail .product-info .btn-size button {
+  background-color: transparent;
+  padding: 13px 0;
+  border: 2px solid var(--color-gray);
+  width: 90px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.product-detail .product-info .btn-size .button-size-active {
+  background-color: var(--color-text) !important;
+  color: white !important;
+  border: none !important;
+}
+
+.product-detail .product-info .btn-size button:hover {
+  border-color: var(--color-text);
+}
+
+.product-detail .formCart {
+  display: flex;
+  gap: 20px;
+  align-items: stretch;
+  margin-top: 30px;
+}
+
+.product-detail .formCart .input-qty {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--color-gray);
+  border-radius: 3px;
+}
+
+.product-detail .formCart .input-qty input {
+  width: 55px;
+  padding: 23px 0;
+  outline: none;
+  border: none;
+  background-color: transparent !important;
+  color: var(--color-text) !important;
+  font-size: 1.5rem;
+  font-weight: 500;
+  text-align: center;
+  margin: 0 !important;
+}
+
+.product-detail .formCart .input-qty i {
+  padding: 7px;
+  cursor: pointer;
+  color: var(--color-gray);
+  transition: color 0.3s ease;
+}
+
+.product-detail .formCart .input-qty i:hover {
+  color: var(--color-text);
+}
+
+.product-detail .formCart button {
+  background-color: var(--color-green);
+  color: white;
+  padding: 0 25px;
+  border: 2px solid var(--color-green);
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.product-detail .formCart button:hover {
+  background-color: transparent;
+  color: var(--color-green);
+}
