@@ -108,6 +108,13 @@ module.exports.googleCallback = async (req, res) => {
     res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
     return res.redirect("/");
   }
+
+  const checkEmailUser = await User.findOne({ email: userData.email });
+  if (checkEmailUser) {
+    req.flash("error", "Your email existed!")
+    return res.redirect("back")
+  }
+
   const newUser = new User({
     email: userData.email,
     fullName: userData.name,
@@ -157,11 +164,99 @@ module.exports.facebookCallback = async (req, res) => {
     res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
     return res.redirect("/");
   }
+
+  const checkEmailUser = await User.findOne({ email: userData.email });
+  if (checkEmailUser) {
+    req.flash("error", "Your email existed!")
+    return res.redirect("back")
+  }
+
   const newUser = new User({
     email: userData.email,
     fullName: userData.name,
     facebookId: userData.id,
     thumbnail: userData.picture.data.url
+  })
+
+  await newUser.save();
+  const [accessToken, refreshToken] = [genTokenHelper.genAccessToken(newUser.id), genTokenHelper.genRefreshToken(newUser.id)];
+  res.cookie("accessToken", accessToken, { httpOnly: true, maxAge: 60 * 1000 });
+  res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
+  return res.redirect("/");
+}
+
+module.exports.githubCallback = async (req, res) => {
+  // console.log(req.user._json);
+  // {
+  //   login: 'PhanThanhTungg',
+  //   id: 166277205,
+  //   node_id: 'U_kgDOCekwVQ',
+  //   avatar_url: 'https://avatars.githubusercontent.com/u/166277205?v=4',
+  //   gravatar_id: '',
+  //   url: 'https://api.github.com/users/PhanThanhTungg',
+  //   html_url: 'https://github.com/PhanThanhTungg',
+  //   followers_url: 'https://api.github.com/users/PhanThanhTungg/followers',
+  //   following_url: 'https://api.github.com/users/PhanThanhTungg/following{/other_user}',
+  //   gists_url: 'https://api.github.com/users/PhanThanhTungg/gists{/gist_id}',
+  //   starred_url: 'https://api.github.com/users/PhanThanhTungg/starred{/owner}{/repo}',
+  //   subscriptions_url: 'https://api.github.com/users/PhanThanhTungg/subscriptions',
+  //   organizations_url: 'https://api.github.com/users/PhanThanhTungg/orgs',
+  //   repos_url: 'https://api.github.com/users/PhanThanhTungg/repos',
+  //   events_url: 'https://api.github.com/users/PhanThanhTungg/events{/privacy}',
+  //   received_events_url: 'https://api.github.com/users/PhanThanhTungg/received_events',
+  //   type: 'User',
+  //   user_view_type: 'public',
+  //   site_admin: false,
+  //   name: null,
+  //   company: null,
+  //   blog: '',
+  //   location: null,
+  //   email: null,
+  //   hireable: null,
+  //   bio: null,
+  //   twitter_username: null,
+  //   notification_email: null,
+  //   public_repos: 3,
+  //   public_gists: 0,
+  //   followers: 0,
+  //   following: 0,
+  //   created_at: '2024-04-07T05:27:44Z',
+  //   updated_at: '2025-03-11T04:37:19Z'
+  // }
+  // console.log(req.user.emails[0].value);
+  // phantungpt03@gmail.com
+  const [userData, email] = [req.user._json, req.user.emails[0].value];
+  
+  const user = await User.findOne({
+    githubId: userData.id,
+  })
+  if (user) {
+    if (user.status !== "active") {
+      req.flash("error", "Your acccount is imactive!")
+      return res.redirect("back")
+    }
+
+    if (user.deleted == "true") {
+      req.flash("error", "Your account is being locked!")
+      return res.redirect("back")
+    }
+    const [accessToken, refreshToken] = [genTokenHelper.genAccessToken(user.id), genTokenHelper.genRefreshToken(user.id)];
+    res.cookie("accessToken", accessToken, { httpOnly: true, maxAge: 60 * 1000 });
+    res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
+    return res.redirect("/");
+  }
+
+  const checkEmailUser = await User.findOne({ email});
+  if (checkEmailUser) {
+    req.flash("error", "Your email existed!")
+    return res.redirect("back")
+  }
+
+  const newUser = new User({
+    email,
+    fullName: userData.login,
+    githubId: userData.id,
+    thumbnail: userData.avatar_url
   })
 
   await newUser.save();

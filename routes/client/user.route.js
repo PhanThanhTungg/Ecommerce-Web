@@ -53,8 +53,15 @@ router.post("/login-facebook",passport.authenticate("facebook", { scope: ["email
 
 router.get(
   "/facebook/callback",
-  passport.authenticate("facebook", { failureRedirect: "/login", session: false }),
+  passport.authenticate("facebook", { failureRedirect: "user/login", session: false }),
   controller.facebookCallback
+)
+
+router.post("/login-github", passport.authenticate("github", { scope: [ 'user:email' ] }));
+router.get(
+  "/github/callback",
+  passport.authenticate('github', { failureRedirect: 'user/login' }),
+  controller.githubCallback
 )
 
 router.get("/logout", controller.logout);
@@ -91,5 +98,7 @@ router.patch(
   uploadCloud.upload,
   controller.editPatch
 ) // edit sp
+
+
 
 module.exports = router;
