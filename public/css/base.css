@@ -108,3 +108,26 @@ textarea:focus-visible {
   visibility: visible;
   transform: translateY(0);
 }
+
+.page-format{
+  margin-top: 50px;
+}
+
+
+.input__number{
+  border: 1px solid #c3c0c0;
+  border-radius: 5px;
+  display: inline-block;
+  padding: 0 10px;
+}
+.input__number input{
+  text-align: center;
+  width: 40px;
+}
+.input__number span{
+  cursor: pointer;
+}
+
+th, tr{
+  text-align: center;
+}

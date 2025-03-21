@@ -139,7 +139,8 @@ module.exports.update = async (req, res) => {
     $set: { "products.$.quantity": quantity }
   });
 
-  req.flash("success", "Cập nhật số lượng thành công!");
-
-  res.redirect("back");
+  res.json({
+    code: 200,
+    mess: "update cart successfully"
+  })
 }

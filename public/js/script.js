@@ -138,22 +138,24 @@ if (buttonStatus.length > 0) {
 // end button status
 
 
-
-
-
-//show password
-const passField = document.querySelector(".input-password");
-const showBtn = document.querySelector(".show-password i");
-if (passField && showBtn) {
-  showBtn.onclick = (() => {
-    if (passField.type === "password") {
-      passField.type = "text";
-      showBtn.classList.add("hide-btn");
-    } else {
-      passField.type = "password";
-      showBtn.classList.remove("hide-btn");
-    }
-  });
+//input number event
+const inputNumber = document.querySelector(".input__number");
+if(inputNumber){
+  const subSpan = inputNumber.querySelector(".sub");
+  const addSpan = inputNumber.querySelector(".add");
+  const inputValue = inputNumber.querySelector("input");
+  const productId = inputValue.getAttribute("item-id")
+  const sizeId = inputValue.getAttribute("sizeId")
+  subSpan.addEventListener("click", ()=>{
+    inputValue.value = +inputValue.value-1;
+    fetch(`/cart/update/${productId}/${sizeId}/${inputValue.value}`).then(res=>res.json())
+    .then(data=>console.log(data));
+  })
+  addSpan.addEventListener("click", ()=>{
+    inputValue.value = +inputValue.value+1;
+    fetch(`/cart/update/${productId}/${sizeId}/${inputValue.value}`).then(res=>res.json())
+    .then(data=>console.log(data));
+  })
 }
 
 
