@@ -7,7 +7,7 @@ const validate = require("../../validate/client/user.validate")
 const authMiddleware = require("../../middlewares/client/auth.middleware")
 
 //để up file ảnh
-const multer  = require('multer')
+const multer = require('multer')
 const uploadCloud = require("../../middlewares/admin/uploadCloud.middleware")
 
 // const storageMulter = require("../../helpers/storageMulter")
@@ -44,12 +44,19 @@ router.post(
   passport.authenticate("google", { scope: ["profile", "email"] }),
 )
 
-router.get("/google/callback", 
+router.get("/google/callback",
   passport.authenticate("google", { failureRedirect: "/user/login" }),
   controller.googleCallback
 );
 
-router.post("/login-facebook",passport.authenticate("facebook", { scope: ["email"] }))
+router.post(
+  "/login-facebook",
+  (req, res) => {
+    req.flash("error", "This website is not registered as a business, please try with google or github");
+    return res.redirect("back");
+  },
+  passport.authenticate("facebook", { scope: ["email"] })
+)
 
 router.get(
   "/facebook/callback",
@@ -57,7 +64,7 @@ router.get(
   controller.facebookCallback
 )
 
-router.post("/login-github", passport.authenticate("github", { scope: [ 'user:email' ] }));
+router.post("/login-github", passport.authenticate("github", { scope: ['user:email'] }));
 router.get(
   "/github/callback",
   passport.authenticate('github', { failureRedirect: 'user/login' }),
@@ -93,8 +100,8 @@ router.get(
 )
 
 router.patch(
-  "/info/edit/:id", 
-  upload.single("thumbnail"), 
+  "/info/edit/:id",
+  upload.single("thumbnail"),
   uploadCloud.upload,
   controller.editPatch
 ) // edit sp
