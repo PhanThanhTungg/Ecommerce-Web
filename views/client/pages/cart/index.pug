@@ -42,15 +42,17 @@ block main
                         p.product-size Size: #{item.sizeInfo.size}                     
                     td.align-middle $#{item.sizeInfo.priceNew}
                     td.align-middle.text-center
-                      input(
-                        type="number"
-                        name="quantity"
-                        value=item.quantity
-                        min="1"
-                        sizeId = item.sizeInfo.id
-                        item-id=item.product_id
-                        style="width: 60px"
-                      )
+                      .input__number
+                        span.sub ‒
+                        input(
+                          type="number"
+                          name="quantity"
+                          value=item.quantity
+                          min="1"
+                          sizeId = item.sizeInfo.id
+                          item-id=item.product_id
+                        )
+                        span.add +
                     td.align-middle $#{item.totalPrice}
             .row.button-after-cart
               .col-xl-6

@@ -1,18 +1,18 @@
 //Cập nhật số lượng sản phẩm trong giỏ hàng
-const tableCart = document.querySelector("[table-cart]")
-if(tableCart) {
-  const inputsQuantity = tableCart.querySelectorAll("input[name='quantity']")
+// const tableCart = document.querySelector("[table-cart]")
+// if(tableCart) {
+//   const inputsQuantity = tableCart.querySelectorAll("input[name='quantity']")
 
-  inputsQuantity.forEach(input => {
-    input.addEventListener("change", () => {
-      const productId = input.getAttribute("item-id")
-      const quantity = input.value
-      const sizeId = input.getAttribute("sizeId")
+//   inputsQuantity.forEach(input => {
+//     input.addEventListener("change", () => {
+//       const productId = input.getAttribute("item-id")
+//       const quantity = input.value
+//       const sizeId = input.getAttribute("sizeId")
 
-      window.location.href = `/cart/update/${productId}/${sizeId}/${quantity}`;
-    })
-  })
-}
+//       window.location.href = `/cart/update/${productId}/${sizeId}/${quantity}`;
+//     })
+//   })
+// }
 
 //end-Cập nhật số lượng sản phẩm trong giỏ hàng
 
@@ -29,7 +29,6 @@ const getRelatedProducts = ()=>{
     },
     body: JSON.stringify({listCategory})
   }).then(res=>res.json()).then(data=>{
-    console.log(data);
   })
 }
 getRelatedProducts();

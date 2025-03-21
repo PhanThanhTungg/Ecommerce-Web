@@ -37,45 +37,42 @@ for (const x of sizeLayout) {
   }
 }
 
+const buttonSize = document.querySelectorAll(".button-size")
+if(buttonSize){
+  buttonSize[0].classList.add("button-size-active")
+  buttonSize.forEach(item=>{
+    item.addEventListener("click", (e)=>{
+      const priceNew = item.getAttribute("priceNew")
+      const price = item.getAttribute("price")
+      const stock = item.getAttribute("stock")
 
+      const priceNewData = document.querySelector(".inner-price-new .formatMoney")
+      let moneyN = Number(priceNew)
+      let moneyS = moneyN.toLocaleString('vi', {style : 'currency', currency : 'VND'})
+      priceNewData.innerHTML = `${moneyS}`
 
-//size
-// const buttonSize = document.querySelectorAll(".button-size")
-// if(buttonSize){
-//   buttonSize[0].classList.add("button-size-active")
-//   buttonSize.forEach(item=>{
-//     item.addEventListener("click", (e)=>{
-//       const priceNew = item.getAttribute("priceNew")
-//       const price = item.getAttribute("price")
-//       const stock = item.getAttribute("stock")
+      const priceData = document.querySelector(".inner-price-old")
+      moneyN = Number(price)
+      moneyS = moneyN.toLocaleString('vi', {style : 'currency', currency : 'VND'})
+      priceData.innerHTML = `${moneyS}`
 
-//       const priceNewData = document.querySelector(".inner-price-new .formatMoney")
-//       let moneyN = Number(priceNew)
-//       let moneyS = moneyN.toLocaleString('vi', {style : 'currency', currency : 'VND'})
-//       priceNewData.innerHTML = `${moneyS}`
+      const stockData = document.querySelector(".stock")
+      stockData.innerHTML = stock
 
-//       const priceData = document.querySelector(".inner-price-old")
-//       moneyN = Number(price)
-//       moneyS = moneyN.toLocaleString('vi', {style : 'currency', currency : 'VND'})
-//       priceData.innerHTML = `${moneyS}`
+      item.classList.add("button-size-active")
+      buttonSize.forEach(item1 =>{
+        if(item1!=item){
+          item1.classList.remove("button-size-active")
+        }
+      })
 
-//       const stockData = document.querySelector(".stock")
-//       stockData.innerHTML = stock
-
-//       item.classList.add("button-size-active")
-//       buttonSize.forEach(item1 =>{
-//         if(item1!=item){
-//           item1.classList.remove("button-size-active")
-//         }
-//       })
-
-//       const CartInput = document.querySelector(".formCart .sizeInput")
-//       const stockInput = document.querySelector(".formCart .stockInput")
-//       CartInput.setAttribute("value", item.getAttribute("id"))
-//       stockInput.setAttribute("max", item.getAttribute("stock"))
-//     })
-//   })
-// }
+      const CartInput = document.querySelector(".formCart .sizeInput")
+      const stockInput = document.querySelector(".formCart .stockInput")
+      CartInput.setAttribute("value", item.getAttribute("id"))
+      stockInput.setAttribute("max", item.getAttribute("stock"))
+    })
+  })
+}
 
 // call api  /product/:slugCategory
 // const sortSelect = document.querySelector("[sort-select]");
