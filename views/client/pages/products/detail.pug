@@ -109,7 +109,31 @@ block main
             button(
               type="submit"
             ) ADD TO CART
-    .box-feedback
+    section.box-description
+      +box-head("MÔ TẢ SẢN PHẨM")
+      .inner-desc !{product.description}
+    section.section-policy
+      .container
+        .inner-section-policy.row
+          .col-4
+            .inner-title
+              .icon
+                img(src="https://vinova-furstore.myshopify.com/cdn/shop/files/icon-1_200x.png?v=1695007028")
+              .title Extra Shipping
+            .inner-content Lorem Ipsum is simply dummy text of the printing and typeset ting industry lorem Ipsum
+          .col-4
+            .inner-title
+              .icon
+                img(src="https://vinova-furstore.myshopify.com/cdn/shop/files/icon-2_200x.png?v=1695007028")
+              .title Payment Secured
+            .inner-content Lorem Ipsum is simply dummy text of the printing and typeset ting industry lorem Ipsum
+          .col-4
+            .inner-title
+              .icon 
+                img(src="https://vinova-furstore.myshopify.com/cdn/shop/files/icon-3_200x.png?v=1695007028")
+              .title Money Back Guarantee
+            .inner-content Lorem Ipsum is simply dummy text of the printing and typeset ting industry lorem Ipsum
+    section.box-feedback
       .container
         .row  
           .col-12
@@ -182,13 +206,9 @@ block main
               
                   .wrap-hr(style="display: flex; align-item: center; justify-content: center")
                     hr.m-0.mt-3(style="height: 0.5px; background-color: #158b8d; width: 99%")
-              
-
-    hr
-
-
+   
     .container.my-5
-      +box-head("SẢN PHẨM LIÊN QUAN")
+      +box-head("Related Product")
       .row
         .col-12 
           #demo
@@ -197,8 +217,7 @@ block main
                     +product-grid-slide(relatedProduct)
                   #demo2
         .col-12.mt-5
-          +box-head("MÔ TẢ SẢN PHẨM")
-          .inner-desc !{product.description}
+          
   
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   script(src="/js/detailProduct.js")

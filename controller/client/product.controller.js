@@ -89,11 +89,11 @@ module.exports.detail = async (req, res) => {
         item.priceNew = (item.price * (100 - product.discountPercentage) / 100).toFixed()
       }
     }
-    for (const item of product.feedback) {
-      const user = await User.findOne({ tokenUser: item.userToken })
-      item.fullName = user.fullName
-      item.thumbnail = user.thumbnail
-    }
+    // for (const item of product.feedback) {
+    //   const user = await User.findOne({ tokenUser: item.userToken })
+    //   item.fullName = user.fullName
+    //   item.thumbnail = user.thumbnail
+    // }
 
     const relatedProduct = await Product.find({
       deleted: false,
@@ -105,15 +105,15 @@ module.exports.detail = async (req, res) => {
         size.priceNew = (size.price * (100 - item.discountPercentage) / 100).toFixed(0);
       }
     }
-    console.log(product.sales)
 
     res.render("client/pages/products/detail.pug", {
       pageTitle: product.title,
       product: product,
-      myToken: req.cookies.tokenUser,
+      myToken: res.locals.user.tokenUser,
       relatedProduct: relatedProduct
     })
   } catch (error) {
+    console.log(error)
     res.redirect(`/products`) //chuyen huong den url
   }
 }
