@@ -85,7 +85,6 @@
 
 
 /* Header */
-
 .header .header-1 {
   padding: 14px 0;
   background-color: var(--main-bg-color);
@@ -793,110 +792,6 @@ h1 {
 /* end-box-trending */
 
 
-
-/* product-detail */
-.product-detail {
-  margin-top: 150px;
-}
-
-.product-detail .inner-thumb img {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-  margin-bottom: 30px;
-}
-
-.product-detail .inner-title {
-  font-size: 32px;
-  margin-bottom: 15px;
-  color: white
-}
-
-.product-detail .inner-category a {
-  color: #3a8788
-}
-
-.product-detail .inner-category a:hover {
-  color: green
-}
-
-.product-detail a {
-  margin-bottom: 10px;
-}
-
-.product-detail .text {
-  color: #4ca7a9;
-  font-weight: 600;
-}
-
-.product-detail .inner-price-new {
-  color: #0ebcbf;
-  font-weight: 600;
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.product-detail .inner-price-old {
-  color: rgba(187, 183, 183, 0.815);
-  font-weight: 600;
-  font-size: 20px;
-  text-decoration: line-through;
-  margin-bottom: 10px;
-}
-
-.product-detail .inner-percent {
-  margin-bottom: 10px;
-}
-
-.product-detail .inner-percent span {
-  color: #fff;
-  background: rgba(255, 0, 0, 0.516);
-  font-weight: 600;
-  display: inline-block;
-  padding: 3px 6px;
-  border-radius: 8px;
-}
-
-.product-detail .inner-stock {
-  margin-bottom: 10px;
-}
-
-.product-detail .inner-stock span {
-  color: #fff;
-  background: #158b8d;
-  font-weight: 600;
-  display: inline-block;
-  padding: 3px 6px;
-  border-radius: 8px;
-}
-
-.product-detail .inner-desc {
-  color: rgba(255, 255, 255, 0.539)
-}
-
-.product-detail h2 {
-  font-size: 25px;
-}
-
-
-.product-detail .inner-desc img {
-  max-width: 100%;
-  height: auto;
-}
-
-.product-detail button {
-  background-color: #158b8d;
-  border: none;
-}
-
-.product-detail button:hover {
-  background-color: rgba(255, 166, 0, 0.653);
-  color: black;
-  border: none;
-}
-
-/* End product-detail */
-
 /* Show Alert */
 [show-alert] {
   position: fixed;
@@ -952,7 +847,7 @@ h1 {
 /* footer */
 .footer {
   background-color: var(--main-bg-color);
-  margin-top: 100px;
+  margin-top: 80px;
 }
 
 .footer .main-footer {

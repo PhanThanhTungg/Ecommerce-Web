@@ -2,18 +2,36 @@ extends ../../layout/default.pug
 include ../../mixins/box-head.pug
 include ../../mixins/moment.pug
 include ../../mixins/product-layout-slide.pug
+include ../../mixins/rating.pug
 
 block main
   .product-detail
-    .container.my-5
+    .container
       .row  
-        .col-xl-6.col-md-6
-          .inner-thumb
-            img(src=product.thumbnail, alt=product.title)
-        .col-xl-6.col-md-6
-          h1(class="inner-title") #{product.title}
-
-          hr(style="background-color: gray")
+        .col-md-7.col-sm-12.product-images
+          .swiper.image-detail
+            .swiper-wrapper
+              each item in product.images
+                .swiper-slide
+                  img(src=item)
+            .swiper-button-next
+              <i class="fi fi-rr-right"></i>
+            .swiper-button-prev
+              <i class="fi fi-rr-left"></i>
+          .swiper.thumbnail-detail(thumbsSlider="")
+            .swiper-wrapper
+              each item in product.images
+                .swiper-slide
+                  img(src=item)
+        .col-md-5
+          h3(class="inner-title") #{product.title}
+          .d-flex.align-items-center
+            .inner-rating.mr-5(data-rating=product.ratingNumber)
+              +rating-1
+            a(href="#") VIEW ALL COMMENT
+          
+          //- if(product.listSize)
+          //-   each item in product.listSize
 
           if (product.category)
             div(class="inner-category") 
@@ -34,7 +52,7 @@ block main
           
           div(class="inner-stock text") Đã bán <span>#{product.sales}</span>
 
-          .inner-rating.mb-3(style="color: #ccc") <i class="fa-solid fa-star"></i> #{product.ratingNumber}
+          
 
           form(
             action=`/cart/add/${product.id}`
@@ -69,7 +87,7 @@ block main
                 action=`/products/detail/feedback/${product.slug}`
                 id="form-feedback"
                 method="POST"  
-              )
+              )  
                 <div id="rating">
                   <input type="radio" id="star5" name="rating" value="5"/>
                   <label class = "full" for="star5" title="Awesome - 5 stars"></label>
@@ -85,7 +103,7 @@ block main
               
                   <input type="radio" id="star1" name="rating" value="1"/>
                   <label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-                </div>
+                </div>   
                 div(class="form-group")
                   label(for="desc" class="inner-title")
                   textarea(
@@ -149,6 +167,10 @@ block main
         .col-12.mt-5
           +box-head("MÔ TẢ SẢN PHẨM")
           .inner-desc !{product.description}
+  
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  script(src="/js/detailProduct.js")
   script(src="/js/feedback.js")
   script(src="/js/product.js") 
   script(src="/js/format.js") 
+  script(src="/js/rating.js")
