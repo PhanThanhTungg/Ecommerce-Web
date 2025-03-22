@@ -15,22 +15,23 @@ block main
             table(class="table table-cart table-borderless" table-cart)
               thead
                 tr
-                  th(scope="col")
+                  th(style="line-height:100%")
+                    input.checkAll(type="checkbox")
                   th(scope="col") PRODUCT
                   th(scope="col") 
                   th(scope="col") PRICE
                   th(scope="col") QUANTITY
                   th(scope="col") TOTAL
-                  th(style="line-height:100%")
-                    input.checkAll(type="checkbox")
+                  th(scope="col")
               tbody
                 each item, index in cartDetail.products
-                  tr(data-category-id = item.productInfo.product_category_id)
-                    td.align-middle.text-center
-                      i.fi.fi-rr-trash-xmark.icon-delete(
-                        style="font-size: 17px",
-                        data-api = `/cart/delete/${item.product_id}/${item.sizeInfo.id}`
-                      )                 
+                  tr(data-category-id = item.productInfo.product_category_id)  
+                    td.align-middle
+                      input.checkOne(
+                        type="checkbox" 
+                        data-product-id=item.productInfo.id 
+                        data-size-id=item.sizeInfo.id
+                      )        
                     td.align-middle.inner-image
                       img(
                         src=item.productInfo.images[0]
@@ -56,12 +57,11 @@ block main
                         )
                         span.add +
                     td.align-middle $#{item.totalPrice}
-                    td.align-middle(style="")
-                      input.checkOne(
-                        type="checkbox" 
-                        data-product-id=item.productInfo.id 
-                        data-size-id=item.sizeInfo.id
-                      )
+                    td.align-middle.text-center
+                      i.fi.fi-rr-trash-xmark.icon-delete(
+                        style="font-size: 17px",
+                        data-api = `/cart/delete/${item.product_id}/${item.sizeInfo.id}`
+                      )       
             .row.button-after-cart
               .col-xl-6
                 .inner-button

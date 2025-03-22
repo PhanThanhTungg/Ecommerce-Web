@@ -84,7 +84,6 @@ if(formCheckout){
     })
     const data = listData.join(",");
     e.target.data.value = data;
-    formCheckout.action += "?_method=POST";
     formCheckout.submit();
   })
 }

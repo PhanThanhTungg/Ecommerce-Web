@@ -3,40 +3,37 @@ const Product = require("../../model/product.model");
 const Order = require("../../model/order.model");
 
 module.exports.index = async (req, res) => {
-  console.log(req.body);
-  const cartId = req.cookies.cartId;
+  const orderProducts = [];
+  const dataSplit = req.body.data.split(",");
+  let totalPrice = 0;
+  for(const item of dataSplit){
+    let [productId,sizeId,quantity] = item.split("-");
+    quantity = +quantity;
 
-  const cart = await Cart.findOne({
-    _id: cartId
-  });
+    const product = await Product.findOne({
+      _id: productId
+    }).select("images title slug listSize discountPercentage")
 
-  cart.totalPrice = 0;
+    const size = product.listSize.find(i=>i.id == sizeId)
 
-  if(cart.products.length > 0) {
-    for (const item of cart.products) {
-      const product = await Product.findOne({
-        _id: item.product_id
-      }).select("thumbnail title slug listSize discountPercentage")
+    size.priceNew = (size.price * (100 - product.discountPercentage)/100).toFixed(0)
 
-      const sizeInfo = product.listSize.find(i=>{
-        return i.id == item.sizeId
-      })
+    const totalPriceItem = quantity * size.priceNew
 
-      sizeInfo.priceNew = (sizeInfo.price * (100 - product.discountPercentage)/100).toFixed(0)
+    totalPrice += totalPriceItem
 
-      item.sizeInfo = sizeInfo
-      item.productInfo = product
-
-      item.totalPrice = item.quantity * sizeInfo.priceNew
-
-      cart.totalPrice += item.totalPrice
-    }
-  }
-
-
+    orderProducts.push({
+      product,
+      size,
+      quantity,
+      totalPriceItem
+    })
+  };
+  console.log(orderProducts);
   res.render("client/pages/checkout/index", {
     pageTitle: "Đặt hàng",
-    cartDetail: cart
+    orderProducts,
+    totalPrice
   });
 };
 
