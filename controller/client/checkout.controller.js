@@ -4,6 +4,10 @@ const Order = require("../../model/order.model");
 
 module.exports.index = async (req, res) => {
   const orderProducts = [];
+  if(!req.body.data){
+    req.flash("error", "Vui lòng chọn mặt hàng");
+    return res.redirect("back");
+  }
   const dataSplit = req.body.data.split(",");
   let totalPrice = 0;
   for(const item of dataSplit){
