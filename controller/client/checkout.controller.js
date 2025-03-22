@@ -3,6 +3,7 @@ const Product = require("../../model/product.model");
 const Order = require("../../model/order.model");
 
 module.exports.index = async (req, res) => {
+  console.log(req.body);
   const cartId = req.cookies.cartId;
 
   const cart = await Cart.findOne({

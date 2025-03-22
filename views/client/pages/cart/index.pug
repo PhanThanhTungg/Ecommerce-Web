@@ -21,6 +21,8 @@ block main
                   th(scope="col") PRICE
                   th(scope="col") QUANTITY
                   th(scope="col") TOTAL
+                  th(style="line-height:100%")
+                    input.checkAll(type="checkbox")
               tbody
                 each item, index in cartDetail.products
                   tr(data-category-id = item.productInfo.product_category_id)
@@ -54,13 +56,24 @@ block main
                         )
                         span.add +
                     td.align-middle $#{item.totalPrice}
+                    td.align-middle(style="")
+                      input.checkOne(
+                        type="checkbox" 
+                        data-product-id=item.productInfo.id 
+                        data-size-id=item.sizeInfo.id
+                      )
             .row.button-after-cart
               .col-xl-6
                 .inner-button
-                  a.history.d-sm-block(href="/products") Continue shopping
+                  a.history.d-block(href="/products") Continue shopping
               .col-xl-6
                 .inner-button.button-3
-                  a.history.d-sm-block(href="/checkout") Checkout
+                  form.form-checkout(
+                    action="/checkout"
+                    method="post"
+                  )
+                    input.d-none(type="text" name="data")
+                    button(style="width:100%").history.d-block Checkout
 
 
           .col-xl-4.col-md-12.bill
@@ -75,7 +88,7 @@ block main
             .inner-content
               .cart-info
                 span TOTAL:
-                p.formatMoney #{cartDetail.totalPrice}$
+                p $#{cartDetail.totalPrice}
               .cart-info
                 span SHIPPING:                
                 if (cartDetail.totalPrice > 200)
