@@ -7,7 +7,7 @@ include ../../mixins/rating.pug
 block main
   .product-detail
     .container
-      .row.mb-5
+      .row
         .col-md-7.col-sm-12.product-images
           .swiper.image-detail
             .swiper-wrapper
@@ -110,8 +110,16 @@ block main
               type="submit"
             ) ADD TO CART
     section.box-description
-      +box-head("MÔ TẢ SẢN PHẨM")
-      .inner-desc !{product.description}
+      .container
+        div
+          .nav.nav-tabs(role="tablist")
+            button.nav-link.active#nav-description-tab(data-toggle="tab" data-target="#nav-description" type="button" role="tab" aria-controls="nav-description" aria-selected="true") Mô tả sản phẩm
+            button.nav-link#nav-policy-tab(data-toggle="tab" data-target="#nav-policy" type="button" role="tab" aria-controls="nav-policy" aria-selected="false") Chính sách giao hàng
+            button.nav-link#nav-shipping-tab(data-toggle="tab" data-target="#nav-shipping" type="button" role="tab" aria-controls="nav-shipping" aria-selected="false") Vận chuyển và hoàn trả
+        .tab.tab-content
+          .tab-pane.fade.show.active.inner-desc#nav-description(role="tabpanel" aria-labelledby="nav-description-tab") !{product.description}
+          .tab-pane.fade#nav-policy(role="tabpanel" aria-labelledby="nav-policy-tab") Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla luctus libero quis mauris vestibulum dapibus. Maecenas ullamcorper erat mi, vel consequat enim suscipit at. Pellentesque a elit at elit
+          .tab-pane.fade#nav-shipping(role="tabpanel" aria-labelledby="nav-shipping-tab") Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla luctus libero quis mauris vestibulum dapibus. Maecenas ullamcorper erat mi, vel consequat enim suscipit at. Pellentesque a elit at elit
     section.section-policy
       .container
         .inner-section-policy.row
