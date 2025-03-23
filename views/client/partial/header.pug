@@ -37,14 +37,16 @@ header.header
                 li
                   a.header-user-login(href="/user/login") <i class="fi fi-ss-user-key" style="font-size: 20px"></i>
               else
-                li 
-                  a.userInfo(href="/user/info")
+                li.sub-menu
+                  a(href="/user/info")
                     <i class="fa-regular fa-user"></i>
-                  ul.afterLogin
+                  ul.sub-menu__content
                     li 
-                      a(href="/user/info") <i class="fi fi-rr-guide-alt mr-3"></i> Info
+                      a.d-flex(href="/user/info") 
+                        <i class="fi fi-rr-guide-alt mr-3"></i> Info
                     li
-                      a(href="/user/logout") <i class="fi fi-rr-sign-out-alt mr-3"></i> Logout
+                      a.d-flex(href="/user/logout") 
+                        <i class="fi fi-rr-sign-out-alt mr-3"></i> Logout
   .header-2
     .container
       //- .col-2(style = "padding: 0") 

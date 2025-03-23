@@ -72,23 +72,12 @@
   opacity: 1;
 }
 
-
-
-
-
-
-
-
 /* end-auth */
 
 
 
 
 /* Header */
-.header .header-1 {
-  padding: 14px 0;
-  background-color: var(--main-bg-color);
-}
 
 /* From Uiverse.io by AbanoubMagdy1 */ 
 .wave-group {
@@ -181,6 +170,10 @@
 }
 
 
+.header .header-1 {
+  background-color: var(--main-bg-color);
+}
+
 
 .header .header-1 .logo {
   display: flex;
@@ -197,7 +190,7 @@
   align-items: center;
 }
 
-.header .header-1 .inner-nav ul {
+.header .header-1 .inner-nav ul:not(.sub-menu__content) {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -205,11 +198,11 @@
   margin-right: 30px;
 }
 
-.header .header-1 .inner-nav ul li {
-  margin-left: 40px;
+.header .header-1 .inner-nav ul:not(.sub-menu__content) > li {
+  padding: 30px 20px;
 }
 
-.header .header-1 .inner-nav ul li i {
+.header .header-1 .inner-nav ul:not(.sub-menu__content) > li i {
   color: var(--secondary-color-text);
   font-size: 18px;
   display: flex;
@@ -221,7 +214,7 @@
   z-index: 999;
 }
 
-.header .header-1 .inner-nav ul li i::after {
+.header .header-1 .inner-nav ul:not(.sub-menu__content) > li i::after {
   content: "";
   width: 100%;
   height: 100%;
@@ -242,6 +235,10 @@
   transform: scale(2.5);
 }
 
+.header .header-1 .inner-nav ul.sub-menu__content li i:hover::after {
+  opacity: 0;
+  transform: none;
+}
 
 .header .header-1 li:has(>a.userInfo){
   position: relative;
@@ -278,7 +275,7 @@
   position: relative;
 }
 
-.header .header-2 ul.inner-menu li::before {
+.header .header-2 ul.inner-menu li::before, ul.sub-menu__content li::before {
   content: "";
   display: inline-block;
   height: 3px;
@@ -292,7 +289,7 @@
   transition: all 0.3s linear;
 }
 
-.header .header-2 ul.inner-menu li:hover::before {
+.header .header-2 ul.inner-menu li:hover::before, ul.sub-menu__content li:hover::before {
   width: 70%;
 }
 
@@ -321,8 +318,16 @@
   color: white;
 }
 
-
-/* End Header */
+.sub-menu__content{
+  left: -40% !important;
+  padding-top: 10px !important;
+  text-wrap: wrap !important;
+  text-align: center;
+}
+.sub-menu__content li{
+  padding: 15px 20px !important;
+  display: inline-flex !important;
+}
 
 /* sub-menu */
 .sub-menu {
@@ -339,7 +344,8 @@
   margin: 0;
   background: #fff;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  min-width: 150px;
+  /* min-width: 150px; */
+  text-wrap: nowrap;
   visibility: hidden;
   opacity: 0;
   transform: translateY(10px);
