@@ -28,6 +28,8 @@ if(inputNumbers){
   })
 }
 
+
+
 //delete item
 const deleteIcons = document.querySelectorAll("[table-cart] .icon-delete");
 if(deleteIcons){
@@ -42,6 +44,47 @@ if(deleteIcons){
         }
       })
     })
+  })
+}
+
+//input event 
+const inputCheckAll = document.querySelector("[table-cart] .checkAll");
+if(inputCheckAll){
+  const inputCheckOne = document.querySelectorAll("[table-cart] .checkOne");
+  inputCheckAll.addEventListener("click", ()=>{
+    if(inputCheckOne){
+      const check = inputCheckAll.checked;
+      inputCheckOne.forEach(item=>{
+        item.checked = check;
+      })
+    }
+  })
+  if(inputCheckOne){
+    inputCheckOne.forEach(item=>{
+      item.addEventListener("click", ()=>{
+        const totalInput = inputCheckOne.length;
+        const totalChecked = [...inputCheckOne].filter(item=>item.checked==true).length;
+        console.log(totalChecked)
+        inputCheckAll.checked = totalChecked==totalInput?true:false;
+      })
+    })
+  }
+}
+
+//button checkout event
+const formCheckout =  document.querySelector(".button-after-cart .form-checkout");
+if(formCheckout){
+  formCheckout.addEventListener("submit", e=>{
+    e.preventDefault();
+    const inputChecked = document.querySelectorAll("[table-cart] .checkOne:checked");
+    const listData = [...inputChecked].map(item=>{
+      const trCloset = item.closest("tr");
+      const quantity = trCloset.querySelector(".input__number input");
+      return `${item.dataset.productId}-${item.dataset.sizeId}-${quantity.value}`
+    })
+    const data = listData.join(",");
+    e.target.data.value = data;
+    formCheckout.submit();
   })
 }
 

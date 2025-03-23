@@ -20,32 +20,32 @@ block main
               th Số lượng
               th Tổng tiền
           tbody
-            if(cartDetail.products.length > 0)
-              each item, index in cartDetail.products
+            if(orderProducts.length > 0)
+              each item, index in orderProducts
                 tr
                   td #{index + 1}
                   td
                     img(
-                      src=item.productInfo.thumbnail
-                      alt=item.productInfo.title
+                      src=item.product.images[0]
+                      alt=item.product.title
                       width="80px"
                     )
-                  td #{item.productInfo.title}
-                  td #{item.sizeInfo.size}
-                  td.formatMoney #{item.sizeInfo.priceNew}đ
+                  td #{item.product.title}
+                  td #{item.size.size}
+                  td.formatMoney #{item.size.priceNew}đ
                   td #{item.quantity}
-                  td.formatMoney #{item.totalPrice}đ
+                  td.formatMoney #{item.totalPriceItem}đ
             else
               tr
                 td(
                   colspan="7"
                   class="text-center"
                 ) Giỏ hàng trống.
-        if(cartDetail.products.length > 0)
-          h3(class="text-right table-cart") Tổng đơn hàng: <span class="formatMoney"> #{cartDetail.totalPrice} </span> 
+        if(orderProducts.length > 0)
+          h3(class="text-right table-cart") Tổng đơn hàng: <span class="formatMoney"> #{totalPrice} </span> 
 
 
-    if(cartDetail.products.length > 0)
+    if(orderProducts.length > 0)
       .row
         .col-12
           .card.p-4.my-4

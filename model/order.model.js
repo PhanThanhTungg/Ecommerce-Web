@@ -2,33 +2,18 @@ const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema(
   {
-    tokenUser: String,
-    cart_id: String,
+    userId: String,
     userInfo: {
       fullName: String,
       phone: String,
-      address: String
+      province: String,
+      district: String,
+      commune: String,
+      detail: String
     },
-    products: [
-      {
-        product_id: String,
-        size_id: String,
-        size: String,
-        price: Number,
-        discountPercentage: Number,
-        quantity: Number,
-        status:{
-          type: String,
-          default: "xacNhan"
-        },
-      }
-    ],
-    
-    deleted:{
-      type: Boolean,
-      default: false
-    },
-    deletedAt: Date
+    totalPrice: Number,
+    deliveryStatus: String,
+    paymentStatus: String,
   },
   {
     timestamps: true,

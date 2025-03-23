@@ -3,39 +3,41 @@ const Product = require("../../model/product.model");
 const Order = require("../../model/order.model");
 
 module.exports.index = async (req, res) => {
-  const cartId = req.cookies.cartId;
-
-  const cart = await Cart.findOne({
-    _id: cartId
-  });
-
-  cart.totalPrice = 0;
-
-  if(cart.products.length > 0) {
-    for (const item of cart.products) {
-      const product = await Product.findOne({
-        _id: item.product_id
-      }).select("thumbnail title slug listSize discountPercentage")
-
-      const sizeInfo = product.listSize.find(i=>{
-        return i.id == item.sizeId
-      })
-
-      sizeInfo.priceNew = (sizeInfo.price * (100 - product.discountPercentage)/100).toFixed(0)
-
-      item.sizeInfo = sizeInfo
-      item.productInfo = product
-
-      item.totalPrice = item.quantity * sizeInfo.priceNew
-
-      cart.totalPrice += item.totalPrice
-    }
+  const orderProducts = [];
+  if(!req.body.data){
+    req.flash("error", "Vui lòng chọn mặt hàng");
+    return res.redirect("back");
   }
+  const dataSplit = req.body.data.split(",");
+  let totalPrice = 0;
+  for(const item of dataSplit){
+    let [productId,sizeId,quantity] = item.split("-");
+    quantity = +quantity;
 
+    const product = await Product.findOne({
+      _id: productId
+    }).select("images title slug listSize discountPercentage")
 
+    const size = product.listSize.find(i=>i.id == sizeId)
+
+    size.priceNew = (size.price * (100 - product.discountPercentage)/100).toFixed(0)
+
+    const totalPriceItem = quantity * size.priceNew
+
+    totalPrice += totalPriceItem
+
+    orderProducts.push({
+      product,
+      size,
+      quantity,
+      totalPriceItem
+    })
+  };
+  console.log(orderProducts);
   res.render("client/pages/checkout/index", {
     pageTitle: "Đặt hàng",
-    cartDetail: cart
+    orderProducts,
+    totalPrice
   });
 };
 
