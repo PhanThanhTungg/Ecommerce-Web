@@ -41,7 +41,6 @@ module.exports.index = async (req, res) => {
   });
 };
 
-
 module.exports.order = async (req, res) => {
   let { orderProducts, fullName, phone, province, district, commune, detail, paymentMethod } = req.body;
   orderProducts = JSON.parse(orderProducts);
