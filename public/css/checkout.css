@@ -1,0 +1,244 @@
+.checkout {
+  margin-top: 50px;
+}
+
+.checkout form h3 {
+  font-size: 2rem;
+}
+
+.checkout form h5 {
+  margin: 13px 0;
+  font-size: 1.7  rem
+}
+
+.checkout .info .custom-field {
+  position: relative;
+  font-size: 14px;
+  border-top: 15px solid transparent;
+  display: block;
+}
+
+.checkout .info .custom-field input {
+  appearance: none;
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  -moz-appearance: none;
+  border: none;
+  padding: 10px 12px;
+  width: 100%;
+  border-radius: 3px;
+  font-size: 1.5rem;
+}
+.checkout .info .custom-field .placeholder {
+  position: absolute;
+  left: 7px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: fit-content;
+  padding: 0 5px;
+  color: var(--color-gray);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  line-height: 100%;
+  transform: translateY(-50%);
+  transition: all 0.3s ease;
+}
+
+.checkout .info .custom-field input:focus + .placeholder,
+.checkout .custom-field input:not(:placeholder-shown) + .placeholder {
+  top: 0;
+  font-size: 1.3rem;
+  color: #222;
+  background-color: white;
+  z-index: 1000;
+}
+
+.custom-field .border {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: none;
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+  border-radius: 3px;
+}
+
+.custom-field .border::after, 
+.custom-field .border::before,
+.checkout .info .select2-container--default .select2-selection--single::after,
+.checkout .info .select2-container--default .select2-selection--single::before {
+  content: "";
+  width: 0;
+  height: 0;
+  display: inline-block;
+  position: absolute;
+  border-radius: 3px;
+}
+
+.custom-field .border::before,
+.checkout .info .select2-container--default .select2-selection--single::before {
+  left: 0;
+  bottom: 0;
+  border-right: 0px solid var(--color-text);
+  border-bottom: 0px solid var(--color-text);
+  transition: 
+    border 0s linear calc(0.12s * 4),
+    height 0.12s ease-in calc(0.12s * 2),
+    width 0.12s ease-in calc(0.12s * 3);
+}
+
+.custom-field .border::after,
+.checkout .info .select2-container--default .select2-selection--single::after {
+  right: 0;
+  top: 0;
+  border-left: 0px solid var(--color-text);
+  border-top: 0px solid var(--color-text);
+  transition: 
+    border 0s linear calc(0.12s * 2),
+    height 0.12s ease-in,
+    width 0.12s ease-in 0.12s;
+}
+
+.custom-field input:focus ~ .border::before,
+.custom-field input:not(:placeholder-shown) ~ .border::before,
+.custom-field input.dirty ~ .border::before,
+.custom-field input:focus ~ .border::after,
+.custom-field input:not(:placeholder-shown) ~ .border::after,
+.custom-field input.dirty ~ .border::after,
+.checkout .info .select2-container--default .select2-selection--single[aria-expanded="true"]::before,
+.checkout .info .select2-container--default .select2-selection--single[aria-expanded="true"]::after,
+.checkout .info .select2-container--default .select2-selection--single.dirty::before,
+.checkout .info .select2-container--default .select2-selection--single.dirty::after {
+  width: 100%;
+  height: 100%;
+  border-width: 1.5px;
+}
+
+.custom-field input:not(:placeholder-shown) ~ .border::before,
+.custom-field input.dirty ~ .border::before,
+.custom-field input:focus ~ .border::before,
+.checkout .info .select2-container--default .select2-selection--single[aria-expanded="true"]::before {
+  transition-delay: 0s, 0.12s, 0s;
+}
+
+.custom-field input:not(:placeholder-shown) ~ .border::after,
+.custom-field input.dirty ~ .border::after,
+.custom-field input:focus ~ .border::after,
+.checkout .info .select2-container--default .select2-selection--single[aria-expanded="true"]::after {
+  transition-delay: 
+    calc(0.12s * 2), 
+    calc(0.12s * 3), 
+    calc(0.12s * 2);
+}
+
+.checkout .info select {
+  width: 100%;
+}
+
+.checkout .info .selet2-container {
+  width: 100% !important;
+}
+
+.checkout .info .select2-container--default .select2-selection--single {
+  height: fit-content;
+  padding: 5px 3px;
+  border-color: var(--border-color);
+}
+
+.select2-container--open .select2-dropdown--below {
+  border: 1px solid var(--color-gray);
+  border-radius: 5px
+}
+
+.select2-search--dropdown {
+  padding: 0;
+  margin: 4px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.select2-container--default .select2-search--dropdown .select2-search__field {
+  padding: 5px 4px 5px 0;
+  border: none;
+}
+
+.select2-search--dropdown::before {
+  content: "\f002";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  font-size: 16px;
+  padding: 0 10px;
+}
+
+p.address-info {
+  transition: all 0.3s ease;
+  margin: 15px 0;
+  color: var(--secondary-color-text);
+  font-style: italic;
+}
+
+/* payment-method */
+
+.form-check-input {
+  width: 20px;
+  height: 20px;
+  position: unset;
+  
+}
+
+.checkout .payment-method .form-check {
+  padding: 0
+}
+
+.checkout .payment-method .form-check img {
+  width: 50px;
+  height: auto;
+}
+
+.checkout .payment-method {
+  padding-right: 15px;
+  border-radius: 5px;
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
+}
+
+.checkout .payment-method .form-check {
+  padding: 10px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: var(--secondary-color-text);
+  transition: all 0.3s ease;
+}
+
+.checkout .payment-method .form-check label {
+  cursor: pointer;
+}
+
+.checkout .payment-method .form-check:hover {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.checkout .payment-method .form-check.selected {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.checkout button.thanhToan {
+  display: block;
+  width: fit-content;
+  background-color: var(--color-green);
+  color: var(--color-one);
+  padding: 5px 15px;
+  border-radius: 5px;
+  margin: 15px 0 15px auto;
+}

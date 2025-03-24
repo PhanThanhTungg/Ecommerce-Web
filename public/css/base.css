@@ -12,6 +12,7 @@
   --color-orange: #ff6400;
   --color-gray: #b7b7b7;
   --color-hover: #095e41;
+  --border-color: #dee2e6;
 }
 
 * {
@@ -52,6 +53,16 @@ a:hover {
   background-color: rgba(255, 0, 0, 0.358) !important;
   color: white;
   border-radius: 20px;
+}
+
+.wrapper-flex-column-gap-15 {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.select2-selection__arrow {
+  display: none;
 }
 
 ul {

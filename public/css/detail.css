@@ -275,6 +275,7 @@
 
 .product-detail .box-description .nav-tabs .nav-link {
   border: none;
+  margin-bottom: -2px;
   color: var(--color-gray);
   white-space: nowrap;
   padding-bottom: 25px;

@@ -230,14 +230,6 @@ maxPrice.addEventListener('change', function () {
   priceRange.noUiSlider.set([null, this.value]);
 })
 
-// const sortSelect = document.querySelector('[sort-select]');
-// sortSelect.addEventListener('change', function () {
-//   const sortKey = this.value.split('-');
-//   sortBy = sortKey[0];
-//   sortValue = sortKey[1];
-//   fetchAPIProducts();
-// })
-
 const sortSelects = document.querySelectorAll('input[name="sort-form"]');
 sortSelects.forEach(item => {
   item.addEventListener('change', function () {
@@ -253,17 +245,6 @@ sortSelects.forEach(item => {
   })
 })
 
-// collapse icon
-
-// document.addEventListener('DOMContentLoaded', function() {
-//   const collapseAvailability = document.querySelector(".collapseAvailability");
-
-//   collapseAvailability.addEventListener("shown.bs.collapse", function() {
-//     console.log("sh");
-//     const iconAvailability = document.getElementById("icon-availability");
-//     iconAvailability.innerHTML = `<i class="fi fi-rr-angle-up"></i>`;
-//   })
-// })
 
 document.addEventListener("DOMContentLoaded", function () {
   const collapseAvailability = document.getElementById("collapseAvailability");
