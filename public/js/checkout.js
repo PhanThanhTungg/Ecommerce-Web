@@ -1,0 +1,122 @@
+let provinces = [];
+let districts = [];
+let wards = [];
+
+// api hành chính việt nam
+async function getProvinces() {
+  try {
+    const res = await fetch(`https://open.oapi.vn/location/provinces?size=100`);
+    const data = await res.json();
+    provinces = data.data;
+    provinces.sort((a, b) => a.name.localeCompare(b.name, 'vi'));
+    $('.checkout .info .province').select2({
+      placeholder: "Tỉnh/Thành",
+      width: '100%',
+      data: provinces.map(item => ({
+        id: item.name,
+        text: item.name,
+        _resultId: item.id
+      })),
+    })
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function getDistricts(provinceId) {
+  const res = await fetch(`https://open.oapi.vn/location/districts/${provinceId}?size=100`);
+  const data = await res.json();
+  districts = data.data;
+  districts.sort((a, b) => a.name.localeCompare(b.name, 'vi'));
+}
+
+async function getWards(districtId) {
+  console.log(districtId);
+  const res = await fetch(`https://open.oapi.vn/location/wards/${districtId}?size=100`);
+  const data = await res.json();
+  wards = data.data;
+  wards.sort((a, b) => a.name.localeCompare(b.name, 'vi'));
+}
+
+async function action() {
+  await getProvinces();
+  $('.checkout .info .district').select2({
+    placeholder: "Quận/Huyện",
+    width: '100%',
+  })
+  $('.checkout .info .ward').select2({
+    placeholder: "Phường/Xã",
+    width: '100%',
+  })
+
+  const displayProvince = document.querySelector('.checkout .info .address-info .display-province');
+  $('.checkout .info .province').on('select2:select', async function(e) {
+    const selectElement = $('.checkout .info .district');    
+    selectElement.select2('destroy');
+    selectElement.empty();
+    await getDistricts(e.params.data._resultId);
+    $('.checkout .info .district').select2({
+      placeholder: "Quận/Huyện",
+      width: '100%',
+      data: districts.map(item => ({
+        id: item.name,
+        text: item.name,
+        _resultId: item.id
+      }))
+    })
+    selectElement.val('').trigger('change');
+
+    displayProvince.innerText = e.params.data.text;
+    document.querySelector('.province + span .select2-selection--single').classList.add('dirty');
+  })
+  
+  const displayDistrict = document.querySelector('.checkout .info .address-info .display-district');
+  $('.checkout .info .district').on('select2:select', async function(e) {
+    const selectElement = $('.checkout .info .ward');    
+    selectElement.select2('destroy');
+    selectElement.empty();
+    await getWards(e.params.data._resultId);
+    $('.checkout .info .ward').select2({
+      placeholder: "Phường/Xã",
+      width: '100%',
+      data: wards.map(item => ({
+        id: item.name,
+        text: item.name,
+        _resultId: item.id
+      })),
+    })
+    selectElement.val('').trigger('change');
+
+    displayDistrict.innerText = e.params.data.text + ", ";
+    document.querySelector('.district + span .select2-selection--single').classList.add('dirty');
+  })
+
+  const displayWard = document.querySelector('.checkout .info .address-info .display-ward');
+  $('.checkout .info .ward').on('select2:select', async function(e) {
+    displayWard.innerText = e.params.data.text + ", ";
+    document.querySelector('.ward + span .select2-selection--single').classList.add('dirty');
+  })
+
+  const displayAddress = document.querySelector('.checkout .info .address-info .display-address');
+  const inputDetailAddress = document.querySelector('input[name="detailAddress"]');
+  inputDetailAddress.addEventListener('input', function() {
+    if (this.value) {
+      displayAddress.innerText = this.value + ", ";
+    } else {
+      displayAddress.innerText = "";
+    }
+  })
+}
+
+action()
+
+// payment
+
+function check(value) {
+  const input = document.getElementById(value);
+  input.checked = true;
+  document.querySelectorAll(".payment-method .form-check").forEach((div) => {
+    div.classList.remove("selected");
+  });
+  input.parentElement.classList.add("selected");
+}

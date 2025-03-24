@@ -37,4 +37,11 @@ subQty.addEventListener('click', function() {
 
 addQty.addEventListener('click', function() {
   inputQty.value = parseInt(inputQty.value) + 1;
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const container = document.querySelector('.product-single__tab .container');
+  if (container) {
+    container.classList.remove("container");
+  }
 })

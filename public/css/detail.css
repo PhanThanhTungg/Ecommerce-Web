@@ -56,7 +56,7 @@
 }
 
 .product-detail .product-images .image-detail img {
-  aspect-ratio: 3/4;
+  aspect-ratio: 6/7;
   object-fit: cover;
   width: 100%;
 }
@@ -249,4 +249,82 @@
 .product-detail .formCart button:hover {
   background-color: transparent;
   color: var(--color-green);
+}
+
+.product-detail .box-description {
+  padding: 70px 0;
+  border-bottom: 1px solid var(--color-gray);
+}
+
+.product-detail .box-description .container > :first-child {
+  border-bottom: 1px solid #dee2e6;
+  margin-bottom: 50px;
+}
+
+.product-detail .box-description .tab-content {
+  text-align: justify;
+}
+
+.product-detail .box-description .nav {
+  gap: 40px;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  padding-bottom: 1.5px;
+}
+
+.product-detail .box-description .nav-tabs .nav-link {
+  border: none;
+  margin-bottom: -2px;
+  color: var(--color-gray);
+  white-space: nowrap;
+  padding-bottom: 25px;
+  font-size: 22px;
+  font-weight: 600;
+  position: relative;
+  transition: all 0.3s linear;
+}
+
+.product-detail .box-description .nav-tabs .nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;  
+  z-index: 1000;
+  width: 0;
+  height: 3px;
+  background-color: var(--color-text);
+  transition: all 0.3s linear;
+}
+
+.product-detail .box-description .nav-tabs .nav-link.active, .product-detail .box-description .nav-tabs .nav-link:hover {
+  color: var(--color-text);
+}
+
+.product-detail .box-description .nav-tabs .nav-link.active::after, .product-detail .box-description .nav-tabs .nav-link:hover:after {
+  width: 100%;
+  left: 0;
+  right: inherit;
+}
+
+.product-detail .box-description .nav-tabs {  
+  border: none;
+}
+
+.nav-link {
+  padding: 0;
+}
+
+#nav-description img {
+  max-width: 100%;
+  object-fit: contain;
+  margin: 15px 0;
+}
+
+#nav-description ul {
+  list-style-type: disc;
+}
+
+.product-detail .box-description .tab-content {
+  color: var(--secondary-color-text);
 }
