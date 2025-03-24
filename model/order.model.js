@@ -11,9 +11,8 @@ const orderSchema = new mongoose.Schema(
       commune: String,
       detail: String
     },
-    totalPrice: Number,
     deliveryStatus: String,
-    paymentStatus: String,
+    paymentMethod: String,
   },
   {
     timestamps: true,

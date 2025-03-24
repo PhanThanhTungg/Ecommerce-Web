@@ -185,35 +185,35 @@ block main
             else 
               h2.text-white.ml-5 Đăng nhập để bình luận!
               
-          .col-12 
-            each feedback in product.feedback 
-              if feedback.userToken == myToken 
-                .wrap-feedback.mine
-                  .user
-                    .avatar.mr-2
-                      img(src=feedback.thumbnail, alt="avt", width = "40px" height = "40px",style="border-radius:50%")
-                    .name.mr-4 #{feedback.fullName}
-                    .rating #{feedback.rating}/5 <i class="fa-solid fa-star"></i>
-                  .time.ml-4
-                    +formatDateTime(feedback.time)
-                  .comment.ml-5 #{feedback.comment}
-                .wrap-hr(style="display: flex; align-item: center; justify-content: center")
-                  hr.m-0(style="height: 0.5px; background-color: #158b8d; width: 95%")
-            hr
-            each feedback in product.feedback 
-              if feedback.userToken != myToken
-                .wrap-feedback
-                  .user
-                    .avatar.mr-2 
-                      img(src=feedback.thumbnail, alt="avt", width = "40px" height = "40px",style="border-radius:50%")
-                    .name.mr-4 #{feedback.fullName}
-                    .rating #{feedback.rating}/5 <i class="fa-solid fa-star"></i>
-                  .time.ml-4
-                    +formatDateTime(feedback.time)
-                  .comment.ml-5 #{feedback.comment}
+          //- .col-12 
+          //-   each feedback in product.feedback 
+          //-     if feedback.userToken == myToken 
+          //-       .wrap-feedback.mine
+          //-         .user
+          //-           .avatar.mr-2
+          //-             img(src=feedback.thumbnail, alt="avt", width = "40px" height = "40px",style="border-radius:50%")
+          //-           .name.mr-4 #{feedback.fullName}
+          //-           .rating #{feedback.rating}/5 <i class="fa-solid fa-star"></i>
+          //-         .time.ml-4
+          //-           +formatDateTime(feedback.time)
+          //-         .comment.ml-5 #{feedback.comment}
+          //-       .wrap-hr(style="display: flex; align-item: center; justify-content: center")
+          //-         hr.m-0(style="height: 0.5px; background-color: #158b8d; width: 95%")
+          //-   hr
+          //-   each feedback in product.feedback 
+          //-     if feedback.userToken != myToken
+          //-       .wrap-feedback
+          //-         .user
+          //-           .avatar.mr-2 
+          //-             img(src=feedback.thumbnail, alt="avt", width = "40px" height = "40px",style="border-radius:50%")
+          //-           .name.mr-4 #{feedback.fullName}
+          //-           .rating #{feedback.rating}/5 <i class="fa-solid fa-star"></i>
+          //-         .time.ml-4
+          //-           +formatDateTime(feedback.time)
+          //-         .comment.ml-5 #{feedback.comment}
               
-                  .wrap-hr(style="display: flex; align-item: center; justify-content: center")
-                    hr.m-0.mt-3(style="height: 0.5px; background-color: #158b8d; width: 99%")
+          //-         .wrap-hr(style="display: flex; align-item: center; justify-content: center")
+          //-           hr.m-0.mt-3(style="height: 0.5px; background-color: #158b8d; width: 99%")
    
     .container.my-5
       +box-head("Related Product")
