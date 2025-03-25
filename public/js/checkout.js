@@ -120,3 +120,16 @@ function check(value) {
   });
   input.parentElement.classList.add("selected");
 }
+
+// handle checkout
+// const formCheckout = document.querySelector(".form-checkout");
+// if(formCheckout){
+//   formCheckout.addEventListener("submit", (e)=>{
+//     e.preventDefault();
+//     e.target.action += "qrcode";
+//     const orderProducts = JSON.parse(e.target.orderProducts.value);
+//     const totalPrice = +e.target.orderProducts.dataset.total;
+    
+//     // e.target.submit();
+//   })
+// }

@@ -37,7 +37,9 @@ module.exports.index = async (req, res) => {
   res.render("client/pages/checkout/index", {
     pageTitle: "Đặt hàng",
     orderProducts,
-    totalPrice
+    totalPrice,
+    bankId: process.env.QR_BANK_ID,
+    bankAccount: process.env.QR_BANK_ACC
   });
 };
 
