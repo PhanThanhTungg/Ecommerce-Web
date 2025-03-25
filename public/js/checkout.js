@@ -141,7 +141,7 @@ function check(value) {
   input.parentElement.classList.add("selected");
 }
 
-<<<<<<< HEAD
+
 //collapse icon
 document.addEventListener('DOMContentLoaded', function() {
   const totalPriceCollapseIcon = document.getElementById('totalPriceCollapse');
@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
     totalPriceCollapseIcon.classList.add("fi-rr-angle-down");
   });
 })
-=======
+
 // handle checkout
 // const formCheckout = document.querySelector(".form-checkout");
 // if(formCheckout){
@@ -170,4 +170,4 @@ document.addEventListener('DOMContentLoaded', function() {
 //     // e.target.submit();
 //   })
 // }
->>>>>>> origin
+
