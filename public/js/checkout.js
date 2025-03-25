@@ -141,6 +141,7 @@ function check(value) {
   input.parentElement.classList.add("selected");
 }
 
+<<<<<<< HEAD
 //collapse icon
 document.addEventListener('DOMContentLoaded', function() {
   const totalPriceCollapseIcon = document.getElementById('totalPriceCollapse');
@@ -156,3 +157,17 @@ document.addEventListener('DOMContentLoaded', function() {
     totalPriceCollapseIcon.classList.add("fi-rr-angle-down");
   });
 })
+=======
+// handle checkout
+// const formCheckout = document.querySelector(".form-checkout");
+// if(formCheckout){
+//   formCheckout.addEventListener("submit", (e)=>{
+//     e.preventDefault();
+//     e.target.action += "qrcode";
+//     const orderProducts = JSON.parse(e.target.orderProducts.value);
+//     const totalPrice = +e.target.orderProducts.dataset.total;
+    
+//     // e.target.submit();
+//   })
+// }
+>>>>>>> origin

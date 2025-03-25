@@ -36,6 +36,7 @@ block main
           .note-title Ghi chú
           textarea(rows="6" placeholder="Gửi lời nhắn của bạn tới người bán tại đây ❤️")
   .container.checkout
+
     .row  
       form.col-xl-6.col-lg-7.col-md-12(
         action="/checkout/order"
@@ -43,7 +44,7 @@ block main
       )
         h3 Thông tin liên hệ
         .info
-          input.d-none(name="orderProducts" value=orderProducts)
+          input.d-none(name="orderProducts" value=orderProducts data-total = totalPrice)
           label.custom-field
             input(type='text' name="fullName" placeholder=" " required)
             span.placeholder Họ và tên
@@ -77,6 +78,13 @@ block main
                 | Thanh toán khi nhận hàng
             </label>
             <input class="form-check-input" type="radio" name="paymentMethod" id="cash" value="cash" checked>
+          </div>
+          <div class="form-check" onclick="check('qr')">
+            img(src="https://www.clipartmax.com/png/middle/359-3591884_my-qr-code-qr-code-scan-icon-qr-code-scanner-clipart.png" alt="qr")          
+            <label class="form-check-label w-100" for="zalopay" onclick="event.stopPropagation();">
+                | Mã QR
+            </label>
+            <input class="form-check-input" type="radio" name="paymentMethod" id="qr" value="qr">
           </div>
           <div class="form-check" onclick="check('zalopay')">
             img(src="https://res.cloudinary.com/dndo7fe82/image/upload/c_limit,w_80/f_auto/v1742730960/logo/zivcjlqj9bmt3ofvorfa.png" alt="Zalopay")          
@@ -117,4 +125,16 @@ block main
           .input-note 
             .note-title Ghi chú
             textarea(rows="6" placeholder="Gửi lời nhắn của bạn tới người bán tại đây ❤️")
+        button.thanhToan(type="submit") Đặt hàng
+      .col-xl-6.col-lg-5.d-none.d-lg-block 
+  //- .section-qr(data-bank-id=bankId data-bank-account=bankAccount)
+  //-   img(src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQ-0Mwq9JPyfxwsroEGCB9ZBqKXBKVT81pYIMvuwaP-zHIZ1bse")
+  //-   .des
+  //-     p Mã QR thanh toán tự động
+  //-     p Thường không quá 3 phút
+  //-   p Số tiền: <span class="price">2000 đ</span>
+  //-   p Người thụ hưởng: <span class="owner">PHAN THANH TUNG</span>
+  //-   .wait
+  //-     span Đang chờ thanh toán
+  //-     span.time 09:57 
   script(src="/js/format.js") 

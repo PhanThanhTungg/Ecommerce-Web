@@ -435,3 +435,12 @@ p.address-info {
     max-height: 100vh;
   }
 }
+.section-qr{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.483);
+  z-index: 1006;
+  padding: 20px;
+}
