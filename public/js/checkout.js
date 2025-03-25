@@ -50,6 +50,10 @@ async function action() {
   })
 
   const displayProvince = document.querySelector('.checkout .info .address-info .display-province');
+  const displayDistrict = document.querySelector('.checkout .info .address-info .display-district');
+  const displayWard = document.querySelector('.checkout .info .address-info .display-ward');
+  const displayAddress = document.querySelector('.checkout .info .address-info .display-address');
+
   $('.checkout .info .province').on('select2:select', async function(e) {
     const selectElement = $('.checkout .info .district');    
     selectElement.select2('destroy');
@@ -62,15 +66,32 @@ async function action() {
         id: item.name,
         text: item.name,
         _resultId: item.id
-      }))
+      })),
+      language: {
+        noResults: function() {
+            return 'Vui lòng chọn tỉnh';
+        },
+        error: function() {
+            return 'Vui lòng chọn một tỉnh.';
+        }
+      }
     })
     selectElement.val('').trigger('change');
 
     displayProvince.innerText = e.params.data.text;
+    displayDistrict.innerText = "";
+    displayWard.innerText = "";
     document.querySelector('.province + span .select2-selection--single').classList.add('dirty');
+
+    const selectWard = $('.checkout .info .ward');    
+    selectWard.select2('destroy');
+    selectWard.empty();
+    $('.checkout .info .ward').select2({
+      placeholder: 'Phường/Xã',
+      width: '100%'
+    })
   })
   
-  const displayDistrict = document.querySelector('.checkout .info .address-info .display-district');
   $('.checkout .info .district').on('select2:select', async function(e) {
     const selectElement = $('.checkout .info .ward');    
     selectElement.select2('destroy');
@@ -88,17 +109,16 @@ async function action() {
     selectElement.val('').trigger('change');
 
     displayDistrict.innerText = e.params.data.text + ", ";
+    displayWard.innerText = "";
     document.querySelector('.district + span .select2-selection--single').classList.add('dirty');
   })
 
-  const displayWard = document.querySelector('.checkout .info .address-info .display-ward');
   $('.checkout .info .ward').on('select2:select', async function(e) {
     displayWard.innerText = e.params.data.text + ", ";
     document.querySelector('.ward + span .select2-selection--single').classList.add('dirty');
   })
 
-  const displayAddress = document.querySelector('.checkout .info .address-info .display-address');
-  const inputDetailAddress = document.querySelector('input[name="detailAddress"]');
+  const inputDetailAddress = document.querySelector('input[name="detail"]');
   inputDetailAddress.addEventListener('input', function() {
     if (this.value) {
       displayAddress.innerText = this.value + ", ";
@@ -120,3 +140,19 @@ function check(value) {
   });
   input.parentElement.classList.add("selected");
 }
+
+//collapse icon
+document.addEventListener('DOMContentLoaded', function() {
+  const totalPriceCollapseIcon = document.getElementById('totalPriceCollapse');
+  const collapseOrderProduct = document.getElementById('collapseOrderProduct');
+
+  $(collapseOrderProduct).on("show.bs.collapse", function () {
+    totalPriceCollapseIcon.classList.remove("fi-rr-angle-down");
+    totalPriceCollapseIcon.classList.add("fi-rr-angle-up");
+  });
+
+  $(collapseOrderProduct).on("hide.bs.collapse", function () {
+    totalPriceCollapseIcon.classList.remove("fi-rr-angle-up");
+    totalPriceCollapseIcon.classList.add("fi-rr-angle-down");
+  });
+})

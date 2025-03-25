@@ -1,26 +1,27 @@
 const Cart = require("../../model/cart.model");
 const Product = require("../../model/product.model");
 const Order = require("../../model/order.model");
+const OrderProduct = require("../../model/order-product.model")
 
 module.exports.index = async (req, res) => {
   const orderProducts = [];
-  if(!req.body.data){
+  if (!req.body.data) {
     req.flash("error", "Vui lòng chọn mặt hàng");
     return res.redirect("back");
   }
   const dataSplit = req.body.data.split(",");
   let totalPrice = 0;
-  for(const item of dataSplit){
-    let [productId,sizeId,quantity] = item.split("-");
+  for (const item of dataSplit) {
+    let [productId, sizeId, quantity] = item.split("-");
     quantity = +quantity;
 
     const product = await Product.findOne({
       _id: productId
     }).select("images title slug listSize discountPercentage")
 
-    const size = product.listSize.find(i=>i.id == sizeId)
+    const size = product.listSize.find(i => i.id == sizeId)
 
-    size.priceNew = (size.price * (100 - product.discountPercentage)/100).toFixed(0)
+    size.priceNew = (size.price * (100 - product.discountPercentage) / 100).toFixed(0)
 
     const totalPriceItem = quantity * size.priceNew
 
@@ -33,7 +34,6 @@ module.exports.index = async (req, res) => {
       totalPriceItem
     })
   };
-  console.log(orderProducts);
   res.render("client/pages/checkout/index", {
     pageTitle: "Đặt hàng",
     orderProducts,
@@ -41,60 +41,42 @@ module.exports.index = async (req, res) => {
   });
 };
 
-
 module.exports.order = async (req, res) => {
-  const cartId = req.cookies.cartId
-  const userInfo = req.body
+  let { orderProducts, fullName, phone, province, district, commune, detail, paymentMethod } = req.body;
+  orderProducts = JSON.parse(orderProducts);
 
-  const cart = await Cart.findOne({
-    _id: cartId
-  })
+  const orderData = {
+    userInfo:{
+      fullName,
+      phone,
+      province,
+      district,
+      commune,
+      detail
+    },
+    deliveryStatus: "Pending",
+    paymentMethod
+  }
 
+  if(res.locals.user) orderData.userId = res.locals.user.id;
+  const order = new Order(orderData);
+  await order.save();
 
-  const products = []
-
-  for (const product of cart.products) {
-    const objectProduct = {
-      product_id: product.product_id,
-      size_id: product.sizeId,
-      quantity: product.quantity,
-    }
-
-    const productInfo = await Product.findOne({
-      _id: product.product_id
-    }).select("listSize discountPercentage")
-
-    const sizeInfo = productInfo.listSize.find(i=>{
-      return i.id == objectProduct.size_id
-      
+  for(const item of orderProducts){
+    const orderProduct = new OrderProduct({
+      order_id: order.id,
+      product_id: item.product._id,
+      size_id: item.size._id,
+      product_title: item.product.title,
+      size: item.size.size,
+      price: item.size.price,
+      discountPercentage: item.product.discountPercentage,
+      quantity: item.quantity,
     })
-
-    objectProduct.size = sizeInfo.size
-    objectProduct.price= sizeInfo.price
-    objectProduct.discountPercentage = productInfo.discountPercentage
-    objectProduct.priceNew = (objectProduct.price * (100 - objectProduct.discountPercentage)/100).toFixed(0)
-
-    products.push(objectProduct)
+    await orderProduct.save();
   }
 
-  const orderInfo = {
-    tokenUser: req.cookies.tokenUser,
-    cart_id: cartId,
-    userInfo: userInfo,
-    products: products,
-  }
-
-
-  const order = new Order(orderInfo)
-  order.save()
-
-  await Cart.updateOne({
-    _id: cartId
-  }, {
-    products: []
-  });
-
-  res.redirect(`/checkout/success/${order.id}`)
+  res.redirect("/")
 }
 
 module.exports.success = async (req, res) => {
@@ -108,7 +90,7 @@ module.exports.success = async (req, res) => {
       _id: product.product_id
     })
 
-    const sizeInfo = infoProduct.listSize.find(i=>{
+    const sizeInfo = infoProduct.listSize.find(i => {
       return i.id == product.size_id
     })
 
@@ -116,11 +98,11 @@ module.exports.success = async (req, res) => {
     product.title = infoProduct.title
     product.thumbnail = infoProduct.thumbnail
 
-    product.sizeInfo.priceNew = (product.sizeInfo.price * (100 - infoProduct.discountPercentage)/100).toFixed(0)
+    product.sizeInfo.priceNew = (product.sizeInfo.price * (100 - infoProduct.discountPercentage) / 100).toFixed(0)
 
     product.totalPrice = product.sizeInfo.priceNew * product.quantity
-    const currentStock = sizeInfo.stock-product.quantity
-    await Product.updateOne({_id: product.product_id},{
+    const currentStock = sizeInfo.stock - product.quantity
+    await Product.updateOne({ _id: product.product_id }, {
       sales: infoProduct.sales + product.quantity
     })
 
@@ -130,7 +112,7 @@ module.exports.success = async (req, res) => {
     }, {
       $set: {
         "listSize.$.stock": currentStock
-      } 
+      }
     })
 
     totalPrice += product.totalPrice

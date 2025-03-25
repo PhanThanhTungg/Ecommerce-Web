@@ -5,7 +5,7 @@ include ../../mixins/product-item-template.pug
 include ../../mixins/product-layout-slide.pug
 
 block main
-  +alert-error(3000)
+
   .page-format
     .container.my-3
       .cart-title YOUR SHOPPING CART
@@ -102,10 +102,7 @@ block main
                     i.fi.fi-rr-truck-check
                 p.condition-info
                   | Free shipping for any orders above 
-                  span.formatMoney 200$
-              .input-note 
-                .note-title ADD A NOTE TO YOUR ORDER:
-                textarea(rows="8" placeholder="ADD YOUR NOTE HERE")
+                  span.formatMoney 200$              
       else
         .cart-empty-notification
           .title YOU HAVE NO PRODUCT IN YOUR CART

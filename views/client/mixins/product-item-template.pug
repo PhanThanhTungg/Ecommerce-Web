@@ -74,5 +74,14 @@ mixin product-item-template-cart(item)
           <i class="fa-solid fa-bolt"></i> -#{item.discountPercentage}%
 
 
-
+mixin product-item-template-order(item)
+  .product-wrapper.d-flex.align-items-center  
+    .product-image
+      .quantity #{item.quantity}
+      .image
+        img(src=item.product.images[0].replace('upload/', 'upload/c_limit,w_62/f_auto/') alt=item.product.title)
+    .product-info
+      .title #{item.product.title}
+      .size #{item.size.size}
+    .product-price.formatMoney #{item.totalPriceItem}$
 

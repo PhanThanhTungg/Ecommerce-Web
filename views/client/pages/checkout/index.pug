@@ -1,58 +1,49 @@
 extends ../../layout/default.pug
 include ../../mixins/box-head.pug
 include ../../mixins/alert.pug
+include ../../mixins/product-item-template.pug
 
 block main
-  +alert-success(5000)
-  +alert-error(5000)
 
+  .d-block.d-lg-none.checkout
+    a(
+      data-toggle="collapse" 
+      href="#collapseOrderProduct" 
+      role="button" 
+      aria-expanded="false" 
+      aria-controls="collapseOrderProduct"
+    )
+      .container.d-flex.justify-content-between
+        .total-price
+          .title Tổng            
+          .value.formatMoney #{totalPrice}
+        .wrapper
+          span Xem chi tiết
+          i#totalPriceCollapse.fi.fi-rr-angle-down
+    .collapse#collapseOrderProduct
+      .order-products.container
+        .inner-orderProducts.wrapper-flex-column-gap-15
+          if (orderProducts.length > 0)
+            each item in orderProducts
+              +product-item-template-order(item)
+        .shipping
+          .name Phí vận chuyển
+          .value Lorem
+        .total-price
+          .title Tổng
+          .value.formatMoney #{totalPrice}
+        .input-note 
+          .note-title Ghi chú
+          textarea(rows="6" placeholder="Gửi lời nhắn của bạn tới người bán tại đây ❤️")
   .container.checkout
-    //- .row
-    //-   .col-12.mt-4
-    //-     table(class="table table-bordered")
-    //-       thead
-    //-         tr
-    //-           th STT
-    //-           th Ảnh
-    //-           th Tên
-    //-           th Loại
-    //-           th Giá
-    //-           th Số lượng
-    //-           th Tổng tiền
-    //-       tbody
-    //-         if(orderProducts.length > 0)
-    //-           each item, index in orderProducts
-    //-             tr
-    //-               td #{index + 1}
-    //-               td
-    //-                 img(
-    //-                   src=item.product.images[0]
-    //-                   alt=item.product.title
-    //-                   width="80px"
-    //-                 )
-    //-               td #{item.product.title}
-    //-               td #{item.size.size}
-    //-               td.formatMoney #{item.size.priceNew}đ
-    //-               td #{item.quantity}
-    //-               td.formatMoney #{item.totalPriceItem}đ
-    //-         else
-    //-           tr
-    //-             td(
-    //-               colspan="7"
-    //-               class="text-center"
-    //-             ) Giỏ hàng trống.
-    //-     if(orderProducts.length > 0)
-    //-       h3(class="text-right table-cart") Tổng đơn hàng: <span class="formatMoney"> #{totalPrice} </span> 
-
-    .row
-      //- .col-12.d-block.d-lg-none.bg-primary àld
+    .row  
       form.col-xl-6.col-lg-7.col-md-12(
-        action="https://www.postb.in/1742813165321-0198754812590"
+        action="/checkout/order"
         method = "POST"
       )
-        
         h3 Thông tin liên hệ
         .info
+          input.d-none(name="orderProducts" value=orderProducts)
           label.custom-field
             input(type='text' name="fullName" placeholder=" " required)
             span.placeholder Họ và tên
@@ -67,10 +58,10 @@ block main
               option          
             select.district.form-address(required name="district")
               option          
-            select.ward.form-address(name="ward")
+            select.ward.form-address(name="commune")
               option
           label.custom-field
-            input(type="text" name="detailAddress" placeholder=" " autocomplete="off" required)
+            input(type="text" name="detail" placeholder=" " autocomplete="off" required)
             span.placeholder Địa chỉ chi tiết
             <span class="border"></span> 
           p.address-info
@@ -110,5 +101,20 @@ block main
             <input class="form-check-input" type="radio" name="paymentMethod" id="vnpay" value="vnpay">
           </div>
         button.thanhToan(type="sumbmit") Đặt hàng
-      .col-xl-6.col-lg-5.d-none.d-lg-block 
+      .col-xl-6.col-lg-5.d-none.d-lg-block
+        h3.order-products-title Đơn hàng của bạn
+        .order-products
+          .inner-orderProducts.wrapper-flex-column-gap-15
+            if (orderProducts.length > 0)
+              each item in orderProducts
+                +product-item-template-order(item)
+          .shipping
+            .name Phí vận chuyển
+            .value Lorem
+          .total-price
+            .title Tổng
+            .value.formatMoney #{totalPrice}
+          .input-note 
+            .note-title Ghi chú
+            textarea(rows="6" placeholder="Gửi lời nhắn của bạn tới người bán tại đây ❤️")
   script(src="/js/format.js") 

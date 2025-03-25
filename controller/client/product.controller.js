@@ -109,7 +109,6 @@ module.exports.detail = async (req, res) => {
     res.render("client/pages/products/detail.pug", {
       pageTitle: product.title,
       product: product,
-      myToken: res.locals.user.tokenUser,
       relatedProduct: relatedProduct
     })
   } catch (error) {
