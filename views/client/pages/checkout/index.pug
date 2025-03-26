@@ -16,7 +16,7 @@ block main
       .container.d-flex.justify-content-between
         .total-price
           .title Tổng            
-          .value.formatMoney #{totalPrice}
+          .value #{totalPrice} đ
         .wrapper
           span Xem chi tiết
           i#totalPriceCollapse.fi.fi-rr-angle-down
@@ -31,7 +31,7 @@ block main
           .value Lorem
         .total-price
           .title Tổng
-          .value.formatMoney #{totalPrice}
+          .value #{totalPrice} đ
         .input-note 
           .note-title Ghi chú
           textarea(rows="6" placeholder="Gửi lời nhắn của bạn tới người bán tại đây ❤️")
@@ -121,19 +121,19 @@ block main
             .value Lorem
           .total-price
             .title Tổng
-            .value.formatMoney #{totalPrice}
+            .value #{totalPrice} đ
           .input-note 
             .note-title Ghi chú
             textarea(rows="6" placeholder="Gửi lời nhắn của bạn tới người bán tại đây ❤️")
       .col-xl-6.col-lg-5.d-none.d-lg-block 
-  //- .section-qr(data-bank-id=bankId data-bank-account=bankAccount)
-  //-   img(src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQ-0Mwq9JPyfxwsroEGCB9ZBqKXBKVT81pYIMvuwaP-zHIZ1bse")
-  //-   .des
-  //-     p Mã QR thanh toán tự động
-  //-     p Thường không quá 3 phút
-  //-   p Số tiền: <span class="price">2000 đ</span>
-  //-   p Người thụ hưởng: <span class="owner">PHAN THANH TUNG</span>
-  //-   .wait
-  //-     span Đang chờ thanh toán
-  //-     span.time 09:57 
+  .section-qr(data-bank-id=bankId data-bank-account=bankAccount)
+    img(src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQ-0Mwq9JPyfxwsroEGCB9ZBqKXBKVT81pYIMvuwaP-zHIZ1bse")
+    .des
+      p Mã QR thanh toán tự động
+      p Thường không quá 3 phút
+    p Số tiền: <span class="price">2000 đ</span>
+    p Người thụ hưởng: <span class="owner">PHAN THANH TUNG</span>
+    .wait
+      span Đang chờ thanh toán
+      span.time 09:57 
   script(src="/js/format.js") 

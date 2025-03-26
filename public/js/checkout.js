@@ -159,15 +159,21 @@ document.addEventListener('DOMContentLoaded', function() {
 })
 
 // handle checkout
-// const formCheckout = document.querySelector(".form-checkout");
-// if(formCheckout){
-//   formCheckout.addEventListener("submit", (e)=>{
-//     e.preventDefault();
-//     e.target.action += "qrcode";
-//     const orderProducts = JSON.parse(e.target.orderProducts.value);
-//     const totalPrice = +e.target.orderProducts.dataset.total;
-    
-//     // e.target.submit();
-//   })
-// }
+const formCheckout = document.querySelector(".form-checkout");
+if(formCheckout){
+  formCheckout.addEventListener("submit", (e)=>{
+    e.preventDefault();
+    if(e.target.paymentMethod == "qr"){
+      e.target.action += "qrcode";
+      const orderProducts = JSON.parse(e.target.orderProducts.value);
+      const totalPrice = +e.target.orderProducts.dataset.total;
+      console.log(totalPrice)
+      console.log(orderProducts);
+      // e.target.submit();
+    }
+    else if(e.target.paymentMethod == "cash"){
+      e.target.submit();
+    }
+  })
+}
 

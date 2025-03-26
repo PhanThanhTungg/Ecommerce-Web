@@ -34,6 +34,7 @@ module.exports.index = async (req, res) => {
       totalPriceItem
     })
   };
+  console.log(totalPrice)
   res.render("client/pages/checkout/index", {
     pageTitle: "Đặt hàng",
     orderProducts,
@@ -78,16 +79,25 @@ module.exports.order = async (req, res) => {
     await orderProduct.save();
   }
 
-  res.redirect("/")
+  res.redirect("/checkout/success/"+order.id)
 }
 
 module.exports.success = async (req, res) => {
   const order = await Order.findOne({
     _id: req.params.orderId
   })
-  var totalPrice = 0
 
-  for (const product of order.products) {
+  if(!order){
+    req.flash("Vui lòng tuân thủ theo các bước mua sắm");
+    return res.redirect("/")
+  }
+  let totalPrice = 0
+
+  const products = await OrderProduct.find({
+    order_id: order.id
+  })
+
+  for (const product of products) {
     const infoProduct = await Product.findOne({
       _id: product.product_id
     })
@@ -96,13 +106,9 @@ module.exports.success = async (req, res) => {
       return i.id == product.size_id
     })
 
-    product.sizeInfo = sizeInfo
-    product.title = infoProduct.title
-    product.thumbnail = infoProduct.thumbnail
+    product.thumbnail = infoProduct.images[0];
 
-    product.sizeInfo.priceNew = (product.sizeInfo.price * (100 - infoProduct.discountPercentage) / 100).toFixed(0)
-
-    product.totalPrice = product.sizeInfo.priceNew * product.quantity
+    product.totalPrice = product.price * product.quantity
     const currentStock = sizeInfo.stock - product.quantity
     await Product.updateOne({ _id: product.product_id }, {
       sales: infoProduct.sales + product.quantity
@@ -119,10 +125,12 @@ module.exports.success = async (req, res) => {
 
     totalPrice += product.totalPrice
   }
-  order.totalPrice = totalPrice
-
+  
   res.render("client/pages/checkout/success", {
     pageTitle: "Đặt hàng thành công",
-    order: order
+    order: order,
+    products,
+    totalPrice
   })
+  // res.redirect("/");
 }
