@@ -278,24 +278,24 @@ p.address-info {
   padding: 15px 30px 30px 30px;
 }
 
-.checkout .order-products .inner-orderProducts {
+.inner-orderProducts {
   max-height: 50vh;
   padding: 11px 0;
   overflow-y: auto;
 }
 
-.checkout .order-products .inner-orderProducts .product-wrapper .product-price {
+.inner-orderProducts .product-wrapper .product-price {
   margin-left: auto;
   margin-right: 15px;
 }
 
-.checkout .order-products .inner-orderProducts .product-wrapper .product-image {
+.inner-orderProducts .product-wrapper .product-image {
   position: relative;
   border: 1px solid var(--border-color);
   border-radius: 8px;
 }
 
-.checkout .order-products .inner-orderProducts .product-wrapper .product-image .quantity {
+.inner-orderProducts .product-wrapper .product-image .quantity {
   position: absolute;
   top: 0;
   right: 0;
@@ -312,37 +312,37 @@ p.address-info {
   font-weight: 500;
 }
 
-.checkout .order-products .inner-orderProducts .product-wrapper .product-image .image {
+.inner-orderProducts .product-wrapper .product-image .image {
   overflow: hidden;
   border-radius: 8px;
 }
 
-.checkout .order-products .inner-orderProducts .product-wrapper .product-image .image img {
+.inner-orderProducts .product-wrapper .product-image .image img {
   width: 100%;
   aspect-ratio: 6/7;
   object-fit: cover;
 }
 
-.checkout .order-products .inner-orderProducts .product-wrapper .product-info {
+.inner-orderProducts .product-wrapper .product-info {
   margin-left: 15px;
   flex-grow: 1;
   width: 58%;
 }
 
-.checkout .order-products .inner-orderProducts .product-wrapper .product-info .title {
+.inner-orderProducts .product-wrapper .product-info .title {
   max-width: 80%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.checkout .order-products .inner-orderProducts .product-wrapper .product-info .size {
+.inner-orderProducts .product-wrapper .product-info .size {
   color: var(--secondary-color-text);
   text-transform: capitalize;
   font-size: 1.3rem;
 }
 
-.checkout .order-products .inner-orderProducts .product-wrapper .product-price {
+.inner-orderProducts .product-wrapper .product-price {
   font-weight: 600;
   font-size: 1.7rem;
   color: var(--color-text);
@@ -440,12 +440,7 @@ p.address-info {
 
 
 .section-qr{
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   background-color: rgba(0, 0, 0, 0.483);
-  z-index: 1006;
   padding: 20px;
 }
 
