@@ -5,6 +5,10 @@ block main
   .page-format
     .container.my-3
       div orderId: #{order.id}
+      if order.deliveryStatus == "pending"
+        div Don hang da duoc dat thanh cong
+      if order.deliveryStatus == "pending-payment"
+        div Cho xac nhan thanh toan
       if(products)
         div Tên: #{order.userInfo.fullName}
         div sdt: #{order.userInfo.phone}
@@ -41,4 +45,21 @@ block main
 
             if(products.length > 0)
               h3(class="text-right table-cart") Tổng đơn hàng: #{totalPrice}
+      
+      a(href="/products") Tiếp tục mua hàng
+      if order.deliveryStatus == "pending-payment"
+        button.qr-button Mã QR
+      
+  
+  .section-qr(data-bank-id=bankId data-bank-account=bankAccount)
+    img(src=`https://img.vietqr.io/image/${bankId}-${bankAccount}-qr_only.png?amount=${totalPrice}&addInfo=fixcung`)
+    .des
+      p Mã QR thanh toán tự động
+      p Thường không quá 3 phút
+    p Số tiền: <span class="price">#{totalPrice} đ</span>
+    p Người thụ hưởng: <span class="owner">PHAN THANH TUNG</span>
+    .wait
+      span Đang chờ thanh toán
+      span.time 09:57 
+  script(src="/js/checkout.js")
   

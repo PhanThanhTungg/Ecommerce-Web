@@ -167,8 +167,6 @@ if(formCheckout){
       e.target.action += "qrcode";
       const orderProducts = JSON.parse(e.target.orderProducts.value);
       const totalPrice = +e.target.orderProducts.dataset.total;
-      console.log(totalPrice)
-      console.log(orderProducts);
       // e.target.submit();
     }
     else if(e.target.paymentMethod == "cash"){

@@ -39,8 +39,6 @@ module.exports.index = async (req, res) => {
     pageTitle: "Đặt hàng",
     orderProducts,
     totalPrice,
-    bankId: process.env.QR_BANK_ID,
-    bankAccount: process.env.QR_BANK_ACC
   });
 };
 
@@ -57,7 +55,7 @@ module.exports.order = async (req, res) => {
       commune,
       detail
     },
-    deliveryStatus: "Pending",
+    deliveryStatus: paymentMethod=="cash"?"pending":"pending-payment",
     paymentMethod
   }
 
@@ -86,7 +84,7 @@ module.exports.success = async (req, res) => {
   const order = await Order.findOne({
     _id: req.params.orderId
   })
-
+  
   if(!order){
     req.flash("Vui lòng tuân thủ theo các bước mua sắm");
     return res.redirect("/")
@@ -130,7 +128,9 @@ module.exports.success = async (req, res) => {
     pageTitle: "Đặt hàng thành công",
     order: order,
     products,
-    totalPrice
+    totalPrice,
+    bankId: process.env.QR_BANK_ID,
+    bankAccount: process.env.QR_BANK_ACC
   })
   // res.redirect("/");
 }

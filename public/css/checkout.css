@@ -435,6 +435,7 @@ p.address-info {
     max-height: 100vh;
   }
 }
+
 .section-qr{
   position: fixed;
   top: 50%;
@@ -443,4 +444,10 @@ p.address-info {
   background-color: rgba(0, 0, 0, 0.483);
   z-index: 1006;
   padding: 20px;
+}
+
+.section-qr img{
+  width: 70%; height: auto;
+  display: block;
+  margin: 0 auto;
 }
