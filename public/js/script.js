@@ -138,8 +138,52 @@ if (buttonStatus.length > 0) {
 // end button status
 
 
+// responsive
+const maxWidth767 = window.matchMedia('(max-width: 767px)');
 
+function handleResize767(e) {
+  const title = document.querySelectorAll('.footer .main-footer .title');
+  const titleIcon = document.querySelectorAll('.footer .main-footer .title i');
+  const content = document.querySelectorAll('.footer .main-footer .inner-content.wrapper-flex-column-gap-15');
+  if (e.matches) {
+    for(let i = 0; i < 4; i++) {
+      title[i].setAttribute('data-toggle', 'collapse');
+      title[i].setAttribute('role', 'button');
+      title[i].setAttribute('data-target', `#collapse${i}`);
+      title[i].setAttribute('aria-expanded', 'false');
+      title[i].setAttribute('aria-controls', `collapse${i}`);
 
+      content[i].classList.add('collapse');
+      content[i].setAttribute('id', `collapse${i}`);
+      
+      titleIcon[i].classList.add('fi-rr-angle-down');
+      $(content[i]).on("show.bs.collapse", function() {
+        titleIcon[i].classList.remove('fi-rr-angle-down');
+        titleIcon[i].classList.add('fi-rr-angle-up');
+      })
+      $(content[i]).on('hide.bs.collapse', function() {
+        titleIcon[i].classList.remove('fi-rr-angle-up');
+        titleIcon[i].classList.add('fi-rr-angle-down');
+      })
+    }
+  } else {
+    for(let i = 0; i < 4; i++) {
+      title[i].removeAttribute('data-toggle');
+      title[i].removeAttribute('role');
+      title[i].removeAttribute('data-target');
+      title[i].removeAttribute('aria-expanded');
+      title[i].removeAttribute('aria-controls');
+      titleIcon[i].classList.remove('fi-rr-angle-down');
+      titleIcon[i].classList.remove('fi-rr-angle-up');
+
+      content[i].classList.remove('collapse');
+      content[i].removeAttribute('id');
+    }
+  }
+}
+
+maxWidth767.addEventListener('change', handleResize767);
+handleResize767(maxWidth767);
   
 
 
