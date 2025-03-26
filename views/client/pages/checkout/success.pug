@@ -13,20 +13,37 @@ block main
         if order.deliveryStatus == "pending-payment"
           i.fi.fi-rr-pending
           span Chờ xác nhận thanh toán
-      .inner-content
+      .inner-content.d-flex
         .order-info
           .title Thông tin đơn đặt hàng
-          .customer-info
+          .customer-info.wrapper-flex-column-gap-15
             span Tên người nhận: #{order.userInfo.fullName}
             span Số điện thoại: #{order.userInfo.phone}
             span Địa chỉ: #{order.userInfo.detail}, #{order.userInfo.commune}, #{order.userInfo.district}, #{order.userInfo.province}
             span Phương thức thanh toán: 
-          .order-product
+          .inner-orderProducts.wrapper-flex-column-gap-15
             each item in products
-              //- +product-item-template-order(item)
+              .product-wrapper.d-flex.align-items-center  
+                .product-image
+                  .quantity #{item.quantity}
+                  .image
+                    img(src=item.thumbnail.replace('upload/', 'upload/c_limit,w_62/f_auto/') alt=item.product_title)
+                .product-info
+                  .title #{item.product_title}
+                  .size #{item.size.size}
+                .product-price.formatMoney #{item.totalPrice}$
           .totalPrice Tổng #{totalPrice} đ
         if order.deliveryStatus == 'pending-payment'
-          .section-qr QR
+          .section-qr(data-bank-id=bankId data-bank-account=bankAccount)
+            img(src=`https://img.vietqr.io/image/${bankId}-${bankAccount}-qr_only.png?amount=${totalPrice}&addInfo=fixcung`)
+            .des
+              p Mã QR thanh toán tự động
+              p Thường không quá 3 phút
+            p Số tiền: <span class="price">#{totalPrice} đ</span>
+            p Người thụ hưởng: <span class="owner">PHAN THANH TUNG</span>
+            .wait
+              span Đang chờ thanh toán
+              span.time 09:57 
       div orderId: #{order.id}
       
       if(products == 0)
@@ -51,7 +68,11 @@ block main
                     tr
                       td #{index + 1}
                       td
-                        
+                        img(
+                          src=item.thumbnail
+                          alt=item.product_title
+                          width="80px"
+                        )
                       td #{item.product_title}
                       td #{item.size}
                       td #{item.price} 
@@ -67,15 +88,6 @@ block main
         button.qr-button Mã QR
       
   
-  .section-qr.d-none(data-bank-id=bankId data-bank-account=bankAccount)
-    img(src=`https://img.vietqr.io/image/${bankId}-${bankAccount}-qr_only.png?amount=${totalPrice}&addInfo=fixcung`)
-    .des
-      p Mã QR thanh toán tự động
-      p Thường không quá 3 phút
-    p Số tiền: <span class="price">#{totalPrice} đ</span>
-    p Người thụ hưởng: <span class="owner">PHAN THANH TUNG</span>
-    .wait
-      span Đang chờ thanh toán
-      span.time 09:57 
+  
   script(src="/js/checkout.js")
   
