@@ -11,8 +11,17 @@ const orderSchema = new mongoose.Schema(
       commune: String,
       detail: String
     },
+    totalPrice: String,
     note: String,
     deliveryStatus: String,
+    paymentStatus:{
+      status:{
+        type: String,
+        default: "lack"
+      }, //ok, change, lack
+      change: Number,
+      lack: Number,
+    },
     paymentMethod: String,
   },
   {

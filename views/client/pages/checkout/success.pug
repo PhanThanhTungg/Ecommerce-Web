@@ -49,10 +49,9 @@ block main
       a(href="/products") Tiếp tục mua hàng
       if order.deliveryStatus == "pending-payment"
         button.qr-button Mã QR
-      
   
-  .section-qr(data-bank-id=bankId data-bank-account=bankAccount)
-    img(src=`https://img.vietqr.io/image/${bankId}-${bankAccount}-qr_only.png?amount=${totalPrice}&addInfo=fixcung`)
+  .section-qr()
+    img(src=`https://img.vietqr.io/image/${bankId}-${bankAccount}-qr_only.png?amount=${totalPrice}&addInfo=STARTSEVQR${order.id}END`)
     .des
       p Mã QR thanh toán tự động
       p Thường không quá 3 phút

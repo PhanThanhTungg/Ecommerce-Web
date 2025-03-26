@@ -34,7 +34,6 @@ module.exports.index = async (req, res) => {
       totalPriceItem
     })
   };
-  console.log(totalPrice)
   res.render("client/pages/checkout/index", {
     pageTitle: "Đặt hàng",
     orderProducts,
@@ -60,6 +59,13 @@ module.exports.order = async (req, res) => {
   }
 
   if(res.locals.user) orderData.userId = res.locals.user.id;
+
+  let totalPrice = orderProducts.reduce((val1,val2)=>{
+    return val1 + val2.totalPriceItem;
+  },0)
+  console.log(orderProducts);
+  console.log(totalPrice);
+  orderData.totalPrice = totalPrice;
   const order = new Order(orderData);
   await order.save();
 
@@ -106,7 +112,7 @@ module.exports.success = async (req, res) => {
 
     product.thumbnail = infoProduct.images[0];
 
-    product.totalPrice = product.price * product.quantity
+    product.totalPrice = +(product.price *(1-product.discountPercentage/100)).toFixed(0) * product.quantity
     const currentStock = sizeInfo.stock - product.quantity
     await Product.updateOne({ _id: product.product_id }, {
       sales: infoProduct.sales + product.quantity
