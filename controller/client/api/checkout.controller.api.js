@@ -13,6 +13,7 @@ module.exports.getDeliveryStatus = async (req,res)=>{
         "Content-Type": "application/json"
       }
     })
+
     const order = await Order.findOne({_id: orderId});
     const filterTransaction = data.transactions.filter(item=>new RegExp(orderId).test(item.transaction_content));
     
@@ -23,26 +24,46 @@ module.exports.getDeliveryStatus = async (req,res)=>{
       return val1+parseInt(val2.amount_out);
     },0)
     const totalAmount = amountIn - amountOut;
-
-    let paymentStatus = order.paymentStatus.status;
+    
+    let paymentStatus = {
+      status: order.paymentStatus.status,
+      change: order.paymentStatus.change,
+      lack: order.paymentStatus.lack
+    };
 
     if(totalAmount == order.totalPrice && paymentStatus != "ok"){
       await Order.updateOne({_id: orderId},{
-        $set:{"paymentStatus.status":"ok"}
+        $set:{
+          "paymentStatus.status":"ok",
+        }
       });
-      paymentStatus = "ok";
+      paymentStatus = {
+        status: "ok"
+      };
     }
     else if(totalAmount < order.totalPrice && paymentStatus != "lack"){
       await Order.updateOne({_id: orderId},{
-        $set:{"paymentStatus.status":"lack"}
+        $set:{
+          "paymentStatus.status":"lack",
+          "paymentStatus.lack":order.totalPrice-totalAmount,
+        }
       })
-      paymentStatus = "lack"
+      paymentStatus = {
+        status: "lack",
+        lack: order.totalPrice-totalAmount
+      }
     }
     else if(totalAmount > order.totalPrice && paymentStatus != "change"){
       await Order.updateOne({_id: orderId},{
-        $set:{"paymentStatus.status":"change"}
+        $set:{
+          "paymentStatus.status":"change",
+          "paymentStatus.status":totalAmount - order.totalPrice,
+        }
       })
-      paymentStatus = "change";
+      paymentStatus = {
+        status: "change",
+        change: totalAmount - order.totalPrice
+      };
     }
     res.status(200).json({
       paymentStatus

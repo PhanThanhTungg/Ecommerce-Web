@@ -58,13 +58,12 @@ module.exports.order = async (req, res) => {
     paymentMethod
   }
 
-  if(res.locals.user) orderData.userId = res.locals.user.id;
+  orderData.userId = res.locals.user?.id || req.cookies?.cartId;
 
   let totalPrice = orderProducts.reduce((val1,val2)=>{
     return val1 + val2.totalPriceItem;
   },0)
-  console.log(orderProducts);
-  console.log(totalPrice);
+
   orderData.totalPrice = totalPrice;
   const order = new Order(orderData);
   await order.save();
