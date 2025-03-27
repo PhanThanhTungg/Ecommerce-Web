@@ -21,19 +21,19 @@ block main
             .col-2 #{order.userInfo.phone}
             .col-8 #{order.userInfo.detail}, #{order.userInfo.commune}, #{order.userInfo.district}, #{order.userInfo.province}
             .col-2 Kiểu thanh toán: #{order.paymentMethod}
-            .col-4
+            - status = order.paymentStatus.status
+            .col-4.paymentStatus-section(status = status data-order-id = order._id)
               if order.paymentMethod == "Mã QR"
-                - status = order.paymentStatus.status
                 if status == "ok"
                   p Trạng thái thanh toán: Đã chuyển đủ
                 if status == "lack"
                   p Trạng thái thanh toán: Chuyển thiếu
                   p Tiền thiếu: #{order.paymentStatus.lack}
                   button.button-qr-history Mã QR
-                    +qr-code(bankId, bankAccount, order.paymentStatus.lack, order._id)
+                  +qr-code(bankId, bankAccount, order.paymentStatus.lack, order._id)
                 if status == "change"
                   p Trạng thái thanh toán: Chuyển thừa
-                  p Tiền thiếu: #{order.paymentStatus.change}
+                  p Tiền thừa: #{order.paymentStatus.change}
           .orderProducts
             - totalPrice = 0
             each item in order.orderProducts
