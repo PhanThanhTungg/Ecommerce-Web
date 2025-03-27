@@ -166,13 +166,16 @@ if(qrSection){
 const successPage = document.querySelector(".success");
 if(successPage){
   const orderId = successPage.dataset.orderId;
-  const fetchApi = ()=>{
-    fetch(`/api/checkout/delivery-status/qr/${orderId}`).then(res=>res.json())
-    .then(data=>{
-      console.log(data);
-      // if(data.paymentStatus == "ok")
-    })
+  const paymentMethod = successPage.dataset.paymentMethod;
+  if(paymentMethod = "qr"){
+    const fetchApi = ()=>{
+      fetch(`/api/checkout/delivery-status/qr/${orderId}`).then(res=>res.json())
+      .then(data=>{
+        console.log(data);
+        // if(data.paymentStatus == "ok")
+      })
+    }
+    setInterval(fetchApi, 15000);
   }
-  setInterval(fetchApi, 15000);
 }
 

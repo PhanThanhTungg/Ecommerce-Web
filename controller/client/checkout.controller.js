@@ -45,6 +45,10 @@ module.exports.order = async (req, res) => {
   let { orderProducts, fullName, phone, province, district, commune, detail, paymentMethod } = req.body;
   orderProducts = JSON.parse(orderProducts);
 
+  let totalPrice = orderProducts.reduce((val1,val2)=>{
+    return val1 + val2.totalPriceItem;
+  },0)
+
   const orderData = {
     userInfo:{
       fullName,
@@ -55,14 +59,16 @@ module.exports.order = async (req, res) => {
       detail
     },
     deliveryStatus: paymentMethod=="cash"?"pending":"pending-payment",
-    paymentMethod
+    paymentMethod,
+  }
+  if(paymentMethod!="cash"){
+    orderData.paymentStatus = {
+      status: "lack",
+      lack: totalPrice
+    }
   }
 
   orderData.userId = res.locals.user?.id || req.cookies?.cartId;
-
-  let totalPrice = orderProducts.reduce((val1,val2)=>{
-    return val1 + val2.totalPriceItem;
-  },0)
 
   orderData.totalPrice = totalPrice;
   const order = new Order(orderData);

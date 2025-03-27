@@ -3,7 +3,7 @@ include ../../mixins/box-head.pug
 include ../../mixins/product-item-template.pug
 
 block main
-  .page-format.success(data-order-id = order.id)
+  .page-format.success(data-order-id = order.id data-order-payment-method)
     .container.my-3
       .notification.wrapper-flex-column-gap-15.align-items-center
         if order.deliveryStatus == "pending"

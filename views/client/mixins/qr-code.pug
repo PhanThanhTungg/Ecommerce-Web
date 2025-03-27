@@ -1,0 +1,10 @@
+mixin qr-code(bankId, bankAccount, amount, orderId)
+  .section-qr.d-none.section-qr-history(data-bank-id=bankId data-bank-account=bankAccount)
+    img(src=`https://img.vietqr.io/image/${bankId}-${bankAccount}-qr_only.png?amount=${amount}&addInfo=STARTSEVQR${orderId}END`)
+    .des
+      p Mã QR thanh toán tự động
+      p Thường không quá 3 phút
+    p Số tiền: <span class="price">#{amount} đ</span>
+    p Người thụ hưởng: <span class="owner">PHAN THANH TUNG</span>
+    .wait
+      span Đang chờ thanh toán

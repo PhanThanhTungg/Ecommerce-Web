@@ -35,7 +35,8 @@ module.exports.getDeliveryStatus = async (req,res)=>{
       await Order.updateOne({_id: orderId},{
         $set:{
           "paymentStatus.status":"ok",
-        }
+        },
+        $unset: { "paymentStatus.change": "", "paymentStatus.lack": "" }
       });
       paymentStatus = {
         status: "ok"
@@ -46,7 +47,8 @@ module.exports.getDeliveryStatus = async (req,res)=>{
         $set:{
           "paymentStatus.status":"lack",
           "paymentStatus.lack":order.totalPrice-totalAmount,
-        }
+        },
+        $unset: { "paymentStatus.change": ""}
       })
       paymentStatus = {
         status: "lack",
@@ -57,8 +59,9 @@ module.exports.getDeliveryStatus = async (req,res)=>{
       await Order.updateOne({_id: orderId},{
         $set:{
           "paymentStatus.status":"change",
-          "paymentStatus.status":totalAmount - order.totalPrice,
-        }
+          "paymentStatus.change":totalAmount - order.totalPrice,
+        },
+        $unset: {"paymentStatus.lack": ""}
       })
       paymentStatus = {
         status: "change",

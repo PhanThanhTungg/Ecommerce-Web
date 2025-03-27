@@ -16,10 +16,7 @@ const orderSchema = new mongoose.Schema(
     note: String,
     deliveryStatus: String,
     paymentStatus:{
-      status:{
-        type: String,
-        default: "lack"
-      }, //ok, change, lack
+      status:String, //ok, change, lack
       change: Number,
       lack: Number,
     },

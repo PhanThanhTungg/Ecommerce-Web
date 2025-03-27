@@ -1,6 +1,7 @@
 const Order = require("../../model/order.model")
 const Product = require("../../model/product.model");
 const OrderProduct = require("../../model/order-product.model");
+const getStatusHelper = require("../../helpers/getStatus.helper");
 const filterStatusOrderHelper = require("../../helpers/filterStatusOrder")
 const searchHelper = require("../../helpers/search")
 module.exports.index = async (req, res) => {
@@ -9,11 +10,11 @@ module.exports.index = async (req, res) => {
   if(user){
     orders = await Order.find({
       userId: user.id
-    }).select("-userId -updatedAt").lean()
+    }).sort({ createdAt: -1 }).select("-userId -updatedAt").lean()
   }else{
     orders = await Order.find({
       cartId: req.cookies.cartId
-    }).select("-userId -updatedAt").lean()
+    }).sort({ createdAt: -1 }).select("-userId -updatedAt").lean()
   }
 
   if(!orders){
@@ -22,13 +23,18 @@ module.exports.index = async (req, res) => {
   }
 
   for(const order of orders){
+    order.paymentMethod = getStatusHelper.getPaymentMethod(order.paymentMethod);
     const orderProducts = await OrderProduct.find({
       order_id: order._id
     }).lean();
+    for(const item of orderProducts){
+      const product = await Product.findOne({_id: item.product_id});
+      item.product_thumbnail = product.images[0];
+    }
     order.orderProducts = orderProducts;
   }
+
   
-  console.log(orders)
   //   // //search
   // let findTitle = null 
   // const objectSearch = searchHelper(req.query)
@@ -143,8 +149,10 @@ module.exports.index = async (req, res) => {
     // }
     //end sort
     res.render("client/pages/order/index", {
-        pageTitle: "Lịch sử mua hàng",
-        orders: orders,
+      pageTitle: "Lịch sử mua hàng",
+      orders: orders,
+      bankId: process.env.QR_BANK_ID,
+      bankAccount: process.env.QR_BANK_ACC
         // filterStatus: filterStatus
     })
 }
