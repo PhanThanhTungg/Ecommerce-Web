@@ -158,21 +158,25 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 })
 
-// handle checkout
-const formCheckout = document.querySelector(".form-checkout");
-if(formCheckout){
-  formCheckout.addEventListener("submit", (e)=>{
-    e.preventDefault();
-    if(e.target.paymentMethod == "qr"){
-      e.target.action += "qrcode";
-      const orderProducts = JSON.parse(e.target.orderProducts.value);
-      const totalPrice = +e.target.orderProducts.dataset.total;
-      // e.target.submit();
+const qrSection = document.querySelector(".section-qr");
+if(qrSection){
+  
+}
+
+const successPage = document.querySelector(".success");
+if(successPage){
+  const orderId = successPage.dataset.orderId;
+  const paymentMethod = successPage.dataset.paymentMethod;
+  if(paymentMethod = "qr"){
+    const fetchApi = ()=>{
+      fetch(`/api/checkout/delivery-status/qr/${orderId}`).then(res=>res.json())
+      .then(data=>{
+        console.log(data);
+        // if(data.paymentStatus == "ok")
+      })
     }
-    else if(e.target.paymentMethod == "cash"){
-      e.target.submit();
-    }
-  })
+    setInterval(fetchApi, 15000);
+  }
 }
 
 // hide qr code

@@ -3,7 +3,7 @@ include ../../mixins/box-head.pug
 include ../../mixins/product-item-template.pug
 
 block main
-  .page-format.success
+  .page-format.success(data-order-id = order.id data-order-payment-method)
     .container.my-3
       .notification.wrapper-flex-column-gap-15.align-items-center
         if order.deliveryStatus == "pending"
@@ -50,7 +50,8 @@ block main
             
         if order.deliveryStatus == 'pending-payment'
           .section-qr(data-bank-id=bankId data-bank-account=bankAccount)
-            img(src=`https://img.vietqr.io/image/${bankId}-${bankAccount}-qr_only.png?amount=${totalPrice}&addInfo=fixcung`)
+
+            img(src=`https://img.vietqr.io/image/${bankId}-${bankAccount}-qr_only.png?amount=${totalPrice}&addInfo=STARTSEVQR${order.id}END`)
             p.des Mã QR thanh toán tự động
             .info-bank-account
               b Số tiền: <span class="price">#{totalPrice} đ</span>
@@ -61,10 +62,5 @@ block main
             //-   span Đang chờ thanh toán
             //-   span.time 09:57       
       
-      
-
-      
-  
-  
   script(src="/js/checkout.js")
   

@@ -6,91 +6,50 @@ include ../../mixins/moment.pug
 include ../../mixins/filter-status.pug
 include ../../mixins/search.pug
 include ../../mixins/sort-order.pug
+include ../../mixins/qr-code.pug
 
 block main
   .page-format
     .container.my-3
-      .card.mb-3.filter-status-search
-        .card-body
-            .row
-                .col-12
-                    +filter-status(filterStatus)
-      .card.mb-3.sort
-          .card-header(style="color: white") <i class="fa-solid fa-arrow-up-short-wide"></i> Lọc 
-          .card-body
+      each order in orders
+        .orderInfo
+          .row
+            .col-6 ##{order._id}
+            .col-6 
+              +formatDateTime(order.createdAt)
+            .col-2 #{order.userInfo.fullName}
+            .col-2 #{order.userInfo.phone}
+            .col-8 #{order.userInfo.detail}, #{order.userInfo.commune}, #{order.userInfo.district}, #{order.userInfo.province}
+            .col-2 Kiểu thanh toán: #{order.paymentMethod}
+            - status = order.paymentStatus?.status
+            .col-4.paymentStatus-section(status = status data-order-id = order._id)
+              if order.paymentMethod == "Mã QR"
+                if status == "ok"
+                  p Trạng thái thanh toán: Đã chuyển đủ
+                if status == "lack"
+                  p Trạng thái thanh toán: Chuyển thiếu
+                  p Tiền thiếu: #{order.paymentStatus.lack}
+                  button.button-qr-history Mã QR
+                  +qr-code(bankId, bankAccount, order.paymentStatus.lack, order._id)
+                if status == "change"
+                  p Trạng thái thanh toán: Chuyển thừa
+                  p Tiền thừa: #{order.paymentStatus.change}
+          .orderProducts
+            - totalPrice = 0
+            each item in order.orderProducts
+              - price = +(item.price*(100-item.discountPercentage)/100).toFixed(0)
+              - totalPrice += price
               .row
-                  .col-4
-                      +sortOrder()
-                  .col-4
-                  .col-4
-                      +search(keyword)
-      .row
-        .col-12 
-          +box-head(pageTitle)
-        .col-12
-          table(class="table table-bordered" table-cart)
-            thead
-              tr
-                .row
-                  th Ảnh
-                  th.col-md-3.col-12 Tên
-                  th Loại
-                  th Giá
-                  th Số lượng
-                  th Tổng tiền
-                  if(orders.length>0)
-                    th Thời gian
-                  if(orders.length>0)
-                    th Trạng thái
-                  if(orders.length>0)
-                    th
-            tbody
-              if(orders.length>0)
-                each order, index in orders
-                    tr
-                      td
-                        img(
-                          src=order.productInfo.thumbnail
-                          alt=order.productInfo.title
-                          width="80px"
-                        )
-                      td
-                        a(
-                          href=`/products/detail/${order.productInfo.slug}`
-                        ) #{order.productInfo.title}
-                      td #{order.size}
-                      td.formatMoney #{order.priceNew}đ
-                      td
-                        input(
-                          value=order.quantity
-                          disabled
-                          item-id=order.product_id
-                          style="width: 60px"
-                        )
-                      td.formatMoney #{order.totalPrice}đ
-                      td 
-                        +formatDateTime(order.createAt)
-                      td #{order.statusDisplay}
-                      td(class="table-history-action")
-                        div 
-                          a(href=`/products/detail/${order.productInfo.slug}` class="button-1") Mua lại
-                        if(order.statusDisplay=='Đang xác nhận' ||order.statusDisplay=='Đã xác nhận')
-                          .mt-2 
-                           button(
-                              class="btn btn-danger btn-sm button-2"
-                              button-delete
-                              data-id = order.order_id
-                              object-id = order.object_id
-                          ) Hủy
-                          form(
-                              action="" 
-                              method="POST"
-                              id = "form-delete-item"
-                              data-path = `/history/delete`
-                          ) 
-              else
-                tr
-                  td(colspan="7") Chưa có sản phẩm nào!
-    script(src="/js/cart.js") 
-    script(src="/js/order.js")
-    script(src="/js/format.js")
+                .col-2 #{item.product_title}
+                .col-2
+                  img(src=item.product_thumbnail width="80%")
+                .col-2
+                  p Size: #{item.size}
+                  p Giá: #{price}
+                  p Số lượng: #{item.quantity}
+                .col-2
+            
+        hr
+
+    //- script(src="/js/cart.js") 
+    script(src="/js/history.js")

@@ -5,4 +5,6 @@ const controller = require("../../../controller/client/api/product.controller.ap
 
 router.get("/:slugCategory?", controller.productApiGetData)
 
+router.get("/type/:type", controller.productApiGettype)
+
 module.exports = router;

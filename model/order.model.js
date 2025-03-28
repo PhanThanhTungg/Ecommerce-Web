@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const orderSchema = new mongoose.Schema(
   {
     userId: String,
+    cartId: String,
     userInfo: {
       fullName: String,
       phone: String,
@@ -11,8 +12,14 @@ const orderSchema = new mongoose.Schema(
       commune: String,
       detail: String
     },
+    totalPrice: String,
     note: String,
     deliveryStatus: String,
+    paymentStatus:{
+      status:String, //ok, change, lack
+      change: Number,
+      lack: Number,
+    },
     paymentMethod: String,
   },
   {
