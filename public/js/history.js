@@ -1,4 +1,5 @@
-const paymentStatusSections = document.querySelectorAll(".paymentStatus-section[status='lack']");
+const paymentStatusSections = document.querySelectorAll(".paymentStatus-section[status='lack']")
+
 if(paymentStatusSections){
   [...paymentStatusSections].forEach(item=>{
     fetch(`/api/checkout/delivery-status/qr/${item.dataset.orderId}`).then(res=>res.json())
@@ -9,8 +10,6 @@ if(paymentStatusSections){
       })
   })
 }
-
-
 
 const buttonQrHistorys = document.querySelectorAll(".button-qr-history");
 if(buttonQrHistorys){

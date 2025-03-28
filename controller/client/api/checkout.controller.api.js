@@ -16,7 +16,7 @@ module.exports.getDeliveryStatus = async (req,res)=>{
 
     const order = await Order.findOne({_id: orderId});
     const filterTransaction = data.transactions.filter(item=>new RegExp(orderId).test(item.transaction_content));
-    
+    console.log(filterTransaction)
     let amountIn = filterTransaction.reduce((val1,val2)=>{
       return val1+parseInt(val2.amount_in);
     },0)

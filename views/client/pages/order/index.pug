@@ -21,7 +21,7 @@ block main
             .col-2 #{order.userInfo.phone}
             .col-8 #{order.userInfo.detail}, #{order.userInfo.commune}, #{order.userInfo.district}, #{order.userInfo.province}
             .col-2 Kiểu thanh toán: #{order.paymentMethod}
-            - status = order.paymentStatus.status
+            - status = order.paymentStatus?.status
             .col-4.paymentStatus-section(status = status data-order-id = order._id)
               if order.paymentMethod == "Mã QR"
                 if status == "ok"
