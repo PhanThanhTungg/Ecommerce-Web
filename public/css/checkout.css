@@ -489,7 +489,7 @@ p.address-info {
   font-size: 2rem;
   font-weight: 500;
   flex-grow: 1;
-  text-align: center;
+  padding-left: calc(50% + 7.5px);
 }
 
 .success .inner-content .order-info .order-products .totalPrice .value {
@@ -504,7 +504,7 @@ p.address-info {
 
 .success .inner-content .order-info .order-products .shipping .name {
   flex-grow: 1;
-  padding-left: 10px;
+  padding-left: calc(50% + 7.5px);
 }
 
 .success .inner-content .order-info .order-products .shipping .value {
@@ -570,7 +570,7 @@ p.address-info {
 .section-qr .des {
   text-align: center;
   color: var(--secondary-color-text);
-  font-style: inherit;
+  font-style: italic;
   margin-bottom: 15px;
   white-space: nowrap;
 }

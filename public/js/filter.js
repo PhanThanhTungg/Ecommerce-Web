@@ -27,8 +27,8 @@ function fetchAPIProducts(pageSelected = 1) {
               <div class="col-xl-4 col-md-4 col-6 mb-3">
                 <div class="product-item">
                   <div class="inner-image">
-                    <img class="img-product-1" src="${item.images[0]}" alt="{item.title}">
-                    <img class="img-product-2" src="${item.images.length > 1 ? item.images[1] : item.images[0]}" alt="${item.title}">
+                    <img class="img-product-1" src="${item.images[0].replace('upload/', 'upload/c_limit,w_254/f_auto/')}" alt=${item.title}>
+                    <img class="img-product-2" src="${item.images.length > 1 ? item.images[1].replace('upload/', 'upload/c_limit,w_254/f_auto/') : item.images[0].replace('upload/', 'upload/c_limit,w_254/f_auto/')}" alt=${item.title}>
                     ${item.featured == "1" ? '<div class="inner-featured">Trending</div>' : ''}
                   </div>
                   <div class="inner-content">

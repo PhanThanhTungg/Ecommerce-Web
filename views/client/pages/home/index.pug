@@ -101,15 +101,15 @@ block main
 
     .section-products-featured.my-5
       .container
-        .row
-          .col-6
-            +box-head("ALL PRODUCTS")
-          .col-6
-            +sort()
+        //- .row
+        //-   .col-6
+        //-     +box-head("ALL PRODUCTS")
+        //-   .col-6
+        //-     +sort()
 
         +product-grid(productsNew)
 
-        +pagination(pagination)
+        //- +pagination(pagination)
 
   script(src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js")
   script(src="/js/rating.js")

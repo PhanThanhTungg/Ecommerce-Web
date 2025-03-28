@@ -13,7 +13,7 @@ block main
             .swiper-wrapper
               each item in product.images
                 .swiper-slide
-                  img(src=item)
+                  img(src=item.replace('upload/', 'upload/c_limit,w_540/f_auto/'))
             .swiper-button-next
               <i class="fi fi-rr-right"></i>
             .swiper-button-prev
@@ -22,7 +22,7 @@ block main
             .swiper-wrapper
               each item in product.images
                 .swiper-slide
-                  img(src=item)
+                  img(src=item.replace('upload/', 'upload/c_limit,w_90/f_auto/'))
         .col-md-5.product-info
           h3(class="inner-title") #{product.title}
           .d-flex.align-items-center
@@ -81,7 +81,7 @@ block main
             .btn-size
               each item in product.listSize 
                 button.button-size(id=item.id price=item.price priceNew=item.priceNew stock=item.stock) #{item.size}
-                
+
 
           form(
             action=`/cart/add/${product.id}`
@@ -155,36 +155,36 @@ block main
                 <div id="rating">
                   <input type="radio" id="star5" name="rating" value="5"/>
                   <label class = "full" for="star5" title="Awesome - 5 stars"></label>
-              
+
                   <input type="radio" id="star4" name="rating" value="4"/>
                   <label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-              
+
                   <input type="radio" id="star3" name="rating" value="3"/>
                   <label class = "full" for="star3" title="Meh - 3 stars"></label>
-              
+
                   <input type="radio" id="star2" name="rating" value="2"/>
                   <label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-              
+
                   <input type="radio" id="star1" name="rating" value="1"/>
                   <label class = "full" for="star1" title="Sucks big time - 1 star"></label>
                 </div>   
                 div(class="form-group")
                   label(for="desc" class="inner-title")
                   textarea(
-                      class="form-control"
-                      id="desc"
-                      name="description"
-                      rows="6"
-                      required
+                    class="form-control"
+                    id="desc"
+                    name="description"
+                    rows="6"
+                    required
                   )
                 div(class="form-group" style="margin: 0; padding-bottom:30px; display: flex; justify-content: flex-end")
                   button(
-                      type="submit"
-                      class="btn btn-primary button-1 button-feedback"
+                    type="submit"
+                    class="btn btn-primary button-1 button-feedback"
                   ) Xác nhận
             else 
               h2.text-white.ml-5 Đăng nhập để bình luận!
-              
+
           //- .col-12 
           //-   each feedback in product.feedback 
           //-     if feedback.userToken == myToken 
@@ -211,22 +211,22 @@ block main
           //-         .time.ml-4
           //-           +formatDateTime(feedback.time)
           //-         .comment.ml-5 #{feedback.comment}
-              
+
           //-         .wrap-hr(style="display: flex; align-item: center; justify-content: center")
           //-           hr.m-0.mt-3(style="height: 0.5px; background-color: #158b8d; width: 99%")
-   
+
     .container.my-5
       +box-head("Related Product")
       .row
         .col-12 
           #demo
-              #indemo
-                  #demo1
-                    +product-grid-slide(relatedProduct)
-                  #demo2
+            #indemo
+              #demo1
+                +product-grid-slide(relatedProduct)
+              #demo2
         .col-12.mt-5
-          
-  
+
+
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   script(src="/js/detailProduct.js")
   script(src="/js/feedback.js")

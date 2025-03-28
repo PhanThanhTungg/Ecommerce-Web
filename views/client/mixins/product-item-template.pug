@@ -3,9 +3,9 @@ mixin product-item-template-1(item)
   a(href=`/products/detail/${item.slug}`)
     .col-xl-4.col-md-4.col-6.mb-3
       .product-item
-        .inner-image    
-          img.img-product-1(src=item.images[0], alt=item.title)
-          img.img-product-2(src=(item.images.length>1?item.images[1]:item.images[0]), alt=item.title)
+        .inner-image
+          img.img-product-1(src=item.images[0].replace('upload/', 'upload/c_limit,w_348/f_auto/'), alt=item.title)
+          img.img-product-2(src=(item.images.length>1?item.images[1].replace('upload/', 'upload/c_limit,w_348/f_auto/'):item.images[0].replace('upload/', 'upload/c_limit,w_348/f_auto/')), alt=item.title)
           if item.featured == "1"
             .inner-featured Trending
           //- .overlay-product
@@ -57,8 +57,8 @@ mixin product-item-template-cart(item)
   a(href=`/products/detail/${item.slug}`)
     .product-item(style="width: 20rem; height: auto; margin-right:30px")
       .inner-image    
-        img.img-product-1(src=item.images[0], alt=item.title)
-        img.img-product-2(src=(item.images.length>1?item.images[1]:item.images[0]), alt=item.title)
+        img.img-product-1(src=item.images[0].replace('upload/', 'upload/c_limit,w_200/f_auto/'), alt=item.title)
+        img.img-product-2(src=(item.images.length>1?item.images[1].replace('upload/', 'upload/c_limit,w_200/f_auto/'):item.images[0].replace('upload/', 'upload/c_limit,w_200/f_auto/')), alt=item.title)
         if item.featured == "1"
           .inner-featured Trending
       .inner-content
