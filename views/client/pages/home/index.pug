@@ -81,7 +81,7 @@ block main
             .col-4
               .inner-box.text-center
                 .inner-image
-                  img(src=item.thumbnail)
+                  img(src=item.thumbnail.replace('upload/', 'upload/c_limit,w_350/f_auto/'))
                 a.inner-button(href=`/products/${item.slug}`) #{item.title}
     //- .section-products-featured.my-5
     //-   .container
@@ -101,18 +101,23 @@ block main
 
     .section-products-featured.my-5
       .container
-        //- .row
-        //-   .col-6
-        //-     +box-head("ALL PRODUCTS")
-        //-   .col-6
-        //-     +sort()
-
-        +product-grid(productsNew)
-
-        //- +pagination(pagination)
+        h3 Sản phẩm hàng đầu
+        .d-flex.justify-content-between.align-items-center.mb-5
+          button.prev.pagination-button
+            i.fi.fi-rr-arrow-left
+          .inner-button
+            button.featured.active(value='featured') Nổi bật
+            button.saleoff(value='saleoff') Giảm giá
+            button.sales(value='sales') Bán chạy nhất
+          button.next.pagination-button
+            i.fi.fi-rr-arrow-right
+        .row.box-product
+          
+        //- +product-grid(productsNew)
 
   script(src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js")
   script(src="/js/rating.js")
-  script(src="/js/product.js") 
+  //- script(src="/js/product.js")
   script(src="/js/format.js") 
-  script(src="/js/productSlide.js")
+  //- script(src="/js/productSlide.js")
+  script(src="/js/homepage.js")

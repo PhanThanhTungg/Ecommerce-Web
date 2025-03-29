@@ -24,11 +24,11 @@ function fetchAPIProducts(pageSelected = 1) {
         products.forEach(item => {
           boxProduct.innerHTML += `
             <a href="/products/detail/${item.slug}">
-              <div class="col-xl-4 col-md-4 col-6 mb-3">
+              <div class="col-xl-4 col-md-4 col-6 mb-4">
                 <div class="product-item">
                   <div class="inner-image">
                     <img class="img-product-1" src="${item.images[0].replace('upload/', 'upload/c_limit,w_254/f_auto/')}" alt=${item.title}>
-                    <img class="img-product-2" src="${item.images.length > 1 ? item.images[1].replace('upload/', 'upload/c_limit,w_254/f_auto/') : item.images[0].replace('upload/', 'upload/c_limit,w_254/f_auto/')}" alt=${item.title}>
+                    <img class="img-product-2" src="${item.images.length > 1 ? item.images[1].replace('upload/', 'upload/c_limit,w_305/f_auto/') : item.images[0].replace('upload/', 'upload/c_limit,w_305/f_auto/')}" alt=${item.title}>
                     ${item.featured == "1" ? '<div class="inner-featured">Trending</div>' : ''}
                   </div>
                   <div class="inner-content">
@@ -81,6 +81,14 @@ function fetchAPIProducts(pageSelected = 1) {
             </a>
           `
         });
+        const rating_wrappers = document.querySelectorAll(".inner-rating");
+        if (rating_wrappers) {
+          rating_wrappers.forEach(rating => {
+            const ratingNumber = rating.dataset.rating;
+            const ratingInput = rating.querySelector(`input[value="${ratingNumber}"]`);
+            ratingInput.checked = true;
+          })
+        }
       }
       createPagination(data.objectPagination.totalPage, data.objectPagination.currentPage);
     })
@@ -263,12 +271,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const collapsePrice = document.getElementById("collapsePrice");
   const iconPrice = document.getElementById("icon-price");
 
-  $(collapsePrice).on("show.bs.collapse", function() {
+  $(collapsePrice).on("show.bs.collapse", function () {
     iconPrice.classList.remove("fi-rr-angle-down");
     iconPrice.classList.add("fi-rr-angle-up");
   })
 
-  $(collapsePrice).on("hide.bs.collapse", function() {
+  $(collapsePrice).on("hide.bs.collapse", function () {
     iconPrice.classList.remove("fi-rr-angle-up");
     iconPrice.classList.add("fi-rr-angle-down");
   })

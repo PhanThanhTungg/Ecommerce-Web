@@ -15,12 +15,12 @@ block main
                     +filter()
                 .col
                     +sort()
-                    +product-grid(Products)
+                    .row.box-product
+                    //- +product-grid(Products)
                     
                     +pagination()
     
-    script(src="/js/format.js") 
-    script(src="/js/product.js") 
-    script(src="/js/rating.js")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.8.1/nouislider.min.js")
     script(src="/js/filter.js")
+    script(src="/js/format.js") 
+    script(src="/js/product.js") 
