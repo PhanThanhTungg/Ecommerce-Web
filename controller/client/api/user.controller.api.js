@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../../../model/user.model");
+const UserInformation = require("../../../model/user-infomation.model");
 const genTokenHelper = require("../../../helpers/genToken.helper");
 module.exports.refresh = async (req,res)=>{
   const refreshToken = req.cookies.refreshToken;
@@ -14,4 +15,16 @@ module.exports.refresh = async (req,res)=>{
   } catch (error) {
     return res.status(400).json({mess: error.message});
   }
+}
+
+module.exports.addInformation = async (req,res)=>{
+  const userInformation = new UserInformation({
+    user_id: res.locals.user?.id,
+    ...req.body
+  })
+  await userInformation.save();
+  res.json({
+    code: 200,
+    data: userInformation
+  })
 }
