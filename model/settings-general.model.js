@@ -8,6 +8,13 @@ const settingGeneralSchema = new mongoose.Schema(
     email: String,
     address: String,
     copyright: String,
+    shippingFee:{
+      kmFree: Number,
+      addFeePerKm: Number,
+      urbanFee: Number,
+      suburbanFee: Number,
+      interProvincialFee: Number,
+    }
   },
   {
     timestamps: true,

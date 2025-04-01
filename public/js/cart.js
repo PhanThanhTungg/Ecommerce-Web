@@ -13,22 +13,41 @@ if(inputNumbers){
       inputValue.value = Math.max(1,+inputValue.value);
       inputValue.value = Math.min(+inputValue.value, stock);
       fetch(`/cart/update/${productId}/${sizeId}/${inputValue.value}`).then(res=>res.json())
-      .then(data=>console.log(data));
+      .then(data=>{
+        if(data.code == 200){
+          const totalPrice = document.querySelector(".cart-info .total-price");
+          totalPrice.innerHTML = data.totalPrice + " đ";
+          const miniCart = document.querySelector("span.miniCart");
+          miniCart.innerHTML = data.totalItem
+        }
+      });
     })
     subSpan.addEventListener("click", ()=>{
       inputValue.value = Math.max(1,+inputValue.value-1);
       fetch(`/cart/update/${productId}/${sizeId}/${inputValue.value}`).then(res=>res.json())
-      .then(data=>console.log(data));
+      .then(data=>{
+        if(data.code == 200){
+          const totalPrice = document.querySelector(".cart-info .total-price");
+          totalPrice.innerHTML = data.totalPrice + " đ";
+          const miniCart = document.querySelector("span.miniCart");
+          miniCart.innerHTML = data.totalItem
+        }
+      });
     })
     addSpan.addEventListener("click", ()=>{
       inputValue.value = Math.min(+inputValue.value+1,stock);
       fetch(`/cart/update/${productId}/${sizeId}/${inputValue.value}`).then(res=>res.json())
-      .then(data=>console.log(data));
+      .then(data=>{
+        if(data.code == 200){
+          const totalPrice = document.querySelector(".cart-info .total-price");
+          totalPrice.innerHTML = data.totalPrice + " đ";
+          const miniCart = document.querySelector("span.miniCart");
+          miniCart.innerHTML = data.totalItem
+        }
+      });
     })
   })
 }
-
-
 
 //delete item
 const deleteIcons = document.querySelectorAll("[table-cart] .icon-delete");
@@ -41,6 +60,10 @@ if(deleteIcons){
         if(data.code==200){
           const rowDelete = deleteIcon.closest("tr");
           rowDelete.parentElement.removeChild(rowDelete);
+          const totalPrice = document.querySelector(".cart-info .total-price");
+          totalPrice.innerHTML = data.totalPrice + " đ";
+          const miniCart = document.querySelector("span.miniCart");
+          miniCart.innerHTML = data.totalItem
         }
       })
     })

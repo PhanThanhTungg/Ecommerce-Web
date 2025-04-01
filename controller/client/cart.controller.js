@@ -119,9 +119,19 @@ module.exports.delete = async (req, res) => {
     $pull: { products: { product_id: productId, sizeId: sizeId } }  //$pull: xóa đi
   })
 
+  const cart = await Cart.findOne({_id: cartId});
+  let totalPrice = 0;
+  for(const product of cart.products){
+    const productItem = await Product.findOne({_id: product.product_id});
+    const size = productItem.listSize.find(item => item.id == product.sizeId);
+    totalPrice += +(size.price * (100-productItem.discountPercentage) / 100).toFixed(0)*product.quantity;
+  }
+
   res.json({
     code : 200,
-    mess: "delete successfully"
+    mess: "delete successfully",
+    totalPrice,
+    totalItem: cart.products.length
   })
 }
 
@@ -146,8 +156,18 @@ module.exports.update = async (req, res) => {
     $set: { "products.$.quantity": quantity }
   });
 
+  const cart = await Cart.findOne({_id: cartId});
+  let totalPrice = 0;
+  for(const product of cart.products){
+    const productItem = await Product.findOne({_id: product.product_id});
+    const size = productItem.listSize.find(item => item.id == product.sizeId);
+    totalPrice += +(size.price * (100-productItem.discountPercentage) / 100).toFixed(0)*product.quantity;
+  }
+
   res.json({
+    totalPrice,
     code: 200,
-    mess: "update cart successfully"
+    mess: "update cart successfully",
+    totalItem: cart.products.length
   })
 }

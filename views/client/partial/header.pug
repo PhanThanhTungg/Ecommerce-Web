@@ -32,7 +32,7 @@ header.header
               li 
                 a(href="/cart")
                   <i class="fa-solid fa-cart-shopping"></i>
-                    span #{miniCart ? miniCart.totalQuantity:0}
+                    span.miniCart #{miniCart ? miniCart.totalQuantity:0}
               if(! user) 
                 li
                   a.header-user-login(href="/user/login") <i class="fi fi-ss-user-key" style="font-size: 20px"></i>

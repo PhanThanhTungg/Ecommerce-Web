@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bản đồ OpenStreetMap</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+  crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <style>
+    #map {
+      height: 500px;
+    }
+
+    /* Định kích thước bản đồ */
+  </style>
+</head>
+
+<body>
+
+  <h2>Chọn vị trí trên bản đồ</h2>
+  <div id="map"></div>
+  <p>Tọa độ: <span id="coordinates">Chưa chọn</span></p>
+
+  <script>
+    // Tạo bản đồ và đặt trung tâm tại Hà Nội
+    var map = L.map('map').setView([20.97619065,105.7815093], 100);
+
+    // Thêm lớp tile của OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Thêm marker có thể kéo thả
+    var marker = L.marker([20.97619065, 105.7815093], { draggable: true }).addTo(map);
+
+    // Cập nhật tọa độ khi kéo marker
+    marker.on('dragend', function (event) {
+      var position = marker.getLatLng();
+      document.getElementById("coordinates").innerText = `${position.lat}, ${position.lng}`;
+    });
+
+    // Lấy tọa độ khi nhấp vào bản đồ
+    map.on('click', function (event) {
+      var latlng = event.latlng;
+      marker.setLatLng(latlng); // Di chuyển marker đến vị trí mới
+      document.getElementById("coordinates").innerText = `${latlng.lat}, ${latlng.lng}`;
+    });
+  </script>
+
+</body>
+
+</html>

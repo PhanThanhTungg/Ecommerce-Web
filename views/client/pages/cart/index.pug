@@ -88,7 +88,7 @@ block main
             .inner-content
               .cart-info
                 span TOTAL:
-                p $#{cartDetail.totalPrice}
+                p.total-price #{cartDetail.totalPrice} đ
               .cart-info
                 span SHIPPING:                
                 if (cartDetail.totalPrice > 200)
@@ -102,7 +102,7 @@ block main
                     i.fi.fi-rr-truck-check
                 p.condition-info
                   | Free shipping for any orders above 
-                  span.formatMoney 200$              
+                  span 200$              
       else
         .cart-empty-notification
           .title YOU HAVE NO PRODUCT IN YOUR CART

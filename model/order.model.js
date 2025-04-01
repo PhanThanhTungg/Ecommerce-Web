@@ -10,6 +10,7 @@ const orderSchema = new mongoose.Schema(
       province: String,
       district: String,
       commune: String,
+      mapId: String,
       detail: String
     },
     totalPrice: String,
