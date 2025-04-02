@@ -17,6 +17,7 @@ const orderSchema = new mongoose.Schema(
     totalProductPrice: Number,
     totalPrice: Number,
     note: String,
+    deliveryMethod: String,
     deliveryStatus: String,
     paymentStatus:{
       status:String, //ok, change, lack

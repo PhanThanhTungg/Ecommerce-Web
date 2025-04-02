@@ -26,6 +26,9 @@ const updateMap = (lat, lng) => {
     var position = marker.getLatLng();
     boxInfo.querySelector("input.locationX").value = position.lat;
     boxInfo.querySelector("input.locationY").value = position.lng;
+    let shopLocationId = mapArea.dataset.shoplocationid.split(",");
+    shopLocationId = shopLocationId[1].trim() + "," + shopLocationId[0].trim();
+    updateShippingFee(mapArea.dataset.apiKey,`${position.lng},${position.lat}`, shopLocationId)
   });
 
   map.on('click', function (event) {
@@ -33,6 +36,9 @@ const updateMap = (lat, lng) => {
     marker.setLatLng(latlng);
     boxInfo.querySelector("input.locationX").value = latlng.lat;
     boxInfo.querySelector("input.locationY").value = latlng.lng;
+    let shopLocationId = mapArea.dataset.shoplocationid.split(",");
+    shopLocationId = shopLocationId[1].trim() + "," + shopLocationId[0].trim();
+    updateShippingFee(mapArea.dataset.apiKey,`${latlng.lng},${latlng.lat}`, shopLocationId)
   });
 
   let shopLocationId = mapArea.dataset.shoplocationid.split(",");

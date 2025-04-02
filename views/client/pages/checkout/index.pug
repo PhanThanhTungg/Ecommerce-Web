@@ -74,6 +74,24 @@ block main
               input.locationX(type="text" name="locationX" value="13")
               input.locationY(type="text" name="locationY" value="1232")
           input(name="shippingFee")
+        
+        h3 Phương thức giao hàng
+        .delivery-method.payment-method.mb-5
+          <div class="form-check selected" onclick="check('instant')">  
+            img(src="https://file.hstatic.net/1000191021/file/8-icon-shipper_9355d76e20d746d99c4484f13f9ab446_grande.jpg" alt="COD")        
+            <label class="form-check-label w-100" for="instant" onclick="event.stopPropagation();">
+                | Giao hàng ngay lập tức
+            </label>
+            input.form-check-input(type="radio" name="deliveryMethod" id="instant" value="instant" checked)
+          </div>
+          <div class="form-check selected" onclick="check('standard')">  
+            img(src="https://www.toponseek.com/wp-content/uploads/2024/07/pasted-image-0-16-1-639x639.png" alt="COD")        
+            <label class="form-check-label w-100" for="standard" onclick="event.stopPropagation();">
+                | Giao hàng qua đơn vị vận chuyển
+            </label>
+            input.form-check-input(type="radio" name="deliveryMethod" id="standard" value="standard")
+          </div>
+
         h3 Phương thức thanh toán
         .payment-method
           <div class="form-check selected" onclick="check('cash')">  
