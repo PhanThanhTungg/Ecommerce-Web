@@ -14,6 +14,17 @@ module.exports.general = async (req, res) => {
 module.exports.generalPatch = async (req, res) => {
   const settingsGeneral = await SettingGeneral.findOne({})
 
+  req.body.shippingFee = {
+    initialFee: req.body.initialFee,
+    addFeePerKm: req.body.addFeePerKm,
+    urbanFee: req.body.urbanFee,
+    suburbanFee: req.body.suburbanFee,
+    interProvincialFee: req.body.interProvincialFee,
+  }
+  req.body.apiKey = {
+    apiOpenStreetMap : req.body.apiOpenStreetMap
+  }
+
   if(settingsGeneral) {
     await SettingGeneral.updateOne({
       _id: settingsGeneral.id

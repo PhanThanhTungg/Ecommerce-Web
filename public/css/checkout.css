@@ -584,3 +584,24 @@ p.address-info {
 .section-qr .info-bank-account > * {
   white-space: nowrap;
 }
+
+#map{
+  position: relative;
+}
+
+#map .input-location{
+  position: absolute;
+  background-color: white;
+  z-index: 1000;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  font-size: 14px;
+  top: 10px;
+  display: inline-block;
+  width: fit-content;
+}
+#map .input-location input{
+  text-align: center;
+  color: rgba(128, 128, 128, 0.738)
+}

@@ -10,10 +10,12 @@ const orderSchema = new mongoose.Schema(
       province: String,
       district: String,
       commune: String,
-      mapId: String,
-      detail: String
+      detail: String,
+      mapId: String
     },
-    totalPrice: String,
+    shippingFee: Number,
+    totalProductPrice: Number,
+    totalPrice: Number,
     note: String,
     deliveryStatus: String,
     paymentStatus:{

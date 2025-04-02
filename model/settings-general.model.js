@@ -7,9 +7,16 @@ const settingGeneralSchema = new mongoose.Schema(
     phone: String,
     email: String,
     address: String,
+    addressId: {
+      type: String,
+      default: "20.97689475028883, 105.78036447266416"
+    },
     copyright: String,
+    apiKey:{
+      apiOpenStreetMap: String
+    },
     shippingFee:{
-      kmFree: Number,
+      initialFee: Number,
       addFeePerKm: Number,
       urbanFee: Number,
       suburbanFee: Number,

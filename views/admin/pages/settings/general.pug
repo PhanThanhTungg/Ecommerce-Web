@@ -36,6 +36,64 @@ block main
           class="image-preview"
           upload-image-preview
         )
+      h2.page-title(style="font-size: 22px") Key api
+      div(class="form-group")
+        label(for="apiOpenStreetMap") Api OpenStreetMap
+        input(
+          type="text"
+          class="form-control"
+          id="apiOpenStreetMap"
+          name="apiOpenStreetMap"
+          value=(settingsGeneral ? settingsGeneral.apiKey.apiOpenStreetMap : "")
+        )
+      h2.page-title(style="font-size: 22px") Phí Vận chuyển
+
+      div(class="form-group")
+        label(for="initialFee") Phí ship ở km đầu tiên
+        input(
+          type="text"
+          class="form-control"
+          id="initialFee"
+          name="initialFee"
+          value=(settingsGeneral ? settingsGeneral.shippingFee.initialFee : "")
+        )
+      
+      div(class="form-group")
+        label(for="addFeePerKm") Phí ship tăng thêm mỗi km
+        input(
+          type="text"
+          class="form-control"
+          id="addFeePerKm"
+          name="addFeePerKm"
+          value=(settingsGeneral ? settingsGeneral.shippingFee.addFeePerKm : "")
+        )
+      div(class="form-group")
+        label(for="urbanFee") Phí ship chuyển phát trung gian - Nội thành
+        input(
+          type="text"
+          class="form-control"
+          id="urbanFee"
+          name="urbanFee"
+          value=(settingsGeneral ? settingsGeneral.shippingFee.urbanFee : "")
+        )
+      div(class="form-group")
+        label(for="suburbanFee") Phí ship chuyển phát trung gian - Ngoại thành
+        input(
+          type="text"
+          class="form-control"
+          id="suburbanFee"
+          name="suburbanFee"
+          value=(settingsGeneral ? settingsGeneral.shippingFee.suburbanFee : "")
+        )
+      div(class="form-group")
+        label(for="interProvincialFee") Phí ship chuyển phát trung gian - Liên tỉnh
+        input(
+          type="text"
+          class="form-control"
+          id="interProvincialFee"
+          name="interProvincialFee"
+          value=(settingsGeneral ? settingsGeneral.shippingFee.interProvincialFee : "")
+        )
       div(class="form-group")
         label(for="phone") Số điện thoại
         input(

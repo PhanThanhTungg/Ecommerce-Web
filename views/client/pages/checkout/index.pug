@@ -61,7 +61,7 @@ block main
             select.ward.form-address(name="commune")
               option
           label.custom-field
-            input(type="text" name="detail" placeholder=" " autocomplete="off" required)
+            input.detail(type="text" name="detail" placeholder=" " autocomplete="off" required)
             span.placeholder Địa chỉ chi tiết
             <span class="border"></span> 
           p.address-info
@@ -69,6 +69,11 @@ block main
             span.display-ward
             span.display-district
             span.display-province
+          div.d-none(id="map" style="height: 500px" data-shoplocationid = settingsGeneral.addressId data-api-key = settingsGeneral.apiKey.apiOpenStreetMap)
+            div.input-location
+              input.locationX(type="text" name="locationX" value="13")
+              input.locationY(type="text" name="locationY" value="1232")
+          input(name="shippingFee")
         h3 Phương thức thanh toán
         .payment-method
           <div class="form-check selected" onclick="check('cash')">  
@@ -125,5 +130,5 @@ block main
             .note-title Ghi chú
             textarea(rows="6" placeholder="Gửi lời nhắn của bạn tới người bán tại đây ❤️")
       .col-xl-6.col-lg-5.d-none.d-lg-block 
-
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   script(src="/js/checkout.js")

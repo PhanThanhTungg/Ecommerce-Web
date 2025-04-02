@@ -35,6 +35,7 @@ module.exports.index = async (req, res) => {
     })
   };
   res.render("client/pages/checkout/index", {
+    page: "checkoutIndex",
     pageTitle: "Đặt hàng",
     orderProducts,
     totalPrice,
