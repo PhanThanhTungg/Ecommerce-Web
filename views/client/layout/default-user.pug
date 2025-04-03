@@ -10,29 +10,40 @@ html(lang="en")
     link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css")
     link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css")
     link(rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     link(rel="stylesheet", href="/css/style.css")
     link(rel="stylesheet", href="/css/base.css")
+    link(rel="stylesheet", href="/css/checkout.css")
   body 
     +alert-success(2000)
     include ../partial/header.pug
 
-    .bodyy.row 
-      .sider-user.col-2.p-0
-        .avatar-wrap 
-          .avatar
-            img(src=infoUser.thumbnail, alt="")
-          .name #{infoUser.fullName}
-        ul.ul-1.p-0
-          a(href="info")
+    .bodyy      
+      .wrapper-flex-gap-15  
+        .sidebar-user.wrapper-flex-column-gap-15
+          .avatar-wrap.wrapper-flex-column-gap-15
+            .avatar
+              img(src=infoUser.thumbnail.replace('upload/', 'upload/c_limit,w_190/f_auto/'), alt="avatar")
+            .name.pb-3 #{infoUser.fullName}
+          ul.menu
             li
-              <i class="fa-solid fa-address-card mr-1"></i> Thông tin
-          a(href="/cart")
+              a.active(href="info")
+                i.fi.fi-rr-circle-user
+                span Thông tin
             li
-              <i class="fa-solid fa-cart-shopping mr-1"></i> Mã giảm giá
-      .col-10.p-0 
-        block main
+              a.align-items-stretch(href="/cart")
+                i.fi.fi-rr-gift-card
+                span Mã giảm giá
+            li
+              a(href="/history")
+                i.fi.fi-rr-time-past
+                span Lịch sử mua hàng
+        .main-user-info.wrapper-flex-column-gap-15
+          block main
 
     include ../partial/footer.pug
 
-    script(src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js") 
-    script(src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js") 
+    script(src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js")
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js")
+    script(src="/js/script.js")

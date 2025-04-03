@@ -2,119 +2,133 @@ extends ../../layout/default-user.pug
 include ../../mixins/box-head.pug
 
 block main
-  .content-user
-    .header-user Hồ sơ cá nhân
-    .box-user
-      .content-user-wrap
-        form(
-            action=`/user/info/edit/${infoUser.id}?_method=PATCH`
-            id="form-edit-product"
-            method="POST"
-            enctype="multipart/form-data"   
-        )
-          div(
-              class="form-group"
-              upload-image
-          )
-              label(for="thumbnail") Ảnh
-              input.mb-2.text-white(
+  h3.title Thông tin cá nhân
+  .box-user
+    .content-user-wrap    
+        .row
+          .col-lg-6.col-md-12.basic-info
+            form(
+              action=`/user/info/edit/${infoUser.id}?_method=PATCH`
+              id="form-edit-product"
+              method="POST"
+              enctype="multipart/form-data"   
+            )
+              div(
+                class="avatar wrapper-flex-gap-15 align-items-center justify-content-start"
+                upload-image
+              )                
+                label(for="thumbnail" title="Đổi ảnh đại diện")
+                  .image-preview
+                    img(
+                        src=infoUser.thumbnail.replace('upload/', 'upload/c_limit,w_130/f_auto/') 
+                        upload-image-preview 
+                        alt="avatar"
+                    )
+                input.text-white(
                   type="file"
                   class="form-control-file"
                   id="thumbnail"
                   name="thumbnail"
                   accept = "image/*"
                   upload-image-input
-              )
-              img(
-                  src=infoUser.thumbnail
-                  upload-image-preview
-                  class="image-preview"
-              )
-          div(class="form-group")
-              label(for="name") Tên
-              input(
-                  type="text"
-                  class="form-control"
-                  id="name"
-                  name="name"
-                  required
-                  value=infoUser.fullName
-              )
-          div(class="form-group")
-              label(for="email") Email
-              input(
-                  type="text"
-                  class="form-control"
-                  id="email"
-                  name="email"
-                  disabled
-                  value=infoUser.email
-              )
-          div(class="form-group")
-              label(for="phone") Phone
-              input(
-                  type="text"
-                  class="form-control"
-                  id="phone"
-                  name="phone"
-                  value=infoUser.phone
-              )
-          div(class="form-group")
-              label(for="sex") Giới tính
-              select(
-                  name="sex"
-                  id="sex"
-                  class="form-control"
-                  optionSelected = infoUser.sex
-              )
-                option(value="default") -Không xác định-
-                option(value="male") Nam 
-                option(value="female") Nữ
-                option(value="diff") Khác
-          div(class="form-group")
-              label(for="total-order") Tổng giá trị
-              input(
-                  type="text"
-                  class="form-control"
-                  id="total-order"
-                  name="total-order"
-                  disabled
-                  value= `${infoUser.totalValue} đ`
-              )
-          div(class="form-group")
-              label(for="total-success") Số đơn thành công
-              input(
-                  type="text"
-                  class="form-control"
-                  id="total-success"
-                  name="total-success"
-                  disabled
-                  value= infoUser.cntSuccess
-              )
-          div(class="form-group")
-              label(for="total-fail") Số đơn bạn bom
-              input(
-                  type="text"
-                  class="form-control"
-                  id="total-fail"
-                  name="total-fail"
-                  disabled
-                  value= infoUser.cntFail
-              )
-          div(class="form-group")
-              label(for="rank") Xếp hạng
-              input(
-                  type="text"
-                  class="form-control"
-                  id="rank"
-                  name="rank"
-                  disabled
-                  value=infoUser.rank
-              )
-          div(class="form-group" style="margin-bottom: 0; padding-bottom:20px")
-              button(
+                  hidden
+                )
+              .wrapper-flex-column-gap-15
+                label.custom-field
+                  input(
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    value=infoUser.fullName
+                    placeholder=" "
+                  )
+                  span.placeholder Họ và tên
+                  <span class="border"></span>
+                label.custom-field
+                  input(
+                    type="text"
+                    id="email"
+                    name="email"
+                    disabled
+                    value=infoUser.email
+                    placeholder=" "
+                  )
+                  span.placeholder Email
+                  <span class="border"></span>
+                label.custom-field
+                  input(
+                    type="text"
+                    id="phone"
+                    name="phone"
+                    required
+                    value=infoUser.phone
+                    placeholder=" "
+                  )
+                  span.placeholder Số điện thoại
+                  <span class="border"></span>
+                label.custom-field
+                  select.dirty(
+                      name="sex"
+                      id="sex"
+                      optionSelected = infoUser.sex
+                  )
+                    option(value="default") -Không xác định-
+                    option(value="male") Nam 
+                    option(value="female") Nữ
+                    option(value="diff") Khác
+                  span.placeholder Giới tính
+                  <span class="border"></span>
+              div(class="form-group" style="margin-bottom: 0;")
+                button(
                   type="submit"
                   class="btn btn-primary button-1"
-              ) Cập nhật 
-    script(src="/js/info.js") 
-    script(src="/js/script.js") 
+                ) Cập nhật
+          .col-lg-6.col-md-12.wrapper-flex-column-gap-15.address
+            h4.title Địa chỉ
+            a(
+              type="button"
+              data-toggle="modal"
+              data-target="#addressModal"
+            )
+              i.fi.fi-rr-add
+              span Thêm địa chỉ
+            .modal.fade#addressModal(tabindex="-1" aria-hidden="true")
+              .modal-dialog.modal-dialog-centered
+                .modal-content.wrapper-flex-column-gap-15
+                  button.close(type="button" data-dismiss="modal")
+                    i.fi.fi-rr-circle-xmark
+                  form.wrapper-flex-column-gap-15#add-address-form
+                    h4.title Thêm địa chỉ mới
+                    input.d-none(value=infoUser.fullName name="fullName")
+                    input.d-none(value=infoUser.phone name="phone")          
+                    select.province.form-address(required name="province")
+                      option          
+                    select.district.form-address(required name="district")
+                      option          
+                    select.ward.form-address(name="commune")
+                      option
+                    label.custom-field
+                      input(type="text" name="detail" placeholder=" " autocomplete="off" required)
+                      span.placeholder Địa chỉ chi tiết
+                      <span class="border"></span>
+                    p.address-info
+                      span.display-address
+                      span.display-ward
+                      span.display-district
+                      span.display-province
+                    button(type="submit") Thêm
+            .address-display.wrapper-flex-column-gap-15
+              .address-item
+                i.fi.fi-rr-house-chimney
+                .detail
+                  .name Việt
+                  .phone 0987654321
+                  .add số 1223 đường abc
+              .address-item
+                i.fi.fi-rr-house-chimney
+                .detail
+                  .name Việt
+                  .phone 0987654321
+                  .add số 1223 đường abc
+  script(src="/js/info.js") 
