@@ -15,6 +15,7 @@ module.exports.generalPatch = async (req, res) => {
   const settingsGeneral = await SettingGeneral.findOne({})
 
   req.body.shippingFee = {
+    freeShippingThreshold: req.body.freeShippingThreshold,
     initialFee: req.body.initialFee,
     addFeePerKm: req.body.addFeePerKm,
     urbanFee: req.body.urbanFee,

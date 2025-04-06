@@ -49,6 +49,15 @@ block main
       h2.page-title(style="font-size: 22px") Phí Vận chuyển
 
       div(class="form-group")
+        label(for="freeShippingThreshold") Ngưỡng miễn phí ship
+        input(
+          type="text"
+          class="form-control"
+          id="freeShippingThreshold"
+          name="freeShippingThreshold"
+          value=(settingsGeneral ? settingsGeneral.shippingFee.freeShippingThreshold : "")
+        )
+      div(class="form-group")
         label(for="initialFee") Phí ship ở km đầu tiên
         input(
           type="text"

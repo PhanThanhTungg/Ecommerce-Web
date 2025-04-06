@@ -1,17 +1,27 @@
 //Map----------------------------------------
 const boxInfo = document.querySelector(".info");
 const mapArea = document.querySelector("#map");
+const shippingFee = JSON.parse(mapArea.dataset.shippingFee);
+const totalPrice = mapArea.dataset.totalPrice;
+const freeShip = totalPrice >= shippingFee.freeShippingThreshold ? true: false;
+
+
 let map;
 const updateShippingFee = (apiKey, location1, location2) => {
   let url = `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${apiKey}&start=${location1}&end=${location2}`;
   fetch(url)
     .then(response => response.json())
     .then(data => {
-      const distance = data.features[0].properties.segments[0].distance
-      console.log(distance/1000);
+      const distance = data.features[0].properties.segments[0].distance / 1000;
+      const shipFee = shippingFee.initialFee + Math.floor(distance) * shippingFee.addFeePerKm;
+      const shippingValues = document.querySelectorAll(".shipping .value");
+      shippingValues.forEach((shippingValue) => {
+        shippingValue.innerText = shipFee.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+      })
     })
     .catch(error => console.error("Lỗi:", error));
 }
+
 const updateMap = (lat, lng) => {
   mapArea.classList.remove("d-none");
   if (map !== undefined) map.remove();
@@ -28,7 +38,8 @@ const updateMap = (lat, lng) => {
     boxInfo.querySelector("input.locationY").value = position.lng;
     let shopLocationId = mapArea.dataset.shoplocationid.split(",");
     shopLocationId = shopLocationId[1].trim() + "," + shopLocationId[0].trim();
-    updateShippingFee(mapArea.dataset.apiKey,`${position.lng},${position.lat}`, shopLocationId)
+    if(!freeShip) 
+      updateShippingFee(mapArea.dataset.apiKey,`${position.lng},${position.lat}`, shopLocationId)
   });
 
   map.on('click', function (event) {
@@ -38,13 +49,15 @@ const updateMap = (lat, lng) => {
     boxInfo.querySelector("input.locationY").value = latlng.lng;
     let shopLocationId = mapArea.dataset.shoplocationid.split(",");
     shopLocationId = shopLocationId[1].trim() + "," + shopLocationId[0].trim();
-    updateShippingFee(mapArea.dataset.apiKey,`${latlng.lng},${latlng.lat}`, shopLocationId)
+    if(!freeShip)
+      updateShippingFee(mapArea.dataset.apiKey,`${latlng.lng},${latlng.lat}`, shopLocationId)
   });
 
   let shopLocationId = mapArea.dataset.shoplocationid.split(",");
   shopLocationId = shopLocationId[1].trim() + "," + shopLocationId[0].trim();
   let customerLocationid = boxInfo.querySelector("input.locationY").value + "," + boxInfo.querySelector("input.locationX").value;
-  updateShippingFee(mapArea.dataset.apiKey, shopLocationId, customerLocationid);
+  if(!freeShip)
+    updateShippingFee(mapArea.dataset.apiKey, shopLocationId, customerLocationid);
 }
 
 const checkUpdateMap = () => {

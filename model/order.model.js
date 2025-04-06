@@ -15,7 +15,6 @@ const orderSchema = new mongoose.Schema(
     },
     shippingFee: Number,
     totalProductPrice: Number,
-    totalPrice: Number,
     note: String,
     deliveryMethod: String,
     deliveryStatus: String,

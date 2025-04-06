@@ -69,7 +69,14 @@ block main
             span.display-ward
             span.display-district
             span.display-province
-          div.d-none(id="map" style="height: 500px" data-shoplocationid = settingsGeneral.addressId data-api-key = settingsGeneral.apiKey.apiOpenStreetMap)
+          div.d-none(
+            id="map" 
+            style="height: 500px" 
+            data-shoplocationid = settingsGeneral.addressId 
+            data-api-key = settingsGeneral.apiKey.apiOpenStreetMap
+            data-shipping-fee = settingsGeneral.shippingFee
+            data-total-price = totalPrice
+          )
             div.input-location
               input.locationX(type="text" name="locationX" value="13")
               input.locationY(type="text" name="locationY" value="1232")
@@ -140,7 +147,8 @@ block main
                 +product-item-template-order(item)
           .shipping
             .name Phí vận chuyển
-            .value Lorem
+            .value #{totalPrice >= settingsGeneral.shippingFee.freeShippingThreshold ? "Miễn phí":"Chưa xác định"} 
+          p.mt-3 Mua đủ #{settingsGeneral.shippingFee.freeShippingThreshold} đ để được miễn phí vận chuyển
           .total-price
             .title Tổng
             .value #{totalPrice} đ

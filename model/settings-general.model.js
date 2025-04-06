@@ -16,6 +16,7 @@ const settingGeneralSchema = new mongoose.Schema(
       apiOpenStreetMap: String
     },
     shippingFee:{
+      freeShippingThreshold: Number,
       initialFee: Number,
       addFeePerKm: Number,
       urbanFee: Number,
