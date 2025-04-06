@@ -4,6 +4,7 @@ const mapArea = document.querySelector("#map");
 const shippingFee = JSON.parse(mapArea.dataset.shippingFee);
 const totalPrice = mapArea.dataset.totalPrice;
 const freeShip = totalPrice >= shippingFee.freeShippingThreshold ? true: false;
+let shippingFeeValue = 0;
 
 
 let map;
@@ -15,8 +16,14 @@ const updateShippingFee = (apiKey, location1, location2) => {
       const distance = data.features[0].properties.segments[0].distance / 1000;
       const shipFee = shippingFee.initialFee + Math.floor(distance) * shippingFee.addFeePerKm;
       const shippingValues = document.querySelectorAll(".shipping .value");
+      shippingFeeValue = shipFee;
       shippingValues.forEach((shippingValue) => {
         shippingValue.innerText = shipFee.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+      })
+
+      const totalPriceValues = document.querySelectorAll(".total-price .value");
+      totalPriceValues.forEach((totalPriceValue) => {
+        totalPriceValue.innerText = (parseInt(totalPrice) + shipFee).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
       })
     })
     .catch(error => console.error("Lỗi:", error));
@@ -298,4 +305,45 @@ if (successPage) {
 }
 
 // hide qr code
+
+
+// handle form submit
+const formCheckout = document.querySelector(".checkout form.form-checkout");
+if(formCheckout){
+  formCheckout.addEventListener("submit", (e) => {
+    e.preventDefault();
+    setTimeout(() => {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = "shippingFee";
+      input.value = shippingFeeValue;
+      formCheckout.appendChild(input);
+
+      const textArea = document.createElement("textarea");
+      textArea.name = "note";
+      textArea.style.display = "none";
+      textArea.value = document.querySelector(".input-note textarea").value;
+      formCheckout.appendChild(textArea);
+
+      e.target.submit();
+    }, 1000);
+  })
+}
+// end - handle form submit
+
+// handle input note
+const inputNotes = document.querySelectorAll(".input-note textarea");
+if(inputNotes){
+  inputNotes.forEach((inputNote) => {
+    inputNote.addEventListener("input", (e) => {
+      const value = e.target.value;
+      inputNotes.forEach((note) => {
+        if (note !== e.target) {
+          note.value = value;
+        }
+      });
+    });
+  });
+}
+//end - handle input note
 

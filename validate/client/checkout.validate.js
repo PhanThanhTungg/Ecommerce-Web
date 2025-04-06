@@ -1,5 +1,6 @@
 module.exports.checkout = (req,res,next)=>{
-  const arrCheck = ["orderProducts","fullName", "phone", "province", "district", "commune", "detail", "paymentMethod"];
+  console.log(req.body);
+  const arrCheck = ["orderProducts","fullName", "phone", "province", "district", "commune", "detail", "paymentMethod", "shippingFee"];
   const validPayment = ["vnpay", "momo", "zalopay", "cash", "qr"];
   if(!validPayment.includes(req.body.paymentMethod)){
     req.flash("error", `Vui lòng tuân thủ các bước mua sắm`)

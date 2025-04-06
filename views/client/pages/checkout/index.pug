@@ -37,7 +37,7 @@ block main
           textarea(rows="6" placeholder="Gửi lời nhắn của bạn tới người bán tại đây ❤️")
   .container.checkout
     .row  
-      form.col-xl-6.col-lg-7.col-md-12(
+      form.form-checkout.col-xl-6.col-lg-7.col-md-12(
         action="/checkout/order"
         method = "POST"
       )
@@ -69,7 +69,7 @@ block main
             span.display-ward
             span.display-district
             span.display-province
-          div.d-none(
+          div.d-none.mb-4(
             id="map" 
             style="height: 500px" 
             data-shoplocationid = settingsGeneral.addressId 
@@ -80,7 +80,6 @@ block main
             div.input-location
               input.locationX(type="text" name="locationX" value="13")
               input.locationY(type="text" name="locationY" value="1232")
-          input(name="shippingFee")
         
         h3 Phương thức giao hàng
         .delivery-method.payment-method.mb-5
@@ -148,10 +147,15 @@ block main
           .shipping
             .name Phí vận chuyển
             .value #{totalPrice >= settingsGeneral.shippingFee.freeShippingThreshold ? "Miễn phí":"Chưa xác định"} 
-          p.mt-3 Mua đủ #{settingsGeneral.shippingFee.freeShippingThreshold} đ để được miễn phí vận chuyển
-          .total-price
+          p.mt-5 Mua đủ <span class="format-money">#{settingsGeneral.shippingFee.freeShippingThreshold}</span> để được miễn phí vận chuyển
+          .total-products.total
+            .name Tổng sản phẩm
+            .value 
+              span.format-money #{totalPrice}
+          .total-price.total
             .title Tổng
-            .value #{totalPrice} đ
+            .value 
+              span.format-money #{totalPrice}
           .input-note 
             .note-title Ghi chú
             textarea(rows="6" placeholder="Gửi lời nhắn của bạn tới người bán tại đây ❤️")

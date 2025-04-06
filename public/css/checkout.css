@@ -253,8 +253,8 @@ p.address-info {
   display: block;
   width: 100%;
   background: #0f0c29;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: -webkit-linear-gradient(to right, black, #4c4c4c, black);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, black, #4c4c4c, black);
   color: white;
   font-size: 1.5rem;
   font-weight: 500;
@@ -362,18 +362,18 @@ p.address-info {
   color: var(--secondary-color-text)
 }
 
-.checkout .order-products .total-price {
+.checkout .order-products .total {
   margin-top: 25px;
   display: flex;
   justify-content: space-between;
 }
 
-.checkout .order-products .total-price .title {
+.checkout .order-products .total .title {
   font-size: 2.2rem;
   font-weight: 600;
 }
 
-.checkout .order-products .total-price .value {
+.checkout .order-products .total .value {
   font-size: 1.9rem;
   font-weight: 600;
 }

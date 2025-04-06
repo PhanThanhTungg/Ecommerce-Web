@@ -29,6 +29,17 @@ if(headerSearchLabel){
   })
 }
 
+// format money
+const spanMoney = document.querySelectorAll(".format-money");
+if(spanMoney.length){
+  spanMoney.forEach(span=>{
+    const money = span.innerText.replace(/\./g, "").replace(/,/g, "");
+    span.innerText = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(money);
+  })
+}
+
+
+
 
 //show alert cập nhật trạng thái thành công
 const showAlert = document.querySelector("[show-alert]")

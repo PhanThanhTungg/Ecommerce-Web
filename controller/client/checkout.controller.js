@@ -43,10 +43,12 @@ module.exports.index = async (req, res) => {
 };
 
 module.exports.order = async (req, res) => {
-  let { orderProducts, fullName, phone, province, district, commune, detail, paymentMethod } = req.body;
+  let { orderProducts, fullName, phone, province, district,
+  commune, detail, locationX, locationY, deliveryMethod, paymentMethod, shippingFee, note} = req.body;
+  console.log(req.body);
   orderProducts = JSON.parse(orderProducts);
 
-  let totalPrice = orderProducts.reduce((val1,val2)=>{
+  let totalProductPrice = orderProducts.reduce((val1,val2)=>{
     return val1 + val2.totalPriceItem;
   },0)
 
@@ -57,8 +59,13 @@ module.exports.order = async (req, res) => {
       province,
       district,
       commune,
-      detail
+      detail,
+      mapId: `${locationX},${locationY}`
     },
+    shippingFee,
+    totalProductPrice,
+    note,
+    deliveryMethod,
     deliveryStatus: paymentMethod=="cash"?"pending":"pending-payment",
     paymentMethod,
   }
@@ -71,7 +78,7 @@ module.exports.order = async (req, res) => {
 
   orderData.userId = res.locals.user?.id || req.cookies?.cartId;
 
-  orderData.totalPrice = totalPrice;
+
   const order = new Order(orderData);
   await order.save();
 
