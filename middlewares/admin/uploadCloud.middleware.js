@@ -24,14 +24,13 @@ const streamUpload = async (buffer) => {
   });
 }
 
-module.exports.upload = (req, res, next) => {
+module.exports.upload = async(req, res, next) => {
   if (req.file) {
     async function upload(req) {
       let result = await streamUpload(req.file.buffer);
-      console.log(result);
       req.body[req.file.fieldname] = result.secure_url
     }
-    upload(req);
+    await upload(req);
   }
   next();
 }

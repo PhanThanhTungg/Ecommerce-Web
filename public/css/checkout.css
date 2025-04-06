@@ -20,14 +20,15 @@
   padding-left: 0;
 }
 
-.checkout .info .custom-field {
+.custom-field {
   position: relative;
   font-size: 1.5rem;
   border-top: 15px solid transparent;
   display: block;
 }
 
-.checkout .info .custom-field input {
+.custom-field input,
+.custom-field select {
   appearance: none;
   -webkit-appearance: none;
   -ms-appearance: none;
@@ -38,7 +39,7 @@
   border-radius: 3px;
   font-size: 1.6rem;
 }
-.checkout .info .custom-field .placeholder {
+.custom-field .placeholder {
   position: absolute;
   left: 7px;
   top: 50%;
@@ -54,8 +55,9 @@
   transition: all 0.3s ease;
 }
 
-.checkout .info .custom-field input:focus + .placeholder,
-.checkout .custom-field input:not(:placeholder-shown) + .placeholder {
+.custom-field input:focus + .placeholder,
+.custom-field input:not(:placeholder-shown) + .placeholder,
+.custom-field .dirty + .placeholder {
   top: 0;
   font-size: 1.3rem;
   color: #222;
@@ -74,12 +76,13 @@
   align-items: center;
   padding-left: 12px;
   border-radius: 3px;
+  pointer-events: none;
 }
 
 .custom-field .border::after, 
 .custom-field .border::before,
-.checkout .info .select2-container--default .select2-selection--single::after,
-.checkout .info .select2-container--default .select2-selection--single::before {
+.select2-container--default .select2-selection--single::after,
+.select2-container--default .select2-selection--single::before {
   content: "";
   width: 0;
   height: 0;
@@ -89,7 +92,7 @@
 }
 
 .custom-field .border::before,
-.checkout .info .select2-container--default .select2-selection--single::before {
+.select2-container--default .select2-selection--single::before {
   left: 0;
   bottom: 0;
   border-right: 0px solid var(--color-text);
@@ -101,7 +104,7 @@
 }
 
 .custom-field .border::after,
-.checkout .info .select2-container--default .select2-selection--single::after {
+.select2-container--default .select2-selection--single::after {
   right: 0;
   top: 0;
   border-left: 0px solid var(--color-text);
@@ -114,14 +117,14 @@
 
 .custom-field input:focus ~ .border::before,
 .custom-field input:not(:placeholder-shown) ~ .border::before,
-.custom-field input.dirty ~ .border::before,
+.custom-field .dirty ~ .border::before,
 .custom-field input:focus ~ .border::after,
 .custom-field input:not(:placeholder-shown) ~ .border::after,
-.custom-field input.dirty ~ .border::after,
-.checkout .info .select2-container--default .select2-selection--single[aria-expanded="true"]::before,
-.checkout .info .select2-container--default .select2-selection--single[aria-expanded="true"]::after,
-.checkout .info .select2-container--default .select2-selection--single.dirty::before,
-.checkout .info .select2-container--default .select2-selection--single.dirty::after {
+.custom-field .dirty ~ .border::after,
+.select2-container--default .select2-selection--single[aria-expanded="true"]::before,
+.select2-container--default .select2-selection--single[aria-expanded="true"]::after,
+.select2-container--default .select2-selection--single.dirty::before,
+.select2-container--default .select2-selection--single.dirty::after {
   width: 100%;
   height: 100%;
   border-width: 1.5px;
@@ -130,35 +133,35 @@
 .custom-field input:not(:placeholder-shown) ~ .border::before,
 .custom-field input.dirty ~ .border::before,
 .custom-field input:focus ~ .border::before,
-.checkout .info .select2-container--default .select2-selection--single[aria-expanded="true"]::before {
+.select2-container--default .select2-selection--single[aria-expanded="true"]::before {
   transition-delay: 0s, 0.12s, 0s;
 }
 
 .custom-field input:not(:placeholder-shown) ~ .border::after,
 .custom-field input.dirty ~ .border::after,
 .custom-field input:focus ~ .border::after,
-.checkout .info .select2-container--default .select2-selection--single[aria-expanded="true"]::after {
+.select2-container--default .select2-selection--single[aria-expanded="true"]::after {
   transition-delay: 
     calc(0.12s * 2), 
     calc(0.12s * 3), 
     calc(0.12s * 2);
 }
 
-.checkout .info select {
+select {
   width: 100%;
 }
 
-.checkout .info .selet2-container {
+.selet2-container {
   width: 100% !important;
 }
 
-.checkout .info .selet2-container .select2-selection__placeholder {
+.selet2-container .select2-selection__placeholder {
   color: var(--secondary-color-text);
 }
 
-.checkout .info .select2-container--default .select2-selection--single {
+.select2-container--default .select2-selection--single {
   height: fit-content;
-  padding: 5px 3px;
+  padding: 8px 3px;
   border-color: var(--border-color);
 }
 

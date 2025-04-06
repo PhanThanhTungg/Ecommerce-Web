@@ -62,6 +62,12 @@ a:hover {
   gap: 15px;
 }
 
+.wrapper-flex-gap-15 {
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+}
+
 .select2-selection__arrow {
   display: none;
 }

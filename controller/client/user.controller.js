@@ -430,11 +430,7 @@ module.exports.info = async (req, res) => {
 }
 
 module.exports.editPatch = async (req, res) => {
-
-  // if(req.file){
-  //     req.body.thumbnail = `/uploads/${req.file.filename}` // cap nhat anh o local
-  // }
-  // //req.file tra ve object file anh 
+  console.log(req.body.thumbnail) 
   try {
     await User.updateOne({
       _id: req.params.id,
