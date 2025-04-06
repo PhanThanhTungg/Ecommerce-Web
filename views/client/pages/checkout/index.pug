@@ -69,6 +69,8 @@ block main
             span.display-ward
             span.display-district
             span.display-province
+          button.btn-address.button-3.mb-5.d-block.w-100(type="button") 
+            span Chọn địa chỉ trên bản đồ
           div.d-none.mb-4(
             id="map" 
             style="height: 500px" 
@@ -136,7 +138,8 @@ block main
             </label>
             <input class="form-check-input" type="radio" name="paymentMethod" id="vnpay" value="vnpay">
           </div>
-        button.thanhToan(type="sumbmit") Đặt hàng
+        button.button-3.w-100.mt-3(type="sumbmit") 
+          span Đặt hàng
       .col-xl-6.col-lg-5.d-none.d-lg-block
         h3.order-products-title Đơn hàng của bạn
         .order-products

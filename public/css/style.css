@@ -1340,6 +1340,39 @@ h1 {
   color: black
 }
 
+.button-3{
+  color: #fff;
+  padding: 10px 20px;
+  position: relative;
+  z-index: 3;
+  background: transparent;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+.button-3:hover{
+  color: #000;
+  transition: all 0.5s linear;
+}
+.button-3::before{
+  content: "";
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: black;
+  position: absolute;
+  z-index: 1;
+}
+.button-3:hover::before{
+  right: 100%;
+  left: 100%;
+  transition: all 0.5s linear;
+}
+.button-3 span{
+  position: relative;
+  z-index: 2;
+}
+
 
 
 /* end history-order */
