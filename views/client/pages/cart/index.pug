@@ -65,15 +65,17 @@ block main
             .row.button-after-cart
               .col-xl-6
                 .inner-button
-                  a.history.d-block(href="/products") Continue shopping
+                  a.button-4.d-block(href="/products") 
+                    span Continue shopping
               .col-xl-6
-                .inner-button.button-3
+                .inner-button
                   form.form-checkout(
                     action="/checkout"
                     method="post"
                   )
                     input.d-none(type="text" name="data")
-                    button(style="width:100%").history.d-block Checkout
+                    button.button-3(style="width:100%").d-block 
+                      span Checkout
 
 
           .col-xl-4.col-md-12.bill

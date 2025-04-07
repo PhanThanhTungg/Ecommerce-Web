@@ -1375,6 +1375,43 @@ h1 {
 
 
 
+
+.button-4{
+  color: #000;
+  padding: 10px 20px;
+  position: relative;
+  z-index: 3;
+  background: #000;
+  border: 1px solid #000;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.button-4:hover{
+  color: #fff;
+  transition: all 0.5s linear;
+}
+.button-4::before{
+  content: "";
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: #fff;
+  position: absolute;
+  z-index: 1;
+}
+.button-4:hover::before{
+  right: 100%;
+  left: 100%;
+  transition: all 0.5s linear;
+}
+.button-4 span{
+  position: relative;
+  z-index: 2;
+}
+
+
+
 /* end history-order */
 
 /* show password */

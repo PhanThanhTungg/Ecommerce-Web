@@ -64,11 +64,13 @@ block main
             input.detail(type="text" name="detail" placeholder=" " autocomplete="off" required)
             span.placeholder Địa chỉ chi tiết
             <span class="border"></span> 
-          p.address-info
-            span.display-address
-            span.display-ward
-            span.display-district
-            span.display-province
+          div.address-info
+            span.address-success
+              span.display-address
+              span.display-ward
+              span.display-district
+              span.display-province
+            span.address-error 
           button.btn-address.button-3.mb-5.d-block.w-100(type="button") 
             span Chọn địa chỉ trên bản đồ
           div.d-none.mb-4(

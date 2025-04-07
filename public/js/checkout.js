@@ -5,7 +5,13 @@ const shippingFee = JSON.parse(mapArea.dataset.shippingFee);
 const totalPrice = mapArea.dataset.totalPrice;
 const freeShip = totalPrice >= shippingFee.freeShippingThreshold ? true: false;
 let shippingFeeValue = 0;
+let checkMap = false;
 
+
+const displayProvince = document.querySelector('.checkout .info .address-info .display-province');
+const displayDistrict = document.querySelector('.checkout .info .address-info .display-district');
+const displayWard = document.querySelector('.checkout .info .address-info .display-ward');
+const displayAddress = document.querySelector('.checkout .info .address-info .display-address');
 
 let map;
 const updateShippingFee = (apiKey, location1, location2) => {
@@ -98,9 +104,22 @@ const checkUpdateMap = () => {
           let lng = data[0].lon;
           boxInfo.querySelector("input.locationX").value = lat;
           boxInfo.querySelector("input.locationY").value = lng;
+          checkMap = true;
+          const addressError = boxInfo.querySelector(".address-error");
+          if(addressError) addressError.classList.add("d-none");
           updateMap(lat, lng);
         } else {
           console.log("Không tìm thấy địa chỉ.");
+          const addressError = boxInfo.querySelector(".address-error");
+          if(addressError){
+            addressError.classList.remove("d-none");
+            addressError.innerText = "Không tìm thấy địa chỉ. Vui lòng kiểm tra lại.";
+          } 
+          const addressSuccess = boxInfo.querySelector(".address-success");
+          if (addressSuccess) addressSuccess.classList.add("d-none");
+          mapArea.classList.add("d-none");
+
+          checkMap = false;
         }
       })
       .catch(error => console.error("Lỗi:", error));
@@ -109,10 +128,31 @@ const checkUpdateMap = () => {
 
 }
 
-const detail = boxInfo.querySelector("input.detail");
-detail.addEventListener("change", () => {
-  checkUpdateMap();
-})
+// const detail = boxInfo.querySelector("input.detail");
+// detail.addEventListener("change", () => {
+//   checkUpdateMap();
+// })
+
+const buttonAddress = document.querySelector(".btn-address");
+if(buttonAddress) {
+  buttonAddress.addEventListener("click", () => {
+    const selectProvince = boxInfo.querySelector("select.province").value;
+    const selectDistrict = boxInfo.querySelector("select.district").value;
+    const selectWard = boxInfo.querySelector("select.ward").value;
+    const detail = boxInfo.querySelector("input.detail").value;
+    if (selectProvince && selectDistrict && selectWard && detail) {
+      checkUpdateMap();
+    } else {
+      const addressError = boxInfo.querySelector(".address-error");
+      if(addressError) {
+        addressError.classList.remove("d-none");
+        addressError.innerText = "Không tìm thấy địa chỉ. Vui lòng kiểm tra lại.";
+      }
+      const addressSuccess = boxInfo.querySelector(".address-success");
+      if (addressSuccess) addressSuccess.classList.add("d-none");
+    }
+  })
+}
 
 
 //End - Map-------------------------------------
@@ -153,7 +193,6 @@ async function getDistricts(provinceId) {
 }
 
 async function getWards(districtId) {
-  console.log(districtId);
   const res = await fetch(`https://open.oapi.vn/location/wards/${districtId}?size=100`);
   const data = await res.json();
   wards = data.data;
@@ -170,11 +209,6 @@ async function action() {
     placeholder: "Phường/Xã",
     width: '100%',
   })
-
-  const displayProvince = document.querySelector('.checkout .info .address-info .display-province');
-  const displayDistrict = document.querySelector('.checkout .info .address-info .display-district');
-  const displayWard = document.querySelector('.checkout .info .address-info .display-ward');
-  const displayAddress = document.querySelector('.checkout .info .address-info .display-address');
 
   $('.checkout .info .province').on('select2:select', async function (e) {
     const selectElement = $('.checkout .info .district');
@@ -199,6 +233,11 @@ async function action() {
       }
     })
     selectElement.val('').trigger('change');
+    
+    const addressError = boxInfo.querySelector(".address-error");
+    if(addressError) addressError.classList.add("d-none");
+    const addressSuccess = boxInfo.querySelector(".address-success");
+    if (addressSuccess) addressSuccess.classList.remove("d-none");
 
     displayProvince.innerText = e.params.data.text;
     displayDistrict.innerText = "";
@@ -208,7 +247,6 @@ async function action() {
     const selectWard = $('.checkout .info .ward');
     selectWard.select2('destroy');
     selectWard.empty();
-    checkUpdateMap();
     $('.checkout .info .ward').select2({
       placeholder: 'Phường/Xã',
       width: '100%'
@@ -231,21 +269,32 @@ async function action() {
     })
     selectElement.val('').trigger('change');
 
+    const addressError = boxInfo.querySelector(".address-error");
+    if(addressError) addressError.classList.add("d-none");
+    const addressSuccess = boxInfo.querySelector(".address-success");
+    if (addressSuccess) addressSuccess.classList.remove("d-none");
+
     displayDistrict.innerText = e.params.data.text + ", ";
     displayWard.innerText = "";
     document.querySelector('.district + span .select2-selection--single').classList.add('dirty');
-    checkUpdateMap()
   })
 
   $('.checkout .info .ward').on('select2:select', async function (e) {
+    const addressError = boxInfo.querySelector(".address-error");
+    if(addressError) addressError.classList.add("d-none");
+    const addressSuccess = boxInfo.querySelector(".address-success");
+    if (addressSuccess) addressSuccess.classList.remove("d-none");
     displayWard.innerText = e.params.data.text + ", ";
     document.querySelector('.ward + span .select2-selection--single').classList.add('dirty');
-    checkUpdateMap();
   })
 
   const inputDetailAddress = document.querySelector('input[name="detail"]');
   inputDetailAddress.addEventListener('input', function () {
     if (this.value) {
+      const addressError = boxInfo.querySelector(".address-error");
+      if(addressError) addressError.classList.add("d-none");
+      const addressSuccess = boxInfo.querySelector(".address-success");
+      if (addressSuccess) addressSuccess.classList.remove("d-none");
       displayAddress.innerText = this.value + ", ";
     } else {
       displayAddress.innerText = "";
@@ -312,7 +361,17 @@ const formCheckout = document.querySelector(".checkout form.form-checkout");
 if(formCheckout){
   formCheckout.addEventListener("submit", (e) => {
     e.preventDefault();
-    setTimeout(() => {
+      if(checkMap == false) {
+        const addressError = boxInfo.querySelector(".address-error");
+        if(addressError) addressError.classList.remove("d-none");
+        const addressSuccess = boxInfo.querySelector(".address-success");
+        if (addressSuccess) addressSuccess.classList.add("d-none");
+        addressError.innerText = "Vui lòng kiểm tra lại địa chỉ.";
+        addressError.classList.add("text-danger");
+        window.scrollTo({ top: addressError.offsetTop - 50, behavior: "smooth" });
+        return;
+      }
+
       const input = document.createElement("input");
       input.type = "hidden";
       input.name = "shippingFee";
@@ -326,7 +385,7 @@ if(formCheckout){
       formCheckout.appendChild(textArea);
 
       e.target.submit();
-    }, 1000);
+
   })
 }
 // end - handle form submit
