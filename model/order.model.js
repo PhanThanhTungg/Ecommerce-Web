@@ -1,3 +1,4 @@
+const e = require("express");
 const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema(
@@ -5,25 +6,67 @@ const orderSchema = new mongoose.Schema(
     userId: String,
     cartId: String,
     userInfo: {
-      fullName: String,
-      phone: String,
-      province: String,
-      district: String,
-      commune: String,
-      detail: String,
+      fullName: {
+        type: String,
+        required: true
+      },
+      phone: {
+        type: String,
+        required: true
+      },
+      province: {
+        type: String,
+        required: true
+      },
+      district: {
+        type: String,
+        required: true
+      },
+      commune: {
+        type: String,
+        required: true
+      },
+      detail: {
+        type: String,
+        required: true
+      },
       mapId: String
     },
-    shippingFee: Number,
-    totalProductPrice: Number,
+    shippingFee: {
+      type: Number,
+      default: 0
+    },
+    totalProductPrice: {
+      type: Number,
+      required: true
+    },
     note: String,
-    deliveryMethod: String,
-    deliveryStatus: String,
+    deliveryMethod: {
+      type: String,
+      required: true
+    },
+    deliveryStatus: {
+      type: String,
+      required: true,
+      enum: [
+        "pending",
+        "pending-payment",
+        "shipping",
+        "delivered",
+        "cancelled",
+      ],
+    },
     paymentStatus:{
-      status:String, //ok, change, lack
-      change: Number,
+      status:{
+        type: String,
+        enum: ["ok", "lack"]
+      }, 
       lack: Number,
     },
-    paymentMethod: String,
+    paymentMethod: {
+      type: String,
+      enum: ["vnpay", "momo", "zalopay", "cash", "qr"]
+    },
   },
   {
     timestamps: true,

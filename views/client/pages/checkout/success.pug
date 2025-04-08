@@ -3,7 +3,7 @@ include ../../mixins/box-head.pug
 include ../../mixins/product-item-template.pug
 
 block main
-  .page-format.success(data-order-id = order.id data-order-payment-method)
+  .page-format.success(data-order-id = order.id data-payment-method = order.paymentMethod)
     .container.my-3
       .notification.wrapper-flex-column-gap-15.align-items-center
         if order.deliveryStatus == "pending"
@@ -17,17 +17,23 @@ block main
           i.fi.fi-rr-pending
           span Chờ xác nhận thanh toán
           p Vui lòng quét mã QR để thanh toán
+      <div class="success-box d-none align-items-center wrapper-flex-column-gap-15">
+        <div class="icon"><i class="fa-solid fa-circle-check"></i></div>
+        <h2>Thanh toán thành công!</h2>
+        <p>Cảm ơn bạn đã mua hàng. Đơn hàng của bạn đang được xử lý.</p>
+        <a class = "button-4" href="/products"><span>Tiếp tục mua sắm</span></a>
+      </div>
       .inner-content.d-flex.mt-5
         .order-info.wrapper-flex-column-gap-15
-          span.info Mã đơn hàng: #{order.id}
+          span.info Mã đơn hàng: ##{order.id}
           span.info Tên người nhận: #{order.userInfo.fullName}
           span.info Số điện thoại: #{order.userInfo.phone}
           span.info Địa chỉ: #{order.userInfo.detail}, #{order.userInfo.commune}, #{order.userInfo.district}, #{order.userInfo.province}
           span.info Phương thức thanh toán: 
-            if order.deliveryStatus == "pending"
+            if order.paymentMethod == "qr"
+              | Mã Qr
+            if order.paymentMethod == "cash"
               | Thanh toán khi nhận hàng
-            if order.deliveryStatus == "pending-payment"
-              | Mã QR
           .order-products.wrapper-flex-column-gap-15
             span.title Đơn hàng của bạn
             .inner-orderProducts.wrapper-flex-column-gap-15
@@ -50,20 +56,16 @@ block main
           .inner-button
             a.continue-shopping(href="/products") Tiếp tục mua hàng
             a.history(href="/history") Theo dõi đơn hàng
-            
+
         if order.deliveryStatus == 'pending-payment'
           .section-qr(data-bank-id=bankId data-bank-account=bankAccount)
-
-            img(src=`https://img.vietqr.io/image/${bankId}-${bankAccount}-qr_only.png?amount=${totalPrice}&addInfo=STARTSEVQR${order.id}END`)
+            img(src=`https://img.vietqr.io/image/${bankId}-${bankAccount}-qr_only.png?amount=${totalPrice+order.shippingFee}&addInfo=STARTSEVQR${order.id}END`)
             p.des Mã QR thanh toán tự động
             .info-bank-account
-              b Số tiền: <span class="price">#{totalPrice} đ</span>
+              b.totalPriceBanking Số tiền: <span class="price format-money">#{totalPrice+order.shippingFee}</span>
+              b(
+                class=`${(order.paymentStatus.lack != 0 && order.paymentStatus.status=="lack")?"":"d-none"}`
+              ).text-danger.totalLack Còn thiếu: <span class="format-money">#{order.paymentStatus.lack}</span>
               b Ngân hàng: #{bankId}
-              b Người thụ hưởng: <span class="owner">PHAN THANH TUNG</span>
-    
-            //- .wait
-            //-   span Đang chờ thanh toán
-            //-   span.time 09:57       
-      
-  script(src="/js/checkout.js")
-  
+              b Người thụ hưởng: <span class="owner">PHAN THANH TUNG</span>  
+  script(src="/js/success.js")
