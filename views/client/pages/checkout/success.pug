@@ -9,7 +9,10 @@ block main
         if order.deliveryStatus == "pending"
           i.fi.fi-rr-check
           span Đặt hàng thành công!
-          p Bạn sẽ nhận được hàng sau 5-7 ngày
+          if order.deliveryMethod == "instant"
+            p Vui lòng để ý điện thoại để nhận hàng
+          else if order.deliveryMethod == "standard"
+            p Bạn sẽ nhận được hàng sau 5-7 ngày
         if order.deliveryStatus == "pending-payment"
           i.fi.fi-rr-pending
           span Chờ xác nhận thanh toán
@@ -37,13 +40,13 @@ block main
                   .product-info
                     .title #{item.product_title}
                     .size #{item.size.size}
-                  .product-price.formatMoney #{item.totalPrice} đ
+                  .product-price.format-money #{item.totalPrice}
             .shipping.d-flex.align-items-center
               span.name Phí vận chuyển
-              span.value 0 đ
+              span.value.format-money #{order.shippingFee}
             .totalPrice.d-flex.align-items-center
               span.name Tổng 
-              span.value #{totalPrice} đ
+              span.value.format-money #{totalPrice+order.shippingFee}
           .inner-button
             a.continue-shopping(href="/products") Tiếp tục mua hàng
             a.history(href="/history") Theo dõi đơn hàng

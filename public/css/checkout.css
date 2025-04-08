@@ -199,6 +199,7 @@ div.address-info {
   font-style: italic;
 }
 
+
 /* payment-method */
 
 .form-check-input {
@@ -477,10 +478,23 @@ div.address-info {
   gap: 10px;
 }
 
+.success .inner-content .order-info .info{ 
+  display: block;
+  font-size: 1.6rem;
+  background-color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  letter-spacing: 0.4px;
+  font-weight: 350;
+}
+
+
 .success .inner-content .order-info .order-products {
   padding: 20px;
   background-color: white;
   border-radius: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .success .inner-content .order-info .order-products span.title {
