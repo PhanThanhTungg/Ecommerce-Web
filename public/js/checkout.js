@@ -371,7 +371,7 @@ if(formCheckout){
         window.scrollTo({ top: addressError.offsetTop - 50, behavior: "smooth" });
         return;
       }
-
+ 
       const input = document.createElement("input");
       input.type = "hidden";
       input.name = "shippingFee";
@@ -384,7 +384,15 @@ if(formCheckout){
       textArea.value = document.querySelector(".input-note textarea").value;
       formCheckout.appendChild(textArea);
 
-      e.target.submit();
+
+      if(e.target.paymentMethod.value == "zalopay"){
+        console.log("zalo");
+      }
+      else{
+
+        e.target.submit();
+      }
+
 
   })
 }
@@ -405,5 +413,7 @@ if(inputNotes){
   });
 }
 //end - handle input note
+
+
 
 
