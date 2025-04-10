@@ -16,7 +16,8 @@ block main
           .row.orderInfo
             .col-6.orderInfo__id <b>##{order._id}</b>
             .col-6.orderInfo__date.text-right 
-              b 
+              b.d-flex.align-items-center.justify-content-end
+                <i class="fa-solid fa-calendar-days mr-2"></i> 
                 +formatDateTime(order.createdAt)
             .col-12.orderInfo__customer.row.mt-3
               .col-3.text-decor 
@@ -44,23 +45,38 @@ block main
                     span.text-paid Đã thanh toán
                   if status == "lack"
                     span.text-error Chuyển thiếu <span class = "format-money">#{order.paymentStatus.lack}</span>
-                    button.button-4.d-inline-block.ml-2(style="padding: 5px 20px; border-radius: 10px; overflow: hidden")
+                    button.button-4.button-qr-history.d-inline-block.ml-2(style="padding: 5px 20px; border-radius: 10px; overflow: hidden")
                       span Quét mã
-                    +qr-code(bankId, bankAccount, order.paymentStatus.lack, order._id)
-          .orderProducts.d-none
-            - totalPrice = 0
-            each item in order.orderProducts
-              - price = +(item.price*(100-item.discountPercentage)/100).toFixed(0)
-              - totalPrice += price
-              .row
-                .col-2 #{item.product_title}
-                .col-2
-                  img(src=item.thumbnail width="80%")
-                .col-2
-                  p Size: #{item.size}
-                  p Giá: #{price}
-                  p Số lượng: #{item.quantity}
-                .col-2
+                    .section-qr-history.d-none
+                      +qr-code(bankId, bankAccount, order.paymentStatus.lack, order._id)
+            .orderProducts.d-none.w-100.row
+              table.col-10
+                thead.w-100
+                  tr.w-100
+                    th.rounded-left Tên
+                    th Ảnh
+                    th Size
+                    th Giá
+                    th Số lượng
+                    th.rounded-right Thành tiền
+                tbody
+                  - totalPrice = 0
+                  each item in order.orderProducts
+                    - price = +(item.price*(100-item.discountPercentage)/100).toFixed(0)
+                    - totalPrice += price
+                    tr
+                      td.rounded-left #{item.product_title}
+                      td.td-image
+                        img(src=item.thumbnail width="90px" height="auto" style="border-radius: 10px;")
+                      td #{item.size}
+                      td <span class = "format-money">#{price}</span>
+                      td #{item.quantity}
+                      td.rounded-right <span class = "format-money">#{totalPrice}</span>
+              .orderNote.col-2 
+                p <b>Ghi chú </b>
+                p #{order.note}
+                  
+
             
         hr
 
