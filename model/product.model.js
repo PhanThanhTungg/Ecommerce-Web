@@ -50,21 +50,6 @@ const productSchema = new mongoose.Schema(
       account_id: String,
       deletedAt: Date
     },
-    feedback: {
-      type: [
-        {
-          userToken: String,
-          rating: String,
-          comment: String,
-          time: Date
-        }
-      ],
-      default: []
-    },
-    ratingNumber: {
-      type: Number,
-      default: 5
-    },
     sales: {
       type: Number,
       default: 0

@@ -2,21 +2,24 @@ const mongoose = require("mongoose");
 
 const feedbackSchema = new mongoose.Schema(
   {
-    product_id: {
+    productId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Product',
       required: true,
       index: true
     },
-    userToken: {
-      type: String,
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
       required: true
     },
     rating: {
       type: Number,
       required: true,
       min: 1,
-      max: 5
+      max: 5,
+      validate: {
+        validator: Number.isInteger,
+        message: '{VALUE} is not an integer value'
+      }
     },
     comment: String,
     deleted: {
@@ -29,7 +32,7 @@ const feedbackSchema = new mongoose.Schema(
   }
 );
 
-feedbackSchema.index({ product_id: 1, userToken: 1 });
+feedbackSchema.index({ product_id: 1, userId: 1 });
 
 const ProductFeedback = mongoose.model('ProductFeedback', feedbackSchema, "product-feedback");
 

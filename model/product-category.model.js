@@ -34,6 +34,6 @@ const productCategorySchema = new mongoose.Schema(
   }
 )
 
-const ProductCategory = mongoose.model('ProductCategory'/*ten model */, productCategorySchema, "categorys" /*ten collection*/)
+const ProductCategory = mongoose.model('ProductCategory', productCategorySchema, "categorys")
 
 module.exports = ProductCategory

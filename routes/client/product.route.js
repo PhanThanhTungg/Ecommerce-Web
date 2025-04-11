@@ -9,8 +9,6 @@ router.get('/:slugCategory', controller.category)
 
 router.get('/detail/:slugProduct', controller.detail)
 
-
-router.post('/detail/feedback', controller.addFeedback)
 router.post('/detail/feedback/:slugProduct', controller.feedback)
 
 module.exports = router

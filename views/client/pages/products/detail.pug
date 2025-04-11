@@ -42,12 +42,12 @@ block main
                   |   -#{product.discountPercentage}%
           table.inner-info.table.table-borderless
             tbody              
-              if (product.category)
+              if (product.categoryTitle)
                 tr
                   td.name.text-left(style="width: 30%;")            
                     span.text Category
                   td.text-left(style="width: fit-content;")
-                    a(href=`/products/${product.category.slug}`) #{product.category.title}
+                    a(href=`/products/${product.categorySlug}`) #{product.categoryTitle}
               if (product.listSize)
                 tr
                   td.name.text-left(style="width: 30%;")
@@ -80,11 +80,9 @@ block main
           if(product.listSize)
             .btn-size
               each item in product.listSize 
-                button.button-size(id=item.id price=item.price priceNew=item.priceNew stock=item.stock) #{item.size}
-
-
+                button.button-size(id=item._id price=item.price priceNew=item.priceNew stock=item.stock) #{item.size}
           form(
-            action=`/cart/add/${product.id}`
+            action=`/cart/add/${product._id}`
             onSubmit="disableButton()"
             method="POST"
             class = "formCart"
@@ -93,7 +91,7 @@ block main
               class="sizeInput d-none"
               type = "text"
               name="sizeId"
-              value=product.listSize[0].id
+              value=product.listSize[0]._id
             )
             .input-qty
               i.fi.fi-rr-minus-small.sub
@@ -143,89 +141,27 @@ block main
             .inner-content Lorem Ipsum is simply dummy text of the printing and typeset ting industry lorem Ipsum
     section.box-feedback
       .container
-        .row  
-          .col-12
-            .inner-title.text-white <b>Đánh giá</b>
-            if myToken
-              form(
-                action=`/products/detail/feedback/${product.slug}`
-                id="form-feedback"
-                method="POST"  
-              )  
-                <div id="rating">
-                  <input type="radio" id="star5" name="rating" value="5"/>
-                  <label class = "full" for="star5" title="Awesome - 5 stars"></label>
-
-                  <input type="radio" id="star4" name="rating" value="4"/>
-                  <label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-
-                  <input type="radio" id="star3" name="rating" value="3"/>
-                  <label class = "full" for="star3" title="Meh - 3 stars"></label>
-
-                  <input type="radio" id="star2" name="rating" value="2"/>
-                  <label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-
-                  <input type="radio" id="star1" name="rating" value="1"/>
-                  <label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-                </div>   
-                div(class="form-group")
-                  label(for="desc" class="inner-title")
-                  textarea(
-                    class="form-control"
-                    id="desc"
-                    name="description"
-                    rows="6"
-                    required
-                  )
-                div(class="form-group" style="margin: 0; padding-bottom:30px; display: flex; justify-content: flex-end")
-                  button(
-                    type="submit"
-                    class="btn btn-primary button-1 button-feedback"
-                  ) Xác nhận
-            else 
-              h2.text-white.ml-5 Đăng nhập để bình luận!
-
-          //- .col-12 
-          //-   each feedback in product.feedback 
-          //-     if feedback.userToken == myToken 
-          //-       .wrap-feedback.mine
-          //-         .user
-          //-           .avatar.mr-2
-          //-             img(src=feedback.thumbnail, alt="avt", width = "40px" height = "40px",style="border-radius:50%")
-          //-           .name.mr-4 #{feedback.fullName}
-          //-           .rating #{feedback.rating}/5 <i class="fa-solid fa-star"></i>
-          //-         .time.ml-4
-          //-           +formatDateTime(feedback.time)
-          //-         .comment.ml-5 #{feedback.comment}
-          //-       .wrap-hr(style="display: flex; align-item: center; justify-content: center")
-          //-         hr.m-0(style="height: 0.5px; background-color: #158b8d; width: 95%")
-          //-   hr
-          //-   each feedback in product.feedback 
-          //-     if feedback.userToken != myToken
-          //-       .wrap-feedback
-          //-         .user
-          //-           .avatar.mr-2 
-          //-             img(src=feedback.thumbnail, alt="avt", width = "40px" height = "40px",style="border-radius:50%")
-          //-           .name.mr-4 #{feedback.fullName}
-          //-           .rating #{feedback.rating}/5 <i class="fa-solid fa-star"></i>
-          //-         .time.ml-4
-          //-           +formatDateTime(feedback.time)
-          //-         .comment.ml-5 #{feedback.comment}
-
-          //-         .wrap-hr(style="display: flex; align-item: center; justify-content: center")
-          //-           hr.m-0.mt-3(style="height: 0.5px; background-color: #158b8d; width: 99%")
-
-    .container.my-5
-      +box-head("Related Product")
-      .row
-        .col-12 
-          #demo
-            #indemo
-              #demo1
-                +product-grid-slide(relatedProduct)
-              #demo2
-        .col-12.mt-5
-
+        .row
+          .col-4
+            div totalReview: #{product.totalReviews}
+            div avarageRating: #{product.averageRating}
+            each i in [1,2,3,4,5]
+              div #{i} #{Object.values(product.starCounts)[i-1]}
+            if !user
+              div Đăng nhập để đánh giá sản phẩm
+            else
+              button.bg-dark.text-white Đánh giá sản phẩm
+          .col-8
+            each feedback in product.feedback
+              div.d-flex
+                img(src=feedback.userDetail.thumbnail width="50" height="50")
+                p Tên : #{feedback.userDetail.fullName} 
+              div Comment: #{feedback.comment}
+              div
+                +formatDate(feedback.createdAt)
+              p Sao: #{feedback.rating}
+              hr
+          
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   script(src="/js/detailProduct.js")

@@ -2,6 +2,7 @@ const Product = require("../../model/product.model")
 const User = require("../../model/user.model")
 const ProductCategory = require("../../model/product-category.model")
 const paginationHelper = require("../../helpers/pagination")
+const { category } = require("../../middlewares/client/category.middleware")
 
 module.exports.index = async (req, res) => {
 
@@ -66,54 +67,181 @@ module.exports.index = async (req, res) => {
 
 module.exports.detail = async (req, res) => {
   try {
-    const find = {
-      deleted: false,
-      slug: req.params.slugProduct,
-      status: "active"
-    }
-
-    const product = await Product.findOne(find)
-
-    if (product.product_category_id) {
-      const category = await ProductCategory.findOne({
-        _id: product.product_category_id,
-        status: "active",
-        deleted: false
-      })
-
-      product.category = category
-    }
-
-    if (product.listSize) {
-      for (const item of product.listSize) {
-        item.priceNew = (item.price * (100 - product.discountPercentage) / 100).toFixed()
+    const product = await Product.aggregate([
+      { $match: { slug: req.params.slugProduct, deleted: false, status: "active" } },
+      { $limit: 1 },
+      {
+        $addFields: {
+          "_id_product_category": { $toObjectId: "$product_category_id" }
+        }
+      },
+      {
+        $lookup: {
+          from: "product-feedback",
+          localField: "_id",
+          foreignField: "productId",
+          as: "feedback"
+        }
+      },
+      {
+        $lookup: {
+          from: "customers",
+          pipeline: [ { $project: { fullName: 1, email: 1, thumbnail: 1 } } ],
+          as: "SEARCH_OBJECTS"
+        }
+      },
+      {
+        $addFields: {
+          "feedback": {
+            $map: {
+              input: "$feedback",
+              as: "feedbackItem",
+              in: {
+                $mergeObjects: [
+                  "$$feedbackItem",
+                  {
+                    userDetail: {
+                      $arrayElemAt: [
+                        {
+                          $filter: {
+                            input: "$SEARCH_OBJECTS",
+                            as: "user",
+                            cond: { $eq: ["$$user._id", "$$feedbackItem.userId"] }
+                          }
+                        },
+                        0
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        $lookup: {
+          from: "categorys",
+          localField: "_id_product_category",
+          foreignField: "_id",
+          as: "category"
+        }
+      },
+      {
+        $addFields: {
+          categoryTitle: { $ifNull: [{ $arrayElemAt: ["$category.title", 0] }, ""] },
+          categorySlug: { $ifNull: [{ $arrayElemAt: ["$category.slug", 0] }, ""] },
+        }
+      },
+      {
+        $addFields: {
+          "listSize": {
+            $map: {
+              input: "$listSize",
+              as: "size",
+              in: {
+                _id: "$$size._id",
+                size: "$$size.size",
+                price: "$$size.price",
+                stock: "$$size.stock",
+                priceNew: {
+                  $toString: {
+                    $floor: {
+                      $multiply: [
+                        "$$size.price",
+                        { $divide: [{ $subtract: [100, "$discountPercentage"] }, 100] }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        $project: {
+          category: 0, _id_product_category: 0, id_string: 0,
+          createdAt: 0, updatedAt: 0, updatedBy: 0, deleted: 0, __v: 0,
+          createBy: 0, position: 0, SEARCH_OBJECTS: 0
+        }
+      },
+      {
+        $addFields: {
+          averageRating: {
+            $cond: {
+              if: { $eq: [{ $size: "$feedback" }, 0] },
+              then: 0,
+              else: { $avg: "$feedback.rating" }
+            }
+          },
+          totalReviews: { $size: "$feedback" }
+        }
+      },
+      {
+        $addFields: {
+          starCounts: {
+            oneStar: {
+              $size: {
+                $filter: {
+                  input: "$feedback",
+                  as: "item",
+                  cond: { $eq: ["$$item.rating", 1] }
+                }
+              }
+            },
+            twoStars: {
+              $size: {
+                $filter: {
+                  input: "$feedback",
+                  as: "item",
+                  cond: { $eq: ["$$item.rating", 2] }
+                }
+              }
+            },
+            threeStars: {
+              $size: {
+                $filter: {
+                  input: "$feedback",
+                  as: "item",
+                  cond: { $eq: ["$$item.rating", 3] }
+                }
+              }
+            },
+            fourStars: {
+              $size: {
+                $filter: {
+                  input: "$feedback",
+                  as: "item",
+                  cond: { $eq: ["$$item.rating", 4] }
+                }
+              }
+            },
+            fiveStars: {
+              $size: {
+                $filter: {
+                  input: "$feedback",
+                  as: "item",
+                  cond: { $eq: ["$$item.rating", 5] }
+                }
+              }
+            }
+          }
+        }
       }
-    }
-    // for (const item of product.feedback) {
-    //   const user = await User.findOne({ tokenUser: item.userToken })
-    //   item.fullName = user.fullName
-    //   item.thumbnail = user.thumbnail
-    // }
+    ]);
 
-    const relatedProduct = await Product.find({
-      deleted: false,
-      product_category_id: product.product_category_id,
-      status: "active"
-    })
-    for (const item of relatedProduct) {
-      for (const size of item.listSize) {
-        size.priceNew = (size.price * (100 - item.discountPercentage) / 100).toFixed(0);
-      }
+    if (product.length == 0) {
+      return res.redirect("/products")
     }
 
     res.render("client/pages/products/detail.pug", {
       pageTitle: product.title,
-      product: product,
-      relatedProduct: relatedProduct
+      product: product[0],
     })
   } catch (error) {
     console.log(error)
-    res.redirect(`/products`) //chuyen huong den url
+    res.redirect(`/products`)
   }
 }
 
@@ -186,40 +314,6 @@ module.exports.category = async (req, res) => {
     pagination: objectPagination
   });
 
-}
-
-module.exports.addFeedback = async (req, res) => {
-  const slugProduct = req.params.slugProduct
-  const rate = req.body.rating
-  const commentData = req.body.description
-  const userId = req.cookies.tokenUser
-
-  const data = {
-    userToken: userId,
-    rating: rate,
-    comment: commentData,
-    time: new Date()
-  }
-
-
-  const product = await Product.findOne({ slug: slugProduct })
-  product.feedback.push(data)
-  await product.save()
-
-
-  let ratingCnt = 1
-  let ratingAvg = 5
-  product.feedback.forEach(item => {
-    ratingCnt += 1
-    ratingAvg += (parseInt(item.rating))
-  })
-  ratingAvg /= ratingCnt
-  await Product.updateOne(
-    { slug: slugProduct },
-    { ratingNumber: Number(ratingAvg.toFixed(2)) }
-  )
-  req.flash("success", `Đánh giá thành công`)
-  res.redirect("back")
 }
 
 module.exports.feedback = async (req, res) => {

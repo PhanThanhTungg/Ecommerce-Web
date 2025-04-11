@@ -1,5 +1,6 @@
 const Category = require("../../../model/product-category.model");
 const Product = require("../../../model/product.model");
+const Feedback = require("../../../model/product-feedback.model")
 const paginationHelper = require("../../../helpers/pagination")
 module.exports.productApiGetData = async (req, res) => {
   try {
@@ -173,6 +174,37 @@ module.exports.productApiGettype = async (req, res) => {
       code: 400,
       message: "error!",
       detail_message: error
+    })
+  }
+}
+
+module.exports.productApiAddFeedback = async (req, res) => {
+  try {
+    if(!res.locals.user){
+      return res.json({
+        code: 401,
+        message: "unauthorized!"
+      })
+    }
+    const data = {
+      productId: req.body.productId,
+      userId: "67dc42bd05bd27c7ef365c9f",
+      rating: +req.body.rating,
+      comment: req.body.comment,
+    }
+    const feedback = new Feedback(data);
+    await feedback.save();
+
+    res.json({
+      code: 200,
+      message: "Feedback added successfully",
+      data: feedback,
+    });
+    
+  } catch (error) {
+    res.json({
+      code: 400,
+      error
     })
   }
 }

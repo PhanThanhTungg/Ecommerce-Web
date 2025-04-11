@@ -7,4 +7,6 @@ router.get("/:slugCategory?", controller.productApiGetData)
 
 router.get("/type/:type", controller.productApiGettype)
 
+router.post("/detail/feedback", controller.productApiAddFeedback)
+
 module.exports = router;
