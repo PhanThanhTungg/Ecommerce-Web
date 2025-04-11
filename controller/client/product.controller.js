@@ -27,6 +27,7 @@ module.exports.index = async (req, res) => {
   //Pagigation
   let objectPagination = await paginationHelper(req, await Product.countDocuments(find), 1, 12);
   //End pagigation
+
   const pipeline = [
     { $match: { status: "active", deleted: false } },
     { $addFields: { firstPrice: { $arrayElemAt: ["$listSize.price", 0] } } },
@@ -36,7 +37,6 @@ module.exports.index = async (req, res) => {
   ];
 
   const products = await Product.aggregate(pipeline);
-
 
   for (const item of products) {
     for (const size of item.listSize) {
@@ -186,6 +186,40 @@ module.exports.category = async (req, res) => {
     pagination: objectPagination
   });
 
+}
+
+module.exports.addFeedback = async (req, res) => {
+  const slugProduct = req.params.slugProduct
+  const rate = req.body.rating
+  const commentData = req.body.description
+  const userId = req.cookies.tokenUser
+
+  const data = {
+    userToken: userId,
+    rating: rate,
+    comment: commentData,
+    time: new Date()
+  }
+
+
+  const product = await Product.findOne({ slug: slugProduct })
+  product.feedback.push(data)
+  await product.save()
+
+
+  let ratingCnt = 1
+  let ratingAvg = 5
+  product.feedback.forEach(item => {
+    ratingCnt += 1
+    ratingAvg += (parseInt(item.rating))
+  })
+  ratingAvg /= ratingCnt
+  await Product.updateOne(
+    { slug: slugProduct },
+    { ratingNumber: Number(ratingAvg.toFixed(2)) }
+  )
+  req.flash("success", `Đánh giá thành công`)
+  res.redirect("back")
 }
 
 module.exports.feedback = async (req, res) => {

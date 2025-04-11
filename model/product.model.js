@@ -5,7 +5,10 @@ mongoose.plugin(slug)
 
 const productSchema = new mongoose.Schema(
   {
-    title: String,
+    title: {
+      type: String,
+      required: true
+    },
     product_category_id: {
       type: String,
       default: ""
@@ -78,6 +81,6 @@ const productSchema = new mongoose.Schema(
   }
 )
 
-const Product = mongoose.model('Product'/*ten model */, productSchema, "products" /*ten collection*/)
+const Product = mongoose.model('Product', productSchema, "products")
 
 module.exports = Product
