@@ -93,18 +93,18 @@ block main
                 p.total-price #{cartDetail.totalPrice} đ
               .cart-info
                 span SHIPPING:                
-                if (cartDetail.totalPrice > 200)
-                  p Free
+                if (cartDetail.totalPrice > settingsGeneral.shippingFee.freeShippingThreshold)
+                  .p Free
                 else
-                  .noti Shipping and taxes calculated at checkout
+                  .noti Tính phí vận chuyển ở trang thanh toán
               .free-shipping-condition
                 if (cartDetail.totalPrice > 200)
                   .inner-notice
                     p.notice Congratulations! You've got free shipping!
                     i.fi.fi-rr-truck-check
                 p.condition-info
-                  | Free shipping for any orders above 
-                  span 200$              
+                  | Miễn phí ship cho đơn hàng trên 
+                  span.format-money #{settingsGeneral.shippingFee.freeShippingThreshold}          
       else
         .cart-empty-notification
           .title YOU HAVE NO PRODUCT IN YOUR CART

@@ -1,16 +1,3 @@
-const paymentStatusSections = document.querySelectorAll(".paymentStatus-section[status='lack']")
-
-if(paymentStatusSections){
-  [...paymentStatusSections].forEach(item=>{
-    fetch(`/api/checkout/delivery-status/qr/${item.dataset.orderId}`).then(res=>res.json())
-      .then(data=>{
-        console.log(data);
-      }).catch(err=>{
-        console.log(err);
-      })
-  })
-}
-
 const buttonQrHistorys = document.querySelectorAll(".button-qr-history");
 if(buttonQrHistorys){
   buttonQrHistorys.forEach(button => {
@@ -25,7 +12,6 @@ if(buttonQrHistorys){
 // history page
 const orderInfos = document.querySelectorAll(".orderInfo");
 if(orderInfos){
-  console.log(orderInfos);
   orderInfos.forEach((orderInfo) => {
     orderInfo.addEventListener("click", (e) => {
       const orderProduct = orderInfo.parentElement.querySelector(".orderProducts");
@@ -37,9 +23,16 @@ if(orderInfos){
 // end - history page
 
 document.addEventListener("click", (e)=>{
-  const innerQrSection = document.querySelector(".inner-section-qr");
   const qrSection = document.querySelector(".section-qr-history");
+  const innerQrSection = qrSection.querySelector(".inner-section-qr");
   if(!qrSection.classList.contains("d-none") && !innerQrSection.contains(e.target)){
     qrSection.classList.add("d-none");
   }
 })
+
+const buttonReload = document.querySelector(".button-reload");
+if(buttonReload){
+  buttonReload.addEventListener("click", (e)=>{
+    window.location.reload();
+  })
+}

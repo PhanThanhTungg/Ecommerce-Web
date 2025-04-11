@@ -11,9 +11,12 @@ include ../../mixins/qr-code.pug
 block main
   .page-format
     .container.my-3
+      .button-4.d-inline-block.float-right.mb-3.button-reload
+        span <i class="fa-solid fa-rotate mr-2"></i> Làm mới
+      div.clearfix
       each order in orders
         .orderHistory
-          .row.orderInfo
+          .row.orderInfo.m-0
             .col-6.orderInfo__id <b>##{order._id}</b>
             .col-6.orderInfo__date.text-right 
               b.d-flex.align-items-center.justify-content-end
@@ -49,6 +52,11 @@ block main
                       span Quét mã
                     .section-qr-history.d-none
                       +qr-code(bankId, bankAccount, order.paymentStatus.lack, order._id)
+                if order.paymentMethod == "cash"
+                  if !order.paymentStatus
+                    span.text-error Chưa thanh toán
+                  else if order.paymentStatus.status == "ok"
+                    span.text-paid Đã thanh toán
             .orderProducts.d-none.w-100.row
               table.col-10
                 thead.w-100
