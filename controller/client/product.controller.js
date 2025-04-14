@@ -94,7 +94,12 @@ module.exports.detail = async (req, res) => {
         $addFields: {
           "feedback": {
             $map: {
-              input: "$feedback",
+              input: { 
+                $sortArray: { 
+                  input: "$feedback", 
+                  sortBy: { "createdAt": -1 } 
+                }
+              },
               as: "feedbackItem",
               in: {
                 $mergeObjects: [
