@@ -3,7 +3,7 @@ if(rating_wrappers){
   rating_wrappers.forEach(rating=>{
     const ratingNumber = rating.dataset.rating;
     const ratingInput = rating.querySelector(`input[value="${ratingNumber}"]`);
-    ratingInput.checked = true;
+    if (ratingNumber > 0) ratingInput.checked = true;
   })
 }
 
@@ -12,7 +12,7 @@ document.querySelector('form.add-feedback').addEventListener('submit', function(
   const formData = new FormData(this);
   const formObject = Object.fromEntries(formData.entries());
   const jsonData = JSON.stringify(formObject);
-
+  
   fetch("/api/products/detail/feedback", {
     method: "POST",
     headers: {
@@ -22,7 +22,6 @@ document.querySelector('form.add-feedback').addEventListener('submit', function(
   })
     .then(res => res.json())
     .then(data => {
-      console.log(data);
       if (data.code == 200) {
         const date = new Date(data.data.createdAt);
         const formattedDate = date.toLocaleDateString('en-GB');
@@ -30,6 +29,7 @@ document.querySelector('form.add-feedback').addEventListener('submit', function(
         const newFeedback = document.createElement('div');
         const avatar = document.getElementById('avatar').value;
         const userName = document.getElementById('userName').value;
+        data.data.comment = data.data.comment.replace(/(?:\r\n|\r|\n)/g, '<br>');
         newFeedback.className = 'feedback-item wrapper-flex-gap-15 new-feedback';
         newFeedback.innerHTML = `
           <div class="user-info">

@@ -154,7 +154,7 @@ block main
                 +rating-1
                 +progression(count, percentage)
             if !user
-              div Đăng nhập để đánh giá sản phẩm
+              a.create-feedback(href="/user/login") Đăng nhập để đánh giá sản phẩm
             else
               button.create-feedback(
                 type="button" 
@@ -182,9 +182,10 @@ block main
                 .content
                   .inner-rating(data-rating = feedback.rating)
                     +rating-1
-                  p.comment #{feedback.comment}
-  input.d-none(id="avatar" value=user.thumbnail.replace('upload/', 'upload/c_limit,w_80/f_auto/'))
-  input.d-none(id="userName" value=user.fullName)
+                  p.comment(style="white-space: pre-line;") #{feedback.comment}
+  if (user)
+    input.d-none(id="avatar" value=user.thumbnail.replace('upload/', 'upload/c_limit,w_80/f_auto/'))
+    input.d-none(id="userName" value=user.fullName)
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   script(src="/js/detailProduct.js")
