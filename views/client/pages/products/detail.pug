@@ -83,10 +83,9 @@ block main
                 button.button-size(id=item._id price=item.price priceNew=item.priceNew stock=item.stock) #{item.size}
           form(
             action=`/cart/add/${product._id}`
-            onSubmit="disableButton()"
             method="POST"
             class = "formCart"
-          ) 
+          )
             input(
               class="sizeInput d-none"
               type = "text"
@@ -141,26 +140,49 @@ block main
             .inner-content Lorem Ipsum is simply dummy text of the printing and typeset ting industry lorem Ipsum
     section.box-feedback
       .container
+        h4.title Đánh giá của khách hàng
         .row
-          .col-4
-            div totalReview: #{product.totalReviews}
-            div avarageRating: #{product.averageRating}
-            each i in [1,2,3,4,5]
-              div #{i} #{Object.values(product.starCounts)[i-1]}
+          .col-lg-4.col-sm-12.sticky-top(style="top: 20px;")         
+            .inner-rating.averageRating(data-rating=Math.round(product.averageRating * 2) / 2)
+              span #{product.averageRating.toFixed(2)}
+              +rating-1
+            p.total-review Tất cả #{product.totalReviews} đánh giá
+            each i in [5, 4, 3, 2, 1]
+              - var count = Object.values(product.starCounts)[i - 1];
+              - var percentage = product.totalReviews === 0 ? 0 : (Number(count) / Number(product.totalReviews) * 100);
+              .inner-rating.box-progression(data-rating = i)
+                +rating-1
+                +progression(count, percentage)
             if !user
               div Đăng nhập để đánh giá sản phẩm
             else
-              button.bg-dark.text-white Đánh giá sản phẩm
-          .col-8
+              button.create-feedback(
+                type="button" 
+                data-toggle="collapse" 
+                data-target="#collapse-createFeedback" 
+                aria-expanded="false" 
+                aria-controls="collapse-createFeedback"
+              ) Viết đánh giá
+              .collapse#collapse-createFeedback
+                form.add-feedback
+                  input.d-none(name="productId" value=product._id)
+                  .star-rating
+                    +star-rating
+                  .input-comment                
+                    textarea(type='text' rows='4' name="comment" placeholder="Thêm bình luận của bạn tại đây" required)
+                  button(type='submit') Gửi đánh giá
+          .col-lg-8.col-sm-12.main-content
             each feedback in product.feedback
-              div.d-flex
-                img(src=feedback.userDetail.thumbnail width="50" height="50")
-                p Tên : #{feedback.userDetail.fullName} 
-              div Comment: #{feedback.comment}
-              div
-                +formatDate(feedback.createdAt)
-              p Sao: #{feedback.rating}
-              hr
+              .feedback-item.wrapper-flex-gap-15
+                .user-info
+                  .inner-image
+                    img(src=feedback.userDetail.thumbnail.replace('upload/', 'upload/c_limit,w_80/f_auto/'))
+                  .name(title=feedback.userDetail.fullName) #{feedback.userDetail.fullName}
+                  +formatDate(feedback.createdAt)
+                .content
+                  .inner-rating(data-rating = feedback.rating)
+                    +rating-1
+                  p.comment #{feedback.comment}
           
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

@@ -20,3 +20,13 @@ mixin rating-1
     label.full(for='star1', title='Sucks big time - 1 star')
     input#starhalf(type='radio', name='rating', value='0.5' disabled)
     label.half(for='starhalf', title='Sucks big time - 0.5 stars')
+
+mixin star-rating
+  each val in [5,4,3,2,1]
+    input(type='radio', id='star-rating' + val, name='rating', value=val required)
+    label(for='star-rating' + val)
+
+mixin progression(quantity, ratio = 0)
+  .progress-bar
+    .progress(style=`width: ${ratio}%`)
+  span.quantity #{quantity}

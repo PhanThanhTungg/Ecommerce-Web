@@ -328,3 +328,219 @@
 .product-detail .box-description .tab-content {
   color: var(--secondary-color-text);
 }
+
+/* feedback  */
+.box-feedback {
+  background-color: var(--color-one);
+  padding: 60px 0;
+}
+
+.box-feedback h4.title {
+  font-size: clamp(22px, calc(2vw + 10px), 30px);
+  font-weight: 600;
+}
+
+.box-feedback span, .box-feedback p {
+  color: var(--secondary-color-text);
+}
+
+.box-feedback .averageRating {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.box-feedback .averageRating i {
+  align-self: self-start;
+}
+
+.box-feedback .averageRating form.rating > label::before {
+  font-size: 20px;
+}
+
+.box-feedback .total-review {
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.box-feedback .box-progression {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.box-feedback .box-progression .progress-bar {
+  flex-grow: 1;
+}
+
+.box-feedback .create-feedback {
+  display: block;
+  width: 100%;
+  padding: 10px 0;
+  border-radius: 5px;
+  border: 2px solid var(--color-text);
+  text-align: center;
+  background-color: var(--color-text);
+  color: white;
+  font-weight: 500;
+  margin: 15px 0;
+  transition: all 0.3s ease;
+}
+
+.box-feedback .create-feedback:hover {
+  background-color: transparent;
+  color: var(--color-text);
+}
+
+.box-feedback .main-content > * {
+  padding: 20px 0;
+  border-bottom: 1px solid #ddd;
+  align-items: flex-start;
+}
+
+.box-feedback .main-content :last-child {
+  padding-bottom: 0;
+  border: none;
+}
+
+.box-feedback .main-content .user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30%;
+  gap: 8px;
+}
+
+.box-feedback .main-content .user-info .inner-image {
+  width: 60px;
+  height: 60px;
+  overflow: hidden;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box-feedback .main-content .user-info .inner-image img {
+  width: 100%;
+  object-fit: cover;
+  aspect-ratio: 1/1;
+}
+
+.box-feedback .main-content .user-info p {
+  line-height: 1;
+  font-size: 1.35rem;
+}
+
+.box-feedback .main-content .user-info .name {
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 80%;
+  text-align: center;
+  color: var(--color-text);
+  line-height: 1;
+}
+
+.box-feedback .main-content .content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px
+}
+
+.box-feedback .main-content .content .comment {
+  word-break: break-word;
+}
+
+.star-rating {
+  direction: rtl;
+  display: block;
+  text-align: center;
+}
+
+.star-rating input {
+  opacity: 0;
+  position: absolute;
+  left: -9999px;
+}
+
+.star-rating label {
+  color: #ddd;
+  cursor: pointer;
+}
+
+.star-rating label::before {
+  margin: 0px 3px;
+  font-size: 1.7rem;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f005";
+}
+
+.star-rating>input:checked~label,
+.star-rating:not(:checked)>label:hover,
+.star-rating:not(:checked)>label:hover~label {
+  color: #FFD700;
+}
+
+.star-rating>input:checked+label:hover,
+.star-rating>input:checked~label:hover,
+.star-rating>label:hover~input:checked~label,
+.star-rating>input:checked~label:hover~label {
+  color: #FFED85;
+}
+
+.box-feedback form.add-feedback button {
+  display: block;
+  width: 60%;
+  margin: 0 auto;
+  text-align: center;
+  font-weight: 500;
+  color: var(--color-text);
+  background-color: transparent;
+  padding: 10px 0;
+  border: 2px solid var(--color-text);
+  border-radius: 5px;
+  margin-top: 15px;
+  transition: all 0.3s ease;
+}
+
+.box-feedback form.add-feedback button:hover {
+  color: white;
+  background-color: var(--color-text);
+}
+
+.box-feedback form.add-feedback textarea {
+  width: 100%;
+  padding: 15px;
+  margin-top: 15px
+}
+
+
+/* progress bar */
+.progress-bar {
+  width: fit-content;
+  height: 8px;
+  position: relative;
+  border-radius: 999px;
+  background-color: #ddd;
+}
+
+.progress-bar .progress {
+  background-color: #FFD700;
+  border-radius: 999px;
+  position: absolute;
+  left: 0;
+  height: 100%;
+}
+
+.progress-bar ~ span.quantity {
+  width: 36.8px;
+  font-size: 1.3rem;
+  text-align: right;
+}
+/* end progress bar */
+
+/* end feedback  */

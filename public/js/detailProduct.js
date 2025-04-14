@@ -15,13 +15,15 @@ var swiper2 = new Swiper(".image-detail", {
   },
 });
 
-const disableButton = () => {
-  const btnSubmit = document.querySelector('.product-detail .formCart button');
-  btnSubmit.disabled = true;
-  setTimeout(() => {
-    btnSubmit.disabled = false;
-  }, 500)
-}
+document.querySelectorAll("form").forEach(item => {
+  item.addEventListener("submit", function(e) {
+    const btnSubmit = this.querySelector("button[type='submit']");
+    btnSubmit.disabled = true;
+    setTimeout(() => {
+      btnSubmit.disabled = false;
+    }, 500);
+  });
+})
 
 const subQty = document.querySelector(".product-detail .formCart .sub");
 const addQty = document.querySelector(".product-detail .formCart .add");

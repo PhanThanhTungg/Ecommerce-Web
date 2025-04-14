@@ -28,6 +28,7 @@
 }
 
 .custom-field input,
+.custom-field textarea,
 .custom-field select {
   appearance: none;
   -webkit-appearance: none;
@@ -43,7 +44,6 @@
   position: absolute;
   left: 7px;
   top: 50%;
-  transform: translate(-50%, -50%);
   width: fit-content;
   padding: 0 5px;
   color: var(--secondary-color-text);
@@ -55,8 +55,14 @@
   transition: all 0.3s ease;
 }
 
+.custom-field textarea ~ .placeholder {
+  top: 20px;
+}
+
 .custom-field input:focus + .placeholder,
+.custom-field textarea:focus + .placeholder,
 .custom-field input:not(:placeholder-shown) + .placeholder,
+.custom-field textarea:not(:placeholder-shown) + .placeholder,
 .custom-field .dirty + .placeholder {
   top: 0;
   font-size: 1.3rem;
@@ -116,10 +122,14 @@
 }
 
 .custom-field input:focus ~ .border::before,
+.custom-field textarea:focus ~ .border::before,
 .custom-field input:not(:placeholder-shown) ~ .border::before,
+.custom-field textarea:not(:placeholder-shown) ~ .border::before,
 .custom-field .dirty ~ .border::before,
 .custom-field input:focus ~ .border::after,
+.custom-field textarea:focus ~ .border::after,
 .custom-field input:not(:placeholder-shown) ~ .border::after,
+.custom-field textarea:not(:placeholder-shown) ~ .border::after,
 .custom-field .dirty ~ .border::after,
 .select2-container--default .select2-selection--single[aria-expanded="true"]::before,
 .select2-container--default .select2-selection--single[aria-expanded="true"]::after,
@@ -131,15 +141,21 @@
 }
 
 .custom-field input:not(:placeholder-shown) ~ .border::before,
+.custom-field textarea:not(:placeholder-shown) ~ .border::before,
 .custom-field input.dirty ~ .border::before,
+.custom-field textarea.dirty ~ .border::before,
 .custom-field input:focus ~ .border::before,
+.custom-field textarea:focus ~ .border::before,
 .select2-container--default .select2-selection--single[aria-expanded="true"]::before {
   transition-delay: 0s, 0.12s, 0s;
 }
 
 .custom-field input:not(:placeholder-shown) ~ .border::after,
+.custom-field textarea:not(:placeholder-shown) ~ .border::after,
 .custom-field input.dirty ~ .border::after,
+.custom-field textarea.dirty ~ .border::after,
 .custom-field input:focus ~ .border::after,
+.custom-field textarea:focus ~ .border::after,
 .select2-container--default .select2-selection--single[aria-expanded="true"]::after {
   transition-delay: 
     calc(0.12s * 2), 
