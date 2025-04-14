@@ -28,14 +28,16 @@ document.querySelector('form.add-feedback').addEventListener('submit', function(
         const formattedDate = date.toLocaleDateString('en-GB');
         const feedbackList = document.querySelector('.box-feedback .main-content');
         const newFeedback = document.createElement('div');
+        const avatar = document.getElementById('avatar').value;
+        const userName = document.getElementById('userName').value;
         newFeedback.className = 'feedback-item wrapper-flex-gap-15 new-feedback';
         newFeedback.innerHTML = `
           <div class="user-info">
             <div class="inner-image">
-              <img src="feedback.userDetail.thumbnail.replace('upload/', 'upload/c_limit,w_80/f_auto/')" alt="avatar">
+              <img src=${avatar} alt="avatar">
             </div>
-            <div class="name" title="{{ feedback.userDetail.fullName }}">
-              {{ feedback.userDetail.fullName }}
+            <div class="name" title=${userName}>
+              ${userName}
             </div>
             <p>${formattedDate}</p>
           </div>

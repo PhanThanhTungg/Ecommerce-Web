@@ -188,7 +188,7 @@ module.exports.productApiAddFeedback = async (req, res) => {
     }
     const data = {
       productId: req.body.productId,
-      userId: "67dc42bd05bd27c7ef365c9f",
+      userId: res.locals.user.id,
       rating: +req.body.rating,
       comment: req.body.comment,
     }

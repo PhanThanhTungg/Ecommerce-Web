@@ -28,7 +28,7 @@ block main
           .d-flex.align-items-center
             .inner-rating.mr-5(data-rating=product.ratingNumber)
               +rating-1
-            a(href="#") VIEW ALL COMMENTS
+            a(href="#box-feedback") VIEW ALL COMMENTS
           .inner-price
             if (product.listSize && product.discountPercentage > 0)
               del(class="inner-price-old formatMoney") #{product.listSize[0].price}$
@@ -138,7 +138,7 @@ block main
                 img(src="https://vinova-furstore.myshopify.com/cdn/shop/files/icon-3_200x.png?v=1695007028")
               .title Money Back Guarantee
             .inner-content Lorem Ipsum is simply dummy text of the printing and typeset ting industry lorem Ipsum
-    section.box-feedback
+    section.box-feedback#box-feedback
       .container
         h4.title Đánh giá của khách hàng
         .row
@@ -183,7 +183,8 @@ block main
                   .inner-rating(data-rating = feedback.rating)
                     +rating-1
                   p.comment #{feedback.comment}
-          
+  input.d-none(id="avatar" value=user.thumbnail.replace('upload/', 'upload/c_limit,w_80/f_auto/'))
+  input.d-none(id="userName" value=user.fullName)
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   script(src="/js/detailProduct.js")
