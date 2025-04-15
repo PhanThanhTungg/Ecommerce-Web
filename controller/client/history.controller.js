@@ -37,7 +37,7 @@ module.exports.index = async (req, res) => {
   console.log(orders);
 
   res.render("client/pages/order/index", {
-    pageTitle: "Lịch sử mua hàng",
+    pageTitle: "History",
     orders: orders,
     bankId: process.env.QR_BANK_ID,
     bankAccount: process.env.QR_BANK_ACC

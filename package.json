@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tailwind":"npx @tailwindcss/cli -i ./public/tailwind/input.css -o ./public/tailwind/output.css --watch",
+    "tailwind": "npx @tailwindcss/cli -i ./public/tailwind/input.css -o ./public/tailwind/output.css --watch",
     "start": "nodemon index.js"
   },
   "author": "",
@@ -20,6 +20,7 @@
     "express": "^4.21.1",
     "express-flash": "^0.0.2",
     "express-session": "^1.18.0",
+    "flowbite": "^3.1.2",
     "http-errors": "^2.0.0",
     "md5": "^2.3.0",
     "method-override": "^3.0.0",
@@ -41,6 +42,7 @@
     "tinymce": "^7.0.0"
   },
   "devDependencies": {
+    "daisyui": "^5.0.19",
     "nodemon": "^3.1.9"
   },
   "description": ""
