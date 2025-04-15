@@ -4,11 +4,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "tailwind":"npx @tailwindcss/cli -i ./public/tailwind/input.css -o ./public/tailwind/output.css --watch",
     "start": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@tailwindcss/cli": "^4.1.4",
     "axios": "^1.8.4",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
@@ -35,6 +37,7 @@
     "passport-jwt": "^4.0.1",
     "pug": "^3.0.2",
     "streamifier": "^0.1.1",
+    "tailwindcss": "^4.1.4",
     "tinymce": "^7.0.0"
   },
   "devDependencies": {
