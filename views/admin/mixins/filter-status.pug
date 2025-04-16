@@ -1,11 +1,12 @@
 mixin filter-status(filterStatus)
-  each item in filterStatus
-    button(
-      class=`${item.class} 
-      font-medium border-1 border-gray-300 py-[6px] px-[15px] rounded-md mr-2 bg-transparent
-      dark:bg-black-blur dark:text-gray-400
-      hover:bg-gray-100
-      ${item.class == 'active' ? 'text-green-700 dark:text-white' : 'text-gray-900'}
-      `
-      button-status= item.status
-    ) #{item.name}
+  div(flex="flex")
+    each item in filterStatus
+      button(
+        class=`${item.class} 
+        font-medium border-1 border-gray-600 py-[6px] px-[15px] rounded-md mr-2 bg-transparent
+        dark:bg-black-blur dark:text-gray-400
+        hover:bg-gray-100
+        ${item.class == 'active' ? 'text-green-700 dark:text-white' : 'text-gray-900'}
+        `
+        button-status= item.status
+      ) #{item.name}

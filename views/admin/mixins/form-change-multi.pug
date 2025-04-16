@@ -5,9 +5,9 @@ mixin form-change-multi(path)
     form-change-multi
   )
     div(class="flex")
-      select#countries.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name="type"
+      select#countries.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(name="type"
         class=`form-control
-        focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-black-blur dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
+        focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-black-1 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
         `
       )
         option(value="active") -- Choose action --
@@ -22,5 +22,5 @@ mixin form-change-multi(path)
         class="form-control hidden"
       )
       button(type="submit" class=`btn btn-primary button-1
-      text-white bg-black-blur hover:bg-gray-900 h-full focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:bg-black-blur dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+      text-white bg-black-blur border-1 border-gray-600 hover:bg-gray-900 h-full focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:bg-black-blur dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
       `) Apply
