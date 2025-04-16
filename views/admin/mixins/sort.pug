@@ -1,13 +1,15 @@
 mixin sort()
-    div(sort class="sort")
-        select(
-            class="form-control"
-            name="sort"
-            sort-select
-        )
-            option(value="position-desc" class="option") Position_desc - Defaut
-            option(value="position-asc" class="option") Position_asc
-            option(value="title-asc" class="option") Title A - Z
-            option(value="title-desc" class="option") Title Z - A
-            option(value="sales-desc" class="option") Revenue_desc
-            option(value="sales-asc" class="option") Revenue_asc
+  div(sort class="sort")
+    select#countries.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(
+      class=`form-control
+      focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-black-blur dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
+      `
+      name="sort"
+      sort-select
+    )
+      option(value="position-desc" class="option") Position_desc - Defaut
+      option(value="position-asc" class="option") Position_asc
+      option(value="title-asc" class="option") Title A - Z
+      option(value="title-desc" class="option") Title Z - A
+      option(value="sales-desc" class="option") Revenue_desc
+      option(value="sales-asc" class="option") Revenue_asc
