@@ -1,39 +1,87 @@
+// darkmode
+if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  document.documentElement.classList.add('dark');
+} else {
+  document.documentElement.classList.remove('dark')
+}
+
+var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+// Change the icons inside the button based on previous settings
+if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  themeToggleLightIcon.classList.remove('hidden');
+} else {
+  themeToggleDarkIcon.classList.remove('hidden');
+}
+
+var themeToggleBtn = document.getElementById('theme-toggle');
+
+themeToggleBtn.addEventListener('click', function () {
+  // toggle icons inside button
+  console.log(document.documentElement.classList);
+  themeToggleDarkIcon.classList.toggle('hidden');
+  themeToggleLightIcon.classList.toggle('hidden');
+
+  // if set via local storage previously
+  if (localStorage.getItem('color-theme')) {
+    if (localStorage.getItem('color-theme') === 'light') {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('color-theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('color-theme', 'light');
+    }
+    // if NOT set via local storage previously
+  } else {
+    if (document.documentElement.classList.contains('dark')) {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('color-theme', 'light');
+    } else {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('color-theme', 'dark');
+    }
+  }
+});
+
+
+
 //active page
 const items = document.querySelectorAll(".sider li");
-if(items) {
+if (items) {
   const href = String(window.location.href);
-  if(href.includes("/admin/dashboard"))
+  if (href.includes("/admin/dashboard"))
     document.querySelector("[sider='Sider-Dashboard']").classList.add("active");
-  else if(href.includes("/admin/products-category"))
+  else if (href.includes("/admin/products-category"))
     document.querySelector("[sider='Sider-Category']").classList.add("active");
-  else if(href.includes("/admin/products"))
+  else if (href.includes("/admin/products"))
     document.querySelector("[sider='Sider-Product']").classList.add("active");
-  else if(href.includes("/admin/orders"))
+  else if (href.includes("/admin/orders"))
     document.querySelector("[sider='Sider-Order']").classList.add("active");
-  else if(href.includes("/admin/roles/permissions"))
+  else if (href.includes("/admin/roles/permissions"))
     document.querySelector("[sider='Sider-Permission']").classList.add("active");
-  else if(href.includes("/admin/roles"))
+  else if (href.includes("/admin/roles"))
     document.querySelector("[sider='Sider-Role']").classList.add("active");
-  else if(href.includes("/admin/accounts"))
+  else if (href.includes("/admin/accounts"))
     document.querySelector("[sider='Sider-Account']").classList.add("active");
-  else if(href.includes("/admin/users"))
+  else if (href.includes("/admin/users"))
     document.querySelector("[sider='Sider-User']").classList.add("active");
-  else if(href.includes("/admin/settings/general"))
+  else if (href.includes("/admin/settings/general"))
     document.querySelector("[sider='Sider-Setting']").classList.add("active");
 }
 
 //hover on avatar at header
 const boxAvatar = document.querySelector(".header .name");
-if(boxAvatar){
+if (boxAvatar) {
   const dropdown = boxAvatar.nextElementSibling;
-  boxAvatar.addEventListener("mouseover",()=>{
+  boxAvatar.addEventListener("mouseover", () => {
     dropdown.classList.add("hover");
   })
-  document.addEventListener("mouseover", e=>{
-    if(!boxAvatar.contains(e.target) && !dropdown.contains(e.target)){
+  document.addEventListener("mouseover", e => {
+    if (!boxAvatar.contains(e.target) && !dropdown.contains(e.target)) {
       dropdown.classList.remove("hover");
     }
-    }
+  }
   )
 }
 
@@ -124,18 +172,18 @@ const checkBoxMulti = document.querySelector("[check-box-multi]")
 if (checkBoxMulti) {
   const inputCheckAll = checkBoxMulti.querySelector("input[name='checkall']")
   const inputsId = checkBoxMulti.querySelectorAll("input[name='id']")
-  if(inputCheckAll){
+  if (inputCheckAll) {
     inputCheckAll.addEventListener("click", () => {
       if (inputCheckAll.checked)
-        inputsId.forEach(input => {input.checked = true})
-      else 
-        inputsId.forEach(input => {input.checked = false})
+        inputsId.forEach(input => { input.checked = true })
+      else
+        inputsId.forEach(input => { input.checked = false })
     })
   }
   inputsId.forEach(input => {
     input.addEventListener("click", () => {
       const countChecked = checkBoxMulti.querySelectorAll("input[name='id']:checked").length
-      inputCheckAll.checked = countChecked==inputsId.length?true:false;
+      inputCheckAll.checked = countChecked == inputsId.length ? true : false;
     })
   })
 }
@@ -152,7 +200,7 @@ if (formChangeMulti) {
     const typeChange = e.target.elements.type.value
     if (typeChange == "delete-all") {
       const isConfirm = confirm("Bạn có chắc muốn xóa?")
-      if (!isConfirm) return  
+      if (!isConfirm) return
     }
 
     if (inputsChecked.length > 0) {
@@ -208,14 +256,14 @@ if (uploadImage) {
   const uploadImageInput = document.querySelector("[upload-image-input]");
   uploadImageInput.addEventListener("change", (e) => {
     const uploadImagePreviews = document.querySelectorAll("[upload-image-preview]");
-    [...uploadImagePreviews].forEach(item=>{
+    [...uploadImagePreviews].forEach(item => {
       console.log(item.parentElement.removeChild(item));
     })
     const files = e.target.files;
     if (files) {
-      for(const file of files){
-        uploadImageInput.insertAdjacentHTML("afterend", 
-        `
+      for (const file of files) {
+        uploadImageInput.insertAdjacentHTML("afterend",
+          `
           <img class="image-preview" 
           src="${URL.createObjectURL(file)}" 
           upload-image-preview="upload-image-preview" 
