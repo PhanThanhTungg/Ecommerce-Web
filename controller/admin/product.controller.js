@@ -47,10 +47,11 @@ module.exports.index = async (req, res) => {
   for (const product of products) {
     product.listPrice = []
     product.listSize.forEach(item => {
-      product.listPrice.push(item.size + "---" + item.price)
+      product.listPrice.push({size:item.size, price: item.price})
     })
     const user = await Account.findOne({ _id: product.createBy.account_id })
-
+    const category = await ProductCategory.findOne({ _id: product.product_category_id }).select("title")
+    product.categoryTitle = category.title
     if (user) {
       product.accountFullName = user.fullName
     }

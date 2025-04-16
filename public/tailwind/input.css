@@ -6,4 +6,7 @@
 @import "./base.css";
 @import "./components.css";
 @import "./utilities.css";
-@import "./theme.css"
+@import "./theme.css";
+
+
+@custom-variant dark (&:where(.dark, .dark *));
