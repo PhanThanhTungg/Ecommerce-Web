@@ -1,82 +1,85 @@
 mixin table-tree(items, level = 1)
-    each item, index in items
+  each item, index in items
 
-        - const prefix = Array(level+1).join("-- ")
-        tr
-            td
-                input(
-                    type="checkbox"
-                    name="id"
-                    value = item.id
-                )
-            td #{item.index}
-            td
-                img(
-                    src=item.thumbnail
-                    alt=item.title
-                    width="100px"
-                    height="auto"
-                )
-            td #{prefix} #{item.title}
-            td
-                input(
-                    type="number"
-                    value=item.position
-                    style="width: 60px"
-                    min="1"
-                    name="position"
-                )
-            td
-                if (item.status === "active")
-                    a(
-                        href="javascript:;"
-                        class="status-badge status-badge-active"
-                        data-status=item.status
-                        data-id=item.id
-                        button-change-status
-                    ) Active
-                else
-                    a(
-                        href="javascript:;"
-                        class="status-badge status-badge-inactive"
-                        data-status= item.status
-                        data-id=item.id
-                        button-change-status
-                    ) Inactive
-            td
-                //- a(
-                //-     class="btn btn-secondary btn-sm"
-                //-     href=`${prefixAdmin}/products-category/detail/${item.id}`
-                //- ) Chi tiết
+    - const prefix = Array(level+1).join("-- ")
+    tr(class="bg-white border-b dark:bg-dark-table-row dark:border-black-1 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600")
+      td(class="w-4 p-4")
+        .flex.items-center
+          input#checkbox-table-search-1(type="checkbox" name="id" value=item.id class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-black-blur dark:focus:ring-offset-black-blur focus:ring-2 dark:bg-black-1 dark:border-gray-600")
+          label.sr-only(for="checkbox-table-search-1") checkbox
+      th(scope="row" class="px-6 py-4 text-lg text-gray-900 whitespace-nowrap dark:text-white")
+        div(class="flex items-center")
+          img.rounded-2xl.mr-4(
+            src=item.thumbnail.replace('upload/', 'upload/c_limit,w_110/f_auto/')
+            alt=item.title
+            width="60px"
+            height="auto"
+          )
+          div(class="flex flex-col")
+            span.font-normal #{prefix} #{item.title}
+      td.px-6.py-4
+        input(
+          type="number"
+          class=" text-center p-0 w-[50px] rounded-md bg-transparent"
+            +" [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+          value=item.position
+          style="width: 60px"
+          min="1"
+          name="position"
+        )
+      td.px-6.py-4
+        if (item.status == "active")
+          a(
+            href="javascript:;" class="" 
+            data-status = item.status
+            data-id = item.id
+            button-change-status 
+          )
+            <label class="inline-flex items-center cursor-pointer">
+              <input type="checkbox" value="" class="sr-only peer" checked>
+              <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-black-1 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-green-600 dark:peer-checked:bg-green-600"></div>
+            </label>
+        else 
+          a(
+            href="javascript:;" class=""
+            data-status = item.status
+            data-id = item.id
+            button-change-status
+          ) 
+            <label class="inline-flex items-center cursor-pointer">
+              <input type="checkbox" value="" class="sr-only peer">
+              <div class="relative w-9 h-5 bg-red-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-black-1 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div>
+            </label>
+      td.px-6.py-4
+        .flex.items-center.gap-6
+          if(role.permissions.includes("products-category_edit")) 
+            a(
+              class="button-edit"
+              href=`${prefixAdmin}/products-category/edit/${item.id}`
+            ) <i class="fa-regular fa-pen-to-square text-lg text-black-1 dark:text-white"></i>
 
-                if(role.permissions.includes("products-category_edit")) 
-                    a(
-                        class="button-edit"
-                        href=`${prefixAdmin}/products-category/edit/${item.id}`
-                    ) <i class="fa-regular fa-pen-to-square"></i>
-                
-                if(role.permissions.includes("products-category_delete")) 
-                    a(
-                        class="button-delete"
-                        button-delete
-                        data-id=item.id
-                    ) <i class="fa-solid fa-trash"></i>
-        if(item.children && item.children.length >0)
-            +table-tree(item.children, level+1)
-    form(
-        action="" 
-        method="POST"
-        id = "form-delete-item"
-        data-path = `${prefixAdmin}/products-category/delete`
-    ) 
+          if(role.permissions.includes("products-category_delete")) 
+            a(
+              class="button-delete"
+              button-delete
+              data-id=item.id
+            ) <i class="fa-solid fa-trash text-lg text-red-400 dark:text-red-600"></i>
+    if(item.children && item.children.length >0)
+      +table-tree(item.children, level+1)
+  form(
+    action="" 
+    method="POST"
+    id = "form-delete-item"
+    data-path = `${prefixAdmin}/products-category/delete`
+  ) 
 
-    form(
-        action="" 
-        method="POST"
-        id = "form-change-status"
-        data-path = `${prefixAdmin}/products-category/change-status`
-    ) 
-    //- form k co phuong thuc patch
-    //- =>>>thu vien (npm i method-override): ghi de phuong thuc http(patch, put,....)
-    
+  form(
+    action="" 
+    method="POST"
+    id = "form-change-status"
+    data-path = `${prefixAdmin}/products-category/change-status`
+  ) 
+  //- form k co phuong thuc patch
+  //- =>>>thu vien (npm i method-override): ghi de phuong thuc http(patch, put,....)
+
 

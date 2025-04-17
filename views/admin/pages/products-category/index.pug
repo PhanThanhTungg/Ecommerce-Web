@@ -9,51 +9,47 @@ include ../../mixins/table-tree.pug
 
 block main 
 
-    if(role.permissions.includes("products-category_view"))
-        //- .card.mb-3
-        //-     .card-header Bộ lọc và tìm kiếm
-        //-     .card-body
-        //-         .row 
-        //-             .col-6
-        //-             //-    +filter-status(filterStatus)
-        //-             .col-6
-        //-                 //- +search(keyword)
-        //- .card.mb-3
-        //-     .card-header Sắp xếp
-        //-     .card-body
-        //-         .row
-        //-             .col-4
-        //-                 //- +sort()
-                    
-        .card.wrap-table.mt-5 
-            .card-body
-                .row
-                    .col-8
-                        +form-change-multi(`${prefixAdmin}/products-category/change-multi?_method=PATCH`)
-                    .col-4
-                        if(role.permissions.includes("products-category_create"))
-                            a(
-                                href=`${prefixAdmin}/products-category/create`
-                                class="btn btn-outline-success button-1 button-1-2"
-                            ) + Create
-        
-                table(
-                    class="table table-hover table-sm"
-                    check-box-multi
-                )
-                    thead
-                        tr  
-                            th 
-                                input(type="checkbox" name="checkall")
-                            th 
-                            th Thumbnail
-                            th Title
-                            th Position
-                            th Status
-                            th Action
+  if(role.permissions.includes("products-category_view"))
+    //- .card.mb-3
+    //-     .card-header Bộ lọc và tìm kiếm
+    //-     .card-body
+    //-         .row 
+    //-             .col-6
+    //-             //-    +filter-status(filterStatus)
+    //-             .col-6
+    //-                 //- +search(keyword)
+    //- .card.mb-3
+    //-     .card-header Sắp xếp
+    //-     .card-body
+    //-         .row
+    //-             .col-4
+    //-                 //- +sort()
 
-                    tbody
-                        +table-tree(records)
-    
-                        
-        script(src="/admin/js/product.js")
+    .inner-action.my-7
+      .flex.justify-between.items-center.gap-18
+        if(role.permissions.includes("products-category_create"))
+          a.text-white.bg-blue-400.font-medium.rounded-lg.text-sm.px-5.text-center(
+            class=`dark:bg-blue-500 py-2.5`
+            href=`${prefixAdmin}/products-category/create`
+          ) Create
+        +form-change-multi(`${prefixAdmin}/products-category/change-multi?_method=PATCH`)
+
+    div.relative.overflow-x-auto.shadow-md(class="sm:rounded-xl")
+      table(class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400" check-box-multi)
+        thead(class=`text-xs text-gray-700 uppercase bg-gray-50 
+              dark:bg-dark-table-header dark:text-gray-400`)
+          tr
+            th(scope="col" class="p-4") 
+              .flex.items-center
+                input#checkbox-all-search(type="checkbox" name="checkall" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-black-blur dark:focus:ring-offset-black-blur focus:ring-2 dark:bg-black-1 dark:border-gray-600")
+                label.sr-only(for="checkbox-all-search") checkbox
+            th(scope="col" class="px-6 py-3") Category
+            th(scope="col" class="px-6 py-3") Position
+            th(scope="col" class="px-6 py-3") Status
+            th(scope="col" class="px-6 py-3") Action
+
+        tbody
+          +table-tree(records)
+
+
+    script(src="/admin/js/product.js")

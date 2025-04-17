@@ -1,4 +1,6 @@
 @theme{
   --color-black-blur: #0c1117;
   --color-black-1: rgb(6, 7, 11);
+  --color-dark-table-header: #374151;
+  --color-dark-table-row: #1F2937;
 }
