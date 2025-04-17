@@ -3,53 +3,52 @@ include ../../mixins/alert.pug
 include ../../mixins/select-tree.pug
 
 block main
-    if(role.permissions.includes("products-category_create")) 
-      h1(class="mb-4 page-title") #{pageTitle}
-
+  if(role.permissions.includes("products-category_create")) 
+    h1(class=`mb-7 ml-7 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-4xl
+      dark:text-white`) Create new category
+    .container.px-40
       form(
         action=`${prefixAdmin}/products-category/create`
         method="POST"
         enctype="multipart/form-data"
       )
-        div(class="form-group")
-          label(for="title") Tiêu đề
-          input(
-            type="text"
-            class="form-control"
-            id="title"
-            name="title"
-            required
-          )
-        div(class="form-group")
-          label(for="parent_id") Danh mục cha
-          select(
-            name="parent_id"
-            id="parent_id"
-            class="form-control"
-          )
-            option(value="") -- Chọn danh mục cha
-              if(records)
-                +select-tree(records)
+        label(for="title") Category name
+        input(
+          type="text"
+          id="title"
+          name="title"
+          placeholder="Living room"
+          required
+        )
+        label(for="parent_id") Danh mục cha
+        select(
+          name="parent_id"
+          id="parent_id"
+          class="form-control"
+        )
+          option(value="") -- Chọn danh mục cha
+            if(records)
+              +select-tree(records)
         div(class="form-group form-check form-check-inline")
           input(
-              type="radio"
-              class="form-check-input"
-              id="featured1"
-              name="featured"
-              value="1"
+            type="radio"
+            class="form-check-input"
+            id="featured1"
+            name="featured"
+            value="1"
           )
           label(for="featured1" class="form-check-label") Featured
         div(class="form-group form-check form-check-inline")
           input(
-              type="radio"
-              class="form-check-input"
-              id="featured0"
-              name="featured"
-              value="0"
-              checked
+            type="radio"
+            class="form-check-input"
+            id="featured0"
+            name="featured"
+            value="0"
+            checked
           )
           label(for="featured0" class="form-check-label") Normal
-        div(class="form-group")
+
           label(for="desc") Mô tả
           textarea(
             type="text"
@@ -59,7 +58,6 @@ block main
             rows="5"
           )
         div(
-          class="form-group"
           upload-image
         )
           label(for="thumbnail") Ảnh
@@ -76,7 +74,7 @@ block main
             class="image-preview"
             upload-image-preview
           )
-        div(class="form-group")
+
           label(for="position") Vị trí
           input(
             type="number"
