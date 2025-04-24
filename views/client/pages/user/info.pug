@@ -100,8 +100,10 @@ block main
                     i.fi.fi-rr-circle-xmark
                   form.wrapper-flex-column-gap-15#add-address-form
                     h4.title Thêm địa chỉ mới
-                    input.d-none(value=infoUser.fullName name="fullName")
-                    input.d-none(value=infoUser.phone name="phone")          
+                    label(for="fullName") Full name
+                    input(type="text" id="fullName" name="fullName")
+                    label(for="phone") Phone
+                    input(type="text" id="phone" name="phone")          
                     select.province.form-address(required name="province")
                       option          
                     select.district.form-address(required name="district")
@@ -118,17 +120,19 @@ block main
                       span.display-district
                       span.display-province
                     button(type="submit") Thêm
+
             .address-display.wrapper-flex-column-gap-15
-              .address-item
-                i.fi.fi-rr-house-chimney
-                .detail
-                  .name Việt
-                  .phone 0987654321
-                  .add số 1223 đường abc
-              .address-item
-                i.fi.fi-rr-house-chimney
-                .detail
-                  .name Việt
-                  .phone 0987654321
-                  .add số 1223 đường abc
+              if information.length == 0
+                .address-item
+                  i.fi.fi-rr-house-chimney
+                  .detail
+                    span Chưa có địa chỉ nào
+              else
+                each address in information
+                  .address-item
+                    i.fi.fi-rr-house-chimney
+                    .detail
+                      .name #{address.fullName}
+                      .phone #{address.phone}
+                      .add #{address.detail}, #{address.commune}, #{address.district}, #{address.province}
   script(src="/js/info.js") 

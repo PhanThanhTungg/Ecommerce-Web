@@ -20,22 +20,6 @@ const userSchema = new mongoose.Schema(
       default: "https://howkteam.vn/Content/images/avatar/avatar.png"
     },
     sex: String,
-    cntSuccess: {
-      type: Number,
-      default: 0
-    },
-    cntFail: {
-      type: Number,
-      default: 0
-    },
-    totalValue: {
-      type: Number,
-      default: 0
-    },
-    rank:{
-      type: String,
-      default: "Vô hạng"
-    },
     status:{
       type: String,
       default: "active"

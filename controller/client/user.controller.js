@@ -1,4 +1,5 @@
 const User = require("../../model/user.model")
+const UserInformation = require("../../model/user-infomation.model");
 const ForgotPassword = require("../../model/forgot-password.model")
 const Cart = require("../../model/cart.model");
 
@@ -27,10 +28,10 @@ module.exports.registerPost = async (req, res) => {
     res.redirect("/");
     return;
   }
-  let { fullName, email, password } = req.body;
+  let { email, phone, fullName, password } = req.body;
   password = await bcrypt.hash(password, 12) + "";
 
-  const user = new User({ fullName, email, password });
+  const user = new User({ email, phone, fullName, password });
   const [accessToken, refreshToken] = [genTokenHelper.genAccessToken(user.id), genTokenHelper.genRefreshToken(user.id)];
   await user.save();
   res.cookie("accessToken", accessToken, { httpOnly: true, maxAge: 60 * 1000 });
@@ -376,56 +377,18 @@ module.exports.resetPasswordPost = async (req, res) => {
 
 module.exports.info = async (req, res) => {
   if (res.locals.user) {
-    const tokenUser = res.locals.user.tokenUser;
-    //update rank of user
-    let totalValue = 0
-    let cntFail = 0
-    let cntSuccess = 0
-    const orders = await Order.find({ tokenUser: tokenUser })
-    for (const order of orders) {
-      for (const product of order.products) {
-        const productItem = await Product.findOne({
-          _id: product.product_id,
-          status: "active",
-          deleted: false,
-        })
-
-        const sizeInfo = productItem.listSize.find(i => {
-          return i.id == product.size_id
-        })
-
-        let priceNew = (sizeInfo.price * (100 - productItem.discountPercentage) / 100).toFixed(0)
-        if (product.status == "biBom") cntFail += product.quantity
-        if (product.status == "daThanhToan") {
-          cntSuccess += product.quantity
-          totalValue += priceNew * product.quantity
-        }
-      }
-    }
-    const rank = totalValue >= 100000000 ? "Chiến tướng" : (
-      totalValue >= 50000000 ? "Cao thủ" : (
-        totalValue >= 10000000 ? "Kim cương" : (
-          totalValue >= 5000000 ? "Vàng" : (
-            totalValue >= 1000000 ? "Bạc" : (
-              totalValue >= 500000 ? "Đồng" : "Vô hạng"
-            )
-          )
-        )
-      )
-    )
-    await User.updateOne({ tokenUser: tokenUser }, { rank: rank })
-    const infoUser = await User.findOne({
-      tokenUser: tokenUser
-    }).select("-password")
-
-    infoUser.totalValue = totalValue
-    infoUser.cntFail = cntFail
-    infoUser.cntSuccess = cntSuccess
-
+    const information = await UserInformation.find({
+      user_id: res.locals.user.id
+    }).sort({ createdAt: -1 })
+    console.log(information)
     res.render("client/pages/user/info", {
       pageTitle: "Thông tin tài khoản",
-      infoUser: infoUser
+      infoUser: res.locals.user,
+      information
     })
+  }
+  else{
+    res.redirect("/login")
   }
 }
 

@@ -4,7 +4,7 @@ if(buttonQrHistorys){
     button.addEventListener("click", (e)=>{
       e.stopPropagation();
       const qrSection = button.parentElement.querySelector(".section-qr-history");
-      qrSection.classList.toggle("d-none");
+      qrSection.classList.remove("d-none");
     })
   })
 }
@@ -23,10 +23,13 @@ if(orderInfos){
 // end - history page
 
 document.addEventListener("click", (e)=>{
-  const qrSection = document.querySelector(".section-qr-history");
-  const innerQrSection = qrSection.querySelector(".inner-section-qr");
-  if(!qrSection.classList.contains("d-none") && !innerQrSection.contains(e.target)){
-    qrSection.classList.add("d-none");
+  const qrSection = document.querySelector(".section-qr-history:not(.d-none");
+  if(qrSection){
+    const innerSection = qrSection.querySelector(".inner-section-qr");
+    if(!innerSection.contains(e.target) && !e.target.classList.contains("button-qr-history")){
+      console.log("close qr section");
+      qrSection.classList.add("d-none");
+    }
   }
 })
 

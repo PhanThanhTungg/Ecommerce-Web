@@ -169,6 +169,7 @@ document.getElementById('add-address-form').addEventListener("submit", async fun
     });
     const result = await res.json();
     console.log(result);
+    location.reload();
   } catch (error) {
     console.log(error);    
   }
