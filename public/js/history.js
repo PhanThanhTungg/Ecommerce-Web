@@ -1,7 +1,7 @@
 const buttonQrHistorys = document.querySelectorAll(".button-qr-history");
-if(buttonQrHistorys){
+if (buttonQrHistorys) {
   buttonQrHistorys.forEach(button => {
-    button.addEventListener("click", (e)=>{
+    button.addEventListener("click", (e) => {
       e.stopPropagation();
       const qrSection = button.parentElement.querySelector(".section-qr-history");
       qrSection.classList.remove("d-none");
@@ -11,7 +11,7 @@ if(buttonQrHistorys){
 
 // history page
 const orderInfos = document.querySelectorAll(".orderInfo");
-if(orderInfos){
+if (orderInfos) {
   orderInfos.forEach((orderInfo) => {
     orderInfo.addEventListener("click", (e) => {
       const orderProduct = orderInfo.parentElement.querySelector(".orderProducts");
@@ -22,11 +22,11 @@ if(orderInfos){
 }
 // end - history page
 
-document.addEventListener("click", (e)=>{
+document.addEventListener("click", (e) => {
   const qrSection = document.querySelector(".section-qr-history:not(.d-none");
-  if(qrSection){
+  if (qrSection) {
     const innerSection = qrSection.querySelector(".inner-section-qr");
-    if(!innerSection.contains(e.target) && !e.target.classList.contains("button-qr-history")){
+    if (!innerSection.contains(e.target) && !e.target.classList.contains("button-qr-history")) {
       console.log("close qr section");
       qrSection.classList.add("d-none");
     }
@@ -34,8 +34,16 @@ document.addEventListener("click", (e)=>{
 })
 
 const buttonReload = document.querySelector(".button-reload");
-if(buttonReload){
-  buttonReload.addEventListener("click", (e)=>{
+if (buttonReload) {
+  buttonReload.addEventListener("click", (e) => {
+    const orderIds = document.querySelectorAll("[data-order-id][data-payment-method='qr'][data-payment-status='lack']");
+    console.log(orderIds);
+    for (const orderId of orderIds) {
+      fetch(`/api/checkout/delivery-status/qr/${orderId.dataset.orderId}`).then(res => res.json())
+        .then(data => {
+          console.log(data);
+        })
+    }
     window.location.reload();
   })
 }

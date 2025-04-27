@@ -3,7 +3,7 @@ const boxInfo = document.querySelector(".info");
 const mapArea = document.querySelector("#map");
 const shippingFee = JSON.parse(mapArea.dataset.shippingFee);
 const totalPrice = mapArea.dataset.totalPrice;
-const freeShip = totalPrice >= shippingFee.freeShippingThreshold ? true: false;
+const freeShip = totalPrice >= shippingFee.freeShippingThreshold ? true : false;
 let shippingFeeValue = 0;
 let checkMap = false;
 
@@ -19,18 +19,44 @@ const updateShippingFee = (apiKey, location1, location2) => {
   fetch(url)
     .then(response => response.json())
     .then(data => {
-      const distance = data.features[0].properties.segments[0].distance / 1000;
-      const shipFee = shippingFee.initialFee + Math.floor(distance) * shippingFee.addFeePerKm;
-      const shippingValues = document.querySelectorAll(".shipping .value");
-      shippingFeeValue = shipFee;
-      shippingValues.forEach((shippingValue) => {
-        shippingValue.innerText = shipFee.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
-      })
+      const deliveryMethod = document.querySelector("input[name='deliveryMethod']:checked").value;
+      if (deliveryMethod == "instant") {
+        const distance = data.features[0].properties.segments[0].distance / 1000;
+        const shipFee = shippingFee.initialFee + Math.floor(distance) * shippingFee.addFeePerKm;
+        const shippingValues = document.querySelectorAll(".shipping .value");
+        shippingFeeValue = shipFee;
+        shippingValues.forEach((shippingValue) => {
+          shippingValue.innerText = shipFee.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        })
 
-      const totalPriceValues = document.querySelectorAll(".total-price .value");
-      totalPriceValues.forEach((totalPriceValue) => {
-        totalPriceValue.innerText = (parseInt(totalPrice) + shipFee).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
-      })
+        const totalPriceValues = document.querySelectorAll(".total-price .value");
+        totalPriceValues.forEach((totalPriceValue) => {
+          totalPriceValue.innerText = (parseInt(totalPrice) + shipFee).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        })
+      }
+      else if (deliveryMethod == "standard") {
+        const selectProvince = boxInfo.querySelector("select.province").value;
+        let shipFee;
+        if (selectProvince != "Hà Nội") {
+          shipFee = shippingFee.interProvincialFee;
+        }
+        else {
+          let selectDistrict = boxInfo.querySelector("select.district").value;
+          const checkQuan = /^Quận/.test(selectDistrict);
+          if (checkQuan) shipFee = shippingFee.urbanFee;
+          else shipFee = shippingFee.suburbanFee;
+        }
+        const shippingValues = document.querySelectorAll(".shipping .value");
+        shippingFeeValue = shipFee;
+        shippingValues.forEach((shippingValue) => {
+          shippingValue.innerText = shipFee.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        })
+
+        const totalPriceValues = document.querySelectorAll(".total-price .value");
+        totalPriceValues.forEach((totalPriceValue) => {
+          totalPriceValue.innerText = (parseInt(totalPrice) + shipFee).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        })
+      }
     })
     .catch(error => console.error("Lỗi:", error));
 }
@@ -51,8 +77,8 @@ const updateMap = (lat, lng) => {
     boxInfo.querySelector("input.locationY").value = position.lng;
     let shopLocationId = mapArea.dataset.shoplocationid.split(",");
     shopLocationId = shopLocationId[1].trim() + "," + shopLocationId[0].trim();
-    if(!freeShip) 
-      updateShippingFee(mapArea.dataset.apiKey,`${position.lng},${position.lat}`, shopLocationId)
+    if (!freeShip)
+      updateShippingFee(mapArea.dataset.apiKey, `${position.lng},${position.lat}`, shopLocationId)
   });
 
   map.on('click', function (event) {
@@ -62,14 +88,14 @@ const updateMap = (lat, lng) => {
     boxInfo.querySelector("input.locationY").value = latlng.lng;
     let shopLocationId = mapArea.dataset.shoplocationid.split(",");
     shopLocationId = shopLocationId[1].trim() + "," + shopLocationId[0].trim();
-    if(!freeShip)
-      updateShippingFee(mapArea.dataset.apiKey,`${latlng.lng},${latlng.lat}`, shopLocationId)
+    if (!freeShip)
+      updateShippingFee(mapArea.dataset.apiKey, `${latlng.lng},${latlng.lat}`, shopLocationId)
   });
 
   let shopLocationId = mapArea.dataset.shoplocationid.split(",");
   shopLocationId = shopLocationId[1].trim() + "," + shopLocationId[0].trim();
   let customerLocationid = boxInfo.querySelector("input.locationY").value + "," + boxInfo.querySelector("input.locationX").value;
-  if(!freeShip)
+  if (!freeShip)
     updateShippingFee(mapArea.dataset.apiKey, shopLocationId, customerLocationid);
 }
 
@@ -106,15 +132,27 @@ const checkUpdateMap = () => {
           boxInfo.querySelector("input.locationY").value = lng;
           checkMap = true;
           const addressError = boxInfo.querySelector(".address-error");
-          if(addressError) addressError.classList.add("d-none");
+          if (addressError) addressError.classList.add("d-none");
           updateMap(lat, lng);
         } else {
           console.log("Không tìm thấy địa chỉ.");
           const addressError = boxInfo.querySelector(".address-error");
-          if(addressError){
+          if (addressError) {
             addressError.classList.remove("d-none");
             addressError.innerText = "Không tìm thấy địa chỉ. Vui lòng kiểm tra lại.";
-          } 
+
+            const shippingValues = document.querySelectorAll(".shipping .value");
+            shippingFeeValue = shipFee;
+            shippingValues.forEach((shippingValue) => {
+              shippingValue.innerText = "-"
+            })
+
+            const totalPriceValues = document.querySelectorAll(".total-price .value");
+            totalPriceValues.forEach((totalPriceValue) => {
+              totalPriceValue.innerText = parseInt(totalPrice).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+            })
+
+          }
           const addressSuccess = boxInfo.querySelector(".address-success");
           if (addressSuccess) addressSuccess.classList.add("d-none");
           mapArea.classList.add("d-none");
@@ -134,7 +172,7 @@ const checkUpdateMap = () => {
 // })
 
 const buttonAddress = document.querySelector(".btn-address");
-if(buttonAddress) {
+if (buttonAddress) {
   buttonAddress.addEventListener("click", () => {
     const selectProvince = boxInfo.querySelector("select.province").value;
     const selectDistrict = boxInfo.querySelector("select.district").value;
@@ -144,9 +182,20 @@ if(buttonAddress) {
       checkUpdateMap();
     } else {
       const addressError = boxInfo.querySelector(".address-error");
-      if(addressError) {
+      if (addressError) {
         addressError.classList.remove("d-none");
         addressError.innerText = "Không tìm thấy địa chỉ. Vui lòng kiểm tra lại.";
+
+        const shippingValues = document.querySelectorAll(".shipping .value");
+        shippingFeeValue = shipFee;
+        shippingValues.forEach((shippingValue) => {
+          shippingValue.innerText = "-"
+        })
+
+        const totalPriceValues = document.querySelectorAll(".total-price .value");
+        totalPriceValues.forEach((totalPriceValue) => {
+          totalPriceValue.innerText = parseInt(totalPrice).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        })
       }
       const addressSuccess = boxInfo.querySelector(".address-success");
       if (addressSuccess) addressSuccess.classList.add("d-none");
@@ -233,9 +282,9 @@ async function action() {
       }
     })
     selectElement.val('').trigger('change');
-    
+
     const addressError = boxInfo.querySelector(".address-error");
-    if(addressError) addressError.classList.add("d-none");
+    if (addressError) addressError.classList.add("d-none");
     const addressSuccess = boxInfo.querySelector(".address-success");
     if (addressSuccess) addressSuccess.classList.remove("d-none");
 
@@ -270,7 +319,7 @@ async function action() {
     selectElement.val('').trigger('change');
 
     const addressError = boxInfo.querySelector(".address-error");
-    if(addressError) addressError.classList.add("d-none");
+    if (addressError) addressError.classList.add("d-none");
     const addressSuccess = boxInfo.querySelector(".address-success");
     if (addressSuccess) addressSuccess.classList.remove("d-none");
 
@@ -281,7 +330,7 @@ async function action() {
 
   $('.checkout .info .ward').on('select2:select', async function (e) {
     const addressError = boxInfo.querySelector(".address-error");
-    if(addressError) addressError.classList.add("d-none");
+    if (addressError) addressError.classList.add("d-none");
     const addressSuccess = boxInfo.querySelector(".address-success");
     if (addressSuccess) addressSuccess.classList.remove("d-none");
     displayWard.innerText = e.params.data.text + ", ";
@@ -292,7 +341,7 @@ async function action() {
   inputDetailAddress.addEventListener('input', function () {
     if (this.value) {
       const addressError = boxInfo.querySelector(".address-error");
-      if(addressError) addressError.classList.add("d-none");
+      if (addressError) addressError.classList.add("d-none");
       const addressSuccess = boxInfo.querySelector(".address-success");
       if (addressSuccess) addressSuccess.classList.remove("d-none");
       displayAddress.innerText = this.value + ", ";
@@ -358,40 +407,40 @@ if (successPage) {
 
 // handle form submit
 const formCheckout = document.querySelector(".checkout form.form-checkout");
-if(formCheckout){
+if (formCheckout) {
   formCheckout.addEventListener("submit", (e) => {
     e.preventDefault();
-      if(checkMap == false) {
-        const addressError = boxInfo.querySelector(".address-error");
-        if(addressError) addressError.classList.remove("d-none");
-        const addressSuccess = boxInfo.querySelector(".address-success");
-        if (addressSuccess) addressSuccess.classList.add("d-none");
-        addressError.innerText = "Vui lòng kiểm tra lại địa chỉ.";
-        addressError.classList.add("text-danger");
-        window.scrollTo({ top: addressError.offsetTop - 50, behavior: "smooth" });
-        return;
-      }
- 
-      const input = document.createElement("input");
-      input.type = "hidden";
-      input.name = "shippingFee";
-      input.value = shippingFeeValue;
-      formCheckout.appendChild(input);
+    if (checkMap == false) {
+      const addressError = boxInfo.querySelector(".address-error");
+      if (addressError) addressError.classList.remove("d-none");
+      const addressSuccess = boxInfo.querySelector(".address-success");
+      if (addressSuccess) addressSuccess.classList.add("d-none");
+      addressError.innerText = "Vui lòng kiểm tra lại địa chỉ.";
+      addressError.classList.add("text-danger");
+      window.scrollTo({ top: addressError.offsetTop - 50, behavior: "smooth" });
+      return;
+    }
 
-      const textArea = document.createElement("textarea");
-      textArea.name = "note";
-      textArea.style.display = "none";
-      textArea.value = document.querySelector(".input-note textarea").value;
-      formCheckout.appendChild(textArea);
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = "shippingFee";
+    input.value = shippingFeeValue;
+    formCheckout.appendChild(input);
+
+    const textArea = document.createElement("textarea");
+    textArea.name = "note";
+    textArea.style.display = "none";
+    textArea.value = document.querySelector(".input-note textarea").value;
+    formCheckout.appendChild(textArea);
 
 
-      if(e.target.paymentMethod.value == "zalopay"){
-        console.log("zalo");
-      }
-      else{
+    if (e.target.paymentMethod.value == "zalopay") {
+      console.log("zalo");
+    }
+    else {
 
-        e.target.submit();
-      }
+      e.target.submit();
+    }
 
 
   })
@@ -400,7 +449,7 @@ if(formCheckout){
 
 // handle input note
 const inputNotes = document.querySelectorAll(".input-note textarea");
-if(inputNotes){
+if (inputNotes) {
   inputNotes.forEach((inputNote) => {
     inputNote.addEventListener("input", (e) => {
       const value = e.target.value;
@@ -413,6 +462,26 @@ if(inputNotes){
   });
 }
 //end - handle input note
+
+//handle delivery method change 
+const deliveryMethodInput = document.querySelectorAll(".delivery-method input[type='radio']");
+if (deliveryMethodInput) {
+  deliveryMethodInput.forEach(input => {
+    input.addEventListener("change", e => {
+      checkUpdateMap();
+    })
+  })
+}
+
+//remove form enter click
+const form = document.querySelector(".form-checkout");
+if (form) {
+  form.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
+  });
+}
 
 
 

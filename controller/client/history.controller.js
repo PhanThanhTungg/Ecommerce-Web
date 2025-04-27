@@ -34,7 +34,6 @@ module.exports.index = async (req, res) => {
     }
   }
 
-  console.log(orders);
 
   res.render("client/pages/order/index", {
     pageTitle: "History",

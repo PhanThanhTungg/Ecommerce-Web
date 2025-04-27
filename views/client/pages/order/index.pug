@@ -10,11 +10,24 @@ include ../../mixins/qr-code.pug
 
 block main
   .page-format
+    .container 
+      .button-4.d-inline-block.float-right.mb-3.button-reload.py-2
+        span <i class="fa-solid fa-rotate mr-2"></i> Refresh
+      div.clearfix
+
+      .wrap-button.mb-4
+        - classCSSButton = "text-center py-2 px-4 rounded-md hover:bg-white hover:shadow-sm cursor-pointer transition-all"
+        - classCssButtonActive = "text-center py-2 px-4 rounded-md bg-white shadow-sm hover:shadow-md cursor-pointer transition-all font-medium"
+        div(class="grid grid-cols-6 gap-2 bg-gray-100 p-2 rounded-lg")
+          div(class=classCssButtonActive) All
+          div(class=classCSSButton) Pending
+          div(class=classCSSButton) Pending-Payment
+          div(class=classCSSButton) Shipping
+          div(class=classCSSButton) Delivered
+          div(class=classCSSButton) Cancelled
+
     if orders.length > 0
       .container.my-3
-        .button-4.d-inline-block.float-right.mb-3.button-reload.py-2
-          span <i class="fa-solid fa-rotate mr-2"></i> Refresh
-        div.clearfix
         each order in orders
           .orderHistory
             //- general information
@@ -35,7 +48,6 @@ block main
                   <i class="fa-solid fa-location-dot mr-2"></i> 
                   span #{order.userInfo.detail}, #{order.userInfo.commune}, #{order.userInfo.district}, #{order.userInfo.province}
               
-
 
               //- payment section 
               .col-12.row.mt-4.align-items-center
@@ -66,8 +78,8 @@ block main
                     else if order.paymentStatus.status == "ok"
                       span.text-paid Paid
 
-
-              .orderProducts.d-none.w-100.row
+              - status = order.paymentStatus?.status
+              .orderProducts.d-none.w-100.row(data-order-id = order.id data-payment-method=order.paymentMethod data-payment-status=status)
                 table.col-10
                   thead.w-100
                     tr.w-100

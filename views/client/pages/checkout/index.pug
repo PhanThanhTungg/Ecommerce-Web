@@ -4,7 +4,7 @@ include ../../mixins/alert.pug
 include ../../mixins/product-item-template.pug
 
 block main
-
+  //- responsive 
   .d-block.d-lg-none.checkout
     a(
       data-toggle="collapse" 
@@ -35,6 +35,8 @@ block main
         .input-note 
           .note-title Ghi chú
           textarea(rows="6" placeholder="Gửi lời nhắn của bạn tới người bán tại đây ❤️")
+  
+  //- form-checkout
   .container.checkout
     .row  
       form.form-checkout.col-xl-6.col-lg-7.col-md-12(
