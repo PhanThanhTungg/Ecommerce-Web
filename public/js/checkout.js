@@ -433,16 +433,8 @@ if (formCheckout) {
     textArea.value = document.querySelector(".input-note textarea").value;
     formCheckout.appendChild(textArea);
 
-
-    if (e.target.paymentMethod.value == "zalopay") {
-      console.log("zalo");
-    }
-    else {
-
-      e.target.submit();
-    }
-
-
+    e.target.submit();
+    
   })
 }
 // end - handle form submit

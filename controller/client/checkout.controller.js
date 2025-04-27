@@ -2,6 +2,9 @@ const Cart = require("../../model/cart.model");
 const Product = require("../../model/product.model");
 const Order = require("../../model/order.model");
 const OrderProduct = require("../../model/order-product.model")
+const axios = require("axios");
+const CryptoJS = require('crypto-js');
+const moment = require("moment");
 
 module.exports.index = async (req, res) => {
   const orderProducts = [];
@@ -46,7 +49,7 @@ module.exports.order = async (req, res) => {
   try {
     let { orderProducts, fullName, phone, province, district,
       commune, detail, locationX, locationY, deliveryMethod, paymentMethod, shippingFee, note } = req.body;
-    console.log(req.body);
+
     orderProducts = JSON.parse(orderProducts);
 
     let totalProductPrice = orderProducts.reduce((val1, val2) => {
@@ -97,11 +100,73 @@ module.exports.order = async (req, res) => {
       await orderProduct.save();
     }
 
+    if (paymentMethod == "zalopay") {
+      return res.redirect(`/checkout/zalopay/${order.id}/${+totalProductPrice + +shippingFee}`)
+    }
+
     res.redirect("/checkout/success/" + order.id)
   } catch (error) {
     console.log(error);
     req.flash("error", "Có lỗi xảy ra trong quá trình đặt hàng, vui lòng thử lại sau");
     return res.redirect("/")
+  }
+}
+
+module.exports.zalopay = async (req, res) => {
+  try {
+    const embed_data = {
+      redirecturl: process.env.URLDEPLOY+`/checkout/success/${req.params.orderId}`
+    };
+
+    const transID = req.params.orderId;
+
+    const items = []; 
+    const amount = req.params.amount; 
+    const description = `Thanh toán đơn hàng #${transID}`;
+
+    const data = {
+      app_id: process.env.APP_ID,
+      app_trans_id: `${moment().format('YYMMDDhhmmss')}_${transID}`,
+      app_user: process.env.USER_ZALOPAY,
+      app_time: Date.now(),
+      amount: amount,
+      embed_data: JSON.stringify(embed_data),
+      item: JSON.stringify(items),
+      description: description,
+      bank_code: "", 
+      callback_url: process.env.URLDEPLOY + "/checkout/zalopay-callback"
+    };
+
+    const dataStr = `${process.env.APP_ID}|${data.app_trans_id}|${data.app_user}|${data.amount}|${data.app_time}|${data.embed_data}|${data.item}`;
+    data.mac = CryptoJS.HmacSHA256(dataStr, process.env.KEY1).toString();
+
+    const response = await axios.post(process.env.ZALOPAY_ENDPOINT, null, { params: data });
+
+    if (response.data.order_url) {
+      res.redirect(response.data.order_url);
+    } else {
+      res.send("Không lấy được order_url từ ZaloPay. Kiểm tra lại cấu hình.");
+    }
+  } catch (error) {
+    console.error("Lỗi thanh toán:", error);
+    res.status(500).send("Có lỗi xảy ra");
+  }
+}
+
+module.exports.zalopayCallback = async (req, res) => {
+  try {
+    const orderId = JSON.parse(req.body.data).app_trans_id.split("_")[1];
+    await Order.updateOne({
+      _id: orderId,
+    }, {
+      "paymentStatus.status": "ok",
+      "deliveryStatus":"pending",
+      $unset: { "paymentStatus.lack": "" }
+    })
+    res.json({ return_code: 1, return_message: "Success" });
+  } catch (error) {
+    console.error("Lỗi callback:", error);
+    res.status(500).send("Có lỗi xảy ra");
   }
 }
 

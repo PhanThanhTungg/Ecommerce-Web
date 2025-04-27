@@ -52,7 +52,7 @@ block main
               //- payment section 
               .col-12.row.mt-4.align-items-center
                 //- payment method 
-                .col-3
+                .col-3(class="flex items-center justify-center")
                   if order.paymentMethod == "qr"
                     <i class="font-size-20 fa-solid fa-qrcode mr-2"></i>
                   if order.paymentMethod == "zalopay"
@@ -63,16 +63,23 @@ block main
                 //- payment status
                 - status = order.paymentStatus?.status
                 .col-6.paymentStatus-section(status = status data-order-id = order._id)
-                  if order.paymentMethod == "qr"
+                  if order.paymentMethod != "cash"
                     if status == "ok"
                       span.text-paid Paid
                     if status == "lack"
                       span.text-error Underpaid <span class = "format-money">#{order.paymentStatus.lack}</span>
-                      button.button-4.button-qr-history.d-inline-block.ml-2(style="padding: 5px 20px; border-radius: 10px; overflow: hidden")
-                        span Scan QR
-                      .section-qr-history.d-none
-                        +qr-code(bankId, bankAccount, order.paymentStatus.lack, order._id)
-                  if order.paymentMethod == "cash"
+                      if order.paymentMethod == "zalopay"
+                        button.button-4.button-zalopay.ml-2(style="padding: 5px 20px; border-radius: 10px; overflow: hidden"
+                          data-order-id=order.id
+                          data-order-lack=order.paymentStatus.lack
+                        )
+                          span Checkout
+                      else
+                        button.button-4.button-qr-history.d-inline-block.ml-2(style="padding: 5px 20px; border-radius: 10px; overflow: hidden")
+                          span Scan QR
+                        .section-qr-history.d-none
+                          +qr-code(bankId, bankAccount, order.paymentStatus.lack, order._id)
+                  else
                     if !order.paymentStatus
                       span.text-error Unpaid
                     else if order.paymentStatus.status == "ok"

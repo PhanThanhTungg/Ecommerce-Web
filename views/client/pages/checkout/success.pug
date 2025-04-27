@@ -8,7 +8,10 @@ block main
       .notification.wrapper-flex-column-gap-15.align-items-center
         if order.deliveryStatus == "pending"
           i.fi.fi-rr-check
-          span Đặt hàng thành công!
+          if order.paymentMethod=="zalopay"
+            span Thanh toán thành công!
+          else
+            span Đặt hàng thành công!
           if order.deliveryMethod == "instant"
             p Vui lòng để ý điện thoại để nhận hàng
           else if order.deliveryMethod == "standard"
@@ -16,7 +19,11 @@ block main
         if order.deliveryStatus == "pending-payment"
           i.fi.fi-rr-pending
           span Chờ xác nhận thanh toán
-          p Vui lòng quét mã QR để thanh toán
+          if order.paymentMethod == "zalopay"
+            p Vui lòng thanh toán 
+              a(href=`/checkout/zalopay/${order.id}/${order.paymentStatus.lack}` style="color: blue; text-decoration:underline") Tại đây
+          else
+            p Vui lòng quét mã QR để thanh toán
       <div class="success-box d-none align-items-center wrapper-flex-column-gap-15">
         <div class="icon"><i class="fa-solid fa-circle-check"></i></div>
         <h2>Thanh toán thành công!</h2>
@@ -34,6 +41,8 @@ block main
               | Mã Qr
             if order.paymentMethod == "cash"
               | Thanh toán khi nhận hàng
+            if order.paymentMethod == "zalopay"
+              | ZaloPay
           .order-products.wrapper-flex-column-gap-15
             span.title Đơn hàng của bạn
             .inner-orderProducts.wrapper-flex-column-gap-15
@@ -57,7 +66,7 @@ block main
             a.continue-shopping(href="/products") Tiếp tục mua hàng
             a.history(href="/history") Theo dõi đơn hàng
 
-        if order.deliveryStatus == 'pending-payment'
+        if order.deliveryStatus == 'pending-payment' && order.paymentMethod != "zalopay"
           .section-qr(data-bank-id=bankId data-bank-account=bankAccount)
             img(src=`https://img.vietqr.io/image/${bankId}-${bankAccount}-qr_only.png?amount=${totalPrice+order.shippingFee}&addInfo=STARTSEVQR${order.id}END`)
             p.des Mã QR thanh toán tự động

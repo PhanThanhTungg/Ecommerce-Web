@@ -8,6 +8,10 @@ router.post("/", controller.index)
 
 router.post("/order", validate.checkout ,controller.order)
 
+router.get("/zalopay/:orderId/:amount", controller.zalopay)
+
+router.post("/zalopay-callback", controller.zalopayCallback)
+
 router.get("/success/:orderId", controller.success)
 
 module.exports = router;
