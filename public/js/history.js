@@ -20,6 +20,17 @@ if(buttonZaloPays){
   })
 }
 
+const buttonMomos = document.querySelectorAll(".button-momo");
+if(buttonMomos){
+  buttonMomos.forEach(button => {
+    button.addEventListener("click", (e) => {
+      const orderId = e.currentTarget.dataset.orderId;
+      const lack = e.currentTarget.dataset.orderLack;
+      location.href = `/checkout/momo/${orderId}/${lack}`;
+    })
+  })
+}
+
 // history page
 const orderInfos = document.querySelectorAll(".orderInfo");
 if (orderInfos) {

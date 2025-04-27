@@ -4,7 +4,9 @@ const Order = require("../../model/order.model");
 const OrderProduct = require("../../model/order-product.model")
 const axios = require("axios");
 const CryptoJS = require('crypto-js');
+const crypto = require('crypto');
 const moment = require("moment");
+const momoConfig = require("../../config/momo.config")
 
 module.exports.index = async (req, res) => {
   const orderProducts = [];
@@ -103,6 +105,9 @@ module.exports.order = async (req, res) => {
     if (paymentMethod == "zalopay") {
       return res.redirect(`/checkout/zalopay/${order.id}/${+totalProductPrice + +shippingFee}`)
     }
+    else if (paymentMethod == "momo") {
+      return res.redirect(`/checkout/momo/${order.id}/${+totalProductPrice + +shippingFee}`)
+    }
 
     res.redirect("/checkout/success/" + order.id)
   } catch (error) {
@@ -115,13 +120,13 @@ module.exports.order = async (req, res) => {
 module.exports.zalopay = async (req, res) => {
   try {
     const embed_data = {
-      redirecturl: process.env.URLDEPLOY+`/checkout/success/${req.params.orderId}`
+      redirecturl: process.env.SUB_URLDEPLOY + `/checkout/success/${req.params.orderId}`
     };
 
     const transID = req.params.orderId;
 
-    const items = []; 
-    const amount = req.params.amount; 
+    const items = [];
+    const amount = req.params.amount;
     const description = `Thanh toán đơn hàng #${transID}`;
 
     const data = {
@@ -133,7 +138,7 @@ module.exports.zalopay = async (req, res) => {
       embed_data: JSON.stringify(embed_data),
       item: JSON.stringify(items),
       description: description,
-      bank_code: "", 
+      bank_code: "",
       callback_url: process.env.URLDEPLOY + "/checkout/zalopay-callback"
     };
 
@@ -153,6 +158,92 @@ module.exports.zalopay = async (req, res) => {
   }
 }
 
+module.exports.momo = async (req, res) => {
+  try {
+    const { orderId, amount } = req.params;
+
+    let {
+      accessKey,
+      secretKey,
+      orderInfo,
+      partnerCode,
+      redirectUrl,
+      ipnUrl,
+      requestType,
+      extraData,
+      orderGroupId,
+      autoCapture,
+      lang,
+    } = momoConfig;
+
+    redirectUrl += `/checkout/success/${orderId}`;
+
+    const requestId = `${moment().format('YYMMDDhhmmss')}_${orderId}`;
+
+    const rawSignature = 'accessKey=' + accessKey + '&amount=' + amount + '&extraData=' + extraData + '&ipnUrl=' +
+      ipnUrl + '&orderId=' + requestId + '&orderInfo=' + orderInfo + '&partnerCode=' + partnerCode + '&redirectUrl=' +
+      redirectUrl + '&requestId=' + requestId + '&requestType=' + requestType;
+
+    const signature = crypto
+      .createHmac('sha256', secretKey)
+      .update(rawSignature)
+      .digest('hex');
+
+    const requestBody = JSON.stringify({
+      partnerCode: partnerCode,
+      partnerName: 'Test',
+      storeId: 'MomoTestStore',
+      requestId: requestId,
+      amount: amount,
+      orderId: requestId,
+      orderInfo: orderInfo,
+      redirectUrl: redirectUrl,
+      ipnUrl: ipnUrl,
+      lang: lang,
+      requestType: requestType,
+      autoCapture: autoCapture,
+      extraData: extraData,
+      orderGroupId: orderGroupId,
+      signature: signature,
+    });
+
+    const options = {
+      method: 'POST',
+      url: 'https://test-payment.momo.vn/v2/gateway/api/create',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(requestBody),
+      },
+      data: requestBody,
+    };
+
+    const result = await axios(options);
+    res.redirect(result.data.payUrl);
+  } catch (error) {
+    console.error("Lỗi thanh toán:", error);
+    res.status(500).send("Có lỗi xảy ra");
+  }
+}
+
+module.exports.momoCallback = async (req, res) => {
+  try {
+    if (req.body.message == "Thành công.") {
+      const orderId = req.body.requestId.split("_")[1];
+      await Order.updateOne({
+        _id: orderId,
+      }, {
+        "paymentStatus.status": "ok",
+        "deliveryStatus": "pending",
+        $unset: { "paymentStatus.lack": "" }
+      })
+      res.json({ return_code: 1, return_message: "Success" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Có lỗi xảy ra o callback");
+  }
+}
+
 module.exports.zalopayCallback = async (req, res) => {
   try {
     const orderId = JSON.parse(req.body.data).app_trans_id.split("_")[1];
@@ -160,7 +251,7 @@ module.exports.zalopayCallback = async (req, res) => {
       _id: orderId,
     }, {
       "paymentStatus.status": "ok",
-      "deliveryStatus":"pending",
+      "deliveryStatus": "pending",
       $unset: { "paymentStatus.lack": "" }
     })
     res.json({ return_code: 1, return_message: "Success" });

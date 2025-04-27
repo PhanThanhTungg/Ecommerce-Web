@@ -43,6 +43,8 @@ block main
               | Thanh toán khi nhận hàng
             if order.paymentMethod == "zalopay"
               | ZaloPay
+            if order.paymentMethod == "momo"
+              | Momo
           .order-products.wrapper-flex-column-gap-15
             span.title Đơn hàng của bạn
             .inner-orderProducts.wrapper-flex-column-gap-15
