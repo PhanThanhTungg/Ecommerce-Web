@@ -6,105 +6,131 @@ block main
   if(role.permissions.includes("products-category_create")) 
     h1(class=`mb-7 ml-7 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-4xl
       dark:text-white`) Create new category
-    .container.px-40
+    .container-custom-sm
       form(
         action=`${prefixAdmin}/products-category/create`
         method="POST"
         enctype="multipart/form-data"
       )
-        label(for="title") Category name
-        input(
-          type="text"
-          id="title"
-          name="title"
-          placeholder="Living room"
-          required
-        )
-        label(for="parent_id") Danh mục cha
-        select(
-          name="parent_id"
-          id="parent_id"
-          class="form-control"
-        )
-          option(value="") -- Chọn danh mục cha
-            if(records)
-              +select-tree(records)
-        div(class="form-group form-check form-check-inline")
-          input(
-            type="radio"
-            class="form-check-input"
-            id="featured1"
-            name="featured"
-            value="1"
-          )
-          label(for="featured1" class="form-check-label") Featured
-        div(class="form-group form-check form-check-inline")
-          input(
-            type="radio"
-            class="form-check-input"
-            id="featured0"
-            name="featured"
-            value="0"
-            checked
-          )
-          label(for="featured0" class="form-check-label") Normal
-
-          label(for="desc") Mô tả
+        div(class="grid gap-6 mb-6 md:grid-cols-2")
+          div.flex.items-center.ps-4.border.border-gray-200.rounded-sm(class='dark:border-gray-700')
+            input#featured0.w-4.h-4.text-blue-600.bg-gray-100.border-gray-300(
+              type='radio' 
+              value='0' 
+              name='featured'
+              checked
+              class=`focus:ring-blue-500
+               dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600`)
+            label.w-full.py-4.ms-2.text-sm.font-medium.text-gray-900(
+              for='featured10' 
+              class='dark:text-gray-300'
+            ) Normal
+          div.flex.items-center.ps-4.border.border-gray-200.rounded-sm(class='dark:border-gray-700')
+            input#featured1.w-4.h-4.text-blue-600.bg-gray-100.border-gray-300(
+              type='radio' 
+              value='1' 
+              name='featured' 
+              class='focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+            )
+            label.w-full.py-4.ms-2.text-sm.font-medium.text-gray-900(
+              for='featured1' 
+              class='dark:text-gray-300'
+            ) Featured category
+          div
+            label.block.mb-2.text-sm.font-medium.text-gray-900(
+              class="dark:text-white"
+              for="title") Category name
+            input.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(
+              class=`focus:ring-blue-500 focus:border-blue-500 p-2.5 
+                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`
+              type="text"
+              id="title"
+              name="title"
+              placeholder="Living room"
+              required
+            )
+          div
+            label.block.mb-2.text-sm.font-medium.text-gray-900(
+              class="dark:text-white"
+              for="parent_id") Parent category
+            select#parent_id.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(
+              name='parent_id' 
+              class=`focus:ring-blue-500 focus:border-blue-500 p-2.5 
+              dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'`)
+              option(value="") Select parent category
+                if(records)
+                  +select-tree(records)
+        .mb-6
+          label.block.mb-2.text-sm.font-medium.text-gray-900(
+            class="dark:text-white"
+            for="desc") Description
           textarea(
             type="text"
-            class="form-control textarea-mce"
+            class="textarea-mce"
             id="desc"
             name="description"
             rows="5"
           )
-        div(
-          upload-image
-        )
-          label(for="thumbnail") Ảnh
-          input(
-            type="file"
-            class="form-control-file"
-            id="thumbnail"
-            name="thumbnail"
-            accept="image/*"
-            upload-image-input
-          )
-          img(
-            src=""
-            class="image-preview"
-            upload-image-preview
-          )
+        
+        .mb-6(upload-image)
+          label.block.mb-2.text-sm.font-medium.text-gray-900(
+            class="dark:text-white"
+            for="thumbnail") Image
+          .flex.items-center.justify-center.w-full.mb-2
+            label.flex.flex-col.items-center.justify-center.w-full.h-64.border-2.border-gray-300.border-dashed.rounded-lg.cursor-pointer.bg-gray-50(for='thumbnail' class='dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600')
+              .flex.flex-col.items-center.justify-center.pt-5.pb-6
+                svg.w-8.h-8.mb-4.text-gray-500(class='dark:text-gray-400' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewbox='0 0 20 16')
+                  path(stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2')
+                p.mb-2.text-sm.text-gray-500(class='dark:text-gray-400')
+                  span.font-semibold Click to upload
+                  |  or drag and drop
+                p.text-xs.text-gray-500(class='dark:text-gray-400') Accept img file
+              input#thumbnail.hidden(
+                type='file' 
+                name='thumbnail' 
+                accept='image/*' 
+                upload-image-input
+              )
+          .images-preview.flex.flex-wrap.gap-2
 
-          label(for="position") Vị trí
+        .mb-6(data-tooltip-target="tooltip-position" 
+              data-tooltip-placement="bottom")
+          label.block.mb-2.text-sm.font-medium.text-gray-900(
+            class="dark:text-white"
+            for="position") Position
           input(
             type="number"
-            class="form-control"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             id="position"
             name="position"
-            placeholder="Tự động tăng"
+            placeholder="Auto-increment"
             min="1"
           )
-        div(class="form-group form-check form-check-inline")
-          input(
-            type="radio"
-            class="form-check-input"
-            id="statusActive"
-            name="status"
-            value="active"
-            checked
-          )
-          label(for="statusActive" class="form-check-label") Hoạt động
-        div(class="form-group form-check form-check-inline")
-          input(
-            type="radio"
-            class="form-check-input"
-            id="statusInActive"
-            name="status"
-            value="inactive"
-          )
-          label(for="statusInActive" class="form-check-label") Dừng hoạt động
-        div(class="form-group" style="margin-bottom: 0; padding-bottom:20px")
-          button(
-            type="submit"
-            class="btn btn-primary button-1 button-1-2"
-          ) Tạo mới
+        #tooltip-position.absolute.z-10.invisible.inline-block.px-3.py-2.text-sm.font-medium.text-white.transition-opacity.duration-300.bg-gray-900.rounded-lg.shadow-xs.opacity-0.tooltip(role='tooltip' class='dark:bg-gray-700')
+          | Categories with lower position values will be given higher priority in the display order.
+          .tooltip-arrow(data-popper-arrow='')
+
+        input(
+          type="radio"
+          class="form-check-input hidden"
+          id="statusActive"
+          name="status"
+          value="active"
+          checked
+        )
+        //-   label(for="statusActive" class="form-check-label") Hoạt động
+        //- div(class="form-group form-check form-check-inline")
+        //-   input(
+        //-     type="radio"
+        //-     class="form-check-input"
+        //-     id="statusInActive"
+        //-     name="status"
+        //-     value="inactive"
+        //-   )
+        //-   label(for="statusInActive" class="form-check-label") Dừng hoạt động
+        button(
+          type="submit"
+          class=`block ml-auto px-5 py-2 cursor-pointer text-center font-medium 
+            text-white bg-gray-800 rounded-sm hover:bg-gray-900
+            dark:bg-gray-700 dark:hover:bg-gray-600`
+        ) OK

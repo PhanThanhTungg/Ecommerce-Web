@@ -40,9 +40,18 @@ if (buttonDelete.length > 0) {
 }
 //end delete item
 
-//add size
-const buttonAddSize = document.querySelector(".buttonAddSize")
-const buttonDelSize = document.querySelector(".buttonDelSize")
+//add and delete size
+const buttonAddSize = document.querySelector(".addSize")
+function deleteRow(e) {
+  const tableSize = document.querySelector(".tableSize tbody");
+  const trElement = e.parentElement.parentElement
+  if (tableSize.querySelectorAll("tr").length <= 1) {
+    alert("Cannot delete the last row")
+    return
+  }
+  tableSize.removeChild(trElement)
+}
+
 if (buttonAddSize) {
   buttonAddSize.addEventListener("click", () => {
     const tableSize = document.querySelector(".tableSize tbody")
@@ -54,18 +63,18 @@ if (buttonAddSize) {
     tableSize.appendChild(firstRow)
   })
 }
-if(buttonDelSize){
-  buttonDelSize.addEventListener("click", () => {
-    const tableSize = document.querySelector(".tableSize tbody")
-    const cnt = tableSize.querySelectorAll("tr").length
-    if (cnt > 1) {
-      const lastRow = tableSize.lastElementChild
-      tableSize.removeChild(lastRow)
+
+//end add and delete size
+
+//switch product status
+const checkboxStatus = document.getElementById("statusActive");
+if (checkboxStatus) {
+  checkboxStatus.addEventListener("change", function () {
+    const secondaryCheckbox = document.getElementById("input-hidden");
+    if(!this.checked) {
+      secondaryCheckbox.innerHTML = `<input type="hidden" name="status" value="inactive">`;
+    } else {
+      secondaryCheckbox.innerHTML = "";
     }
   })
 }
-
-
-
-
-//end add size

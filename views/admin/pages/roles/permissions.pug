@@ -3,197 +3,273 @@ include ../../mixins/alert.pug
 
 block main
 
-    if(role.permissions.includes("roles_permissions"))
-        if(records)
-            div(data-records = records)
-            table(
-                class="table-hover table-sm mt-5"
-                style = "margin-top:0; margin-bottm: 0"
-                table-permissions
-            )
-                thead
-                    tr
-                        th Permission
-                            each item in records
-                                th(class="text-center") #{item.title}
-                tbody
-                    //- danh muc san pham
-                    tr(data-name="id" class="d-none")
-                        td
-                        each item in records
-                            td(class="text-center")
-                                input(type="text" value=item.id)
-                    tr
-                        td(colspan="4")
-                            | CATEGORY MANAGEMENT
-                    tr(data-name="products-category_view")
-                        td -----View
-                        each item in records
-                            td(class="text-center")
-                                input(type="checkbox")
-                    tr(data-name="products-category_create")
-                        td -----Create
-                        each item in records
-                            td(class="text-center")
-                                input(type="checkbox")
-                    tr(data-name="products-category_edit")
-                        td -----Edit
-                        each item in records
-                            td(class="text-center")
-                                input(type="checkbox")
-                    tr(data-name="products-category_delete")
-                        td -----Delete
-                        each item in records
-                            td(class="text-center")
-                                input(type="checkbox")
+  if(role.permissions.includes("roles_permissions"))
+    h1(class=`mb-7 ml-7 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-4xl
+    dark:text-white`) Permissions
+    if(records)
+      .container-custom
+        div(data-records = records)
+        div(class="relative overflow-x-auto shadow-md sm:rounded-lg w-fit max-w-full")
+          table(
+            class="text-base text-left rtl:text-right text-gray-500 dark:text-gray-400"
+            table-permissions
+          )
+            thead(class="text-base text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400")
+              tr
+                th(scope="col" class="px-3 md:px-6 py-3") Permission
+                each item in records
+                  th(scope="col" class="px-3 md:px-6 py-3") #{item.title}
+            tbody
+              tr(data-name="id" class="hidden")
+                td
+                each item in records
+                  td(class="text-center")
+                    input(type="text" value=item.id)
+              tr(class=" border-t dark:border-gray-700 border-gray-200")
+                td(class="whitespace-nowrap w-fit px-3 md:px-6 py-2 font-medium text-gray-900 dark:text-white")
+                  | Category management
+              tr(data-name="products-category_view")
+                td(class="px-5 md:px-8 pb-1.5 text-gray-900 dark:text-white") View
+                each item in records
+                  td(class="text-center pb-1.5")
+                    input(
+                      type="checkbox"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    )
+              tr(data-name="products-category_create")
+                td(class="px-5 md:px-8 pb-1.5 text-gray-900 dark:text-white") Create
+                each item in records
+                  td(class="text-center pb-1.5")
+                    input(
+                      type="checkbox"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    )
+              tr(data-name="products-category_edit")
+                td(class="px-5 md:px-8 pb-1.5 text-gray-900 dark:text-white") Edit
+                each item in records
+                  td(class="text-center pb-1.5")
+                    input(
+                      type="checkbox"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    )
+              tr(data-name="products-category_delete")
+                td(class="px-5 md:px-8 pb-3 text-gray-900 dark:text-white") Delete
+                each item in records
+                  td(class="text-center pb-3")
+                    input(
+                      type="checkbox"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    )
 
-                    //- danh sach san pham
-                    tr
-                        td(colspan="4")
-                            | PRODUCT MANAGEMENT
-                    tr(data-name="products_view")
-                        td -----View
-                        each item in records
-                            td(class="text-center")
-                                input(type="checkbox")
-                    tr(data-name="products_create")
-                        td -----Create
-                        each item in records
-                            td(class="text-center")
-                                input(type="checkbox")
-                    tr(data-name="products_edit")
-                        td -----Edit
-                        each item in records
-                            td(class="text-center")
-                                input(type="checkbox")
-                    tr(data-name="products_delete")
-                        td -----Delete
-                        each item in records
-                            td(class="text-center")
-                                input(type="checkbox")
+              //- danh sach san pham
+              tr(class=" border-t dark:border-gray-700 border-gray-200")
+                td(class="whitespace-nowrap w-fit px-3 md:px-6 py-2 font-medium text-gray-900 dark:text-white")
+                  | Product management
+              tr(data-name="products_view")
+                td(class="px-5 md:px-8 pb-1.5 text-gray-900 dark:text-white") View
+                each item in records
+                  td(class="text-center pb-1.5")
+                    input(
+                      type="checkbox"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    )
+              tr(data-name="products_create")
+                td(class="px-5 md:px-8 pb-1.5 text-gray-900 dark:text-white") Create
+                each item in records
+                  td(class="text-center pb-1.5")
+                    input(
+                      type="checkbox"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    )
+              tr(data-name="products_edit")
+                td(class="px-5 md:px-8 pb-1.5 text-gray-900 dark:text-white") Edit
+                each item in records
+                  td(class="text-center pb-1.5")
+                    input(
+                      type="checkbox"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    )
+              tr(data-name="products_delete")
+                td(class="px-5 md:px-8 pb-3 text-gray-900 dark:text-white") Delete
+                each item in records
+                  td(class="text-center pb-3")
+                    input(
+                      type="checkbox"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    )
 
-                    //- quan ly don hang
-                    tr
-                        td(colspan="4")
-                            | ORDER MANAGEMENT
-                    tr(data-name="orders_view")
-                        td -----View
-                        each item in records
-                            td(class="text-center")
-                                input(type="checkbox")
-                    tr(data-name="orders_edit")
-                        td -----Edit
-                        each item in records
-                            td(class="text-center")
-                                input(type="checkbox")
-                    //- Nhóm quyền
-                    tr
-                        td(colspan="4")
-                            | ROLE MANAGEMENT
-                    tr(data-name="roles_view")
-                        td -----View 
-                        each item in records
-                            td(class="text-center")
-                                input(type="checkbox")
-                    tr(data-name="roles_create")
-                        td -----Create
-                        each item in records
-                            td(class="text-center")
-                                input(type="checkbox")
-                    tr(data-name="roles_edit")
-                        td -----Edit
-                        each item in records
-                            td(class="text-center")
-                                input(type="checkbox")
-                    tr(data-name="roles_delete")
-                        td -----Delete
-                        each item in records
-                            td(class="text-center")
-                                input(type="checkbox")
-                    tr(data-name="roles_permissions")
-                        td -----Permission
-                        each item in records
-                            td(class="text-center")
-                                input(type="checkbox")
+              //- quan ly don hang
+              tr(class=" border-t dark:border-gray-700 border-gray-200")
+                td(class="whitespace-nowrap w-fit px-3 font-medium md:px-6 py-2 text-gray-900 dark:text-white")
+                  | Order management
+              tr(data-name="orders_view")
+                td(class="px-5 md:px-8 pb-1.5 text-gray-900 dark:text-white") View
+                each item in records
+                  td(class="text-center pb-1.5")
+                    input(
+                      type="checkbox"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    )
+              tr(data-name="orders_edit")
+                td(class="px-5 md:px-8 pb-1.5 text-gray-900 dark:text-white") Edit
+                each item in records
+                  td(class="text-center pb-3")
+                    input(
+                      type="checkbox"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    )
+              //- Nhóm quyền
+              tr(class=" border-t dark:border-gray-700 border-gray-200")
+                td(class="whitespace-nowrap w-fit px-3 font-medium md:px-6 py-2 text-gray-900 dark:text-white")
+                  | Role management
+              tr(data-name="roles_view")
+                td(class="px-5 md:px-8 pb-1.5 text-gray-900 dark:text-white") View
+                each item in records
+                  td(class="text-center pb-1.5")
+                    input(
+                      type="checkbox"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    )
+              tr(data-name="roles_create")
+                td(class="px-5 md:px-8 pb-1.5 text-gray-900 dark:text-white") Create
+                each item in records
+                  td(class="text-center pb-1.5")
+                    input(
+                      type="checkbox"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    )
+              tr(data-name="roles_edit")
+                td(class="px-5 md:px-8 pb-1.5 text-gray-900 dark:text-white") Edit
+                each item in records
+                  td(class="text-center pb-1.5")
+                    input(
+                      type="checkbox"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    )
+              tr(data-name="roles_delete")
+                td(class="px-5 md:px-8 pb-1.5 text-gray-900 dark:text-white") Delete
+                each item in records
+                  td(class="text-center pb-1.5")
+                    input(
+                      type="checkbox"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    )
+              tr(data-name="roles_permissions")
+                td(class="px-5 md:px-8 pb-1.5 text-gray-900 dark:text-white") Permissions
+                each item in records
+                  td(class="text-center pb-3")
+                    input(
+                      type="checkbox"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    )
 
 
-                    //- danh sach tai khoan admin
-                    tr
-                        td(colspan="4")
-                            | CUSTOMER ACCOUNT MANAGEMENT
-                    tr(data-name="accounts_view")
-                        td -----View
-                        each item in records
-                            td(class="text-center")
-                                input(type="checkbox")
-                    tr(data-name="accounts_create")
-                        td -----Create
-                        each item in records
-                            td(class="text-center")
-                                input(type="checkbox")
-                    tr(data-name="accounts_edit")
-                        td -----Edit
-                        each item in records
-                            td(class="text-center")
-                                input(type="checkbox")
-                    tr(data-name="accounts_delete")
-                        td -----Delete
-                        each item in records
-                            td(class="text-center")
-                                input(type="checkbox")
+              //- danh sach tai khoan admin
+              tr(class=" border-t dark:border-gray-700 border-gray-200")
+                td(class="whitespace-nowrap w-fit px-3 font-medium md:px-6 py-2 text-gray-900 dark:text-white")
+                  | Customer account management
+              tr(data-name="accounts_view")
+                td(class="px-5 md:px-8 pb-1.5 text-gray-900 dark:text-white") View
+                each item in records
+                  td(class="text-center pb-1.5")
+                    input(
+                      type="checkbox"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    )
+              tr(data-name="accounts_create")
+                td(class="px-5 md:px-8 pb-1.5 text-gray-900 dark:text-white") Create
+                each item in records
+                  td(class="text-center pb-1.5")
+                    input(
+                      type="checkbox"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    )
+              tr(data-name="accounts_edit")
+                td(class="px-5 md:px-8 pb-1.5 text-gray-900 dark:text-white") Edit
+                each item in records
+                  td(class="text-center pb-1.5")
+                    input(
+                      type="checkbox"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    )
+              tr(data-name="accounts_delete")
+                td(class="px-5 md:px-8 pb-1.5 text-gray-900 dark:text-white") Delete
+                each item in records
+                  td(class="text-center pb-3")
+                    input(
+                      type="checkbox"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    )
 
 
-                    //- danh sach tai khoan client
-                    tr
-                        td(colspan="4")
-                            | ADMIN ACCOUNT MANAGEMENT
-                    tr(data-name="users_view")
-                        td -----View 
-                        each item in records
-                            td(class="text-center")
-                                input(type="checkbox")
-                    tr(data-name="users_edit")
-                        td -----Edit 
-                        each item in records
-                            td(class="text-center")
-                                input(type="checkbox")
-                    tr(data-name="users_delete")
-                        td -----Delete
-                        each item in records
-                            td(class="text-center")
-                                input(type="checkbox")
+              //- danh sach tai khoan client
+              tr(class=" border-t dark:border-gray-700 border-gray-200")
+                td(class="whitespace-nowrap w-fit px-3 font-medium md:px-6 py-2 text-gray-900 dark:text-white")
+                  | Admin account management
+              tr(data-name="users_view")
+                td(class="px-5 md:px-8 pb-1.5 text-gray-900 dark:text-white") View
+                each item in records
+                  td(class="text-center pb-1.5")
+                    input(
+                      type="checkbox"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    )
+              tr(data-name="users_edit")
+                td(class="px-5 md:px-8 pb-1.5 text-gray-900 dark:text-white") Edit
+                each item in records
+                  td(class="text-center pb-1.5")
+                    input(
+                      type="checkbox"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    )
+              tr(data-name="users_delete")
+                td(class="px-5 md:px-8 pb-1.5 text-gray-900 dark:text-white") Delete
+                each item in records
+                  td(class="text-center pb-3")
+                    input(
+                      type="checkbox"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    )
 
-                    //- cai dat chung
-                    tr
-                        td(colspan="4")
-                            | SETTING
-                    tr(data-name="settings_view")
-                        td -----View
-                        each item in records
-                            td(class="text-center")
-                                input(type="checkbox")
-                    tr(data-name="settings_edit")
-                        td -----Edit
-                        each item in records
-                            td(class="text-center")
-                                input(type="checkbox")
+              //- cai dat chung
+              tr(class=" border-t dark:border-gray-700 border-gray-200")
+                td(class="whitespace-nowrap w-fit px-3 font-medium md:px-6 py-2 text-gray-900 dark:text-white")
+                  | Setting
+              tr(data-name="settings_view")
+                td(class="px-5 md:px-8 pb-1.5 text-gray-900 dark:text-white") View
+                each item in records
+                  td(class="text-center pb-1.5")
+                    input(
+                      type="checkbox"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    )
+              tr(data-name="settings_edit")
+                td(class="px-5 md:px-8 pb-1.5 text-gray-900 dark:text-white") Edit
+                each item in records
+                  td(class="text-center pb-3")
+                    input(
+                      type="checkbox"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    )
 
-            button(
-                type="submit"
-                class="btn btn-primary mb-3 button-1 mt-3"
-                button-submit
-            ) Update
-        form(
-            id="form-change-permissions"
-            method="POST"
-            action=`${prefixAdmin}/roles/permissions?_method=PATCH`
-            class = "d-none"
+        button(
+          type="submit"
+          class=`block ml-auto mt-6 px-5 py-2 cursor-pointer text-center font-medium 
+            text-white bg-gray-800 rounded-sm hover:bg-gray-900
+            dark:bg-gray-700 dark:hover:bg-gray-600`
+          button-submit
+          ) Update
+    form(
+      id="form-change-permissions"
+      method="POST"
+      action=`${prefixAdmin}/roles/permissions?_method=PATCH`
+      class = "d-none"
+    )
+      div(class="hidden")
+        input(
+          type="text"
+          class="form-control"
+          name="permissions"
         )
-            div(class="form-group")
-                input(
-                    type="text"
-                    class="form-control"
-                    name="permissions"
-                )
 
-        script(src="/admin/js/role.js") 
+    script(src="/admin/js/role.js") 

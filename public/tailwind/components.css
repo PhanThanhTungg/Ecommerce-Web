@@ -1,2 +1,29 @@
+@layer components {
+  .container-custom {
+    @apply lg:max-w-[95%] sm:max-w-[97%] max-w-full;
+    @apply ml-auto mr-auto;
+  }
 
+  .container-custom-sm {
+    @apply xl:max-w-[70%] lg:max-w-[90%] sm:max-w-[97%] max-w-full;
+    @apply ml-auto mr-auto;
+  }
 
+  .tox-tinymce {
+    border: 1px solid #e5e7eb !important;
+  }
+
+  body .tox .tox-edit-area::before {
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+  
+  .dark path {
+    fill: white !important;
+  }
+
+  .dark .tox-tinymce {
+    border: 1px solid var(--border-gray-600) !important;
+  }
+}

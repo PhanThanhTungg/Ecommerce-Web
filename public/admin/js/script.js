@@ -254,26 +254,33 @@ if (showAlert) {
 const uploadImage = document.querySelector("[upload-image]");
 if (uploadImage) {
   const uploadImageInput = document.querySelector("[upload-image-input]");
-  uploadImageInput.addEventListener("change", (e) => {
-    const uploadImagePreviews = document.querySelectorAll("[upload-image-preview]");
-    [...uploadImagePreviews].forEach(item => {
-      console.log(item.parentElement.removeChild(item));
-    })
+  uploadImageInput.addEventListener("change", function(e) {
+    const imagesPreview = document.querySelector(".images-preview");
+    imagesPreview.innerHTML = "";
     const files = e.target.files;
     if (files) {
       for (const file of files) {
-        uploadImageInput.insertAdjacentHTML("afterend",
-          `
-          <img class="image-preview" 
-          src="${URL.createObjectURL(file)}" 
-          upload-image-preview="upload-image-preview" 
-          />
-        `)
+        const img = `<img class="image-preview w-[20%] rounded-sm" 
+          src="${URL.createObjectURL(file)}"/>`;
+        imagesPreview.innerHTML += img;
       }
     }
-  });
+  })
 }
 //end-upload-image-preview
+
+// avatar preview
+const avatarInput = document.getElementById("avatar");
+if (avatarInput) {
+  avatarInput.addEventListener("change", function(e) {
+    const avatarPreview = document.querySelector(".avatar-preview");
+    avatarPreview.src = "https://howkteam.vn/Content/images/avatar/avatar.png";
+    const file = e.target.files[0];
+    if (file) {
+      avatarPreview.src = URL.createObjectURL(file);
+    }
+  })
+}
 
 //sort
 const sort = document.querySelector("[sort]")

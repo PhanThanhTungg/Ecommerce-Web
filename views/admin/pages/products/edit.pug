@@ -3,196 +3,246 @@ include ../../mixins/alert.pug
 include ../../mixins/select-tree.pug
 
 block main
-    if(role.permissions.includes("products_edit"))
-        
-        h1(class="mb-4 page-title") Edit product
-
-        form(
-            action=`${prefixAdmin}/products/edit/${product.id}?_method=PATCH`
-            id="form-edit-product"
-            method="POST"
-            enctype="multipart/form-data"   
-        )
-            //- enctype="multipart/form-data" : khai báo để gửi tệp(ảnh, video,...) lên server
-            div(class="form-group")
-                label(for="title") Title
-                input(
-                    type="text"
-                    class="form-control"
-                    id="title"
-                    name="title"
-                    required
-                    value=product.title
-                )
-            div(class="form-group")
-                label(for="product_category_id") Category 
-                select(
-                    name="product_category_id"
-                    id="product_category_id"
-                    class="form-control"
-                )
-                    option(value="") -- Choose category --
-                    if(category)
-                        +select-tree(category, 1, product.product_category_id)
-            div(class="form-group form-check form-check-inline")
-                input(
-                    type="radio"
-                    class="form-check-input"
-                    id="featured1"
-                    name="featured"
-                    value="1"
-                    checked = (product.featured=="1" ? true: false)
-                )
-                label(for="featured1" class="form-check-label") Featured
-            div(class="form-group form-check form-check-inline")
-                input(
-                    type="radio"
-                    class="form-check-input"
-                    id="featured0"
-                    name="featured"
-                    value="0"
-                    checked = (product.featured=="0" ? true: false)
-                )
-                label(for="featured0" class="form-check-label") Normal
-            div(class="form-group")
-                label(for="desc") Description
-                textarea(
-                    class="form-control textarea-mce"
-                    id="desc"
-                    name="description"
-                    rows="5"
-                    value = product.description
-                ) #{product.description}
-            div(class="form-group")
-                table.tableSize 
-                    thead
-                        tr 
-                            th size 
-                            th price 
-                            th stock
-                    tbody
-                        if product.listSize.length == 0
-                            tr
-                                td 
-                                    input(
-                                        type="text"
-                                        class="form-control"
-                                        id="size"
-                                        name="size"
-                                        required
-                                    )
-                                td 
-                                    input(
-                                        type="text"
-                                        class="form-control"
-                                        id="price"
-                                        name="price"
-                                        required
-                                    )
-                                td 
-                                    input(
-                                        type="text"
-                                        class="form-control"
-                                        id="stock"
-                                        name="stock"
-                                        required
-                                    )
-                        else 
-                            each size in product.listSize
-                                tr
-                                    td
-                                        input(
-                                            type="text"
-                                            class="form-control"
-                                            id="size"
-                                            name="size"
-                                            value = size.size
-                                            required
-                                        )
-                                    td 
-                                        input(
-                                            type="text"
-                                            class="form-control"
-                                            id="price"
-                                            name="price"
-                                            value = size.price
-                                            required
-                                        )
-                                    td 
-                                        input(
-                                            type="text"
-                                            class="form-control"
-                                            id="stock"
-                                            name="stock"
-                                            value = size.stock
-                                            required
-                                        )
-                .button-1.btn.btn-primary.mt-3.buttonAddSize.mr-3 + size
-                .button-1.btn.btn-primary.mt-3.buttonDelSize - size
-            div(class="form-group")
-                label(for="discount") % Discount
-                input(
-                    type="number"
-                    class="form-control"
-                    id="discount"
-                    name="discountPercentage"
-                    value=product.discountPercentage
-                    min="0"
-                )
-            div(
-                class="form-group"
-                upload-image
+  if(role.permissions.includes("products_edit"))
+    h1(class=`mb-7 ml-7 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-4xl
+    dark:text-white`) Edit product
+    .container-custom-sm
+      form(
+        action=`${prefixAdmin}/products/edit/${product.id}?_method=PATCH`
+        id="form-edit-product"
+        method="POST"
+        enctype="multipart/form-data"   
+      )
+        div(class="grid gap-6 mb-6 md:grid-cols-2")
+          div.flex.items-center.ps-4.border.border-gray-200.rounded-sm(class='dark:border-gray-700')
+            input#featured0.w-4.h-4.text-blue-600.bg-gray-100.border-gray-300(
+              type='radio' 
+              value='0' 
+              name='featured'
+              class=`focus:ring-blue-500
+                dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600`
+              checked = (product.featured=="0" ? true: false)
             )
-                label(for="thumbnail") Thumbnail
-                input(
-                    type="file"
-                    class="form-control-file"
-                    id="thumbnail"
-                    name="thumbnail"
-                    accept = "image/*"
-                    upload-image-input
-                )
-                img(
-                    src=product.thumbnail
-                    upload-image-preview
-                    class="image-preview"
-                )
-            div(class="form-group")
-                label(for="position") Position
-                input(
-                    type="number"
-                    class="form-control"
-                    id="position"
-                    name="position"
-                    placeholder="Tự động tăng"
-                    min="1"
-                    value = product.position
-                )
-            div(class="form-group form-check form-check-inline")
-                input(
-                    type="radio"
-                    class="form-check-input"
-                    id="statusActive"
-                    name="status"
-                    value="active"
-                    checked = (product.status=="active" ? true: false)
-                )
-                label(for="statusActive" class="form-check-label") Active
-            div(class="form-group form-check form-check-inline")
-                input(
-                    type="radio"
-                    class="form-check-input"
-                    id="statusInActive"
-                    name="status"
-                    value="inactive"
-                    checked = (product.status=="inactive" ? true: false)
-                )
-                label(for="statusInActive" class="form-check-label") Inactive
-            div(class="form-group" style="margin-bottom: 0; padding-bottom:20px")
-                button(
-                    type="submit"
-                    class="btn btn-primary button-1 button-1-2"
-                ) Update
+            label.w-full.py-4.ms-2.text-sm.font-medium.text-gray-900(
+              for='featured10' 
+              class='dark:text-gray-300'
+            ) Normal
+          div.flex.items-center.ps-4.border.border-gray-200.rounded-sm(class='dark:border-gray-700')
+            input#featured1.w-4.h-4.text-blue-600.bg-gray-100.border-gray-300(
+              type='radio' 
+              value='1' 
+              name='featured' 
+              class='focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+              checked = (product.featured=="1" ? true: false)
+            )
+            label.w-full.py-4.ms-2.text-sm.font-medium.text-gray-900(
+              for='featured1' 
+              class='dark:text-gray-300'
+            ) Featured product
+          div                  
+            label.block.mb-2.text-sm.font-medium.text-gray-900(
+              class="dark:text-white"
+              for="title") Product name
+            input.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(
+              class=`focus:ring-blue-500 focus:border-blue-500 p-2.5 
+                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`
+              type="text"
+              id="title"
+              name="title"
+              placeholder="Product A..."
+              value=product.title
+              required
+            )
+          div
+            label.block.mb-2.text-sm.font-medium.text-gray-900(
+              class="dark:text-white"
+              for="product_category_id") Category
+            select.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(
+              name='product_category_id'
+              id="product_category_id" 
+              class=`focus:ring-blue-500 focus:border-blue-500 p-2.5 
+              dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'`
+            )
+              option(value="") -- Choose category --
+                if(category)
+                +select-tree(category, 1, product.product_category_id)
+        .mb-6(upload-image)
+          label.block.mb-2.text-sm.font-medium.text-gray-900(
+            class="dark:text-white"
+            for="images") Images
+          .flex.items-center.justify-center.w-full.mb-2
+            label.flex.flex-col.items-center.justify-center.w-full.h-64.border-2.border-gray-300.border-dashed.rounded-lg.cursor-pointer.bg-gray-50(
+              for='images' 
+              class='dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600'
+            )
+              .flex.flex-col.items-center.justify-center.pt-5.pb-6
+                svg.w-8.h-8.mb-4.text-gray-500(class='dark:text-gray-400' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewbox='0 0 20 16')
+                  path(stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2')
+                p.mb-2.text-sm.text-gray-500(class='dark:text-gray-400')
+                  span.font-semibold Click to upload
+                  |  or drag and drop
+                p.text-xs.text-gray-500(class='dark:text-gray-400') Accept img file
+              input#images.hidden(
+                type='file' 
+                name='images' 
+                accept='image/*' 
+                upload-image-input
+                multiple
+              )          
+          .images-preview.flex.flex-wrap.gap-2
+
+        .mb-6
+          label.block.mb-2.text-sm.font-medium.text-gray-900(
+            class="dark:text-white"
+          ) Detail  
+          table.tableSize(class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400") 
+            thead(class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400")
+              tr 
+                th(scope="col" class="px-6 py-3") Size
+                th(scope="col" class="px-6 py-3") Price
+                th(scope="col" class="px-6 py-3") Stock
+                th(scope="col")
+            tbody
+              if(product.listSize.length == 0)
+                tr
+                  td 
+                    input(
+                      type="text"
+                      class="form-control"
+                      id="size"
+                      name="size"
+                      required
+                    )
+                  td 
+                    input(
+                      type="text"
+                      class="form-control"
+                      id="price"
+                      name="price"
+                      required
+                    )
+                  td 
+                    input(
+                      type="text"
+                      class="form-control"
+                      id="stock"
+                      name="stock"
+                      required
+                    )
+              else 
+                each size in product.listSize
+                  tr(class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200"  )
+                    td.px-6.py-4
+                      input.w-full.h-full.px-0.border-none.shadow-none.bg-transparent(
+                        type="text"
+                        id="size"
+                        name="size"
+                        required
+                        value = size.size
+                      )
+                    td.px-6.py-4
+                      input.w-full.h-full.px-0.border-none.shadow-none.bg-transparent(
+                        type="text"
+                        id="price"
+                        name="price"
+                        required
+                        value = size.price
+                      )
+                    td.px-6.py-4
+                      input.w-full.h-full.px-0.border-none.shadow-none.bg-transparent(
+                        type="text"
+                        id="stock"
+                        name="stock"
+                        required
+                        value = size.stock
+                      )
+                    td.px-3.py-4
+                      button.deleteSize(
+                        type="button"
+                        class="text-red-500 cursor-pointer text-[15px]"
+                        onClick="deleteRow(this)"
+                      ) Remove
+          button.addSize(
+            type="button"
+            class=`block px-9 py-3 mx-auto mt-4 rounded-lg
+              bg-gray-100 text-black font-medium 
+              cursor-pointer hover:bg-gray-200
+              dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600`
+          ) Add size
+
+        div(class="grid gap-6 mb-6 md:grid-cols-2")
+          .input-discount
+            label.block.mb-2.text-sm.font-medium.text-gray-900(
+              class="dark:text-white"
+              for="discount"
+            ) Discount          
+            input.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(
+              class=`focus:ring-blue-500 focus:border-blue-500 p-2.5 
+                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`
+              type="number"
+              id="discount"
+              name="discountPercentage"
+              placeholder="Enter discount percentage"
+              min="0"
+              max="100"
+              value=product.discountPercentage
+              required
+            )
+          .input-position(data-tooltip-target="tooltip-position" 
+                          data-tooltip-placement="bottom")
+            label.block.mb-2.text-sm.font-medium.text-gray-900(
+              class="dark:text-white"
+              for="postion") Postition
+            input.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(
+              class=`focus:ring-blue-500 focus:border-blue-500 p-2.5 
+                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`
+              type="number"
+              id="postion"
+              name="position"
+              placeholder="Automatic increase"
+              min="1"
+              value = product.position
+              required
+            )
+          #tooltip-position.absolute.z-10.invisible.inline-block.px-3.py-2.text-sm.font-medium.text-white.transition-opacity.duration-300.bg-gray-900.rounded-lg.shadow-xs.opacity-0.tooltip(role='tooltip' class='dark:bg-gray-700')
+            | Products with lower position values will be given higher priority in the display order.
+            .tooltip-arrow(data-popper-arrow='')
+        .mb-6.input-description
+          label.block.mb-2.text-sm.font-medium.text-gray-900(
+            class="dark:text-white"
+            for="desc") Description
+          textarea(
+            type="text"
+            class="textarea-mce"
+            id="desc"
+            name="description"
+            rows="5"
+            value=product.description
+          ) #{product.description}
+        
+        .flex.justify-between.items-center.mb-6
+          label(class="inline-flex items-center mb-5 cursor-pointer")
+            #input-hidden
+            input(
+              type="checkbox"
+              name="status"
+              value="active"
+              class="sr-only peer"
+              id="statusActive"
+              checked = (product.status=="active" ? true: false)
+            )
+            div(class=`relative w-11 h-6 bg-gray-200 
+              peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 
+              dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full 
+              rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] 
+              after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600 dark:peer-checked:bg-green-600`)
+            span(class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300") Active
+          button(
+          type="submit"
+          class=`block ml-auto px-5 py-2 cursor-pointer text-center font-medium 
+            text-white bg-gray-800 rounded-sm hover:bg-gray-900
+            dark:bg-gray-700 dark:hover:bg-gray-600`
+          ) Update
 
 
-        script(src="/admin/js/product.js")
+      script(src="/admin/js/product.js")
