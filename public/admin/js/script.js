@@ -284,6 +284,21 @@ if (avatarInput) {
   })
 }
 
+//logo preview
+const logoInput = document.getElementById("logo");
+if (logoInput) {
+  const logoPreview = document.getElementById("logo-preview");
+  currentSrc = logoPreview.src;
+  logoInput.addEventListener("change", function(e) {
+    const file = e.target.files[0];
+    if (file) {
+      logoPreview.src = URL.createObjectURL(file);
+    } else {
+      logoPreview.src = currentSrc;
+    }
+  })
+}
+
 //sort
 const sort = document.querySelector("[sort]")
 if (sort) {
