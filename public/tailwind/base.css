@@ -4,3 +4,20 @@
   --color-dark-table-header: #374151;
   --color-dark-table-row: #1F2937;
 }
+
+.shadow-none:focus {
+  box-shadow: none !important;
+}
+
+/* Để tránh flash màu nền input khi autofill */
+input:-webkit-autofill { 
+  box-shadow: 0 0 0 1000px transparent inset !important; /* giữ màu nền gốc */
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+  -webkit-text-fill-color: currentColor;
+  font-family: inherit !important;                /* giữ font chữ giống input gốc */
+  transition: background-color 9999s ease-in-out 0s !important; /* tránh flash */
+}
+
+.dark input:-webkit-autofill {
+  -webkit-text-fill-color: white;
+}

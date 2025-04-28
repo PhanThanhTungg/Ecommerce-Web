@@ -5,7 +5,7 @@ mixin form-change-multi(path)
     form-change-multi
   )
     div(class="flex gap-4")
-      select.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.flex-1(class='p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white' name='type')
+      select.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.flex-1(class='p-2.5 pr-8 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white' name='type')
         option(value="active") Choose action
         option(value="active") Active
         option(value="inactive") Inactive
@@ -17,5 +17,5 @@ mixin form-change-multi(path)
         value=""
         class="form-control hidden"
       )
-      button.text-white.bg-blue-400.font-medium.rounded-lg.text-sm.px-5.text-center(
-        type='submit' class='dark:bg-blue-500 py-2.5') Apply
+      button.text-white.bg-blue-600.font-medium.rounded-lg.text-sm.px-5.text-center(
+        type='submit' class='dark:bg-blue-500 py-2.5 cursor-pointer') Apply

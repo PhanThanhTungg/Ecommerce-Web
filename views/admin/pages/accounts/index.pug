@@ -3,86 +3,76 @@ extends ../../layouts/default.pug
 block main
 
   if(role.permissions.includes("accounts_view"))
-
-    .card.mb-3.wrap-table.mt-5
-      .card-body
-        table(
-          class="table table-hover table-sm"
-        )
-          thead
-            tr
-              th 
-              th Avatar
-              th Name
-              th Role
-              th Email
-              if(role.permissions.includes("accounts_edit"))
-                th Status
-              th Action
-
-          tbody
-            each item, index in records
-              tr 
-                td #{index+1}
-                td
-                  img(
-                    src=item.avatar
-                    alt=item.fullName
-                    width="100px"
-                    height="auto"
-                  )
-                td #{item.fullName}
-                td #{item.role?item.role.title:"Empty"}
-                td #{item.email}
-                if(role.permissions.includes("accounts_edit"))
-                  td
-                    if (item.status === "active")
-                      a(
-                        href="javascript:;"
-                        class="status-badge status-badge-active"
-                        data-status= item.status
-                        data-id = item.id
-                        button-change-status 
-                      ) Active
-                    else
-                      a(
-                        href="javascript:;"
-                        class="status-badge status-badge-inactive"
-                        data-status= item.status
-                        data-id = item.id
-                        button-change-status
-                      ) Inactive
-                    form(
-                        action="" 
-                        method="POST"
-                        id = "form-change-status"
-                        data-path = `${prefixAdmin}/accounts/change-status`
-                    ) 
-                td
-                  //- a(
-                  //-   class="btn btn-secondary btn-sm"
-                  //-   href=`${prefixAdmin}/accounts/detail/${item.id}`
-                  //- ) Chi tiết
+    h1(class=`mb-7 ml-7 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-4xl
+      dark:text-white`) Admin accounts
+    .container-custom
+      if(role.permissions.includes("accounts_create"))
+        a(
+          href=`${prefixAdmin}/accounts/create`
+          class="block w-fit ml-auto text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-4 dark:bg-black-blur dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+        ) Create admin account
+      div(class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-6")
+        each item, index in records
+          div(class=`w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm 
+            dark:bg-gray-800 dark:border-gray-700`)
+            div(class="flex justify-end px-4 pt-3")
+              button.inline-block.text-gray-500.rounded-lg.text-sm(
+                id=`dropdownButton-${index}`
+                data-dropdown-toggle=`dropdown-${index}` 
+                class='dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 p-1.5' 
+                type='button'
+              )
+                span.sr-only Open dropdown
+                svg.w-5.h-5(aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewbox='0 0 16 3')
+                  path(d='M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z')
+              // Dropdown menu
+              .z-10.hidden.text-base.list-none.bg-white.divide-y.divide-gray-100.rounded-lg.shadow-sm.w-44(
+                class='dark:bg-gray-700'
+                id=`dropdown-${index}`
+              )
+                ul.py-2(aria-labelledby=`dropdownButton-${index}`)
                   if(role.permissions.includes("accounts_edit"))
-                    a(
-                      class="button-edit"
-                      href=`${prefixAdmin}/accounts/edit/${item.id}`
-                    ) <i class="fa-regular fa-pen-to-square"></i>
+                    li
+                      a.block.px-4.py-2.text-sm.text-gray-700(href=`${prefixAdmin}/accounts/edit/${item.id}` class='hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white') Edit
                   if(role.permissions.includes("accounts_delete"))
-                    a(
-                      class="button-delete"
-                      button-delete 
-                      data-id= item.id
-                    ) <i class="fa-solid fa-trash"></i>
-                    form(
-                      action="" 
-                      method="POST"
-                      id = "form-delete-item"
-                      data-path = `${prefixAdmin}/accounts/delete`
-                    ) 
-        if(role.permissions.includes("accounts_create"))
-          a(
-            href=`${prefixAdmin}/accounts/create`
-            class="btn button-1 button-1-2 mt-3 mb-3"
-          ) + Create
+                    li
+                      a.block.px-4.py-2.text-sm.text-red-600(button-delete='' data-id=item.id class='hover:bg-gray-100 dark:hover:bg-gray-400 dark:text-red-400 dark:hover:text-red-500') Delete
+                      form#form-delete-item(action='' method='POST' data-path=`${prefixAdmin}/accounts/delete`)
+            div(class="flex flex-col items-center pb-10")
+              if(item.avatar)
+                img(class="w-24 h-24 mb-3 rounded-full shadow-lg" src=item.avatar alt=item.fullName)
+              else
+                img(class="w-24 h-24 mb-3 rounded-full shadow-lg" src="https://howkteam.vn/Content/images/avatar/avatar.png" alt=item.fullName)
+              h5(class="mb-1 text-xl font-medium text-gray-900 dark:text-white") #{item.fullName}
+              span(class="text-sm mb-2 text-gray-500 dark:text-gray-400") #{item.role?item.role.title:"Empty"}
+              .contact(class="flex justify-around gap-6")
+                a(href=`mailto:${item.email}`
+                  class="text-2xl text-blue-700 hover:text-blue-600 dark:text-blue-300 dark:hover:text-blue-400"
+                  data-popover-target=`popover-email-${index}`
+                  data-popover-placement="bottom"
+                  data-popover-trigger="hover"
+                ) 
+                  i(class="fa-solid fa-envelope")
+                div(data-popover
+                  id=`popover-email-${index}` 
+                  role="tooltip" 
+                  class="absolute z-10 invisible inline-block w-fit text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-xs opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800"
+                )
+                  div(class="px-3 py-2") #{item.email}
+                  div(data-popper-arrow)
+                a(href=`tel:${item.phone}`
+                  class="text-2xl text-blue-700 hover:text-blue-600 dark:text-blue-300 dark:hover:text-blue-400"
+                  data-popover-target=`popover-phone-${index}` 
+                  type="button"
+                  data-popover-placement="bottom"
+                ) 
+                  i(class="fa-solid fa-phone")
+                div(data-popover
+                  id=`popover-phone-${index}` 
+                  role="tooltip" 
+                  class="absolute z-10 invisible inline-block w-fit text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-xs opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800"
+                )
+                  div(class="px-3 py-2") #{item.phone}
+                  div(data-popper-arrow)
+
   script(src="/admin/js/product.js") 
