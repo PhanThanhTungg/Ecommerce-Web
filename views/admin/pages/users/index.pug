@@ -6,61 +6,70 @@ include ../../mixins/pagination.pug
 block main
 
   if(role.permissions.includes("users_view"))
-    .card.mb-3.filter-status-search.mt-4
-        .card-body
-            .row
-                .col-6
-                    +filter-status(filterStatus)
-                .col-6
-                    +search(keyword)
-    .card.mb-3.sort
-      .card-body
-          .row
-              .col-4
-                  +sortUser()
-    .card.wrap-table
-      .card-body
-        table(
-          class="table table-hover table-sm"
-        )
-          thead
+    .search-box.mb-4
+      +search(keyword)
+    .filter-box.mb-4.flex.gap-20
+      +filter-status(filterStatus)
+      //- +sortUser()
+    .container-custom
+      div.relative.overflow-x-auto.shadow-md(class="sm:rounded-xl")
+        table(class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400" check-box-multi)
+          thead(class=`text-sm text-gray-700 bg-gray-100 
+            dark:bg-dark-table-header dark:text-gray-400`
+          )
             tr
-              th 
-              th Avatar
-              th Name
-              th Email
-              th Total Orders
-              th Unreceived Orders 
-              th Total Purchase Value
-              th Rank
-              if(role.permissions.includes("users_edit"))
-                th Status
-              if(role.permissions.includes("users_delete"))
-                th Delete
-
+              th(scope="col" class="px-2 md:px-4 py-3")
+                a.flex.items-center.cursor-pointer(onClick='sortUser("name")') 
+                  | Name
+                  svg.w-3.h-3(class='ms-1.5' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewbox='0 0 24 24')
+                    path(d='M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z')
+              th(scope="col" class="px-1.5 md:px-2.5 py-3")
+                a.flex.items-center.justify-center.cursor-pointer(onClick='sortUser("cntSuccess")')
+                  .whitespace-nowrap Success orders
+                  svg.w-3.h-3(class='ms-1.5' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewbox='0 0 24 24')
+                    path(d='M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z')             
+              th(scope="col" class="px-1.5 md:px-2.5 py-3")
+                a.flex.items-center.justify-center.cursor-pointer(onClick='sortUser("cntFail")')
+                  .whitespace-nowrap Unreceived orders
+                  svg.w-3.h-3(class='ms-1.5' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewbox='0 0 24 24')
+                    path(d='M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z')         
+              th(scope="col" class="px-1.5 md:px-2.5 py-3")
+                a.flex.items-center.justify-center.cursor-pointer(onClick='sortUser("totalValue")')
+                  .whitespace-nowrap Total purchase
+                  svg.w-3.h-3(class='ms-1.5' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewbox='0 0 24 24')
+                    path(d='M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z')
+              th(scope="col" class="px-1.5 md:px-2.5 py-3")
+                a.flex.items-center.cursor-pointer(onClick='sortUser("rank")')
+                  | Rank
+                  svg.w-3.h-3(class='ms-1.5' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewbox='0 0 24 24')
+                    path(d='M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z')            
+              th(scope="col" class="px-1.5 md:px-2.5 py-3")
           tbody
             each item, index in records
-              tr 
-                td #{index+1}
-                td
-                  img(
-                    src=item.thumbnail
-                    alt=item.fullName
-                    width="100px"
-                    height="auto"
-                  )
-                td #{item.fullName}
-                td #{item.email}
-                td #{item.cntSuccess}
-                td #{item.cntFail}
-                td #{item.totalValue}
-                td #{item.rank}
+              tr(class="h-fit bg-white border-b dark:bg-dark-table-row dark:border-black-1 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600")
+                th(scope="row" 
+                  class="px-2 md:px-4 py-3"
+                ) 
+                  .flex.items-center.gap-4
+                    .avatar.rounded-full.flex.justify-between.items-center.overflow-hidden.border-1.border-gray-200(class="w-[61px] dark:border-gray-800")
+                      img(
+                        src=item.thumbnail
+                        alt=item.fullName
+                        class="w-[60px] aspect-square object-cover"
+                      )
+                    .info.flex.flex-col.gap-1
+                      div(class="font-medium text-gray-900 whitespace-nowrap dark:text-white") #{item.fullName}
+                      div(class="font-normal" title=item.email) #{item.email}
+                td(class="px-1.5 md:px-2.5 py-3 text-center") #{item.cntSuccess}
+                td(class="px-1.5 md:px-2.5 py-3 text-center") #{item.cntFail}
+                td(class="px-1.5 md:px-2.5 py-3 text-center") #{item.totalValue}
+                td(class="px-1.5 md:px-2.5 py-3") #{item.rank}
                 if(role.permissions.includes("users_edit"))
-                  td
-                    if (item.status === "active")
+                  td(class="px-1.5 md:px-2.5 py-3")
+                    if(item.status === "active")
                       a(
                         href="javascript:;"
-                        class="status-badge status-badge-active"
+                        class="status-badge status-badge-active text-green-600 dark:text-green-400"
                         data-status= item.status
                         data-id = item.id
                         button-change-status 
@@ -68,31 +77,18 @@ block main
                     else
                       a(
                         href="javascript:;"
-                        class="status-badge status-badge-inactive"
+                        class="status-badge status-badge-inactive text-red-600 dark:text-red-400"
                         data-status= item.status
                         data-id = item.id
                         button-change-status
                       ) Inactive
                     form(
-                        action="" 
-                        method="POST"
-                        id = "form-change-status"
-                        data-path = `${prefixAdmin}/users/change-status`
-                    ) 
-                if(role.permissions.includes("users_delete"))
-                  td 
-                    a(
-                      class="button-delete"
-                      button-delete 
-                      data-id= item.id
-                    ) <i class="fa-solid fa-trash"></i>
-                    form(
                       action="" 
                       method="POST"
-                      id = "form-delete-item"
-                      data-path = `${prefixAdmin}/users/delete`
-                    ) 
+                      id = "form-change-status"
+                      data-path = `${prefixAdmin}/users/change-status`
+                    )
     +pagination(pagination)
-  
+
   script(src="/admin/js/product.js")   
   script(src="/admin/js/order-user.js")  

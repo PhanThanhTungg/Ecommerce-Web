@@ -272,12 +272,14 @@ if (uploadImage) {
 // avatar preview
 const avatarInput = document.getElementById("avatar");
 if (avatarInput) {
+  const avatarPreview = document.querySelector(".avatar-preview");
+  currentSrc = avatarPreview.src;
   avatarInput.addEventListener("change", function(e) {
-    const avatarPreview = document.querySelector(".avatar-preview");
-    avatarPreview.src = "https://howkteam.vn/Content/images/avatar/avatar.png";
     const file = e.target.files[0];
     if (file) {
       avatarPreview.src = URL.createObjectURL(file);
+    } else {
+      avatarPreview.src = currentSrc;
     }
   })
 }
@@ -326,7 +328,18 @@ if (passField && showBtn) {
   });
 }
 
-
+//switch status
+const checkboxStatus = document.getElementById("statusActive");
+if (checkboxStatus) {
+  checkboxStatus.addEventListener("change", function () {
+    const secondaryCheckbox = document.getElementById("input-hidden");
+    if(!this.checked) {
+      secondaryCheckbox.innerHTML = `<input type="hidden" name="status" value="inactive">`;
+    } else {
+      secondaryCheckbox.innerHTML = "";
+    }
+  })
+}
 
 
 
