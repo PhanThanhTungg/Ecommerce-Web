@@ -66,15 +66,3 @@ if (buttonAddSize) {
 
 //end add and delete size
 
-//switch product status
-const checkboxStatus = document.getElementById("statusActive");
-if (checkboxStatus) {
-  checkboxStatus.addEventListener("change", function () {
-    const secondaryCheckbox = document.getElementById("input-hidden");
-    if(!this.checked) {
-      secondaryCheckbox.innerHTML = `<input type="hidden" name="status" value="inactive">`;
-    } else {
-      secondaryCheckbox.innerHTML = "";
-    }
-  })
-}

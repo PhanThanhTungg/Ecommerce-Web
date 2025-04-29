@@ -2,147 +2,188 @@ extends ../../layouts/default.pug
 include ../../mixins/alert.pug
 block main
   if(role.permissions.includes("settings_view"))
-    h1.page-title Cài đặt chung
-
-    form(
-      action=`${prefixAdmin}/settings/general?_method=PATCH`
-      method="POST"
-      enctype="multipart/form-data"
-    )
-      div(class="form-group")
-        label(for="websiteName") Tên website
-        input(
-          type="text"
-          class="form-control"
-          id="websiteName"
-          name="websiteName"
-          value=(settingsGeneral ? settingsGeneral.websiteName : "")
-        )
-      div(
-        class="form-group"
-        upload-image
+    h1(class=`mb-7 ml-7 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-4xl
+    dark:text-white`) Settings
+    .container-custom-sm
+      form(
+        action=`${prefixAdmin}/settings/general?_method=PATCH`
+        method="POST"
+        enctype="multipart/form-data"
       )
-        label(for="logo") Logo
-        input(
-          type="file"
-          class="form-control-file"
-          id="logo"
-          name="logo"
-          accept="image/*"
-          upload-image-input
-        )
-        img(
-          src=(settingsGeneral ? settingsGeneral.logo : "")
-          class="image-preview"
-          upload-image-preview
-        )
-      h2.page-title(style="font-size: 22px") Key api
-      div(class="form-group")
-        label(for="apiOpenStreetMap") Api OpenStreetMap
-        input(
-          type="text"
-          class="form-control"
-          id="apiOpenStreetMap"
-          name="apiOpenStreetMap"
-          value=(settingsGeneral ? settingsGeneral.apiKey.apiOpenStreetMap : "")
-        )
-      h2.page-title(style="font-size: 22px") Phí Vận chuyển
-
-      div(class="form-group")
-        label(for="freeShippingThreshold") Ngưỡng miễn phí ship
-        input(
-          type="text"
-          class="form-control"
-          id="freeShippingThreshold"
-          name="freeShippingThreshold"
-          value=(settingsGeneral ? settingsGeneral.shippingFee.freeShippingThreshold : "")
-        )
-      div(class="form-group")
-        label(for="initialFee") Phí ship ở km đầu tiên
-        input(
-          type="text"
-          class="form-control"
-          id="initialFee"
-          name="initialFee"
-          value=(settingsGeneral ? settingsGeneral.shippingFee.initialFee : "")
-        )
-      
-      div(class="form-group")
-        label(for="addFeePerKm") Phí ship tăng thêm mỗi km
-        input(
-          type="text"
-          class="form-control"
-          id="addFeePerKm"
-          name="addFeePerKm"
-          value=(settingsGeneral ? settingsGeneral.shippingFee.addFeePerKm : "")
-        )
-      div(class="form-group")
-        label(for="urbanFee") Phí ship chuyển phát trung gian - Nội thành
-        input(
-          type="text"
-          class="form-control"
-          id="urbanFee"
-          name="urbanFee"
-          value=(settingsGeneral ? settingsGeneral.shippingFee.urbanFee : "")
-        )
-      div(class="form-group")
-        label(for="suburbanFee") Phí ship chuyển phát trung gian - Ngoại thành
-        input(
-          type="text"
-          class="form-control"
-          id="suburbanFee"
-          name="suburbanFee"
-          value=(settingsGeneral ? settingsGeneral.shippingFee.suburbanFee : "")
-        )
-      div(class="form-group")
-        label(for="interProvincialFee") Phí ship chuyển phát trung gian - Liên tỉnh
-        input(
-          type="text"
-          class="form-control"
-          id="interProvincialFee"
-          name="interProvincialFee"
-          value=(settingsGeneral ? settingsGeneral.shippingFee.interProvincialFee : "")
-        )
-      div(class="form-group")
-        label(for="phone") Số điện thoại
-        input(
-          type="text"
-          class="form-control"
-          id="phone"
-          name="phone"
-          value=(settingsGeneral ? settingsGeneral.phone : "")
-        )
-      div(class="form-group")
-        label(for="email") Email
-        input(
-          type="email"
-          class="form-control"
-          id="email"
-          name="email"
-          value=(settingsGeneral ? settingsGeneral.email : "")
-        )
-      div(class="form-group")
-        label(for="address") Địa chỉ
-        input(
-          type="text"
-          class="form-control"
-          id="address"
-          name="address"
-          value=(settingsGeneral ? settingsGeneral.address : "")
-        )
-      div(class="form-group")
-        label(for="copyright") Copyright
-        input(
-          type="text"
-          class="form-control"
-          id="copyright"
-          name="copyright"
-          value=(settingsGeneral ? settingsGeneral.copyright : "")
-        )
-      if(role.permissions.includes("settings_edit"))
-        div(class="form-group" style= "margin-bottom: 0")
+        div.logoInput.mb-6
+          label(for="logo")
+            div.block.mb-2.text-sm.font-medium.text-gray-900(
+              class="dark:text-white"
+            ) Logo
+            div(class="h-32 w-fit cursor-pointer")
+              if(settingsGeneral.logo)
+                img#logo-preview(
+                  src=settingsGeneral.logo
+                  class="h-full"
+                )
+              else
+                div(class=`flex justify-center items-center text-gray-600 dark:text-gray-200
+                  w-32 h-32 cursor-pointer bg-gray-50 rounded-xl border-2 border-dashed border-gray-300
+                  dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600`
+                )
+                  i(class=`fa-solid fa-plus text-4xl`)
+          input(
+            type="file"
+            class="hidden"
+            id="logo"
+            name="logo"
+            accept="image/*"
+            upload-image-input
+          )
+        div(class="grid gap-6 mb-6 md:grid-cols-2")
+          div
+            label.block.mb-2.text-sm.font-medium.text-gray-900(
+              class="dark:text-white"
+              for="websiteName") Website name
+            input.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(
+              class=`focus:ring-blue-500 focus:border-blue-500 p-2.5 
+                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`
+              type="text"
+              id="websiteName"
+              name="websiteName"
+              value=(settingsGeneral ? settingsGeneral.websiteName : "")
+            )          
+          div
+            label.block.mb-2.text-sm.font-medium.text-gray-900(
+              class="dark:text-white"
+              for="apiOpenStreetMap") Api OpenStreetMap
+            input.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(
+              class=`focus:ring-blue-500 focus:border-blue-500 p-2.5 
+                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`
+              type="text"
+              id="apiOpenStreetMap"
+              name="apiOpenStreetMap"
+              value=(settingsGeneral ? settingsGeneral.apiKey.apiOpenStreetMap : "")
+            )
+          div
+            label.block.mb-2.text-sm.font-medium.text-gray-900(
+              class="dark:text-white"
+              for="freeShippingThreshold") Free shipping threshold
+            input.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(
+              class=`focus:ring-blue-500 focus:border-blue-500 p-2.5 
+                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`
+              type="text"
+              id="freeShippingThreshold"
+              name="freeShippingThreshold"
+              value=(settingsGeneral ? settingsGeneral.shippingFee.freeShippingThreshold : "")
+            )
+          div
+            label.block.mb-2.text-sm.font-medium.text-gray-900(
+              class="dark:text-white"
+              for="initialFee") First Kilometer Shipping Fee
+            input.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(
+              class=`focus:ring-blue-500 focus:border-blue-500 p-2.5 
+                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`
+              type="text"
+              id="initialFee"
+              name="initialFee"
+              value=(settingsGeneral ? settingsGeneral.shippingFee.initialFee : "")
+            )
+          div
+            label.block.mb-2.text-sm.font-medium.text-gray-900(
+              class="dark:text-white"
+              for="addFeePerKm") Additional Fee per Kilometer
+            input.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(
+              class=`focus:ring-blue-500 focus:border-blue-500 p-2.5 
+                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`
+              type="text"
+              id="addFeePerKm"
+              name="addFeePerKm"
+              value=(settingsGeneral ? settingsGeneral.shippingFee.addFeePerKm : "")
+            )
+          div
+            label.block.mb-2.text-sm.font-medium.text-gray-900(
+              class="dark:text-white"
+              for="urbanFee") Local Delivery Fee (Inner City)
+            input.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(
+              class=`focus:ring-blue-500 focus:border-blue-500 p-2.5 
+                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`
+              type="text"
+              id="urbanFee"
+              name="urbanFee"
+              value=(settingsGeneral ? settingsGeneral.shippingFee.urbanFee : "")
+            )
+          div
+            label.block.mb-2.text-sm.font-medium.text-gray-900(
+              class="dark:text-white"
+              for="suburbanFee") Local Delivery Fee (Suburban)
+            input.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(
+              class=`focus:ring-blue-500 focus:border-blue-500 p-2.5 
+                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`
+              type="text"
+              id="suburbanFee"
+              name="suburbanFee"
+              value=(settingsGeneral ? settingsGeneral.shippingFee.suburbanFee : "")
+            )
+          div
+            label.block.mb-2.text-sm.font-medium.text-gray-900(
+              class="dark:text-white"
+              for="interProvincialFee") Intercity Delivery Fee
+            input.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(
+              class=`focus:ring-blue-500 focus:border-blue-500 p-2.5 
+                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`
+              type="text"
+              id="interProvincialFee"
+              name="interProvincialFee"
+              value=(settingsGeneral ? settingsGeneral.shippingFee.interProvincialFee : "")
+            )
+          div
+            label.block.mb-2.text-sm.font-medium.text-gray-900(
+              class="dark:text-white"
+              for="phone") Phone number
+            input.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(
+              class=`focus:ring-blue-500 focus:border-blue-500 p-2.5 
+                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`
+              type="tel"
+              id="phone"
+              name="phone"
+              value=(settingsGeneral ? settingsGeneral.phone : "")
+            )
+          div
+            label.block.mb-2.text-sm.font-medium.text-gray-900(
+              class="dark:text-white"
+              for="email") Email
+            input.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(
+              class=`focus:ring-blue-500 focus:border-blue-500 p-2.5 
+                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`
+              type="email"
+              id="email"
+              name="email"
+              value=(settingsGeneral ? settingsGeneral.email : "")
+            )
+          div
+            label.block.mb-2.text-sm.font-medium.text-gray-900(
+              class="dark:text-white"
+              for="address") Address
+            input.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(
+              class=`focus:ring-blue-500 focus:border-blue-500 p-2.5 
+                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`
+              type="text"
+              id="address"
+              name="address"
+              value=(settingsGeneral ? settingsGeneral.address : "")
+            )
+          div
+            label.block.mb-2.text-sm.font-medium.text-gray-900(
+              class="dark:text-white"
+              for="copyright") Copyright
+            input.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(
+              class=`focus:ring-blue-500 focus:border-blue-500 p-2.5 
+                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`
+              type="text"
+              id="copyright"
+              name="copyright"
+              value=(settingsGeneral ? settingsGeneral.copyright : "")
+            )
+        if(role.permissions.includes("settings_edit"))
           button(
-            type="submit"
-            class="btn btn-primary button-1 button-1-2"
-            style= "margin-bottom: 10px"
-          ) Cập nhật
+          type="submit"
+          class=`block ml-auto px-5 py-2 cursor-pointer text-center font-medium 
+            text-white bg-gray-800 rounded-sm hover:bg-gray-900
+            dark:bg-gray-700 dark:hover:bg-gray-600`
+          ) Update

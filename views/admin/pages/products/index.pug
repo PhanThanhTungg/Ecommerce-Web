@@ -53,7 +53,7 @@ block main
                 th(scope="row" class="pr-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white")
                   div(class="flex items-center")
                     if(item.images.length > 0)
-                      img(src=item.images[0].replace('upload/', 'upload/c_limit,w_80/f_auto/') 
+                      img(src=item.images[0] 
                           alt=item.title 
                           class="w-15 h-15 rounded-2xl mr-2"
                       )
