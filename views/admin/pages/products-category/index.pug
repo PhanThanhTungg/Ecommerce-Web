@@ -10,21 +10,6 @@ include ../../mixins/table-tree.pug
 block main 
   .container-custom
     if(role.permissions.includes("products-category_view"))
-      //- .card.mb-3
-      //-     .card-header Bộ lọc và tìm kiếm
-      //-     .card-body
-      //-         .row 
-      //-             .col-6
-      //-             //-    +filter-status(filterStatus)
-      //-             .col-6
-      //-                 //- +search(keyword)
-      //- .card.mb-3
-      //-     .card-header Sắp xếp
-      //-     .card-body
-      //-         .row
-      //-             .col-4
-      //-                 //- +sort()
-
       .inner-action.my-7
         .flex.justify-between.items-center.gap-18 
           +form-change-multi(`${prefixAdmin}/products-category/change-multi?_method=PATCH`)
@@ -37,7 +22,7 @@ block main
       div.relative.overflow-x-auto.shadow-md(class="sm:rounded-xl")
         table(class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400" check-box-multi)
           thead(class=`text-xs text-gray-700 uppercase bg-gray-100 
-                dark:bg-dark-table-header dark:text-gray-400`)
+                dark:bg-dark-navy-3 dark:text-gray-400`)
             tr
               th(scope="col" class="px-6 py-4") 
                 .flex.items-center
