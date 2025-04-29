@@ -1,17 +1,23 @@
 mixin alert-success(time)
-    - if (messages.success)
-        .message.info
-            div(
-                class="alert alert-success"
-                show-alert 
-                data-time=time
-            ) <i class="fa-regular fa-circle-check"></i> #{messages.success} <span close-alert style="color: black"> X <span> 
+  - if (messages.success)
+    .message.info(class="text-white")
+      div(
+        class="alert alert-success border-2 border-green-600 py-[10px] px-[15px] bg-green-700 flex items-center"
+        show-alert 
+        data-time=time
+      ) 
+        <i class="fa-regular fa-circle-check mr-2"></i> 
+        | #{messages.success}
+        <span close-alert class="ml-3 text-white bg-transparent "> X <span> 
 
 mixin alert-error(time)
-    - if (messages.error)
-        .message.info
-            div(
-                class="alert alert-danger"
-                show-alert 
-                data-time=time
-            ) <i class="fa-solid fa-circle-exclamation"></i> #{messages.error} <span close-alert style="color: black"> X <span> 
+  - if (messages.error)
+    .message.info
+      div(
+        class="alert alert-danger border-2 border-red-600 py-[10px] px-[15px] bg-red-700 flex items-center"
+        show-alert 
+        data-time=time
+      ) 
+        <i class="fa-solid fa-circle-exclamation"></i> 
+        | #{messages.error}
+        <span close-alert style="color: black"> X <span> 

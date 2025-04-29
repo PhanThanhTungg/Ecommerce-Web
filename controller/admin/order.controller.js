@@ -6,37 +6,45 @@ const filterStatusOrderHelper = require("../../helpers/filterStatusOrder")
 
 
 module.exports.index = async (req, res) => {
-
+  const orders = await Order.aggregate([
+    {
+      $addFields: {
+        "id": { $toString: "$_id" },
+        "_user_id": { $toObjectId: "$userId" }
+      }
+    },
+    {
+      $lookup: {
+        from: "order-product",
+        localField: "id",
+        foreignField: "order_id",
+        as: "products"
+      }
+    },
+    {
+      $lookup: {
+        from: "customers",
+        localField: "_user_id",
+        foreignField: "_id",
+        as: "user"
+      }
+    }
+  ])
 
   res.render("admin/pages/orders/index", {
-    pageTitle: "Quản lý đơn hàng",
-    // orders: listOrder,
-    // keyword: objectSearch.keyword,
-    // filterStatus: filterStatus
+    pageTitle: "Order Management",
+    orders
   })
 }
-module.exports.changeStatus = async (req,res)=>{
-  var productItems=[]
-  const orderId = req.params.orderId
-  const productId = req.params.productId
-  const value = req.params.value
-  // res.send(`${orderId} ${productId} ${value}`)
-
-  const orders = await Order.findOne({_id: orderId})
-  const listProduct = orders.products
-  for(const item of listProduct){
-    if(item.id===productId){
-      item.status= value
-    }
+module.exports.changeStatus = async (req, res) => {
+  try {
+    await Order.updateOne({_id: req.params.orderId }, { deliveryStatus: req.params.value });
+    req.flash('success', 'Change status order successfully');
+    res.redirect("back");
+  } catch (error) {
+    req.flash('error', 'Change status order failed');
+    res.redirect("back");
   }
-  await Order.updateOne({
-    _id: orderId,
-  }, {products: listProduct})
-
-  req.flash('success', 'Chuyển trạng thái thành công!')
-
-  res.redirect("back") // Quay lai trang truoc khi chuyen huong
-
 }
 
 

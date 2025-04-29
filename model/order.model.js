@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema(
   {
+    orderId: String,
     userId: String,
     cartId: String,
     userInfo: {
@@ -72,6 +73,13 @@ const orderSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+orderSchema.pre("save", function(next){
+  if(!this.orderId){
+    this.orderId = this._id.toString().slice(-6);
+  }
+  next();
+})
 
 const Order = mongoose.model("Order", orderSchema, "orders");
 

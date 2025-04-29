@@ -82,8 +82,12 @@ module.exports.order = async (req, res) => {
       }
     }
 
-    orderData.userId = res.locals.user?.id || req.cookies?.cartId;
-
+    if(res.locals.user){
+      orderData.userId = res.locals.user?.id;
+    }
+    else{
+      orderData.cartId = req.cookies?.cartId;
+    }
 
     const order = new Order(orderData);
     await order.save();
