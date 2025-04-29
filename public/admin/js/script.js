@@ -54,23 +54,23 @@ const items = document.querySelectorAll(".sider li");
 if (items) {
   const href = String(window.location.href);
   if (href.includes("/admin/dashboard"))
-    document.querySelector("[sider='Sider-Dashboard']").classList.add("active");
+    document.querySelector("[sider='Sider-Dashboard']").classList.add("nav-active");
   else if (href.includes("/admin/products-category"))
-    document.querySelector("[sider='Sider-Category']").classList.add("active");
+    document.querySelector("[sider='Sider-Category']").classList.add("nav-active");
   else if (href.includes("/admin/products"))
-    document.querySelector("[sider='Sider-Product']").classList.add("active");
+    document.querySelector("[sider='Sider-Product']").classList.add("nav-active");
   else if (href.includes("/admin/orders"))
-    document.querySelector("[sider='Sider-Order']").classList.add("active");
+    document.querySelector("[sider='Sider-Order']").classList.add("nav-active");
   else if (href.includes("/admin/roles/permissions"))
-    document.querySelector("[sider='Sider-Permission']").classList.add("active");
+    document.querySelector("[sider='Sider-Permission']").classList.add("nav-active");
   else if (href.includes("/admin/roles"))
-    document.querySelector("[sider='Sider-Role']").classList.add("active");
+    document.querySelector("[sider='Sider-Role']").classList.add("nav-active");
   else if (href.includes("/admin/accounts"))
-    document.querySelector("[sider='Sider-Account']").classList.add("active");
+    document.querySelector("[sider='Sider-Account']").classList.add("nav-active");
   else if (href.includes("/admin/users"))
-    document.querySelector("[sider='Sider-User']").classList.add("active");
+    document.querySelector("[sider='Sider-User']").classList.add("nav-active");
   else if (href.includes("/admin/settings/general"))
-    document.querySelector("[sider='Sider-Setting']").classList.add("active");
+    document.querySelector("[sider='Sider-Setting']").classList.add("nav-active");
 }
 
 //hover on avatar at header

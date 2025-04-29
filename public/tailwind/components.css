@@ -27,6 +27,10 @@
     border: 1px solid var(--border-gray-600) !important;
   }
 
+  .nav-active{
+    @apply bg-[#5be49b34] rounded-[10px] ;
+  }
+
 }
 
 @layer components{
