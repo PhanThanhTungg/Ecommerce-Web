@@ -67,3 +67,31 @@ if (selectStatusOrders) {
     })
   })
 }
+
+//filter date
+const formatDateInput = (date)=>{
+  const dateSplit = date.split("/");
+  return `${dateSplit[0]}${dateSplit[1]}${dateSplit[2]}`
+}
+const DecodeDateInput = (date)=>{
+  if(!date) return null;
+  return `${date.slice(0, 2)}/${date.slice(2, 4)}/${date.slice(4, 8)}`;
+}
+const filterDate = document.querySelector(".filter-date");
+if(filterDate){
+  const button = filterDate.querySelector("button");
+  const url = new URL(window.location.href);
+  const startDateValue = DecodeDateInput(url.searchParams.get("startDate"));
+  const endDateValue = DecodeDateInput(url.searchParams.get("endDate"));
+  filterDate.querySelector("#datepicker-range-start").value = startDateValue;
+  filterDate.querySelector("#datepicker-range-end").value = endDateValue;
+  
+  button.addEventListener("click", (e) => {
+    let startDate = formatDateInput(filterDate.querySelector("[name='start']").value);
+    let endDate = formatDateInput(filterDate.querySelector("[name='end']").value);
+    console.log(startDate, endDate);
+    url.searchParams.set("startDate", startDate);
+    url.searchParams.set("endDate", endDate);
+    location.href = url.href;
+  })
+}

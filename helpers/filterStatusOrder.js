@@ -1,55 +1,44 @@
-module.exports = (query)=>{
-    let filterStatusOrder=[
-        {
-            name: "All",
-            status: "",
-            class: ""
-        },
-        {
-            name: "Pending",
-            status: "xacNhan",
-            class: ""
-        },
-        {
-            name: "Processing",
-            status: "daXacNhan",
-            class: ""
-        },
-        {
-            name: "Shipped",
-            status: "dangVanChuyen",
-            class: ""
-        },
-        {
-            name: "Delivered",
-            status: "daGiao",
-            class: ""
-        },
-        {
-            name: "Paid",
-            status: "daThanhToan",
-            class: ""
-        },
-        {
-            name: "Canceled",
-            status: "daHuy",
-            class: ""
-        },
-        {
-            name: "Rejected",
-            status: "biBom",
-            class: ""
-        }
-        
-    ]
-    // query status
-    if(query.status){
-        const index = filterStatusOrder.findIndex(item => item.status == query.status)
-        filterStatusOrder[index].class ="active"
-    }
-    else{
-        const index = filterStatusOrder.findIndex(item => item.status == "")
-        filterStatusOrder[index].class ="active"
-    }
-    return filterStatusOrder
+module.exports = (query) => {
+	let filterStatusOrder = [
+		{
+			name: "All",
+			status: "",
+			class: ""
+		},
+		{
+			name: "Pending",
+			status: "pending",
+			class: ""
+		},
+		{
+			name: "Pending-Payment",
+			status: "pending-payment",
+			class: ""
+		},
+		{
+			name: "Shipping",
+			status: "shipping",
+			class: ""
+		},
+		{
+			name: "Delivered",
+			status: "delivered",
+			class: ""
+		},
+		{
+			name: "Cancelled",
+			status: "cancelled",
+			class: ""
+		},
+	]
+	// query status
+	if (query.status) {
+		const index = filterStatusOrder.findIndex(item => item.status == query.status)
+		filterStatusOrder[index].class = "active"
+	}
+	else {
+		const index = filterStatusOrder.findIndex(item => item.status == "")
+		filterStatusOrder[index].class = "active"
+	}
+	return filterStatusOrder
 }
