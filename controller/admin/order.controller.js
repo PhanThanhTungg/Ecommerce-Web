@@ -6,6 +6,10 @@ const filterStatusOrderHelper = require("../../helpers/filterStatusOrder")
 
 
 module.exports.index = async (req, res) => {
+
+  const [totalOrder, currentPage, limit] = [await Order.countDocuments(), 1, 6]
+  const objectPagination = await paginationHelper(req, totalOrder, currentPage, limit)
+
   const orders = await Order.aggregate([
     {
       $addFields: {
@@ -28,12 +32,18 @@ module.exports.index = async (req, res) => {
         foreignField: "_id",
         as: "user"
       }
+    },
+    {
+      $skip: objectPagination.skip
+    },
+    {
+      $limit: objectPagination.limit
     }
   ])
 
   res.render("admin/pages/orders/index", {
     pageTitle: "Order Management",
-    orders
+    orders, objectPagination
   })
 }
 module.exports.changeStatus = async (req, res) => {
