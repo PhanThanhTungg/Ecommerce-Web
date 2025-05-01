@@ -1,6 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
+crawlData/node_modules
 /node_modules
 public/tailwind/output.css
 /.pnp

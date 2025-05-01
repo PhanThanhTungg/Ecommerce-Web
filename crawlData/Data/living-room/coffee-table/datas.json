@@ -1,0 +1,105 @@
+[
+  {
+    "title": "Noguchi Table",
+    "listSize": []
+  },
+  {
+    "title": "Plinth Coffee Table",
+    "listSize": [
+      {
+        "sizeName": "Standard",
+        "priceDefault": "2515.00"
+      },
+      {
+        "sizeName": "XL",
+        "priceDefault": "2515.00"
+      }
+    ]
+  },
+  {
+    "title": "Platner Coffee Table",
+    "listSize": [
+      {
+        "sizeName": "36\"",
+        "priceDefault": "2304.00"
+      },
+      {
+        "sizeName": "42\"",
+        "priceDefault": "3018.00"
+      }
+    ]
+  },
+  {
+    "title": "Saarinen Coffee Table, Oval",
+    "listSize": [
+      {
+        "sizeName": "35\"",
+        "priceDefault": "3995.00"
+      },
+      {
+        "sizeName": "42\"",
+        "priceDefault": "3995.00"
+      }
+    ]
+  },
+  {
+    "title": "Yoko Coffee Table",
+    "listSize": [
+      {
+        "sizeName": "Oval",
+        "priceDefault": "3195.00"
+      },
+      {
+        "sizeName": "Square",
+        "priceDefault": "3195.00"
+      }
+    ]
+  },
+  {
+    "title": "Nelson Platform Bench",
+    "listSize": [
+      {
+        "sizeName": "48\"",
+        "priceDefault": "1995.00"
+      },
+      {
+        "sizeName": "60\"",
+        "priceDefault": "2295.00"
+      },
+      {
+        "sizeName": "72\"",
+        "priceDefault": "2495.00"
+      }
+    ]
+  },
+  {
+    "title": "Nelson Platform Bench",
+    "listSize": [
+      {
+        "sizeName": "48\"",
+        "priceDefault": "1695.00"
+      },
+      {
+        "sizeName": "60\"",
+        "priceDefault": "1995.00"
+      },
+      {
+        "sizeName": "72\"",
+        "priceDefault": "2195.00"
+      }
+    ]
+  },
+  {
+    "title": "Eames Rectangular Coffee Table",
+    "listSize": [
+      {
+        "sizeName": "22\" x 36\"",
+        "priceDefault": "1000.00"
+      },
+      {
+        "sizeName": "22\" x 48\"",
+        "priceDefault": "1045.00"
+      }
+    ]
+  }
+]
