@@ -58,6 +58,7 @@ module.exports.index = async (req, res) => {
     })
   }
 
+
   res.render("client/pages/products/index.pug", {
     pageTitle: "TRANG SẢN PHẨM",
     Products: products,

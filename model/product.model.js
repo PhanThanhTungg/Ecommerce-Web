@@ -21,7 +21,10 @@ const productSchema = new mongoose.Schema(
         stock: Number
       }
     ],
-    discountPercentage: Number,
+    discountPercentage: {
+      type: Number,
+      default: 0
+    },
     thumbnail: String,
     images:{
       type: Array,

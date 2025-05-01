@@ -60,6 +60,7 @@ block main
               id="product_category_id" 
               class=`focus:ring-blue-500 focus:border-blue-500 p-2.5 
               dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'`
+              required
             )
               option(value="") -- Choose category --
               if(category)
@@ -72,7 +73,7 @@ block main
           .flex.items-center.justify-center.w-full.mb-2
             label.flex.flex-col.items-center.justify-center.w-full.h-64.border-2.border-gray-300.border-dashed.rounded-lg.cursor-pointer.bg-gray-50(
               for='images' 
-              class='dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600'
+              class=' dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600'
             )
               .flex.flex-col.items-center.justify-center.pt-5.pb-6
                 svg.w-8.h-8.mb-4.text-gray-500(class='dark:text-gray-400' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewbox='0 0 20 16')
@@ -87,7 +88,6 @@ block main
                 accept='image/*' 
                 upload-image-input
                 multiple
-                required
               )          
           .images-preview.flex.flex-wrap.gap-2
 
@@ -156,7 +156,7 @@ block main
               placeholder="Enter discount percentage"
               min="0"
               max="100"
-              required
+              value="0"
             )
           .input-position(data-tooltip-target="tooltip-position" 
                           data-tooltip-placement="bottom")

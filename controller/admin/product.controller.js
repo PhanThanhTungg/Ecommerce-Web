@@ -67,7 +67,6 @@ module.exports.index = async (req, res) => {
   }
 
 
-  //limit: giới hạn hiển thị // skip: bỏ qua sản phẩm hiển thị
   res.render("admin/pages/products/index.pug", {
     pageTitle: "Danh sách sản phẩm",
     products: products,
@@ -211,7 +210,7 @@ module.exports.createPost = async (req, res) => {
   }
 
   const product = new Product(req.body)
-  await product.save(); // save vao database
+  await product.save(); 
 
   res.redirect(`${systemConfig.prefixAdmin}/products`) //chuyen huong den url
 }

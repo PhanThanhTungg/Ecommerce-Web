@@ -5,6 +5,7 @@ const paginationHelper = require("../../../helpers/pagination")
 module.exports.productApiGetData = async (req, res) => {
   try {
     let find = { status: "active", deleted: false };
+    
     if (req.params.slugCategory) {
       const slugCategory = req.params.slugCategory;
       const category = await Category.findOne({
@@ -39,26 +40,6 @@ module.exports.productApiGetData = async (req, res) => {
         ]
       }
     }
-
-    // //check availability
-    // const availability = req.query.availability;
-    // if (availability == "inStock") {
-    //   find["listSize.stock"] = { $gt: 0 };
-    // }
-    // else if (availability == "outOfStock") {
-    //   find["$expr"] = { $eq: [{ $sum: "$listSize.stock" }, 0] };
-    // }
-
-    // //check range of price
-    // const [priceBegin, priceEnd] = [req.query.priceBegin, req.query.priceEnd]
-    // if(priceBegin && priceEnd){
-    //   find["$expr"] = {
-    //     "$and": [
-    //       { "$gte": [{ "$arrayElemAt": ["$listSize.price", 0] }, priceBegin] },
-    //       { "$lte": [{ "$arrayElemAt": ["$listSize.price", 0] }, priceEnd] }
-    //     ]
-    //   }
-    // }
 
     let exprConditions = [];
 
@@ -111,7 +92,8 @@ module.exports.productApiGetData = async (req, res) => {
     //Pagigation
     let objectPagination = await paginationHelper(req, await Product.countDocuments(find), 1, Number(req.query.limit) || 9);
     //End pagigation
-    console.log(objectPagination)
+    const count = await Product.countDocuments(find);
+    console.log(find);
 
     const pipeline = [
       { $match: find },
@@ -129,6 +111,8 @@ module.exports.productApiGetData = async (req, res) => {
         size.priceNew = (size.price * (100 - item.discountPercentage) / 100).toFixed(0);
       }
     }
+
+    console.log(newProducts);
     res.json({
       products: newProducts,
       objectPagination: objectPagination
