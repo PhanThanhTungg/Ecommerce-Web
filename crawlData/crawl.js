@@ -10,7 +10,7 @@ const main = async () => {
   // const links = await crawlHrefItem(page,'https://www.dwr.com/living-accent-coffee-tables?lang=en_US','.product-tile a.stretched-link');
   // await writeJson("./Data/living-room/coffee-table/links.json", links);
 
-  const Details = await crawDetailItem(page,'./Data/living-room/coffee-table/links.json');
+  const Details = await crawDetailItem(page,'./Data/living-room/coffee-table/links.json', 'idcategory');
   await writeJson("./Data/living-room/coffee-table/datas.json", Details);
   console.log(Details);
 

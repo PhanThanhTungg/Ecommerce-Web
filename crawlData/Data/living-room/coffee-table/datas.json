@@ -1,105 +1,148 @@
 [
   {
     "title": "Noguchi Table",
-    "listSize": []
+    "product_category_id": "idcategory",
+    "listSize": [],
+    "discountPercentage": 27,
+    "images": []
   },
   {
     "title": "Plinth Coffee Table",
+    "product_category_id": "idcategory",
+    "description": "\n            <div class=\"collapse-body pdp-summary-group-body\">\n                \n<div class=\"row\">\n    <div class=\"pdp-summary-group-col-1 col-12 col-lg-5\">\n\n        \n        \n\n        \n        \n            <div class=\"mb-3\">\n                With the Plinth Coffee Table (2017), Norm Architects wanted to rethink the centuries-old idea of a podium and celebrate the natural beauty of marble. Expert stone masters carefully select marble with the best composition and veining for Plinth Tables – each of which has unique markings that make it one of a kind. The result is a collection with multiple uses in the home, office, or showroom. These tables are hollow to make them easier to move but, due to the thickness of the marble, they’re still satisfyingly hefty, weighing in at 200 pounds for the Standard Coffee Table and 324 pounds for the XL Coffee Table. Made in China, Portugal, or Slovenia, depending on type of stone.\n            </div>\n        \n\n        \n        \n            <ul class=\"bulleted mb-3\">\n                \n                    <li>\n                        Sleek tables celebrate the natural beauty of marble.\n                    </li>\n                \n                    <li>\n                        Carrara, Grey Galaxy, Kunis, Nero Marquina or Rose marble.\n                    </li>\n                \n                    <li>\n                        Tables are hollow to make them easier to move.\n                    </li>\n                \n                    <li>\n                        Standard Coffee Table weighs 200 pounds, XL Coffee Table weighs 324 pounds.\n                    </li>\n                \n                    <li>\n                        Marble is a natural material and the marbling patterns on each table will vary.\n                    </li>\n                \n            </ul>\n                                \n\n        \n        \n    </div>\n\n    <div class=\"pdp-summary-group-col-2 col-12 col-lg-5 offset-lg-1\">\n        <div class=\"table table-content summary-table\">\n            \n                \n                \n                    <dl>\n                        <dt>\n                            Brand\n                        </dt>\n                        <dd>\n                            <a href=\"/brands-audo-copenhagen?lang=en_US\">Audo Copenhagen</a>\n                        </dd>\n                    </dl>\n                \n            \n            \n            \n            \n                <dl>\n                    <dt>\n                        Collection\n                    </dt>\n                    <dd>\n                        <a href=\"/collection-plinth-table?lang=en_US\">Plinth Table Collection</a>\n                    </dd>\n                </dl>\n            \n\n            \n            \n                <dl>\n                    <dt>\n                        General Dimensions\n                    </dt>\n                    <dd>\n                        <ul class=\"unstyled summary-pdp-dimensions-list\">\n                            \n                                <li>\n                                    11\" H 54\" W 30\" D\n                                </li>\n                            \n                        </ul>\n                    </dd>\n                </dl>\n            \n\n            \n            \n\n            \n            \n                <dl>\n                    <dt>\n                        Product Weight\n                    </dt>\n                    <dd class=\"summary-weight\">\n                        366.5 lbs\n                    </dd>\n                </dl>\n            \n\n            \n            <dl>\n                <dt>\n                    Assembly\n                </dt>\n                <dd>\n                    \n                        Comes fully assembled\n                    \n                </dd>\n            </dl>\n\n            \n            <dl>\n                <dt>\n                    Warranty\n                </dt>\n                <dd>\n                    \n                        2-year warranty<br>Terms and conditions apply. <a href=\"https://www.dwr.com/warranty.html\" target=\"_blank\">Learn more</a>\n                    \n                </dd>\n            </dl>\n\n            \n            \n\n            \n            \n\n            \n            \n        </div>\n    </div>\n</div>\n            </div>\n        ",
     "listSize": [
       {
-        "sizeName": "Standard",
-        "priceDefault": "2515.00"
+        "size": "Standard",
+        "price": "2515.00",
+        "stock": 66
       },
       {
-        "sizeName": "XL",
-        "priceDefault": "2515.00"
+        "size": "XL",
+        "price": "3669.00",
+        "stock": 73
       }
+    ],
+    "discountPercentage": 23,
+    "thumbnail": "https://images.hermanmiller.group/m/d32d069ff2d643ea/W-DWR_2516192_100143871_carrara_f.png?trim=auto&trim-sd=1&blend-mode=darken&blend=f0f0f0&bg=f0f0f0&auto=format&w=90&h=auto&fit=fill",
+    "images": [
+      "https://images.hermanmiller.group/m/d32d069ff2d643ea/W-DWR_2516192_100143871_carrara_f.png?trim=auto&trim-sd=1&blend-mode=darken&blend=f0f0f0&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/5b9a6fae004f3f3c/W-DWR_2516192_100143871_carrara_a.png?trim=auto&trim-sd=1&blend-mode=darken&blend=f0f0f0&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/7fa494106a91ad1d/W-DWR_2516192_100143871_carrara_p.png?trim=auto&trim-sd=1&blend-mode=darken&blend=f0f0f0&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/125759f3c0d100f/W-DWR_2544255_100328479_hunter_v2_0319_ALT_18x10-5.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/1bad4d1842bd1731/W-DWR_2516381_100604282_gentle_oak_v1_0057.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/66b50959335e3cec/W-MTO_1362_100477171_clear_v1_015.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/79a1f9691d08c73c/W-DWR_2197454_100403606_grey_galaxy_v2_003.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/4eb6bcc42db25cb8/W-DWR_2197454_100403606_grey_galaxy_v1_003.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/7d7906db317fe824/W-DWR_2197051_100229597_sycamore_v2_001.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/5634a787ddea12be/W-DWR_HW23_EDITORIAL_GARRISON_1585.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/c2b4514ac4be74ee/W-DWR_2197454_100143871_cararra_marble_v1.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/9cd439068d6a4b48/W-DWR_2197454_100090317_nero_marquina_v2_001.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/6ca3b40fccde5fb0/W-DWR_2197454_100192421_rose_marble_v1_001.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/5ae405e941102484/W-DWR_429_844390_grey_v3_001.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill"
     ]
   },
   {
     "title": "Platner Coffee Table",
+    "product_category_id": "idcategory",
+    "description": "\n            <div class=\"collapse-body pdp-summary-group-body\">\n                \n<div class=\"row\">\n    <div class=\"pdp-summary-group-col-1 col-12 col-lg-5\">\n\n        \n        \n\n        \n        \n            <div class=\"mb-3\">\n                Warren Platner worked with design giants I.M. Pei and Eero Saarinen before developing his Platner Collection (1966), which reflects his belief that there’s room in modernism “for the kind of decorative, gentle, graceful design that appeared in a period style like Louis XV.” This airy steel wire collection, for which he devised the structure and production method, requires as many as 1,000 welds per piece to create. Made in Italy.\n            </div>\n        \n\n        \n        \n            <ul class=\"bulleted mb-3\">\n                \n                    <li>\n                        Airy steel wire rod construction.\n                    </li>\n                \n                    <li>\n                        Tempered glass, solid marble, or wood veneer top.\n                    </li>\n                \n                    <li>\n                        Plastic ring for protecting floors.\n                    </li>\n                \n                    <li>\n                        Greenguard Indoor Air Quality Certified for low-emitting products.\n                    </li>\n                \n            </ul>\n                                \n\n        \n        \n    </div>\n\n    <div class=\"pdp-summary-group-col-2 col-12 col-lg-5 offset-lg-1\">\n        <div class=\"table table-content summary-table\">\n            \n                \n                \n                    <dl>\n                        <dt>\n                            Brand\n                        </dt>\n                        <dd>\n                            <a href=\"/brands-knoll?lang=en_US\">Knoll®</a>\n                        </dd>\n                    </dl>\n                \n            \n            \n            \n            \n                <dl>\n                    <dt>\n                        Collection\n                    </dt>\n                    <dd>\n                        <a href=\"/collection-platner?lang=en_US\">Platner Collection</a>\n                    </dd>\n                </dl>\n            \n\n            \n            \n                <dl>\n                    <dt>\n                        General Dimensions\n                    </dt>\n                    <dd>\n                        <ul class=\"unstyled summary-pdp-dimensions-list\">\n                            \n                                <li>\n                                    15¼\" H 36\" DIA\n                                </li>\n                            \n                        </ul>\n                    </dd>\n                </dl>\n            \n\n            \n            \n\n            \n            \n                <dl>\n                    <dt>\n                        Product Weight\n                    </dt>\n                    <dd class=\"summary-weight\">\n                        96 lbs\n                    </dd>\n                </dl>\n            \n\n            \n            <dl>\n                <dt>\n                    Assembly\n                </dt>\n                <dd>\n                    \n                        Requires Assembly\n                    \n                </dd>\n            </dl>\n\n            \n            <dl>\n                <dt>\n                    Warranty\n                </dt>\n                <dd>\n                    \n                        5-year warranty<br>Terms and conditions apply. <a href=\"https://www.dwr.com/warranty.html\" target=\"_blank\">Learn more</a>\n                    \n                </dd>\n            </dl>\n\n            \n            \n\n            \n            \n\n            \n            \n        </div>\n    </div>\n</div>\n            </div>\n        ",
     "listSize": [
       {
-        "sizeName": "36\"",
-        "priceDefault": "2304.00"
+        "size": "36\"",
+        "price": "2304.00",
+        "stock": 61
       },
       {
-        "sizeName": "42\"",
-        "priceDefault": "3018.00"
+        "size": "42\"",
+        "price": "3018.00",
+        "stock": 94
       }
+    ],
+    "discountPercentage": 19,
+    "thumbnail": "https://images.hermanmiller.group/m/fffcbfe092e7858f/W-DWR_5961_100208860_clear_glass_nickel_f.png?trim=auto&trim-sd=1&blend-mode=darken&blend=f0f0f0&bg=f0f0f0&auto=format&w=90&h=auto&fit=fill",
+    "images": [
+      "https://images.hermanmiller.group/m/fffcbfe092e7858f/W-DWR_5961_100208860_clear_glass_nickel_f.png?trim=auto&trim-sd=1&blend-mode=darken&blend=f0f0f0&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/488ddd4709946022/W-KNO_PLT_18190.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/a39dae46fa2a9d85/W-KNO_PLT_13429-tif.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/ef284d9f7be53f1c/W-DWR_5792_453561_volo_leather_black_v1.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/04346a0ca23ae38d/W-DWR_73_869577_grey_v1_001.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/084dd1ba4d4a5877/W-DWR_5961_100208895_bronze_metallic_v1_001.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/87101c855c81f50/W-DWR_5961_290050_glass_v4.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/89f8730d0ce4f7b1/W-DWR_7447_8971209_pink_v1.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/a4e8faf1e1665c6f/W-DWR_7447_8971209_ebony_v2.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/ae679dc4bb509918/W-DWR_5961_290050_glass_d2.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/d8ed45af8a01f788/W-DWR_5961_290050_glass_d1.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/6a8f398de8e46c66/W-DWR_5961_290050_glass_v1.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/63aae1dfb926ca13/W-DWR_5961_290050_grey_v1.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/b1fad4671d594510/W-DWR_5961_100208868_clear_glass_gold_d.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/1235259c9a2ae1eb/W-DWR_5961_290050_glass_nickel_v3-tif.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/a22952c7e917546/W-PD_6823_ENV1-jpg.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill"
     ]
   },
   {
     "title": "Saarinen Coffee Table, Oval",
+    "product_category_id": "idcategory",
+    "description": "\n            <div class=\"collapse-body pdp-summary-group-body\">\n                \n<div class=\"row\">\n    <div class=\"pdp-summary-group-col-1 col-12 col-lg-5\">\n\n        \n        \n\n        \n        \n            <div class=\"mb-3\">\n                Architect Eero Saarinen was a genius at creating expressive sculptural forms. From his TWA Terminal (now the TWA Hotel) at New York’s JFK Airport to the Gateway Arch in St. Louis to his Pedestal Table (1956), there’s a magic in everything he created. The Saarinen Table began with his observation that “the underside of typical tables and chairs makes a confusing, unrestful world,” and as he explained in a 1956 Time magazine cover story, he was designing a new collection to “clear up the slum of legs in the U.S. home.” Later that year, he completed the Pedestal Table, which stands on a gracefully shaped cast-aluminum base inspired by a drop of high-viscosity liquid. This is the authentic Pedestal Table by Knoll; it’s stamped with the KnollStudio logo and Eero Saarinen’s signature. Tabletop made in Italy or U.S.A., depending on material.<br><br>Stone masters carefully select marble with the best composition and veining to create tops for marble Saarinen Pedestal Tables. Please rest assured that each one’s unique markings are not imperfections but rather the very traits that make it a true one of a kind. <br><br>Polished Marble tops have a glossy polyester coating, and Satin Marble tops have a matte satin polyester coating; both types help protect against stains.\n            </div>\n        \n\n        \n        \n            <ul class=\"bulleted mb-3\">\n                \n                    <li>\n                        This is an authentic Knoll Saarinen Table.\n                    </li>\n                \n                    <li>\n                        Sturdy, cast-aluminum base.\n                    </li>\n                \n                    <li>\n                        Solid marble, wood veneer or laminate top.\n                    </li>\n                \n                    <li>\n                        Distinct sculptural base inspired by a drop of liquid.\n                    </li>\n                \n                    <li>\n                        A timeless modern classic in continuous production since 1956.\n                    </li>\n                \n            </ul>\n                                \n\n        \n        \n            <div>\n                Eco-Friendly Description: Certified Intertek Clean Air GOLD. Products certified Intertek Clean Air GOLD are certified for low-VOC emissions and conform to ANSI/ BIFMA e3 standard credits 7.6.1, 7.6.2 and/or credit 7.6.3, which includes California Department of Public Health (CDPH) Standard Method v1.2 01350 (2017), as well as conformance to low-emitting materials for WELL and LEED.\n            </div>\n        \n    </div>\n\n    <div class=\"pdp-summary-group-col-2 col-12 col-lg-5 offset-lg-1\">\n        <div class=\"table table-content summary-table\">\n            \n                \n                \n                    <dl>\n                        <dt>\n                            Brand\n                        </dt>\n                        <dd>\n                            <a href=\"/brands-knoll?lang=en_US\">Knoll®</a>\n                        </dd>\n                    </dl>\n                \n            \n            \n            \n            \n                <dl>\n                    <dt>\n                        Collection\n                    </dt>\n                    <dd>\n                        <a href=\"/collection-saarinen-dining-table?lang=en_US\">Saarinen Dining Table Collection</a>\n                    </dd>\n                </dl>\n            \n\n            \n            \n                <dl>\n                    <dt>\n                        General Dimensions\n                    </dt>\n                    <dd>\n                        <ul class=\"unstyled summary-pdp-dimensions-list\">\n                            \n                                <li>\n                                    15¼\" H 42¼\" W 27½\" D 17½\" DIA\n                                </li>\n                            \n                        </ul>\n                    </dd>\n                </dl>\n            \n\n            \n            \n\n            \n            \n                <dl>\n                    <dt>\n                        Product Weight\n                    </dt>\n                    <dd class=\"summary-weight\">\n                        193 lbs\n                    </dd>\n                </dl>\n            \n\n            \n            <dl>\n                <dt>\n                    Assembly\n                </dt>\n                <dd>\n                    \n                        Requires Assembly\n                    \n                </dd>\n            </dl>\n\n            \n            <dl>\n                <dt>\n                    Warranty\n                </dt>\n                <dd>\n                    \n                        5-year warranty<br>Terms and conditions apply. <a href=\"https://www.dwr.com/warranty.html\" target=\"_blank\">Learn more</a>\n                    \n                </dd>\n            </dl>\n\n            \n            \n                <dl>\n                    <dt>\n                        Lifestyle\n                    </dt>\n                    <dd>\n                        <ul class=\"pdp-summary-group-lifestyle unstyled\">\n                            \n                                <li>\n                                    \n\n\n\n<svg role=\"img\" class=\"icon icon-check-dark icon-check-dark-dims \" viewBox=\"0 0 11 9\">\n<title>check-dark</title>\n\n<path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M10.819 1.818L4.182 8.455.546 4.818l1.273-1.272 2.363 2.363L9.546.546l1.273 1.272z\" fill=\"#242222\"></path></svg>\n\n\n                                    <span>Eco-friendly</span>\n                                </li>\n                            \n                            \n                        </ul>\n                    </dd>\n                </dl>\n            \n\n            \n            \n\n            \n            \n        </div>\n    </div>\n</div>\n            </div>\n        ",
     "listSize": [
       {
-        "sizeName": "35\"",
-        "priceDefault": "3995.00"
+        "size": "35\"",
+        "price": "3995.00",
+        "stock": 54
       },
       {
-        "sizeName": "42\"",
-        "priceDefault": "3995.00"
+        "size": "42\"",
+        "price": "3995.00",
+        "stock": 73
       }
+    ],
+    "discountPercentage": 23,
+    "thumbnail": "https://images.hermanmiller.group/m/644a1cdd4c6708b3/W-KNO_7220_100080188_polished_carrara_white_f.png?trim=auto&trim-sd=1&blend-mode=darken&blend=f0f0f0&bg=f0f0f0&auto=format&w=90&h=auto&fit=fill",
+    "images": [
+      "https://images.hermanmiller.group/m/644a1cdd4c6708b3/W-KNO_7220_100080188_polished_carrara_white_f.png?trim=auto&trim-sd=1&blend-mode=darken&blend=f0f0f0&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/485c411d54c334ab/W-DWR_7220_100147879_polished_carrara_white_vendor_f.png?trim=auto&trim-sd=1&blend-mode=darken&blend=f0f0f0&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/4934aa9d39d95953/W-KNO_2583690_100586015_iseo_darkblue_v1_136.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/4327b0561a1678c7/W-KNO_pillo_sofa_82284.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/278377a4083566f0/W-KNO_pillo_sofa_82314.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/240b644644c7b99b/W-KNO_pillo_platner_82870.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/aa4fb7644f5286d/W-DWR_2541718_100360711_grey_v1_001.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/01e3cd9348e87c52/W-KNO_WMB_12798-jpg.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/eb55a604a79fa045/W-DWR_7220_295154_polished_arabescato_white_v2.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/618265dbf5e2011a/W-KNO_SRT_14726-tif.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/ef42f5f2ed855888/W-KNO_SRT_10435-tif.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/d3f3ddbe3565b944/W-DWR_9097_100194691_graphite_chrome_v4_001.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/1831b43f755c890c/W-DWR_2544057_100328168_graphite_velvet_black_v1_001.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/44ffba53a0985395/W-HM_462_395830_white_v1.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/4c476d0681ba655b/W-DWR_429_9002214_pumice_v1_001.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/05759e71fccd84e9/W-DWR_7220_100130860_arabescato_black_v1.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/445df5906dac8c51/W-PD_7220_ALT7-tif.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/1fff8a7873399ed4/W-PD_7220_ALT2-jpg.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/476e7faf5a0ddfad/W-PD_7220_ENV4-jpg.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill"
     ]
   },
   {
     "title": "Yoko Coffee Table",
+    "product_category_id": "idcategory",
+    "description": "\n            <div class=\"collapse-body pdp-summary-group-body\">\n                \n<div class=\"row\">\n    <div class=\"pdp-summary-group-col-1 col-12 col-lg-5\">\n\n        \n        \n\n        \n        \n            <div class=\"mb-3\">\n                “My design for this table started with the oversize ball feet,” says Australian designer Sarah Ellison of this DWR-exclusive table. “We crave that human element that is round and soft, and sensual in a way.” The Yoko Coffee Table (2022) takes inspiration from Japanese minimalism but with contemporary proportions and functionality. Choose from a square or oval size in a walnut or oak finish. Made in Vietnam.\n            </div>\n        \n\n        \n        \n            <ul class=\"bulleted mb-3\">\n                \n                    <li>\n                        Modern coffee table with oversize spherical feet.\n                    </li>\n                \n                    <li>\n                        Playful juxtaposition of straight and round forms.\n                    </li>\n                \n            </ul>\n                                \n\n        \n        \n    </div>\n\n    <div class=\"pdp-summary-group-col-2 col-12 col-lg-5 offset-lg-1\">\n        <div class=\"table table-content summary-table\">\n            \n                \n                \n                    <dl>\n                        <dt>\n                            Brand\n                        </dt>\n                        <dd>\n                            <a href=\"/brands-ellison-studios?lang=en_US\">ELLISON STUDIOS</a>\n                        </dd>\n                    </dl>\n                \n            \n            \n            \n            \n\n            \n            \n                <dl>\n                    <dt>\n                        General Dimensions\n                    </dt>\n                    <dd>\n                        <ul class=\"unstyled summary-pdp-dimensions-list\">\n                            \n                                <li>\n                                    11⅞\" H 59⅛\" W 33½\" D\n                                </li>\n                            \n                        </ul>\n                    </dd>\n                </dl>\n            \n\n            \n            \n\n            \n            \n                <dl>\n                    <dt>\n                        Product Weight\n                    </dt>\n                    <dd class=\"summary-weight\">\n                        153.25 lbs\n                    </dd>\n                </dl>\n            \n\n            \n            <dl>\n                <dt>\n                    Assembly\n                </dt>\n                <dd>\n                    \n                        Requires Assembly\n                    \n                </dd>\n            </dl>\n\n            \n            <dl>\n                <dt>\n                    Warranty\n                </dt>\n                <dd>\n                    \n                        1-year warranty<br>Terms and conditions apply. <a href=\"https://www.dwr.com/warranty.html\" target=\"_blank\">Learn more</a>\n                    \n                </dd>\n            </dl>\n\n            \n            \n\n            \n            \n\n            \n            \n        </div>\n    </div>\n</div>\n            </div>\n        ",
     "listSize": [
       {
-        "sizeName": "Oval",
-        "priceDefault": "3195.00"
+        "size": "Oval",
+        "price": "3195.00",
+        "stock": 99
       },
       {
-        "sizeName": "Square",
-        "priceDefault": "3195.00"
+        "size": "Square",
+        "price": "3195.00",
+        "stock": 89
       }
-    ]
-  },
-  {
-    "title": "Nelson Platform Bench",
-    "listSize": [
-      {
-        "sizeName": "48\"",
-        "priceDefault": "1995.00"
-      },
-      {
-        "sizeName": "60\"",
-        "priceDefault": "2295.00"
-      },
-      {
-        "sizeName": "72\"",
-        "priceDefault": "2495.00"
-      }
-    ]
-  },
-  {
-    "title": "Nelson Platform Bench",
-    "listSize": [
-      {
-        "sizeName": "48\"",
-        "priceDefault": "1695.00"
-      },
-      {
-        "sizeName": "60\"",
-        "priceDefault": "1995.00"
-      },
-      {
-        "sizeName": "72\"",
-        "priceDefault": "2195.00"
-      }
-    ]
-  },
-  {
-    "title": "Eames Rectangular Coffee Table",
-    "listSize": [
-      {
-        "sizeName": "22\" x 36\"",
-        "priceDefault": "1000.00"
-      },
-      {
-        "sizeName": "22\" x 48\"",
-        "priceDefault": "1045.00"
-      }
+    ],
+    "discountPercentage": 13,
+    "thumbnail": "https://images.hermanmiller.group/m/4cf8a88e301077a3/W-DWR_2552212_100368600_square_oak_f.png?trim=auto&trim-sd=1&blend-mode=darken&blend=f0f0f0&bg=f0f0f0&auto=format&w=90&h=auto&fit=fill",
+    "images": [
+      "https://images.hermanmiller.group/m/4cf8a88e301077a3/W-DWR_2552212_100368600_square_oak_f.png?trim=auto&trim-sd=1&blend-mode=darken&blend=f0f0f0&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/60bd383bea92593a/W-DWR_2552212_100368600_square_oak_a.png?trim=auto&trim-sd=1&blend-mode=darken&blend=f0f0f0&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/7ea9a0e54156d4a3/W-DWR_2552212_100368600_square_oak_d1.png?trim=auto&trim-sd=1&blend-mode=darken&blend=f0f0f0&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/7b62ad26618f1c81/W-DWR_2552212_100368599_oval_walnut_v2_001.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/22735465919b18bb/W-DWR_2538745_100284016_caramel_v1_001.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill",
+      "https://images.hermanmiller.group/m/7988f9a38f385c5/W-DWR_2552212_100368599_oval_walnut_v1.png?trim=auto&trim-sd=1&bg=f0f0f0&auto=format&w=800&h=auto&fit=fill"
     ]
   }
 ]
