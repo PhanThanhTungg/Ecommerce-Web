@@ -35,6 +35,11 @@
 
 @layer components{
   .button-1{
-    @apply border-2 border-gray-600 text-gray-200 p-[8px] rounded-xl
+    @apply border-2 border-gray-600 text-black p-[7px] rounded-xl
+    dark:text-gray-200 hover:bg-black hover:text-white transition-all duration-500 ease-in-out;
+  }
+
+  .file{
+    @apply block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400; 
   }
 }

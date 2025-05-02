@@ -1,8 +1,6 @@
 const Product = require("../../model/product.model")
-const User = require("../../model/user.model")
 const ProductCategory = require("../../model/product-category.model")
 const paginationHelper = require("../../helpers/pagination")
-const { category } = require("../../middlewares/client/category.middleware")
 
 module.exports.index = async (req, res) => {
 

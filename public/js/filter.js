@@ -8,7 +8,7 @@ let sortValue = "featured";
 let page = 1;
 let limit = limitSelect.value;
 let priceBegin = 0;
-let priceEnd = 1000000;
+let priceEnd = Math.pow(10,12);
 let availability = "";
 
 function fetchAPIProducts(pageSelected = 1) {

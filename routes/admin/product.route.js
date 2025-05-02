@@ -21,7 +21,9 @@ router.patch("/change-multi", controller.changeMulti)
 
 router.delete("/delete/:id", controller.deleteItem)
 
-router.get("/create", controller.create) // giao diện
+router.get("/create", controller.create) 
+
+router.post("/import", upload.single("uploaded_file"), validate.import, controller.import);
 
 router.post(
     "/create",
@@ -29,9 +31,9 @@ router.post(
     uploadCloud.uploadMutiple,
     validate.createPost,
     controller.createPost
-) // post sp
+) 
 
-router.get("/edit/:id", controller.edit) // giao dien
+router.get("/edit/:id", controller.edit) 
 
 router.patch(
     "/edit/:id", 
@@ -39,7 +41,7 @@ router.patch(
     uploadCloud.upload,
     validate.createPost,
     controller.editPatch
-) // edit sp
+) 
 
 
 router.get("/detail/:id", controller.detail) 

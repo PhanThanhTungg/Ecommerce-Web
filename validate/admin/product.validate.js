@@ -17,3 +17,19 @@ module.exports.createPost = (req, res, next) => {
   }
   next()
 }
+
+module.exports.import = (req, res, next) =>{
+  if (!req.file) {
+    req.flash('error', 'File can not be empty');
+    res.redirect("back");
+    return
+  }
+
+  const fileName = req.file.originalname.split('.').pop()
+  if (fileName != "json" && fileName != "xlsx") {
+    req.flash('error', 'File must be .json or .xlsx');
+    res.redirect("back");
+    return
+  }
+  next()
+} 

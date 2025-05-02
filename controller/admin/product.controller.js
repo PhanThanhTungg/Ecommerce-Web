@@ -158,6 +158,7 @@ module.exports.create = async (req, res) => {
 }
 const cloudinary = require('cloudinary').v2
 const streamifier = require('streamifier')
+const { RunCommandCursor } = require("mongodb")
 //cloudinary
 cloudinary.config({ 
   cloud_name: process.env.CLOUD_NAME, 
@@ -198,21 +199,44 @@ module.exports.createPost = async (req, res) => {
 
   req.body.discountPercentage = parseInt(req.body.discountPercentage)
 
-  if (req.body.position == "") {
-    const countProducts = await Product.countDocuments()
-    req.body.position = countProducts + 1
-  } else {
-    req.body.position = parseInt(req.body.position)
+  if (req.body.position != "") {
+    req.body.position = parseInt(req.body.position);
   }
+  else delete req.body.position;
 
   req.body.createBy = {
     account_id: res.locals.user.id
   }
-
+  console.log(req.body);
   const product = new Product(req.body)
   await product.save(); 
 
   res.redirect(`${systemConfig.prefixAdmin}/products`) //chuyen huong den url
+}
+
+module.exports.import = async (req, res) => {
+  try {
+    const file = req.file;
+    const buffer = file.buffer.toString("utf-8");
+    const jsonData = JSON.parse(buffer);
+
+    for(const item of jsonData) {
+      if(item.listSize==[]) continue;
+      const product = new Product(item);
+      await product.save();
+    }
+
+    req.flash('success', 'Import successfully!');
+    res.redirect(`${systemConfig.prefixAdmin}/products`);
+  
+  } catch (error) {
+    console.log(error);
+    req.flash('error', 'Import failed!');
+    res.redirect(`${systemConfig.prefixAdmin}/products`);
+  }
+
+  
+
 }
 
 module.exports.edit = async (req, res) => {
