@@ -42,7 +42,8 @@
     "pug": "^3.0.2",
     "streamifier": "^0.1.1",
     "tailwindcss": "^4.1.4",
-    "tinymce": "^7.0.0"
+    "tinymce": "^7.0.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"

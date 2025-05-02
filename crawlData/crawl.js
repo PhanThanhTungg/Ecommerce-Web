@@ -7,12 +7,11 @@ import crawDetailItem from './Action/crawDetailItem.js';
 const main = async () => {
   const page = await browser.newPage();
 
-  // const links = await crawlHrefItem(page,'https://www.dwr.com/living-accent-coffee-tables?lang=en_US','.product-tile a.stretched-link');
-  // await writeJson("./Data/living-room/coffee-table/links.json", links);
+  // const links = await crawlHrefItem(page,'https://www.dwr.com/storage-media?lang=en_US','.product-tile a.stretched-link');
+  // await writeJson("./Data/living-room/MediaStorage/links.json", links);
 
-  const Details = await crawDetailItem(page,'./Data/living-room/coffee-table/links.json', 'idcategory');
-  await writeJson("./Data/living-room/coffee-table/datas.json", Details);
-  console.log(Details);
+  const Details = await crawDetailItem(page,'./Data/living-room/MediaStorage/links.json', '6814a40db600fbac90b72c7a');
+  await writeJson("./Data/living-room/MediaStorage/datas.json", Details);
 
   await browser.close();
 };

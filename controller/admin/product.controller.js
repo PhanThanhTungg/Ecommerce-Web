@@ -9,6 +9,8 @@ const createTreeHelper = require("../../helpers/createTree")
 const ProductCategory = require("../../model/product-category.model")
 const Account = require("../../model/account.model")
 
+const xlsx = require('xlsx');
+
 module.exports.index = async (req, res) => {
 
   let find = {
@@ -36,7 +38,7 @@ module.exports.index = async (req, res) => {
 
 
   //Pagigation
-  const [totalProduct, currentPage, limit] = [await Product.countDocuments(find), 1, 4]
+  const [totalProduct, currentPage, limit] = [await Product.countDocuments(find), 1, 8]
   const objectPagination = await paginationHelper(req, totalProduct, currentPage, limit)
 
   //End pagigation
@@ -47,7 +49,7 @@ module.exports.index = async (req, res) => {
   for (const product of products) {
     product.listPrice = []
     product.listSize.forEach(item => {
-      product.listPrice.push({size:item.size, price: item.price})
+      product.listPrice.push({ size: item.size, price: item.price })
     })
     const user = await Account.findOne({ _id: product.createBy.account_id })
     const category = await ProductCategory.findOne({ _id: product.product_category_id }).select("title")
@@ -160,9 +162,9 @@ const cloudinary = require('cloudinary').v2
 const streamifier = require('streamifier')
 const { RunCommandCursor } = require("mongodb")
 //cloudinary
-cloudinary.config({ 
-  cloud_name: process.env.CLOUD_NAME, 
-  api_key: process.env.CLOUD_KEY, 
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_KEY,
   api_secret: process.env.CLOUD_SECRET
 });
 //end cloudinary
@@ -199,17 +201,19 @@ module.exports.createPost = async (req, res) => {
 
   req.body.discountPercentage = parseInt(req.body.discountPercentage)
 
-  if (req.body.position != "") {
+  if (req.body.position == "") {
+    const countProducts = await Product.countDocuments();
+    req.body.position = countProducts + 1;
+  } else {
     req.body.position = parseInt(req.body.position);
   }
-  else delete req.body.position;
 
   req.body.createBy = {
     account_id: res.locals.user.id
   }
-  console.log(req.body);
+
   const product = new Product(req.body)
-  await product.save(); 
+  await product.save();
 
   res.redirect(`${systemConfig.prefixAdmin}/products`) //chuyen huong den url
 }
@@ -217,25 +221,38 @@ module.exports.createPost = async (req, res) => {
 module.exports.import = async (req, res) => {
   try {
     const file = req.file;
-    const buffer = file.buffer.toString("utf-8");
-    const jsonData = JSON.parse(buffer);
+    let jsonData;
 
-    for(const item of jsonData) {
-      if(item.listSize==[]) continue;
+    if (file.mimetype === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+      const workbook = xlsx.read(file.buffer, { type: 'buffer' });
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+      jsonData = xlsx.utils.sheet_to_json(worksheet);
+    } else if(file.mimetype === 'application/json') {
+      const buffer = file.buffer.toString("utf-8");
+      jsonData = JSON.parse(buffer);
+    }
+
+    for (const item of jsonData) {
+      if (item.listSize == []) continue;
+      if(!item.position){
+        const countProducts = await Product.countDocuments();
+        item.position = countProducts + 1;
+      }
       const product = new Product(item);
       await product.save();
     }
 
     req.flash('success', 'Import successfully!');
     res.redirect(`${systemConfig.prefixAdmin}/products`);
-  
+
   } catch (error) {
     console.log(error);
     req.flash('error', 'Import failed!');
     res.redirect(`${systemConfig.prefixAdmin}/products`);
   }
 
-  
+
 
 }
 

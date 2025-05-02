@@ -12,7 +12,11 @@ const productCategorySchema = new mongoose.Schema(
     },
     description: String,
     thumbnail: String,
-    status: String,
+    status: {
+      type: String,
+      enum: ["active", "inactive"],
+      default: "active"
+    },
     position: Number,
     featured:{
       type: Boolean,
