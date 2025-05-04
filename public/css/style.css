@@ -1553,6 +1553,7 @@ h1 {
 }
 
 .sidebar-user .avatar img {
+  width: 100%;
   aspect-ratio: 1/1;
   object-fit: cover;
 }

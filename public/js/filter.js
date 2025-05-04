@@ -86,7 +86,7 @@ function fetchAPIProducts(pageSelected = 1) {
           rating_wrappers.forEach(rating => {
             const ratingNumber = rating.dataset.rating;
             const ratingInput = rating.querySelector(`input[value="${ratingNumber}"]`);
-            ratingInput.checked = true;
+            // ratingInput.checked = true;
           })
         }
       }

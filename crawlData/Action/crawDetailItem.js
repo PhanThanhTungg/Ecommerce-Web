@@ -7,7 +7,7 @@ export default async (page, linkFile, categoryId) => {
   const dataReturn = [];
   let i = 0;
   for (const link of packageObj) {
-    if (i == Math.floor(Math.random()*6+10)) break;
+    if (i == Math.floor(Math.random()*1+30)) break;
     i++;
     await page.goto(link);
     const item = await page.evaluate(async (product_category_id) => {
