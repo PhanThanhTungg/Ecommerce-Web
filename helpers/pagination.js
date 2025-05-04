@@ -1,4 +1,4 @@
-module.exports = async (req, totalProduct, currentPage, limit) => {
+module.exports = (req, totalProduct, currentPage, limit) => {
   const objectPagination = {
     currentPage: currentPage,
     limit: limit

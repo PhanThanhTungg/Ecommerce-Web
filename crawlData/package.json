@@ -5,13 +5,17 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "crawl": "node crawl.js"
+    "crawl": "node crawl.js",
+    "gen": "node genData.js"
   },
   "type": "module",
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@faker-js/faker": "^9.7.0",
+    "bcrypt": "^5.1.1",
     "fs-extra": "^11.3.0",
+    "mongoose": "^8.14.1",
     "puppeteer": "^24.7.2",
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2"

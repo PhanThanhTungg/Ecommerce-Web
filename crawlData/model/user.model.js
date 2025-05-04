@@ -1,5 +1,5 @@
-const mongoose = require("mongoose")
-const generate = require("../helpers/generate")
+import mongoose from "mongoose";
+import * as generate from "../helper/generate.js";
 
 const userSchema = new mongoose.Schema(
   {
@@ -13,23 +13,23 @@ const userSchema = new mongoose.Schema(
     },
     email: String,
     password: String,
-    tokenUser:{
+    tokenUser: {
       type: String,
-      default: ()=>generate.generateRandomString(20)
+      default: () => generate.generateRandomString(20),
     },
     refreshToken: String,
     phone: String,
-    thumbnail:{
+    thumbnail: {
       type: String,
-      default: "https://howkteam.vn/Content/images/avatar/avatar.png"
+      default: "https://howkteam.vn/Content/images/avatar/avatar.png",
     },
     sex: {
       type: String,
-      enum: ["male", "female", "other"]
+      enum: ["male", "female", "other"],
     },
-    status:{
+    status: {
       type: String,
-      default: "active"
+      default: "active",
     },
     deleted: {
       type: Boolean,
@@ -40,8 +40,8 @@ const userSchema = new mongoose.Schema(
   {
     timestamps: true,
   }
-)
+);
 
-const User = mongoose.model("User", userSchema, "customers")
+const User = mongoose.model("User", userSchema, "customers");
 
-module.exports = User
+export default User;
