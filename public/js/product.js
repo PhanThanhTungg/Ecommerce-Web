@@ -38,7 +38,7 @@ for (const x of sizeLayout) {
 }
 
 const buttonSize = document.querySelectorAll(".button-size")
-if(buttonSize){
+if(buttonSize && buttonSize.length > 0){
   buttonSize[0].classList.add("button-size-active")
   buttonSize.forEach(item=>{
     item.addEventListener("click", (e)=>{

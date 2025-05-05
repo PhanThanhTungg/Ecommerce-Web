@@ -1,7 +1,8 @@
 var swiper = new Swiper(".thumbnail-detail", {
   spaceBetween: 0,
-  slidesPerView: "auto",
+  slidesPerView: "4",
   freeMode: true,
+  spaceBetween: 15,
   watchSlidesProgress: true,
 });
 var swiper2 = new Swiper(".image-detail", {
@@ -14,6 +15,15 @@ var swiper2 = new Swiper(".image-detail", {
     swiper: swiper,
   },
 });
+
+document.querySelectorAll(".product-detail .product-images img").forEach(item => {
+    if (item.naturalHeight > item.naturalWidth) {
+      item.classList.add("portrait")
+    } else {
+      item.classList.add("landscape")
+    }
+  
+})
 
 document.querySelectorAll("form").forEach(item => {
   item.addEventListener("submit", function(e) {

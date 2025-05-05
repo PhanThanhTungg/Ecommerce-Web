@@ -3,7 +3,7 @@ import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 puppeteer.use(StealthPlugin());
 
 export default await puppeteer.launch({
-  headless: false,
+  headless: true,
   args: [
     '--no-sandbox',
     '--disable-setuid-sandbox',

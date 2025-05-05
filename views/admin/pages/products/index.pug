@@ -130,7 +130,7 @@ block main
                       ) <i class="fa-solid fa-trash text-lg text-red-400 dark:text-red-600"></i>
 
       div(class="flex justify-center mt-3")
-        +pagination(pagination)
+        +pagination(pagination.currentPage, pagination.totalPage)
 
       form(
         action="" 
