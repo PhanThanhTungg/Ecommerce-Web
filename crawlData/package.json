@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "crawl": "node crawl.js",
-    "gen": "node genData.js"
+    "gen": "node genData.js",
+    "etl": "node etl.js"
   },
   "type": "module",
   "author": "",

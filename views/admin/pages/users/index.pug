@@ -91,7 +91,7 @@ block main
                       data-path = `${prefixAdmin}/users/change-status`
                     )
       div(class="flex justify-center mt-3")               
-        +pagination(pagination)
+        +pagination(pagination.currentPage, pagination.totalPage)
 
   script(src="/admin/js/product.js")   
   script(src="/admin/js/order-user.js")  
