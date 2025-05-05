@@ -29,6 +29,7 @@ const orderAction = async ()=>{
     const newOrder = new Order(order);
     await newOrder.save();
     for(const item of order.orderProducts){
+      item.createdAt = order.createdAt;
       const orderProduct = new OrderProduct(item);
       await orderProduct.save();
     }
@@ -51,8 +52,8 @@ const ProductFeedbackAction = async()=>{
 const main = async()=>{
   await connect();
   // await userAction();
-  // await orderAction();
-  await ProductFeedbackAction();
+  await orderAction();
+  // await ProductFeedbackAction();
 
 }
 main();
