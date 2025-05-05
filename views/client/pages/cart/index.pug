@@ -42,7 +42,7 @@ block main
                           href=`/products/detail/${item.productInfo.slug}`
                         ) #{item.productInfo.title}
                         p.product-size Size: #{item.sizeInfo.size}                     
-                    td.align-middle $#{item.sizeInfo.priceNew}
+                    td.align-middle.formatMoney #{item.sizeInfo.priceNew}$
                     td.align-middle.text-center
                       .input__number
                         span.sub ‒
@@ -56,7 +56,7 @@ block main
                           item-id=item.product_id
                         )
                         span.add +
-                    td.align-middle $#{item.totalPrice}
+                    td.align-middle.formatMoney #{item.totalPrice}$
                     td.align-middle.text-center
                       i.fi.fi-rr-trash-xmark.icon-delete(
                         style="font-size: 17px",
@@ -90,20 +90,20 @@ block main
             .inner-content
               .cart-info
                 span TOTAL:
-                p.total-price #{cartDetail.totalPrice} đ
+                p.total-price.formatMoney #{cartDetail.totalPrice}$
               .cart-info
                 span SHIPPING:                
                 if (cartDetail.totalPrice > settingsGeneral.shippingFee.freeShippingThreshold)
                   .p Free
                 else
-                  .noti Tính phí vận chuyển ở trang thanh toán
+                  .noti Shipping calculated at checkout
               .free-shipping-condition
                 if (cartDetail.totalPrice > 200)
                   .inner-notice
                     p.notice Congratulations! You've got free shipping!
                     i.fi.fi-rr-truck-check
                 p.condition-info
-                  | Miễn phí ship cho đơn hàng trên 
+                  | Free shipping for any orders above 
                   span.format-money #{settingsGeneral.shippingFee.freeShippingThreshold}          
       else
         .cart-empty-notification

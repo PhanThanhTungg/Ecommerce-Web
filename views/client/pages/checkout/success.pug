@@ -9,74 +9,74 @@ block main
         if order.deliveryStatus == "pending"
           i.fi.fi-rr-check
           if order.paymentMethod=="zalopay"
-            span Thanh toán thành công!
+            span Payment Successful!
           else
-            span Đặt hàng thành công!
+            span Order Placed Successfully!
           if order.deliveryMethod == "instant"
-            p Vui lòng để ý điện thoại để nhận hàng
+            p Please keep your phone available for delivery.
           else if order.deliveryMethod == "standard"
-            p Bạn sẽ nhận được hàng sau 5-7 ngày
+            p You will receive your order within 5–7 days.
         if order.deliveryStatus == "pending-payment"
           i.fi.fi-rr-pending
-          span Chờ xác nhận thanh toán
+          span Awaiting Payment Confirmation
           if order.paymentMethod == "zalopay"
-            p Vui lòng thanh toán 
+            p Please proceed with the payment
               a(href=`/checkout/zalopay/${order.id}/${order.paymentStatus.lack}` style="color: blue; text-decoration:underline") Tại đây
           else
-            p Vui lòng quét mã QR để thanh toán
+            p Please scan the QR code to complete your payment
       <div class="success-box d-none align-items-center wrapper-flex-column-gap-15">
         <div class="icon"><i class="fa-solid fa-circle-check"></i></div>
-        <h2>Thanh toán thành công!</h2>
-        <p>Cảm ơn bạn đã mua hàng. Đơn hàng của bạn đang được xử lý.</p>
-        <a class = "button-4" href="/products"><span>Tiếp tục mua sắm</span></a>
+        <h2>Payment Successful!</h2>
+        <p>Thank you for your purchase. Your order is being processed.</p>
+        <a class = "button-4" href="/products"><span>Continue Shopping</span></a>
       </div>
       .inner-content.d-flex.mt-5
         .order-info.wrapper-flex-column-gap-15
-          span.info Mã đơn hàng: ##{order.id}
-          span.info Tên người nhận: #{order.userInfo.fullName}
-          span.info Số điện thoại: #{order.userInfo.phone}
-          span.info Địa chỉ: #{order.userInfo.detail}, #{order.userInfo.commune}, #{order.userInfo.district}, #{order.userInfo.province}
-          span.info Phương thức thanh toán: 
+          span.info Order ID: ##{order.id}
+          span.info Recipient name: #{order.userInfo.fullName}
+          span.info Phone number: #{order.userInfo.phone}
+          span.info Address: #{order.userInfo.detail}, #{order.userInfo.commune}, #{order.userInfo.district}, #{order.userInfo.province}
+          span.info Payment method: 
             if order.paymentMethod == "qr"
-              | Mã Qr
+              | QR Code
             if order.paymentMethod == "cash"
-              | Thanh toán khi nhận hàng
+              | Cash on delivery
             if order.paymentMethod == "zalopay"
               | ZaloPay
             if order.paymentMethod == "momo"
               | Momo
           .order-products.wrapper-flex-column-gap-15
-            span.title Đơn hàng của bạn
+            span.title Your order
             .inner-orderProducts.wrapper-flex-column-gap-15
               each item in products
                 .product-wrapper.d-flex.align-items-center  
                   .product-image
                     .quantity #{item.quantity}
                     .image
-                      img(src=item.thumbnail.replace('upload/', 'upload/c_limit,w_62/f_auto/') alt=item.product_title)
+                      img(src=item.thumbnail alt=item.product_title)
                   .product-info
                     .title #{item.product_title}
                     .size #{item.size.size}
                   .product-price.format-money #{item.totalPrice}
             .shipping.d-flex.align-items-center
-              span.name Phí vận chuyển
+              span.name Shipping
               span.value.format-money #{order.shippingFee}
             .totalPrice.d-flex.align-items-center
-              span.name Tổng 
+              span.name TOTAL 
               span.value.format-money #{totalPrice+order.shippingFee}
           .inner-button
-            a.continue-shopping(href="/products") Tiếp tục mua hàng
-            a.history(href="/history") Theo dõi đơn hàng
+            a.continue-shopping(href="/products") Continue Shopping
+            a.history(href="/history") Track Your Order
 
         if order.deliveryStatus == 'pending-payment' && order.paymentMethod != "zalopay"
           .section-qr(data-bank-id=bankId data-bank-account=bankAccount)
             img(src=`https://img.vietqr.io/image/${bankId}-${bankAccount}-qr_only.png?amount=${totalPrice+order.shippingFee}&addInfo=STARTSEVQR${order.id}END`)
-            p.des Mã QR thanh toán tự động
+            p.des QR Code
             .info-bank-account
-              b.totalPriceBanking Số tiền: <span class="price format-money">#{totalPrice+order.shippingFee}</span>
+              b.totalPriceBanking Amount: <span class="price format-money">#{totalPrice+order.shippingFee}</span>
               b(
                 class=`${(order.paymentStatus.lack != 0 && order.paymentStatus.status=="lack")?"":"d-none"}`
-              ).text-danger.totalLack Còn thiếu: <span class="format-money">#{order.paymentStatus.lack}</span>
-              b Ngân hàng: #{bankId}
-              b Người thụ hưởng: <span class="owner">PHAN THANH TUNG</span>  
+              ).text-danger.totalLack Outstanding Amount: <span class="format-money">#{order.paymentStatus.lack}</span>
+              b Bank: #{bankId}
+              b Beneficiary: <span class="owner">PHAN THANH TUNG</span>  
   script(src="/js/success.js")

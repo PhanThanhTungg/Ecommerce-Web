@@ -2,7 +2,7 @@ extends ../../layout/default-user.pug
 include ../../mixins/box-head.pug
 
 block main
-  h3.title Thông tin cá nhân
+  h3.title Personal Information
   .box-user
     .content-user-wrap    
         .row
@@ -17,7 +17,7 @@ block main
                 class="avatar wrapper-flex-gap-15 align-items-center justify-content-start"
                 upload-image
               )                
-                label(for="thumbnail" title="Đổi ảnh đại diện")
+                label(for="thumbnail" title="Change avatar")
                   .image-preview
                     img(
                         src=infoUser.thumbnail.replace('upload/', 'upload/c_limit,w_130/f_auto/') 
@@ -43,7 +43,7 @@ block main
                     value=infoUser.fullName
                     placeholder=" "
                   )
-                  span.placeholder Họ và tên
+                  span.placeholder Full name
                   <span class="border"></span>
                 label.custom-field
                   input(
@@ -65,7 +65,7 @@ block main
                     value=infoUser.phone
                     placeholder=" "
                   )
-                  span.placeholder Số điện thoại
+                  span.placeholder Phone number
                   <span class="border"></span>
                 label.custom-field
                   select.dirty(
@@ -73,33 +73,33 @@ block main
                       id="sex"
                       optionSelected = infoUser.sex
                   )
-                    option(value="default") -Không xác định-
-                    option(value="male") Nam 
-                    option(value="female") Nữ
-                    option(value="diff") Khác
-                  span.placeholder Giới tính
+                    option(value="default") -Undefined-
+                    option(value="male") Male 
+                    option(value="female") Female
+                    option(value="diff") Other
+                  span.placeholder Gender
                   <span class="border"></span>
               div(class="form-group" style="margin-bottom: 0;")
                 button(
                   type="submit"
                   class="btn btn-primary button-1"
-                ) Cập nhật
+                ) Update
           .col-lg-6.col-md-12.wrapper-flex-column-gap-15.address
-            h4.title Địa chỉ
+            h4.title Address
             a(
               type="button"
               data-toggle="modal"
               data-target="#addressModal"
             )
               i.fi.fi-rr-add
-              span Thêm địa chỉ
+              span Add new address
             .modal.fade#addressModal(tabindex="-1" aria-hidden="true")
               .modal-dialog.modal-dialog-centered
                 .modal-content.wrapper-flex-column-gap-15
                   button.close(type="button" data-dismiss="modal")
                     i.fi.fi-rr-circle-xmark
                   form.wrapper-flex-column-gap-15#add-address-form
-                    h4.title Thêm địa chỉ mới
+                    h4.title Add new address
                     label(for="fullName") Full name
                     input(type="text" id="fullName" name="fullName")
                     label(for="phone") Phone
@@ -112,21 +112,21 @@ block main
                       option
                     label.custom-field
                       input(type="text" name="detail" placeholder=" " autocomplete="off" required)
-                      span.placeholder Địa chỉ chi tiết
+                      span.placeholder Detail
                       <span class="border"></span>
                     p.address-info
                       span.display-address
                       span.display-ward
                       span.display-district
                       span.display-province
-                    button(type="submit") Thêm
+                    button(type="submit") Add
 
             .address-display.wrapper-flex-column-gap-15
               if information.length == 0
                 .address-item
                   i.fi.fi-rr-house-chimney
                   .detail
-                    span Chưa có địa chỉ nào
+                    span You have no address
               else
                 each address in information
                   .address-item

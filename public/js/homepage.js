@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
                       </div>
                       <div class="inner-price">
                         ${item.listSize[0] ? `<div class='inner-price-new formatMoney' > ${Math.round(item.listSize[0].price * (1 - item.discountPercentage / 100))}$</div>
-                        <div class='inner-price-old formatMoney'>$${item.listSize[0].price}</div>` : ``}
+                        <div class='inner-price-old formatMoney'>${item.listSize[0].price}$</div>` : ``}
                       </div>
                       <div class="inner-discount">
                         <i class="fa-solid fa-bolt"></i> -${item.discountPercentage}%

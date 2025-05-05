@@ -96,7 +96,7 @@ if (buttonStatus.length > 0) {
   buttonStatus.forEach(button => {
     button.addEventListener("click", () => {
       const status = button.getAttribute("button-status")
-
+      url.searchParams.delete("page")
       if (status) {
         url.searchParams.set("status", status)  // set param cho url
       }
@@ -145,6 +145,7 @@ if (formSearch) {
     e.preventDefault()  // ngăn chặn xử lí mặc định của trình duyệt là load lại trang
     const keySearch = e.target.elements.keyword.value
     if (keySearch) {
+      url.searchParams.delete("page")
       url.searchParams.set("keyword", keySearch)
     }
     else url.searchParams.delete("keyword")

@@ -221,7 +221,7 @@ async function getProvinces() {
     provinces = data.data;
     provinces.sort((a, b) => a.name.localeCompare(b.name, 'vi'));
     $('.checkout .info .province').select2({
-      placeholder: "Tỉnh/Thành",
+      placeholder: "Province",
       width: '100%',
       data: provinces.map(item => ({
         id: item.name,
@@ -251,11 +251,11 @@ async function getWards(districtId) {
 async function action() {
   await getProvinces();
   $('.checkout .info .district').select2({
-    placeholder: "Quận/Huyện",
+    placeholder: "District",
     width: '100%',
   })
   $('.checkout .info .ward').select2({
-    placeholder: "Phường/Xã",
+    placeholder: "Commune",
     width: '100%',
   })
 
@@ -265,7 +265,7 @@ async function action() {
     selectElement.empty();
     await getDistricts(e.params.data._resultId);
     $('.checkout .info .district').select2({
-      placeholder: "Quận/Huyện",
+      placeholder: "District",
       width: '100%',
       data: districts.map(item => ({
         id: item.name,
@@ -297,7 +297,7 @@ async function action() {
     selectWard.select2('destroy');
     selectWard.empty();
     $('.checkout .info .ward').select2({
-      placeholder: 'Phường/Xã',
+      placeholder: 'Commune',
       width: '100%'
     })
   })
@@ -308,7 +308,7 @@ async function action() {
     selectElement.empty();
     await getWards(e.params.data._resultId);
     $('.checkout .info .ward').select2({
-      placeholder: "Phường/Xã",
+      placeholder: "Commune",
       width: '100%',
       data: wards.map(item => ({
         id: item.name,

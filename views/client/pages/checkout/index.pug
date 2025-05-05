@@ -15,10 +15,10 @@ block main
     )
       .container.d-flex.justify-content-between
         .total-price
-          .title Tổng            
-          .value #{totalPrice} đ
+          .title Total            
+          .value.format-money #{totalPrice}
         .wrapper
-          span Xem chi tiết
+          span Detail
           i#totalPriceCollapse.fi.fi-rr-angle-down
     .collapse#collapseOrderProduct
       .order-products.container
@@ -27,14 +27,14 @@ block main
             each item in orderProducts
               +product-item-template-order(item)
         .shipping
-          .name Phí vận chuyển
-          .value Lorem
+          .name Shipping
+          .value Free
         .total-price
-          .title Tổng
-          .value #{totalPrice} đ
+          .title Total
+          .value.format-money #{totalPrice}
         .input-note 
-          .note-title Ghi chú
-          textarea(rows="6" placeholder="Gửi lời nhắn của bạn tới người bán tại đây ❤️")
+          .note-title Note
+          textarea(rows="6" placeholder="ADD YOUR NOTE HERE ❤️")
   
   //- form-checkout
   .container.checkout
@@ -43,18 +43,18 @@ block main
         action="/checkout/order"
         method = "POST"
       )
-        h3 Thông tin liên hệ
+        h3 Contact
         .info
           input.d-none(name="orderProducts" value=orderProducts data-total = totalPrice)
           label.custom-field
             input(type='text' name="fullName" placeholder=" " required)
-            span.placeholder Họ và tên
+            span.placeholder Full name
             <span class="border"></span>
           label.custom-field
             input(type='tel' name='phone' placeholder=' ' pattern="[0-9]{10,11}" required)
-            span.placeholder Số điện thoại
+            span.placeholder Phone number
             <span class="border"></span>
-          h5 Địa chỉ
+          h5 Address
           .wrapper-flex-column-gap-15
             select.province.form-address(required name="province")
               option          
@@ -64,7 +64,7 @@ block main
               option
           label.custom-field
             input.detail(type="text" name="detail" placeholder=" " autocomplete="off" required)
-            span.placeholder Địa chỉ chi tiết
+            span.placeholder Detail address
             <span class="border"></span> 
           div.address-info
             span.address-success
@@ -74,7 +74,7 @@ block main
               span.display-province
             span.address-error 
           button.btn-address.button-3.mb-5.d-block.w-100(type="button") 
-            span Chọn địa chỉ trên bản đồ
+            span Please confirm your location on the map
           div.d-none.mb-4(
             id="map" 
             style="height: 500px" 
@@ -87,36 +87,36 @@ block main
               input.locationX(type="text" name="locationX" value="13")
               input.locationY(type="text" name="locationY" value="1232")
         
-        h3 Phương thức giao hàng
+        h3 Delivery method
         .delivery-method.payment-method.mb-5
           <div class="form-check selected" onclick="check('instant')">  
             img(src="https://file.hstatic.net/1000191021/file/8-icon-shipper_9355d76e20d746d99c4484f13f9ab446_grande.jpg" alt="COD")        
             <label class="form-check-label w-100" for="instant" onclick="event.stopPropagation();">
-                | Giao hàng ngay lập tức
+                | Express Delivery (1 day)
             </label>
             input.form-check-input(type="radio" name="deliveryMethod" id="instant" value="instant" checked)
           </div>
           <div class="form-check selected" onclick="check('standard')">  
             img(src="https://www.toponseek.com/wp-content/uploads/2024/07/pasted-image-0-16-1-639x639.png" alt="COD")        
             <label class="form-check-label w-100" for="standard" onclick="event.stopPropagation();">
-                | Giao hàng qua đơn vị vận chuyển
+                | Standard Shipping via Carrier (5-7 days)
             </label>
             input.form-check-input(type="radio" name="deliveryMethod" id="standard" value="standard")
           </div>
 
-        h3 Phương thức thanh toán
+        h3 Payment method
         .payment-method
           <div class="form-check selected" onclick="check('cash')">  
             img(src="https://res.cloudinary.com/dndo7fe82/image/upload/c_limit,w_80/f_auto/v1742731186/logo/ugedjq1b6ausv0nco5kf.png" alt="COD")        
             <label class="form-check-label w-100" for="cash" onclick="event.stopPropagation();">
-                | Thanh toán khi nhận hàng
+                | Cash on delivery
             </label>
             <input class="form-check-input" type="radio" name="paymentMethod" id="cash" value="cash" checked>
           </div>
           <div class="form-check" onclick="check('qr')">
             img(src="https://www.clipartmax.com/png/middle/359-3591884_my-qr-code-qr-code-scan-icon-qr-code-scanner-clipart.png" alt="qr")          
             <label class="form-check-label w-100" for="qr" onclick="event.stopPropagation();">
-                | Mã QR
+                | QR Code
             </label>
             <input class="form-check-input" type="radio" name="paymentMethod" id="qr" value="qr">
           </div>
@@ -130,7 +130,7 @@ block main
           <div class="form-check" onclick="check('momo')">
             img(src="https://res.cloudinary.com/dndo7fe82/image/upload/c_limit,w_80/f_auto/v1742730419/logo/Momo.png" alt="MoMo")     
             <label class="form-check-label w-100" for="momo" onclick="event.stopPropagation();">
-                | Ví điện tử MoMo
+                | MoMo
             </label>
             <input class="form-check-input" type="radio" name="paymentMethod" id="momo" value="momo">
           </div>
@@ -142,29 +142,26 @@ block main
           //-   <input class="form-check-input" type="radio" name="paymentMethod" id="vnpay" value="vnpay">
           //- </div>
         button.button-3.w-100.mt-3(type="sumbmit") 
-          span Đặt hàng
+          span Confirm Order
       .col-xl-6.col-lg-5.d-none.d-lg-block
-        h3.order-products-title Đơn hàng của bạn
+        h3.order-products-title Your order
         .order-products
           .inner-orderProducts.wrapper-flex-column-gap-15
             if (orderProducts.length > 0)
               each item in orderProducts
                 +product-item-template-order(item)
           .shipping
-            .name Phí vận chuyển
-            .value #{totalPrice >= settingsGeneral.shippingFee.freeShippingThreshold ? "Miễn phí":"Chưa xác định"} 
-          p.mt-5 Mua đủ <span class="format-money">#{settingsGeneral.shippingFee.freeShippingThreshold}</span> để được miễn phí vận chuyển
-          .total-products.total
-            .name Tổng sản phẩm
-            .value 
-              span.format-money #{totalPrice}
+            .name Shipping
+            .value #{totalPrice >= settingsGeneral.shippingFee.freeShippingThreshold ? "Free":"Undefined"} 
+          p.mt-5 Free shipping for any orders above <span class="format-money">#{settingsGeneral.shippingFee.freeShippingThreshold}</span>
+          
           .total-price.total
-            .title Tổng
+            .title TOTAL
             .value 
               span.format-money #{totalPrice}
           .input-note 
-            .note-title Ghi chú
-            textarea(rows="6" placeholder="Gửi lời nhắn của bạn tới người bán tại đây ❤️")
+            .note-title Note
+            textarea(rows="6" placeholder="ADD YOUR NOTE HERE ❤️")
       .col-xl-6.col-lg-5.d-none.d-lg-block 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   script(src="/js/checkout.js")

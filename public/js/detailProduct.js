@@ -21,8 +21,7 @@ document.querySelectorAll(".product-detail .product-images img").forEach(item =>
       item.classList.add("portrait")
     } else {
       item.classList.add("landscape")
-    }
-  
+    }  
 })
 
 document.querySelectorAll("form").forEach(item => {
