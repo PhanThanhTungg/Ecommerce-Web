@@ -43,7 +43,8 @@ const orderSchema = new mongoose.Schema(
     note: String,
     deliveryMethod: {
       type: String,
-      required: true
+      required: true,
+      enum: ["instant", "standard"]
     },
     deliveryStatus: {
       type: String,

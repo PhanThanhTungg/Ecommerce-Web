@@ -3,6 +3,10 @@ import { readJson, writeJson } from "./Action/fileHandle.js";
 import {connect } from "./config/database.js";
 import User from "./model/user.model.js";
 import genDataOrder from "./Action/gen/genDataOrder.js";
+import Order from "./model/order.model.js";
+import OrderProduct from "./model/order-product.model.js";
+import genDataFeedback from "./Action/gen/genDataFeedback.js";
+import ProductFeedback from "./model/product-feedback.model.js";
 
 const userAction = async ()=>{
   // const users =  await genDataUser();
@@ -13,15 +17,42 @@ const userAction = async ()=>{
     const newUser = new User(user);
     await newUser.save();
   }
+  console.log("User data inserted successfully!");
 }
 
 const orderAction = async ()=>{
-  genDataOrder();
+  // const orders = await genDataOrder();
+  // await writeJson("./DataFakeGen/Order/T2.json", orders);
+
+  const ordersRead = await readJson("./DataFakeGen/Order/T2.json");
+  for(const order of ordersRead){
+    const newOrder = new Order(order);
+    await newOrder.save();
+    for(const item of order.orderProducts){
+      const orderProduct = new OrderProduct(item);
+      await orderProduct.save();
+    }
+  }
+  console.log("Order data inserted successfully!");
+}
+
+const ProductFeedbackAction = async()=>{
+  // const feedbacks = await genDataFeedback();
+  // await writeJson("./DataFakeGen/Product-Feedback/T2.json", feedbacks);
+
+  const feedbacksRead = await readJson("./DataFakeGen/Product-Feedback/T2.json");
+  for(const feedback of feedbacksRead){
+    const newFeedback = new ProductFeedback(feedback);
+    await newFeedback.save();
+  }
+  console.log("Product feedback data inserted successfully!");
 }
 
 const main = async()=>{
   await connect();
   // await userAction();
-  await orderAction();
+  // await orderAction();
+  await ProductFeedbackAction();
+
 }
 main();

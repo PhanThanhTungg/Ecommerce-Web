@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const feedbackSchema = new mongoose.Schema(
   {
@@ -32,8 +32,9 @@ const feedbackSchema = new mongoose.Schema(
   }
 );
 
-feedbackSchema.index({ product_id: 1, userId: 1 });
+// Fix index field name to match schema: productId instead of product_id
+feedbackSchema.index({ productId: 1, userId: 1 });
 
 const ProductFeedback = mongoose.model('ProductFeedback', feedbackSchema, "product-feedback");
 
-module.exports = ProductFeedback;
+export default ProductFeedback;

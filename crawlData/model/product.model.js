@@ -1,7 +1,8 @@
-const mongoose = require("mongoose")
-const slug = require("mongoose-slug-updater")   // slug de seo // vd: tu dong chuyen sản phẩm 1 thành san-pham-1
-// const AutoIncrement = require('mongoose-sequence')(mongoose);
-mongoose.plugin(slug)
+import mongoose from "mongoose";
+import slug from "mongoose-slug-updater";
+// import AutoIncrement from 'mongoose-sequence'; // Uncomment and adjust if needed
+
+mongoose.plugin(slug);
 
 const productSchema = new mongoose.Schema(
   {
@@ -27,7 +28,7 @@ const productSchema = new mongoose.Schema(
       default: 0
     },
     thumbnail: String,
-    images:{
+    images: {
       type: Array,
       default: []
     },
@@ -75,9 +76,11 @@ const productSchema = new mongoose.Schema(
   {
     timestamps: true
   }
-)
+);
 
-// productSchema.plugin(AutoIncrement, { inc_field: 'position' });
-const Product = mongoose.model('Product', productSchema, "products")
+// Uncomment and adjust if you want to use AutoIncrement
+// productSchema.plugin(AutoIncrement(mongoose), { inc_field: 'position' });
 
-module.exports = Product
+const Product = mongoose.model('Product', productSchema, "products");
+
+export default Product;
