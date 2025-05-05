@@ -13,7 +13,7 @@ block main
             .swiper-wrapper
               each item in product.images
                 .swiper-slide
-                  img(src=item.replace('upload/', 'upload/c_limit,w_540/f_auto/'))
+                  img(src=item)
             .swiper-button-next
               <i class="fi fi-rr-right"></i>
             .swiper-button-prev
@@ -22,7 +22,7 @@ block main
             .swiper-wrapper
               each item in product.images
                 .swiper-slide
-                  img(src=item.replace('upload/', 'upload/c_limit,w_90/f_auto/'))
+                  img(src=item)
         .col-md-5.product-info
           h3(class="inner-title") #{product.title}
           .d-flex.align-items-center

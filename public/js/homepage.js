@@ -39,8 +39,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="col-xl-3 col-md-4 col-sm-6 mb-5">
                   <div class="product-item">
                     <div class="inner-image">
-                      <img class="img-product-1" src="${item.images[0].replace('upload/', 'upload/c_limit,w_254/f_auto/')}" alt=${item.title}>
-                      <img class="img-product-2" src="${item.images.length > 1 ? item.images[1].replace('upload/', 'upload/c_limit,w_305/f_auto/') : item.images[0].replace('upload/', 'upload/c_limit,w_305/f_auto/')}" alt=${item.title}>
+                      <img class="img-product-1" src="${item.images[0]}" alt=${item.title}>
+                      <img class="img-product-2" src="${item.images.length > 1 ? item.images[1] : item.images[0].replace}" alt=${item.title}>
                       ${item.featured == "1" ? '<div class="inner-featured">Trending</div>' : ''}
                     </div>
                     <div class="inner-content">
@@ -77,12 +77,12 @@ document.addEventListener("DOMContentLoaded", function () {
                           <label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
                         </form>
                       </div>
-                      <div class="inner-title">
+                      <div class="inner-title px-4">
                         <a href="/products/detail/${item.slug}">${item.title}</a>
                       </div>
                       <div class="inner-price">
-                        ${item.listSize[0] ? `<div class='inner-price-new' > $${Math.round(item.listSize[0].price * (1 - item.discountPercentage / 100))}</div>
-                        <div class='inner-price-old'>$${item.listSize[0].price}</div>` : ``}
+                        ${item.listSize[0] ? `<div class='inner-price-new formatMoney' > ${Math.round(item.listSize[0].price * (1 - item.discountPercentage / 100))}$</div>
+                        <div class='inner-price-old formatMoney'>$${item.listSize[0].price}</div>` : ``}
                       </div>
                       <div class="inner-discount">
                         <i class="fa-solid fa-bolt"></i> -${item.discountPercentage}%
@@ -99,9 +99,17 @@ document.addEventListener("DOMContentLoaded", function () {
             rating_wrappers.forEach(rating => {
               const ratingNumber = rating.dataset.rating;
               const ratingInput = rating.querySelector(`input[value="${ratingNumber}"]`);
-              ratingInput.checked = true;
+              if (ratingNumber > 0) {
+                ratingInput.checked = true;
+              }
             })
           }
+          const moneyObject = document.querySelectorAll(".formatMoney")
+          moneyObject.forEach(item =>{
+            const moneyN = Number(item.innerHTML.slice(0,-1))
+            const moneyS = moneyN.toLocaleString('vi', {style : 'currency', currency : 'VND'})
+            item.innerHTML = moneyS
+          })
         }
 
       })
@@ -122,8 +130,6 @@ document.addEventListener("DOMContentLoaded", function () {
       fetchAPI();
     })
   })
-
-  console.log(buttonPrev, buttonNext);
   
   buttonPrev.addEventListener('click', function() {
     page = page > 1? page - 1 : 1;

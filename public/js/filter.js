@@ -69,8 +69,8 @@ function fetchAPIProducts(pageSelected = 1) {
                       <a href="/products/detail/${item.slug}">${item.title}</a>
                     </div>
                     <div class="inner-price">
-                      ${item.listSize[0] ? `<div class='inner-price-new' > $${item.listSize[0].priceNew}</div>
-                      <div class='inner-price-old'>$${item.listSize[0].price}</div>` : ``}
+                      ${item.listSize[0] ? `<div class='inner-price-new formatMoney' > ${item.listSize[0].priceNew}$</div>
+                      <div class='inner-price-old formatMoney'>${item.listSize[0].price}$</div>` : ``}
                     </div>
                     <div class="inner-discount">
                       <i class="fa-solid fa-bolt"></i> -${item.discountPercentage}%
@@ -81,14 +81,24 @@ function fetchAPIProducts(pageSelected = 1) {
             </a>
           `
         });
+        //rating
         const rating_wrappers = document.querySelectorAll(".inner-rating");
         if (rating_wrappers) {
           rating_wrappers.forEach(rating => {
             const ratingNumber = rating.dataset.rating;
             const ratingInput = rating.querySelector(`input[value="${ratingNumber}"]`);
-            // ratingInput.checked = true;
+            if (ratingNumber > 0) {
+              ratingInput.checked = true;
+            }
           })
         }
+        //format money
+        const moneyObject = document.querySelectorAll(".formatMoney")
+        moneyObject.forEach(item =>{
+          const moneyN = Number(item.innerHTML.slice(0,-1))
+          const moneyS = moneyN.toLocaleString('vi', {style : 'currency', currency : 'VND'})
+          item.innerHTML = moneyS
+        })
       }
       createPagination(data.objectPagination.totalPage, data.objectPagination.currentPage);
     })
