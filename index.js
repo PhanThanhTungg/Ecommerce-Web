@@ -48,7 +48,7 @@ app.use(flash());
 
 // cron
 const dwhAction = require("./DWH/dwh.js");
-dwhAction();
+// dwhAction();
 
 route(app) //gọi đến route
 routeAdmin(app)
