@@ -19,59 +19,60 @@ const Fact_Sale = require("./modelWH/Fact_Sale.model.js");
 const Fact_Feedback = require("./modelWH/Fact_Feedback.model.js");
 
 module.exports = async () => {
-  // const job = new CronJob(
-  //   '19 16 * * *', 
-  //   function () {
-  //     console.log('Bạn sẽ thấy thông báo này lúc 16h19 hàng ngày theo giờ Việt Nam');
-  //   },
-  //   null,
-  //   true,
-  //   'Asia/Ho_Chi_Minh'
-  // );
-  const month = "02";
-  for (let date = 1; date <= 28; date++) {
-    if (date < 10) date = "0" + ("" + date);
-    const startTime = new Date(`2025-${month}-${date}T00:00:00+07:00`);
-    const endTime = new Date(`2025-${month}-${date}T23:59:59+07:00`);
-    const fullData = await getFullDataMongoDB(startTime, endTime);
-    const DimTime = await Dim_Time.create({
-      Time_key: startTime.toISOString(),
-      Day: startTime.getDate(),
-      Month: startTime.getMonth() + 1,
-      Year: startTime.getFullYear(),
-    });
-    const t = await sequelize.transaction();
-    try {
-      const categories = await Category.find({});
-      for (const category of categories) {
-        const DimCategory = await Dim_Category.upsert({
-          Category_key: category._id.toString(),
-          Category_name: category.title,
-          Category_parent_key: category.parent_id ? category.parent_id.toString() : null,
-          Featured: category.featured
-        }, { transaction: t });
-      }
+  const job = new CronJob(
+    '59 23 * * *', 
+    function () {
+      console.log('Bạn sẽ thấy thông báo này lúc 16h19 hàng ngày theo giờ Việt Nam');
+    },
+    null,
+    true,
+    'Asia/Ho_Chi_Minh'
+  );
+  const month = "04";
+  const t = await sequelize.transaction();
 
-      const customers = await User.find({});
-      for (const customer of customers) {
-        const DimCustomer = await Dim_Customer.upsert({
-          Customer_key: customer._id.toString(),
-          Customer_name: customer.fullName,
-          Gender: customer.sex ? customer.sex : 'Unknown',
-          Type: customer.facebookId ? 'Facebook' : customer.googleId ? 'Google' : customer.githubId ? 'Github' : 'Normal',
-        }, { transaction: t });
-      }
+  try {
+    const customers = await User.find({});
+    for (const customer of customers) {
+      const DimCustomer = await Dim_Customer.upsert({
+        Customer_key: customer._id.toString(),
+        Customer_name: customer.fullName,
+        Gender: customer.sex ? customer.sex : 'Unknown',
+        Type: customer.facebookId ? 'Facebook' : customer.googleId ? 'Google' : customer.githubId ? 'Github' : 'Normal',
+      }, { transaction: t });
+    }
+    const categories = await Category.find({});
+    for (const category of categories) {
+      const DimCategory = await Dim_Category.upsert({
+        Category_key: category._id.toString(),
+        Category_name: category.title,
+        Category_parent_key: category.parent_id ? category.parent_id.toString() : null,
+        Featured: category.featured
+      }, { transaction: t });
+    }
 
-      const products = await Product.find({});
-      for (const product of products) {
-        const DimProduct = await Dim_Product.upsert({
-          Product_key: product._id.toString(),
-          Category_key: product.product_category_id.toString(),
-          Product_name: product.title,
-          Featured: product.featured,
-          Position: product.position,
-        }, { transaction: t });
-      }
+    const products = await Product.find({});
+    for (const product of products) {
+      const DimProduct = await Dim_Product.upsert({
+        Product_key: product._id.toString(),
+        Category_key: product.product_category_id.toString(),
+        Product_name: product.title,
+        Featured: product.featured,
+        Position: product.position,
+      }, { transaction: t });
+    }
+
+    for (let date = 1; date <= 30; date++) {
+      if (date < 10) date = "0" + ("" + date);
+      const startTime = new Date(`2025-${month}-${date}T00:00:00+07:00`);
+      const endTime = new Date(`2025-${month}-${date}T23:59:59+07:00`);
+      const fullData = await getFullDataMongoDB(startTime, endTime);
+      const DimTime = await Dim_Time.create({
+        Time_key: startTime.toISOString(),
+        Day: startTime.getDate(),
+        Month: startTime.getMonth() + 1,
+        Year: startTime.getFullYear(),
+      }, { transaction: t });
 
       const orders = fullData.orders;
       for (const order of orders) {
@@ -107,7 +108,7 @@ module.exports = async () => {
       for (const orderProduct of orderProducts) {
         const orderFind = orders.find(item => item._id.toString() === orderProduct.order_id);
         console.log('OrderFind:', orderFind);
-        const FactSale = await Fact_Sale.create({
+        const FactSale = await Fact_Sale.upsert({
           Customer_key: orderFind.factOrderObj.Customer_key,
           Product_key: orderProduct.product_id,
           Location_key: orderFind.factOrderObj.Location_key,
@@ -130,14 +131,11 @@ module.exports = async () => {
           }, { transaction: t });
         }
       }
-
-      await t.commit();
-      console.log('Data inserted to DWH successfully!');
-    } catch (error) {
-      console.error('Error inserting data to DWH:', error);
-      await t.rollback();
     }
+    await t.commit();
+    console.log('Data inserted to DWH successfully!');
+  } catch (error) {
+    console.error('Error inserting data to DWH:', error);
+    await t.rollback();
   }
-
-
 }
