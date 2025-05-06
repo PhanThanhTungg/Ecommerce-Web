@@ -65,7 +65,7 @@ module.exports.index = async (req, res) => {
 
   //pagination
   const [totalOrder, currentPage, limit] = [await Order.countDocuments(find), 1, 6]
-  const objectPagination = await paginationHelper(req, totalOrder, currentPage, limit)
+  const objectPagination = paginationHelper(req, totalOrder, currentPage, limit)
 
   const orders = await Order.aggregate([
     {
@@ -94,23 +94,24 @@ module.exports.index = async (req, res) => {
       }
     },
     {
+      $sort: {
+        createdAt: -1
+      }
+    },
+    {
       $skip: objectPagination.skip
     },
     {
       $limit: objectPagination.limit
-    },
-    {
-      $sort: {
-        createdAt: -1
-      }
     }
   ])
 
   const fiterStatusOrder = filterStatusOrderHelper(req.query);
 
+  console.log(objectPagination);
   res.render("admin/pages/orders/index", {
     pageTitle: "Order Management",
-    orders, objectPagination, fiterStatusOrder, keySearch
+    orders, pagination: objectPagination , fiterStatusOrder, keySearch
   })
 }
 module.exports.changeStatus = async (req, res) => {

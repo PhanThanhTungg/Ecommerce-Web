@@ -78,8 +78,10 @@ orderSchema.pre("save", function(next){
   if(!this.orderId){
     this.orderId = this._id.toString().slice(-6);
   }
+  
   next();
 })
+
 
 const Order = mongoose.model("Order", orderSchema, "orders");
 

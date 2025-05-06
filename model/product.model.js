@@ -77,6 +77,8 @@ const productSchema = new mongoose.Schema(
   }
 )
 
+
+
 // productSchema.plugin(AutoIncrement, { inc_field: 'position' });
 const Product = mongoose.model('Product', productSchema, "products")
 

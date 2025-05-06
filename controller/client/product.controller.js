@@ -239,6 +239,7 @@ module.exports.detail = async (req, res) => {
       return res.redirect("/products")
     }
 
+    console.log(product[0].feedback[0]);
     res.render("client/pages/products/detail.pug", {
       pageTitle: product.title,
       product: product[0],

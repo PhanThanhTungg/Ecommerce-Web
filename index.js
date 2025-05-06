@@ -32,10 +32,8 @@ app.locals.prefixAdmin = require("./config/system.js").prefixAdmin // Khai báo 
 app.locals.moment = moment
 //li thuyết express: app.locals dùng để tạo biến toàn cục mà file pug nào cũng dùng được
 
-
 //tinymce
 app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
-
 
 //Cấu hình pug
 app.set('views', `${__dirname}/views`)
@@ -47,6 +45,10 @@ app.use(methodOverride('_method'))
 app.use(cookieParser('Tung cookie'));
 app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
+
+// cron
+const dwhAction = require("./DWH/dwh.js");
+// dwhAction();
 
 route(app) //gọi đến route
 routeAdmin(app)

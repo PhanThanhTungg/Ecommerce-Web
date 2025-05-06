@@ -6,7 +6,11 @@ const userSchema = new mongoose.Schema(
     facebookId: String,
     googleId: String,
     githubId: String,
-    fullName: String,
+    fullName: {
+      type: String,
+      index: true,
+      trim: true
+    },
     email: String,
     password: String,
     tokenUser:{
@@ -19,7 +23,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "https://howkteam.vn/Content/images/avatar/avatar.png"
     },
-    sex: String,
+    sex: {
+      type: String,
+      enum: ["male", "female", "other"]
+    },
     status:{
       type: String,
       default: "active"

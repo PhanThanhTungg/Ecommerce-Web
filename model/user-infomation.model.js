@@ -12,7 +12,8 @@ const userInformationSchema = new mongoose.Schema(
   {
     timestamps: true
   }
-)
+);
+
 
 const userInfomation = mongoose.model('user-information'/*ten model */, userInformationSchema, "user-information" /*ten collection*/)
 

@@ -17,7 +17,7 @@ module.exports.index = async (req,res)=>{
     //search
     const objectSearch = searchHelper(req.query)
     if(objectSearch.regex){
-        find.fullName = objectSearch.regex
+      find.fullName = objectSearch.regex
     }
 
     //sort
@@ -33,7 +33,7 @@ module.exports.index = async (req,res)=>{
 
 
     //Pagigation
-    let objectPagination = paginationHelper(req,await User.countDocuments(find),1,2);
+    let objectPagination = paginationHelper(req,await User.countDocuments(find),1,8);
     //End pagigation
 
     //status
@@ -42,52 +42,8 @@ module.exports.index = async (req,res)=>{
 
     const records = await User.find(find).select("-password").sort(sort).limit(objectPagination.limit)
     .skip(objectPagination.skip)
-    for(const record of records){
-      let cntSuccess = 0
-      let cntFail = 0
-      let totalValue = 0
-      const orders= await Order.find({tokenUser: record.tokenUser})
-      for (const order of orders){
-        for (const product of order.products){
-          const productItem = await Product.findOne({
-            _id: product.product_id, 
-            status: "active",
-            deleted: false,
-          })
 
-          const sizeInfo = productItem.listSize.find(i=>{
-            return i.id == product.size_id
-          })
-
-          let priceNew = (sizeInfo.price * (100 - productItem.discountPercentage)/100).toFixed(0)
-          if(product.status == "biBom") cntFail+=product.quantity
-          if(product.status == "daThanhToan"){
-            cntSuccess += product.quantity
-            totalValue += priceNew*product.quantity
-          } 
-        }
-      }
-      record.cntSuccess = cntSuccess
-      record.cntFail = cntFail
-      record.totalValue = totalValue
-      record.rank = totalValue >= 100000000?"Chiến tướng":(
-        totalValue >=50000000? "Cao thủ":(
-          totalValue >=10000000?"Kim cương":( 
-            totalValue >=5000000?"Vàng":(
-              totalValue >=1000000?"Bạc":(
-                totalValue >=500000?"Đồng": "Vô hạng"
-              )
-            )
-          )
-        )
-      )
-      await User.updateOne({_id: record.id},
-        {rank: record.rank,
-          cntSuccess: record.cntSuccess,
-          cntFail: record.cntFail,
-          totalValue: record.totalValue
-      })
-    }
+    
     res.render("admin/pages/users/index",{
         pageTitle: "Danh sách tài khoản",
         records : records,

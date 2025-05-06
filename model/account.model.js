@@ -2,19 +2,19 @@ const mongoose = require("mongoose")
 const generate = require("../helpers/generate")
 
 const accountSchema = new mongoose.Schema(
-    { 
+    {
         fullName: String,
         email: String,
         password: String,
-        token:{
+        token: {
             type: String,
-            default: ()=>generate.generateRandomString(20)
+            default: () => generate.generateRandomString(20)
         },
         phone: String,
         avatar: String,
         role_id: String,
         status: String,
-        deleted:{
+        deleted: {
             type: Boolean,
             default: false // nếu không truyền vào thì mặc định là false
         },
@@ -24,6 +24,7 @@ const accountSchema = new mongoose.Schema(
         timestamps: true
     }
 )
+
 
 const Account = mongoose.model('Account'/*ten model */, accountSchema, "admins" /*ten collection*/)
 

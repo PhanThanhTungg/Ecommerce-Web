@@ -32,6 +32,8 @@ const feedbackSchema = new mongoose.Schema(
   }
 );
 
+
+
 feedbackSchema.index({ product_id: 1, userId: 1 });
 
 const ProductFeedback = mongoose.model('ProductFeedback', feedbackSchema, "product-feedback");

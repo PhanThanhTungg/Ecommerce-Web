@@ -14,6 +14,7 @@ const forgotPasswordSchema = new mongoose.Schema(
   }
 )
 
+
 const ForgotPassword = mongoose.model("ForgotPassword",forgotPasswordSchema,"forgot-password")
 
 module.exports = ForgotPassword

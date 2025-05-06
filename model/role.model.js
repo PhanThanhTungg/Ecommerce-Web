@@ -19,6 +19,7 @@ const roleSchema = new mongoose.Schema(
     }
 )
 
+
 const Role = mongoose.model('Role'/*ten model */, roleSchema, "roles" /*ten collection*/)
 
 module.exports = Role

@@ -87,7 +87,7 @@ block main
                   option(value="delivered" selected=item.deliveryStatus=='delivered') Delivered
                   option(value="cancelled" selected=item.deliveryStatus=='cancelled') Cancelled 
     div(class="flex justify-center mt-3")
-      +pagination(objectPagination)
+      +pagination(pagination.currentPage, pagination.totalPage)
     form.form-change-status-order(method="POST" class="hidden")
     script(src="/admin/js/product.js")   
     script(src="/admin/js/order-user.js")                                       
