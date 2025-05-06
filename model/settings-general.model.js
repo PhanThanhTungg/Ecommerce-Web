@@ -30,12 +30,7 @@ const settingGeneralSchema = new mongoose.Schema(
 )
 
 
-settingGeneralSchema.pre('save', function (next) {
-  const now = new Date();
-  this.createdAt = new Date(now.getTime() + 7 * 60 * 60 * 1000);
-  this.updatedAt = new Date(now.getTime() + 7 * 60 * 60 * 1000);
-  next();
-});
+
 
 const SettingGeneral = mongoose.model("SettingGeneral", settingGeneralSchema, "settings-general")
 

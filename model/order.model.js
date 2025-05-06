@@ -78,9 +78,7 @@ orderSchema.pre("save", function(next){
   if(!this.orderId){
     this.orderId = this._id.toString().slice(-6);
   }
-  const now = new Date();
-  this.createdAt = new Date(now.getTime() + 7 * 60 * 60 * 1000);
-  this.updatedAt = new Date(now.getTime() + 7 * 60 * 60 * 1000);
+  
   next();
 })
 

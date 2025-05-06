@@ -18,12 +18,6 @@ const cartSchema = new mongoose.Schema(
     }
 )
 
-cartSchema.pre('save', function (next) {
-    const now = new Date();
-    this.createdAt = new Date(now.getTime() + 7 * 60 * 60 * 1000);
-    this.updatedAt = new Date(now.getTime() + 7 * 60 * 60 * 1000);
-    next();
-});
 
 const Cart = mongoose.model('Cart'/*ten model */, cartSchema, "carts" /*ten collection*/)
 
