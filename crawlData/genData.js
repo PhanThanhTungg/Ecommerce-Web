@@ -9,10 +9,10 @@ import genDataFeedback from "./Action/gen/genDataFeedback.js";
 import ProductFeedback from "./model/product-feedback.model.js";
 
 const userAction = async ()=>{
-  // const users =  await genDataUser();
-  // await writeJson("./DataFakeGen/Customer/T2.json", users);
+  const users =  await genDataUser();
+  await writeJson("./DataFakeGen/Customer/T4.json", users);
 
-  const usersRead = await readJson("./DataFakeGen/Customer/T2.json");
+  const usersRead = await readJson("./DataFakeGen/Customer/T4.json");
   for(const user of usersRead){
     const newUser = new User(user);
     await newUser.save();
@@ -21,10 +21,10 @@ const userAction = async ()=>{
 }
 
 const orderAction = async ()=>{
-  // const orders = await genDataOrder();
-  // await writeJson("./DataFakeGen/Order/T2.json", orders);
+  const orders = await genDataOrder();
+  await writeJson("./DataFakeGen/Order/T4.json", orders);
 
-  const ordersRead = await readJson("./DataFakeGen/Order/T2.json");
+  const ordersRead = await readJson("./DataFakeGen/Order/T4.json");
   for(const order of ordersRead){
     const newOrder = new Order(order);
     await newOrder.save();
@@ -37,11 +37,12 @@ const orderAction = async ()=>{
   console.log("Order data inserted successfully!");
 }
 
-const ProductFeedbackAction = async()=>{
-  // const feedbacks = await genDataFeedback();
-  // await writeJson("./DataFakeGen/Product-Feedback/T2.json", feedbacks);
 
-  const feedbacksRead = await readJson("./DataFakeGen/Product-Feedback/T2.json");
+const ProductFeedbackAction = async()=>{
+  const feedbacks = await genDataFeedback();
+  await writeJson("./DataFakeGen/Product-Feedback/T4.json", feedbacks);
+
+  const feedbacksRead = await readJson("./DataFakeGen/Product-Feedback/T4.json");
   for(const feedback of feedbacksRead){
     const newFeedback = new ProductFeedback(feedback);
     await newFeedback.save();
@@ -51,9 +52,9 @@ const ProductFeedbackAction = async()=>{
 
 const main = async()=>{
   await connect();
-  // await userAction();
-  await orderAction();
-  // await ProductFeedbackAction();
+  // await userAction(); 
+  // await orderAction();
+  await ProductFeedbackAction();
 
 }
 main();

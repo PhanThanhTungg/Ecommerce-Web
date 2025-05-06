@@ -22,14 +22,14 @@ export default async () => {
       user.phone = faker.phone.number();
       user.thumbnail = faker.image.avatar;
       user.sex = faker.helpers.weightedArrayElement([
-        { value: 'male', weight: 60 },
-        { value: 'female', weight: 35 },
+        { value: 'male', weight: 80 },
+        { value: 'female', weight: 15 },
         { value: 'other', weight: 5 }
       ]);
       user.status = "active";
       user.deleted = false;
       // user.createdAt trong khoảng từ từ 01/02/2025 đến 28/02/2025 và bản ghi sau có thời gian lớn hơn hoăc bằng bản ghi trước
-      user.createdAt = user.createdAt = faker.date.between({ from: '2025-02-01', to: '2025-02-28' });
+      user.createdAt = faker.date.between({ from: '2025-04-01', to: '2025-04-30' });
       users.push(user);
     } catch (error) {
       await new Promise((resolve) => setTimeout(resolve, 2000));

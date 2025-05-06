@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { readJson } from "../../Action/fileHandle.js";
 export default async () => {
 
-  const orders = await readJson("./DataFakeGen/Order/T2.json");
+  const orders = await readJson("./DataFakeGen/Order/T4.json");
   const orderProducts = orders.map(order => {
     let orderProducts = order.orderProducts;
     if (order.userId) {
@@ -19,7 +19,7 @@ export default async () => {
 
   const feedbacks = [];
   for (const orderProduct of orderProducts) {
-    const randomDays = Math.floor(Math.random() * 8) + 4;
+    const randomDays = Math.floor(Math.random() * 6) + 3;
     const baseDate = new Date(orderProduct.createdAt);
 
     const feedback = {
@@ -27,10 +27,10 @@ export default async () => {
       userId: orderProduct.user_id,
       rating: faker.helpers.weightedArrayElement([
         { value: 5, weight: 70 },
-        { value: 4, weight: 15 },
-        { value: 3, weight: 5 },
-        { value: 2, weight: 10 },
-        { value: 1, weight: 5 }
+        { value: 4, weight: 5 },
+        { value: 3, weight: 10 },
+        { value: 2, weight: 4 },
+        { value: 1, weight: 6 }
       ]),
       comment: faker.lorem.sentence(10),
       createdAt: new Date(baseDate.getTime() + randomDays * 24 * 60 * 60 * 1000)

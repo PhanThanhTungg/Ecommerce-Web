@@ -30,19 +30,18 @@ module.exports = async () => {
   // );
   const month = "02";
   for (let date = 1; date <= 28; date++) {
-    if((date+"").length === 1) date = "0" + date;
+    if (date < 10) date = "0" + ("" + date);
+    const startTime = new Date(`2025-${month}-${date}T00:00:00+07:00`);
+    const endTime = new Date(`2025-${month}-${date}T23:59:59+07:00`);
+    const fullData = await getFullDataMongoDB(startTime, endTime);
+    const DimTime = await Dim_Time.create({
+      Time_key: startTime.toISOString(),
+      Day: startTime.getDate(),
+      Month: startTime.getMonth() + 1,
+      Year: startTime.getFullYear(),
+    });
     const t = await sequelize.transaction();
     try {
-      const startTime = new Date(`2025-${month}-${date}T00:00:00+07:00`);
-      const endTime = new Date(`2025-${month}-${date}T23:59:59+07:00`);
-      const fullData = await getFullDataMongoDB(startTime, endTime);
-      const DimTime = await Dim_Time.create({
-        Time_key: startTime.toISOString(),
-        Day: startTime.getDate(),
-        Month: startTime.getMonth() + 1,
-        Year: startTime.getFullYear(),
-      }, { transaction: t });
-
       const categories = await Category.find({});
       for (const category of categories) {
         const DimCategory = await Dim_Category.upsert({

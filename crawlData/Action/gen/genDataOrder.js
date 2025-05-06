@@ -11,13 +11,15 @@ export default async () => {
 
   const listProvince = await fetchProvince();
   const orders = [];
-  for (let i = 0; i < 279; i++) {
+  for (let i = 0; i < 298; i++) {
     try {
       const order = {};
       // orderId
       order._id = new mongoose.Types.ObjectId();
 
+      // cartId or userId
       
+      const randomIndex = Math.floor(Math.random() * listUserId.length);
       order.userId = listUserId[randomIndex]._id.toString();
       
 
@@ -47,16 +49,16 @@ export default async () => {
       // order-product
       const orderProducts = [];
       const quantity = faker.helpers.weightedArrayElement([
-        { value: 1, weight: 80 },
-        { value: 2, weight: 10 },
-        { value: 3, weight: 8 },
-        { value: 4, weight: 2 },
+        { value: 1, weight: 83 },
+        { value: 2, weight: 7 },
+        { value: 3, weight: 7 },
+        { value: 4, weight: 3 },
       ]);
       for (let j = 0; j < quantity; j++) {
         const indexProduct = Math.floor(Math.random() * listProduct.length);
         const indexSize = Math.floor(Math.random() * listProduct[indexProduct].listSize.length);
         orderProducts.push({
-          order_id: order.orderId.toString(),
+          order_id: order._id.toString(),
           product_id: listProduct[indexProduct]._id.toString(),
           size_id: listProduct[indexProduct].listSize[indexSize]._id.toString(),
           product_title: listProduct[indexProduct].title,
@@ -64,8 +66,8 @@ export default async () => {
           price: listProduct[indexProduct].listSize[indexSize].price,
           discountPercentage: listProduct[indexProduct].discountPercentage,
           quantity: faker.helpers.weightedArrayElement([
-            { value: 1, weight: 92 },
-            { value: 2, weight: 8 },
+            { value: 1, weight: 83 },
+            { value: 2, weight: 17 },
           ])
         })
       }
@@ -95,8 +97,8 @@ export default async () => {
 
       // deliveryStatus
       const deliveryStatus = faker.helpers.weightedArrayElement([
-        { value: 'pending-payment', weight: 5 },
-        { value: 'delivered', weight: 80 },
+        { value: 'pending-payment', weight: 20 },
+        { value: 'delivered', weight: 70 },
         { value: 'cancelled', weight: 15 },
       ]);
       order.deliveryStatus = deliveryStatus;
@@ -107,21 +109,20 @@ export default async () => {
 
       // paymentMethod
       const paymentMethod = faker.helpers.weightedArrayElement([
-        { value: 'vnpay', weight: 10 },
-        { value: 'momo', weight: 5 },
-        { value: 'zalopay', weight: 20 },
-        { value: 'cash', weight: 60 },
-        { value: 'qr', weight: 5 },
+        { value: 'momo', weight: 16 },
+        { value: 'zalopay', weight: 4 },
+        { value: 'cash', weight: 73 },
+        { value: 'qr', weight: 7 },
       ]);
       order.paymentMethod = paymentMethod;
 
       // createdAt
-      order.createdAt = order.createdAt = faker.date.between({ from: '2025-02-01', to: '2025-02-28' });
+      order.createdAt = order.createdAt = faker.date.between({ from: '2025-04-01', to: '2025-04-30' });
 
       orders.push(order);
     } catch (error) {
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      console.log("Error: ");
+      console.log("Error: ", error);
       continue;
     }
   }
