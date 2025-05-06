@@ -17,18 +17,9 @@ export default async () => {
       // orderId
       order._id = new mongoose.Types.ObjectId();
 
-      // cartId or userId
-      const cartoruser = faker.helpers.weightedArrayElement([
-        { value: 'cart', weight: 15 },
-        { value: 'user', weight: 85 },
-      ]);
-      if (cartoruser === 'cart') {
-        order.cartId = faker.string.uuid();
-      }
-      else {
-        const randomIndex = Math.floor(Math.random() * listUserId.length);
-        order.userId = listUserId[randomIndex]._id.toString();
-      }
+      
+      order.userId = listUserId[randomIndex]._id.toString();
+      
 
       //userInfo
       const userInfo = {

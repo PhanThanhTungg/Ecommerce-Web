@@ -32,6 +32,13 @@ const feedbackSchema = new mongoose.Schema(
   }
 );
 
+feedbackSchema.pre('save', function (next) {
+  const now = new Date();
+  this.createdAt = new Date(now.getTime() + 7 * 60 * 60 * 1000);
+  this.updatedAt = new Date(now.getTime() + 7 * 60 * 60 * 1000);
+  next();
+});
+
 feedbackSchema.index({ product_id: 1, userId: 1 });
 
 const ProductFeedback = mongoose.model('ProductFeedback', feedbackSchema, "product-feedback");

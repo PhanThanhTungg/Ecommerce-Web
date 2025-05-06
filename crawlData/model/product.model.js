@@ -78,6 +78,13 @@ const productSchema = new mongoose.Schema(
   }
 );
 
+productSchema.pre('save', function (next) {
+  const now = new Date();
+  this.createdAt = new Date(now.getTime() + 7 * 60 * 60 * 1000);
+  this.updatedAt = new Date(now.getTime() + 7 * 60 * 60 * 1000);
+  next();
+});
+
 // Uncomment and adjust if you want to use AutoIncrement
 // productSchema.plugin(AutoIncrement(mongoose), { inc_field: 'position' });
 

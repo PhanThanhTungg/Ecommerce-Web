@@ -14,9 +14,9 @@ const sequelize = new Sequelize('WHHTTTQL', 'sa', '123456', {
 });
 
 sequelize.authenticate().then(() => {
-    console.log('Connection has been established successfully.');
+    console.log('Connection mssql has been established successfully.');
 }).catch((error) => {
-    console.error('Unable to connect to the database: ', error);
+    console.error('Unable to connect mssql to the database: ', error);
 });
 
 
