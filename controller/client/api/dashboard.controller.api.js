@@ -8,7 +8,8 @@ module.exports.olapFactSale = async (req, res) => {
   const [factSale] = await Fact_sale.sequelize.query(`
     SELECT 
       ${sql_level},
-      SUM(f.Revenue) AS Total_Revenue
+      SUM(f.Revenue) AS Total_Revenue,
+      SUM(f.Quantity) AS Total_Quantity
     FROM 
       Fact_Sale f
       JOIN Dim_Time t ON f.Time_key = t.Time_key
