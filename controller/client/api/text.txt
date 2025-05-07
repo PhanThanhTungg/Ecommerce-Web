@@ -1,0 +1,38 @@
+fact_sale
+
+API: /api/dashboard/olap/fact_sale,
+Input:
+{
+	timeRollUp: Enum(day, month, year),
+	timeSlide: "2022"/"06-2022"/"01-02-2023"
+	timeDice: {
+		start: "01-02-2023",
+		end: "31-12-2023"
+	}
+
+	productRollUp: Enum(productIdA, B, C, all),
+	productSlide: productIdX,
+	productDice: [prA, prdB, ...]
+
+	locationRollUp: Enum(commune, district, province),
+	locationSlide: "commune-lctId",
+	locationDice: {
+		type: "commune"/"dis",
+		data: [id, id...]
+	}
+}
+
+Trục y: sluong & tổng tiền
+
+Biểu đồ chiều thời gian
+Ô nhập: select option {day, month, year} để rollup/drilldown
+	input range 2 chiều để Dice
+	 
+Trục x: ... năm 2023, 2024, 2025
+
+Biểu đồ chiều sp
+ô nhập: select sp
+Trục x: pdA, B, C, ... 240 sp
+
+Biểu đồ cus
+Trục x: fb, gg, gh, nm

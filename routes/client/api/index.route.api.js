@@ -2,6 +2,7 @@ const productApiRoute = require("./product.route.api");
 const userApiRoute = require("./user.route.api.js");
 const cartApiRoute = require("./cart.route.api.js");
 const checkoutApiRoute = require("./checkout.api.js");
+const dashboardApiRoute = require("./dashboard.route.api.js");
 
 // const categoryMiddleWare = require("../../middlewares/client/category.middleware.js")
 const cartMiddleWare = require("../../../middlewares/client/cart.middleware.js")
@@ -19,5 +20,6 @@ module.exports =(app)=>{
     app.use(`${system.prefixApi}/user`,userApiRoute);
     app.use(`${system.prefixApi}/cart`,cartApiRoute);
     app.use(`${system.prefixApi}/checkout`,checkoutApiRoute);
+    app.use(`${system.prefixApi}/dashboard`,dashboardApiRoute);
 }
 
