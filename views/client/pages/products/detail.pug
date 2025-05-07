@@ -8,7 +8,7 @@ block main
   .product-detail
     .container
       .row
-        .col-md-7.col-sm-12.product-images
+        .col-md-6.col-sm-12.product-images
           .swiper.image-detail
             .swiper-wrapper
               each item in product.images
@@ -23,10 +23,10 @@ block main
               each item in product.images
                 .swiper-slide
                   img(src=item)
-        .col-md-5.product-info
+        .col-md-6.product-info
           h3(class="inner-title") #{product.title}
           .d-flex.align-items-center
-            .inner-rating.mr-5(data-rating=product.ratingNumber)
+            .inner-rating.mr-5(data-rating=Math.round(product.averageRating * 2) / 2)
               +rating-1
             a(href="#box-feedback") VIEW ALL COMMENTS
           .inner-price
@@ -110,9 +110,9 @@ block main
       .container
         div
           .nav.nav-tabs(role="tablist")
-            button.nav-link.active#nav-description-tab(data-toggle="tab" data-target="#nav-description" type="button" role="tab" aria-controls="nav-description" aria-selected="true") Mô tả sản phẩm
-            button.nav-link#nav-policy-tab(data-toggle="tab" data-target="#nav-policy" type="button" role="tab" aria-controls="nav-policy" aria-selected="false") Chính sách giao hàng
-            button.nav-link#nav-shipping-tab(data-toggle="tab" data-target="#nav-shipping" type="button" role="tab" aria-controls="nav-shipping" aria-selected="false") Vận chuyển và hoàn trả
+            button.nav-link.active#nav-description-tab(data-toggle="tab" data-target="#nav-description" type="button" role="tab" aria-controls="nav-description" aria-selected="true") DESCRIPTION
+            button.nav-link#nav-policy-tab(data-toggle="tab" data-target="#nav-policy" type="button" role="tab" aria-controls="nav-policy" aria-selected="false") DELIVERY POLICY
+            button.nav-link#nav-shipping-tab(data-toggle="tab" data-target="#nav-shipping" type="button" role="tab" aria-controls="nav-shipping" aria-selected="false") SHIPPING & RETURN
         .tab.tab-content
           .tab-pane.fade.show.active.inner-desc#nav-description(role="tabpanel" aria-labelledby="nav-description-tab") !{product.description}
           .tab-pane.fade#nav-policy(role="tabpanel" aria-labelledby="nav-policy-tab") Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla luctus libero quis mauris vestibulum dapibus. Maecenas ullamcorper erat mi, vel consequat enim suscipit at. Pellentesque a elit at elit
@@ -140,13 +140,13 @@ block main
             .inner-content Lorem Ipsum is simply dummy text of the printing and typeset ting industry lorem Ipsum
     section.box-feedback#box-feedback
       .container
-        h4.title Đánh giá của khách hàng
+        h4.title Customer Reviews
         .row
           .col-lg-4.col-sm-12.sticky-top(style="top: 20px;")         
             .inner-rating.averageRating(data-rating=Math.round(product.averageRating * 2) / 2)
               span #{product.averageRating.toFixed(2)}
               +rating-1
-            p.total-review Tất cả #{product.totalReviews} đánh giá
+            p.total-review Base on #{product.totalReviews} reviews
             each i in [5, 4, 3, 2, 1]
               - var count = Object.values(product.starCounts)[i - 1];
               - var percentage = product.totalReviews === 0 ? 0 : (Number(count) / Number(product.totalReviews) * 100);
@@ -154,7 +154,7 @@ block main
                 +rating-1
                 +progression(count, percentage)
             if !user
-              a.create-feedback(href="/user/login") Đăng nhập để đánh giá sản phẩm
+              a.create-feedback(href="/user/login") Please login to write comment!
             else
               button.create-feedback(
                 type="button" 
@@ -162,15 +162,15 @@ block main
                 data-target="#collapse-createFeedback" 
                 aria-expanded="false" 
                 aria-controls="collapse-createFeedback"
-              ) Viết đánh giá
+              ) Write comment
               .collapse#collapse-createFeedback
                 form.add-feedback
                   input.d-none(name="productId" value=product._id)
                   .star-rating
                     +star-rating
                   .input-comment                
-                    textarea(type='text' rows='4' name="comment" placeholder="Thêm bình luận của bạn tại đây" required)
-                  button(type='submit') Gửi đánh giá
+                    textarea(type='text' rows='4' name="comment" placeholder="WRITE  YOUR COMMENT HERE" required)
+                  button(type='submit') Submit
           .col-lg-8.col-sm-12.main-content
             each feedback in product.feedback
               .feedback-item.wrapper-flex-gap-15

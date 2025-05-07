@@ -4,8 +4,8 @@ mixin product-item-template-1(item)
     .col-xl-4.col-md-4.col-6.mb-3
       .product-item
         .inner-image
-          img.img-product-1(src=item.images[0].replace('upload/', 'upload/c_limit,w_348/f_auto/'), alt=item.title)
-          img.img-product-2(src=(item.images.length>1?item.images[1].replace('upload/', 'upload/c_limit,w_348/f_auto/'):item.images[0].replace('upload/', 'upload/c_limit,w_348/f_auto/')), alt=item.title)
+          img.img-product-1(src=item.images[0], alt=item.title)
+          img.img-product-2(src=(item.images.length>1?item.images[1]:item.images[0]), alt=item.title)
           if item.featured == "1"
             .inner-featured Trending
           //- .overlay-product
@@ -40,8 +40,8 @@ mixin product-item-template-1(item)
             a(href=`/products/detail/${item.slug}`) #{item.title}
           .inner-price
             if item.listSize[0]
-              .inner-price-new $#{item.listSize[0].priceNew}
-              .inner-price-old $#{item.listSize[0].price}
+              .inner-price-new.format-money #{item.listSize[0].priceNew}$
+              .inner-price-old.format-money #{item.listSize[0].price}$
           //- .size-layout
           //-   each size in item.listSize
           //-     button.button-size-layout(id=size.id stock=size.stock price=size.price priceNew=size.priceNew) #{size.size}
@@ -58,7 +58,7 @@ mixin product-item-template-cart(item)
     .product-item(style="width: 20rem; height: auto; margin-right:30px")
       .inner-image    
         img.img-product-1(src=item.images[0].replace('upload/', 'upload/c_limit,w_200/f_auto/'), alt=item.title)
-        img.img-product-2(src=(item.images.length>1?item.images[1].replace('upload/', 'upload/c_limit,w_200/f_auto/'):item.images[0].replace('upload/', 'upload/c_limit,w_200/f_auto/')), alt=item.title)
+        img.img-product-2(src=(item.images.length>1?item.images[1]:item.images[0]), alt=item.title)
         if item.featured == "1"
           .inner-featured Trending
       .inner-content
@@ -68,8 +68,8 @@ mixin product-item-template-cart(item)
           a(href=`/products/detail/${item.slug}`) #{item.title}
         .inner-price
           if item.listSize[0]
-            .inner-price-new $#{item.listSize[0].priceNew}
-            .inner-price-old $#{item.listSize[0].price}
+            .inner-price-new.formatMoney #{item.listSize[0].priceNew}$
+            .inner-price-old.formatMoney #{item.listSize[0].price}$
         .inner-discount 
           <i class="fa-solid fa-bolt"></i> -#{item.discountPercentage}%
 
@@ -79,9 +79,9 @@ mixin product-item-template-order(item)
     .product-image
       .quantity #{item.quantity}
       .image
-        img(src=item.product.images[0].replace('upload/', 'upload/c_limit,w_62/f_auto/') alt=item.product.title)
+        img(src=item.product.images[0] alt=item.product.title)
     .product-info
       .title #{item.product.title}
       .size #{item.size.size}
-    .product-price.formatMoney #{item.totalPriceItem}$
+    .product-price.format-money #{item.totalPriceItem}
 

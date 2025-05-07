@@ -335,12 +335,13 @@ div.address-info {
 .inner-orderProducts .product-wrapper .product-image .image {
   overflow: hidden;
   border-radius: 8px;
+  width: 100px;
 }
 
 .inner-orderProducts .product-wrapper .product-image .image img {
   width: 100%;
   aspect-ratio: 6/7;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .inner-orderProducts .product-wrapper .product-info {

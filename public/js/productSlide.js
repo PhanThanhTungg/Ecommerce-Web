@@ -1,5 +1,5 @@
 
-var speed = 5;
+var speed = 9;
 var tab = document.getElementById("demo");
 var tab1 = document.getElementById("demo1");
 var tab2 = document.getElementById("demo2");
