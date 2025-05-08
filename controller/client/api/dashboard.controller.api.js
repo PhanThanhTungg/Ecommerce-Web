@@ -38,13 +38,13 @@ module.exports.olapFactSale = async (req, res) => {
   if (Product_is_not_null !== "") havingArray.push(Product_is_not_null);
 
   const customer_level = 
-    body.customerRollUp == "gender" ? "cu.Gender, cu.Type" :
-    body.customerRollUp == "type" ? "cu.Type, cu.Gender" : "";
+    body.customer == "gender" ? "cu.Gender, cu.Type" :
+    body.customer == "type" ? "cu.Type, cu.Gender" : "";
   if (customer_level !== "") levelArray.push(customer_level);
 
   const Customer_is_not_null = 
-    body.customerRollUp == "gender" ? "cu.Gender IS NOT NULL and cu.Type is not null" :
-    body.customerRollUp == "type" ? "cu.Type IS NOT NULL and cu.Gender is not null" : "";
+    body.customer == "gender" ? "cu.Gender IS NOT NULL and cu.Type is not null" :
+    body.customer == "type" ? "cu.Type IS NOT NULL and cu.Gender is not null" : "";
   if (Customer_is_not_null !== "") havingArray.push(Customer_is_not_null);
 
   const sql_level = `${levelArray.join(",")}`;
