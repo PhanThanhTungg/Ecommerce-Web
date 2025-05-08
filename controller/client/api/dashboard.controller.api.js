@@ -449,7 +449,25 @@ module.exports.olapFactOrder = async (req, res) => {
       body.orderRollUp == "delivery" ? "o.Delivery_method IS NOT NULL" :
         body.orderRollUp == "payment" ? "o.Payment_method IS NOT NULL" : "";
     if (Order_is_not_null !== "") havingArray.push(Order_is_not_null);
-    
+
+    //order dice
+    if (body.orderDice) {
+      const type = body.orderDice.type;
+      if (type == "delivery") {
+        const arrOrderDeliveryDice = body.orderDice.arr;
+        if (arrOrderDeliveryDice.length > 0) {
+          const arrOrderDeliveryDiceString = arrOrderDeliveryDice.map((item) => `'${item}'`).join(",");
+          WhereConditions.push(`o.Delivery_method IN (${arrOrderDeliveryDiceString})`);
+        }
+      }
+      if (type == "payment") {
+        const arrOrderPaymentDice = body.orderDice.arr;
+        if (arrOrderPaymentDice.length > 0) {
+          const arrOrderPaymentDiceString = arrOrderPaymentDice.map((item) => `'${item}'`).join(",");
+          WhereConditions.push(`o.Payment_method IN (${arrOrderPaymentDiceString})`);
+        }
+      }
+    }
 
     //sql query
     const sql_level = `${levelArray.join(",")}`;
