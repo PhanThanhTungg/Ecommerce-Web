@@ -144,23 +144,23 @@ module.exports.olapFactSale = async (req, res) => {
     const sql_where = WhereConditions.join(" and ");
 
     const [factSale] = await Fact_sale.sequelize.query(`
-    SELECT 
-      ${sql_level},
-      SUM(f.Revenue) AS Total_Revenue,
-      SUM(f.Quantity) AS Total_Quantity
-    FROM 
-      Fact_Sale f
-      JOIN Dim_Time t ON f.Time_key = t.Time_key
-      JOIN Dim_Location l ON f.Location_key = l.Location_key
-      JOIN Dim_Product p ON f.Product_key = p.Product_key
-      JOIN Dim_Category c ON p.Category_key = c.Category_key
-      JOIN Dim_Customer cu ON f.Customer_key = cu.Customer_key
-    ${sql_where ? "WHERE " : ""}${sql_where}
-    GROUP BY 
-      ROLLUP (${sql_level})
-    HAVING ${sql_having}
-    ORDER BY ${body.sort?body.sort.key+" "+body.sort.value:sql_level};
-  `);
+      SELECT 
+        ${sql_level},
+        SUM(f.Revenue) AS Total_Revenue,
+        SUM(f.Quantity) AS Total_Quantity
+      FROM 
+        Fact_Sale f
+        JOIN Dim_Time t ON f.Time_key = t.Time_key
+        JOIN Dim_Location l ON f.Location_key = l.Location_key
+        JOIN Dim_Product p ON f.Product_key = p.Product_key
+        JOIN Dim_Category c ON p.Category_key = c.Category_key
+        JOIN Dim_Customer cu ON f.Customer_key = cu.Customer_key
+      ${sql_where ? "WHERE " : ""}${sql_where}
+      GROUP BY 
+        ROLLUP (${sql_level})
+      HAVING ${sql_having}
+      ORDER BY ${body.sort?body.sort.key+" "+body.sort.value:sql_level};
+    `);
 
     const keys = Object.keys(factSale[0] || {});
     const resData = {};
@@ -304,7 +304,7 @@ module.exports.olapFactFeedback = async (req, res) => {
       GROUP BY 
         ROLLUP (${sql_level})
       HAVING ${sql_having}
-      ORDER BY ${sql_level};
+      ORDER BY ${body.sort?"AVG_Rating "+body.sort:sql_level};
     `);
 
     const keys = Object.keys(factFeedback[0] || {});
@@ -439,6 +439,17 @@ module.exports.olapFactOrder = async (req, res) => {
       }
     }
 
+    //--------------order---------------
+    //order rollup
+    const order_level = body.orderRollUp == "delivery" ? "o.Delivery_method" :
+      body.orderRollUp == "payment" ? "o.Payment_method" : "";
+    if (order_level !== "") levelArray.push(order_level);
+
+    const Order_is_not_null =
+      body.orderRollUp == "delivery" ? "o.Delivery_method IS NOT NULL" :
+        body.orderRollUp == "payment" ? "o.Payment_method IS NOT NULL" : "";
+    if (Order_is_not_null !== "") havingArray.push(Order_is_not_null);
+    
 
     //sql query
     const sql_level = `${levelArray.join(",")}`;
@@ -454,6 +465,7 @@ module.exports.olapFactOrder = async (req, res) => {
         JOIN Dim_Time t ON f.Time_key = t.Time_key
         JOIN Dim_Location l ON f.Location_key = l.Location_key
         JOIN Dim_Customer cu ON f.Customer_key = cu.Customer_key
+        JOIN Dim_Order o ON f.Order_key = o.Order_key
       ${sql_where ? "WHERE " : ""}${sql_where}
       GROUP BY 
         ROLLUP (${sql_level})
