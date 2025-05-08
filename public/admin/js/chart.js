@@ -1,18 +1,23 @@
-let timeRollUp = "year"
+let timeRollUp = ""
 let timeSlice = "";
-let timeDice = {
-  start: "",
-  end: ""
-}
-let productRollUp = "all"
+let timeDice = "";
+let productRollUp = ""
 let productSlice = "";
-let productDice = []
-let locationRollUp = "province"
+let productDice = ""
+let locationRollUp = ""
 let locationSlice = "";
-let locationDice = {
-  type: "",
-  data: []
-}
+let locationDice = ""
+let customer = "";
+
+const timeInputRadios = document.querySelectorAll('input[name="saleTime"]')
+const locationInputRadios = document.querySelectorAll('input[name="saleLocation"]')
+const productInputRadios = document.querySelectorAll('input[name="saleProduct"]')
+const customerInputRadios = document.querySelectorAll('input[name="saleCustomer"]')
+
+let saleTimeChart = null
+let saleLocationChart = null
+let saleProductChart = null
+let saleCustomerChart = null
 
 const saleAPI = "/api/dashboard/olap/fact_sale";
 
@@ -23,95 +28,204 @@ async function getSaleData() {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({
-        "timeRollUp": "day"
-      })
+      body: `{
+        "timeRollUp":"${timeRollUp}",
+        "timeSlice":"${timeSlice}",
+        "timeDice":"${timeDice}",
+        "productRollUp":"${productRollUp}",
+        "productSlice":"${productSlice}",
+        "productDice":"${productDice}",
+        "locationRollUp":"${locationRollUp}",
+        "locationSlice":"${locationSlice}",
+        "locationDice":"${locationDice}",
+        "customer":"${customer}"
+      }`
     })
     const result = await res.json();
-    console.log(result.data);
+    return result.data;
   } catch (error) {
     console.log(error)
   }
-  
+
 }
-getSaleData()
 
-var optionsSaleTimeChart = {
-  chart: {
-    height: 350,
-    type: "line",
-    stacked: false
-  },
-  dataLabels: {
-    enabled: false
-  },
-  colors: ['#99C2A2', '#C5EDAC', '#66C7F4'],
-  series: [
-
-    {
-      name: 'Column A',
-      type: 'column',
-      data: [21.1, 23, 33.1, 34, 44.1, 44.9, 56.5, 58.5]
-    },
-    {
-      name: "Line C",
-      type: 'line',
-      data: [1.4, 2, 2.5, 1.5, 2.5, 2.8, 3.8, 4.6]
-    },
-  ],
-  stroke: {
-    width: [4, 4, 4]
-  },
-  plotOptions: {
-    bar: {
-      columnWidth: "20%"
-    }
-  },
-  xaxis: {
-    categories: [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016]
-  },
-  yaxis: [
-    {
-      seriesName: 'Quantity',
-      axisTicks: {
-        show: true
-      },
-      axisBorder: {
-        show: true,
-      },
-      title: {
-        text: "Quantity"
-      }
-    },
-    {
-      seriesName: 'Column A',
-      show: false
-    }, {
-      opposite: true,
-      seriesName: 'Revenue',
-      axisTicks: {
-        show: true
-      },
-      axisBorder: {
-        show: true,
-      },
-      title: {
-        text: "Revenue"
-      }
-    }
-  ],
-  tooltip: {
-    shared: false,
-    intersect: true,
-    x: {
-      show: false
-    }
-  },
-  legend: {
-    horizontalAlign: "left",
-    offsetX: 40
+async function renderSaleTimeChart(rollUp = "month") {
+  if (saleTimeChart) {
+    saleTimeChart.destroy();
   }
-};
+  timeRollUp = rollUp
+  const data = await getSaleData();
 
-let saleTimeChart = new ApexCharts(document.querySelector(".fact-sale .time-chart"), optionsSaleTimeChart);
-saleTimeChart.render()
+  const numberOfRecords = data.Total_Revenue.length;
+  let labels = []
+  for (let i = 0; i < numberOfRecords; i++) {
+    let label = data.year[i];
+    if (timeRollUp === "day") {
+      label = data.day[i] + "-" + data.month[i] + "-" + label;
+    } else if (timeRollUp === "month") {
+      label = data.month[i] + "-" + label
+    }
+    labels.push(label)    
+  }
+
+  const optionsSaleTimeChart = {
+    chart: {
+      height: 350,
+      type: "line",
+      stacked: false
+    },
+    dataLabels: {
+      enabled: false
+    },
+    colors: ['#99C2A2', '#C5EDAC', '#66C7F4'],
+    series: [
+      {
+        name: 'Product quantity',
+        type: 'column',
+        data: data.Total_Quantity
+      },
+      {
+        name: 'Revenue',
+        type: 'line',
+        data: data.Total_Revenue
+      },
+    ],
+    stroke: {
+      width: [4, 4, 4]
+    },
+    plotOptions: {
+      bar: {
+        columnWidth: "20%"
+      }
+    },
+    xaxis: {
+      categories: labels,
+      tickAmount: 20,
+
+    },
+    yaxis: [
+      {
+        seriesName: 'Product quantity',
+        axisTicks: {
+          show: true
+        },
+        axisBorder: {
+          show: true,
+        },
+        title: {
+          text: "Product quantity"
+        },
+      },
+      {
+        opposite: true,
+        seriesName: 'Revenue',
+        axisTicks: {
+          show: true
+        },
+        axisBorder: {
+          show: true,
+        },
+        title: {
+          text: "Revenue"
+        },
+        labels: {
+          formatter: function(value) {
+            return Helper.formatLargeNumber(value)
+          }
+        }
+      }
+    ],
+    tooltip: {
+      shared: true,
+      intersect: false,
+      x: {
+        show: false
+      }
+    },
+    legend: {
+      horizontalAlign: "left",
+      offsetX: 40
+    }
+  };
+
+  saleTimeChart = new ApexCharts(document.querySelector(".fact-sale .time-chart"), optionsSaleTimeChart);
+  saleTimeChart.render()
+  timeRollUp = "";
+}
+
+async function renderSaleLocationChart(rollUp = "province") {
+  if (saleLocationChart) {
+    saleLocationChart.destroy();
+  }
+  locationRollUp = rollUp;
+  console.log(locationRollUp, timeRollUp)
+  const data = await getSaleData();
+  console.log(data)
+  const numberOfRecords = data.Total_Revenue.length;
+  let labels = []
+  for (let i = 0; i < numberOfRecords; i++) {
+    let label = Helper.capitalize(data.province[i])
+    if (locationRollUp === "district") {
+      label = Helper.capitalize(data.district[i])
+    } else if (locationRollUp === "commune") {
+      label = Helper.capitalize(data.commune[i])
+    }
+    labels.push(label)
+  }
+
+  let saleLocationChartOptions = {
+    series: [{
+      data: data.Total_Revenue
+    }],
+    chart: {
+      type: 'bar',
+      height: 600,
+      toolbar: Helper.getChartToolbarOptions(),
+      zoom: {
+        enabled: true,
+        type: 'x',
+        autoScaleYaxis: true,
+        
+      },
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 4,
+        borderRadiusApplication: 'end',
+        horizontal: true,
+      }
+    },
+    dataLabels: {
+      enabled: false
+    },
+    xaxis: {
+      categories: labels,
+      labels: {
+        formatter: function(value) {
+          return Helper.formatLargeNumber(value)
+        }
+      }
+    }
+  };
+
+  saleLocationChart = new ApexCharts(document.querySelector(".fact-sale .location-chart"), saleLocationChartOptions);
+  saleLocationChart.render();
+  locationRollUp = ""
+}
+
+async function renderAllChart() {
+  await renderSaleTimeChart()
+  await renderSaleLocationChart()
+}
+renderAllChart()
+
+timeInputRadios.forEach(item => {
+  item.addEventListener('change', function() {
+    renderSaleTimeChart(item.value)
+  })
+})
+locationInputRadios.forEach(item => {
+  item.addEventListener('change', function() {
+    renderSaleLocationChart(item.value)
+  })
+})

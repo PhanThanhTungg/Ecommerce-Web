@@ -7,50 +7,92 @@ block main
     .fact-sale
       h2(class=`mb-5 ml-5 text-xl font-medium leading-none tracking-tight text-gray-900 md:text-2xl
       dark:text-white`) Sales report
-      .options
-
-      .time-chart
-        
-      .location-chart
-
-      .product-chart
-
-      .customer-chart
+      .options(class="grid gap-6 mb-6 md:grid-cols-4")
+        .time-rollup.flex
+          label
+            input(
+              type="radio"
+              name="saleTime"
+              value="day"
+            )
+            span Day
+          label
+            input(
+              type="radio"
+              name="saleTime"
+              value="month"
+            )
+            span Month
+          label
+            input(
+              type="radio"
+              name="saleTime"
+              value="year"
+              checked
+            )
+            span Year
+          
+        .location-rollup.flex
+          label
+            input(
+              type="radio"
+              name="saleLocation"
+              value="commune"
+            )
+            span Commune
+          label
+            input(
+              type="radio"
+              name="saleLocation"
+              value="District"
+            )
+            span District
+          label
+            input(
+              type="radio"
+              name="saleLocation"
+              value="Province"
+              checked
+            )
+            span Province
+        .product-rollup.flex
+          label
+            input(
+              type="radio"
+              name="saleProduct"
+              value="product"
+            )
+            span Product
+          label
+            input(
+              type="radio"
+              name="saleProduct"
+              value="category"
+              checked
+            )
+            span Category
+        .customer-rollup.flex
+          label
+            input(
+              type="radio"
+              name="saleCustomer"
+              value="type"
+              checked
+            )
+            span Type
+          label
+            input(
+              type="radio"
+              name="saleCustomer"
+              value="gender"
+            )
+            span Gender
+      .inner-chart
+        .time-chart
+        .location-chart
+        .product-chart
+        .customer-chart
 
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <script src="js/helper.js"></script>
   script(type="module" src="/admin/js/chart.js")
-
-
-
-
-      //- .col-6
-      //-   .card.mb-4
-      //-     .card-header Danh mục sản phẩm
-      //-     .card-body
-      //-       p Số lượng: <b>#{statistic.categoryProduct.total}</b>
-      //-       p Hoạt động: <b>#{statistic.categoryProduct.active}</b>
-      //-       p Dừng hoạt động: <b>#{statistic.categoryProduct.inactive}</b>
-
-      //- .col-6
-      //-   .card.mb-4
-      //-     .card-header Sản phẩm
-      //-     .card-body
-      //-       p Số lượng: <b>#{statistic.product.total}</b>
-      //-       p Hoạt động: <b>#{statistic.product.active}</b>
-      //-       p Dừng hoạt động: <b>#{statistic.product.inactive}</b>
-
-      //- .col-6
-      //-   .card.mb-4
-      //-     .card-header Tài khoản admin
-      //-     .card-body
-      //-       p Số lượng: <b>#{statistic.account.total}</b>
-      //-       p Hoạt động: <b>#{statistic.account.active}</b>
-      //-       p Dừng hoạt động: <b>#{statistic.account.inactive}</b>
-
-      //- .col-6
-      //-   .card.mb-4
-      //-     .card-header Tài khoản client
-      //-     .card-body
-      //-       p Số lượng: <b>#{statistic.user.total}</b>
-      //-       p Hoạt động: <b>#{statistic.user.active}</b>
-      //-       p Dừng hoạt động: <b>#{statistic.user.inactive}</b>

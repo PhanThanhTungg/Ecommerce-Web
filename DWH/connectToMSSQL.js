@@ -2,8 +2,8 @@ const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize('WHHTTTQL', 'sa', '123456', {
   dialect: 'mssql',
-  host: 'localhost',
-  port: 1609,
+  host: '0.tcp.ap.ngrok.io',
+  port: 17984,
   dialectOptions: {
     options: {
       // instanceName: 'SQLWH',
