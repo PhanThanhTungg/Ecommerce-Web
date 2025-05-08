@@ -60,6 +60,30 @@ module.exports.olapFactSale = async (req, res) => {
           body.locationRollUp == "commune" ? "l.province IS NOT NULL AND l.district IS NOT NULL AND l.commune IS NOT NULL" : "";
     if (Location_is_not_null != "") havingArray.push(Location_is_not_null);
 
+    //location dice
+    if (body.locationDice) {
+      const arrLocationDiceLength = body.locationDice[0].split("-").length;
+      const arrLocationDice = body.locationDice;
+      if(arrLocationDiceLength == 1) {
+        const arrLocationDiceString = arrLocationDice.map((item) => `N'${item}'`).join(",");
+        WhereConditions.push(`l.province IN (${arrLocationDiceString})`);
+      }
+      if(arrLocationDiceLength == 2) {
+        const arrLocationDiceDistrict = arrLocationDice.map((item) => `N'${item.split("-")[0]}'`).join(",");
+        const arrLocationDiceProvince = arrLocationDice.map((item) => `N'${item.split("-")[1]}'`).join(",");
+        WhereConditions.push(`l.district IN (${arrLocationDiceDistrict})`);
+        WhereConditions.push(`l.province IN (${arrLocationDiceProvince})`);
+      }
+      if(arrLocationDiceLength == 3) {
+        const arrLocationDiceCommune = arrLocationDice.map((item) => `N'${item.split("-")[0]}'`).join(",");
+        const arrLocationDiceDistrict = arrLocationDice.map((item) => `N'${item.split("-")[1]}'`).join(",");
+        const arrLocationDiceProvince = arrLocationDice.map((item) => `N'${item.split("-")[2]}'`).join(",");
+        WhereConditions.push(`l.commune IN (${arrLocationDiceCommune})`);
+        WhereConditions.push(`l.district IN (${arrLocationDiceDistrict})`);
+        WhereConditions.push(`l.province IN (${arrLocationDiceProvince})`);
+      }
+    }
+
     //product rollup
     const product_level =
       body.productRollUp == "category" ? "c.category_key, c.category_name" :
@@ -111,7 +135,7 @@ module.exports.olapFactSale = async (req, res) => {
       JOIN Dim_Product p ON f.Product_key = p.Product_key
       JOIN Dim_Category c ON p.Category_key = c.Category_key
       JOIN Dim_Customer cu ON f.Customer_key = cu.Customer_key
-    WHERE ${sql_where}
+    ${sql_where?"WHERE ":""}${sql_where}
     GROUP BY 
       ROLLUP (${sql_level})
     HAVING ${sql_having}
