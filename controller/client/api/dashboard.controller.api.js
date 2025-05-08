@@ -7,6 +7,7 @@ module.exports.olapFactSale = async (req, res) => {
     const havingArray = [];
     const WhereConditions = [];
 
+    //--------------time---------------
     //Time rollup 
     const time_level = body.timeRollUp == "year" ? "t.year" :
       body.timeRollUp == "month" ? "t.year, t.month" :
@@ -48,6 +49,7 @@ module.exports.olapFactSale = async (req, res) => {
       }
     }
 
+    //--------------location---------------
     //location rollup
     const location_level = body.locationRollUp == "province" ? "l.province" :
       body.locationRollUp == "district" ? "l.province,l.district" :
@@ -84,6 +86,7 @@ module.exports.olapFactSale = async (req, res) => {
       }
     }
 
+    //--------------product---------------
     //product rollup
     const product_level =
       body.productRollUp == "category" ? "c.category_key, c.category_name" :
@@ -107,6 +110,7 @@ module.exports.olapFactSale = async (req, res) => {
       }
     }
 
+    //--------------customer---------------
     //customer rollup
     const customer_level =
       body.customer == "gender" ? "cu.Gender, cu.Type" :
@@ -117,6 +121,20 @@ module.exports.olapFactSale = async (req, res) => {
       body.customer == "gender" ? "cu.Gender IS NOT NULL and cu.Type is not null" :
         body.customer == "type" ? "cu.Type IS NOT NULL and cu.Gender is not null" : "";
     if (Customer_is_not_null !== "") havingArray.push(Customer_is_not_null);
+    
+    //customer dice
+    const customerDice = body.customerDice;
+    if(customerDice){
+      if(customerDice.gender){
+        const arrCustomerGenderDice = customerDice.gender.map((item) => `N'${item}'`).join(",");
+        WhereConditions.push(`cu.Gender IN (${arrCustomerGenderDice})`);
+      }
+      if(customerDice.type){
+        const arrCustomerTypeDice = customerDice.type.map((item) => `N'${item}'`).join(",");
+        WhereConditions.push(`cu.Type IN (${arrCustomerTypeDice})`);
+      }
+    }
+
 
     //sql query
     const sql_level = `${levelArray.join(",")}`;
