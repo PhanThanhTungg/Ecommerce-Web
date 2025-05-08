@@ -29,6 +29,8 @@ Helper.formatLargeNumber = function(number) {
 Helper.getChartToolbarOptions = function() {
   return {
     show: true,
+    offsetX: 0,
+    offsetY: 0,
     tools: {
       download: true,
       selection: true,
@@ -36,29 +38,18 @@ Helper.getChartToolbarOptions = function() {
       zoomin: true,
       zoomout: true,
       pan: true,
-      reset: true
+      reset: true,
+      customIcons: []
     }
   };
-};
+}
 
-/**
- * Tính toán chiều cao phù hợp cho biểu đồ dựa trên số lượng dữ liệu
- * @param {number} dataLength - Số lượng mục dữ liệu
- * @param {string} chartType - Loại biểu đồ ('bar', 'line', etc.)
- * @param {boolean} horizontal - Biểu đồ cột có ngang hay không
- * @returns {number} Chiều cao tính toán cho biểu đồ
- */
 Helper.calculateChartHeight = function(dataLength, chartType = 'bar', horizontal = false) {
-  // Chiều cao tối thiểu
   const minHeight = 350;
-  
-  // Với biểu đồ cột ngang, mỗi cột cần khoảng 30px
   if (chartType === 'bar' && horizontal) {
-    // Tính chiều cao dựa trên số lượng dữ liệu
     const calculatedHeight = Math.max(dataLength * 30, minHeight);
     
-    // Giới hạn chiều cao tối đa để tránh biểu đồ quá lớn
-    return Math.min(calculatedHeight, 1000);
+    return calculatedHeight;
   }
   
   // Với các loại biểu đồ khác, có thể áp dụng các quy tắc khác
@@ -66,10 +57,28 @@ Helper.calculateChartHeight = function(dataLength, chartType = 'bar', horizontal
   if (chartType === 'line') {
     return minHeight;
   }
-  
   // Trường hợp mặc định
   return minHeight;
 };
 
+Helper.getChartZoomOptions = function() {
+  return {
+    enabled: true,
+    type: 'x',  
+    autoScaleYaxis: false,  
+    allowMouseWheelZoom: true,  
+    zoomedArea: {
+      fill: {
+        color: '#90CAF9',
+        opacity: 0.4
+      },
+      stroke: {
+        color: '#0D47A1',
+        opacity: 0.4,
+        width: 1
+      }
+    }
+  }
+}
 // Thêm Helper vào window để các script khác có thể sử dụng
 window.Helper = Helper;

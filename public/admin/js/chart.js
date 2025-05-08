@@ -179,14 +179,39 @@ async function renderSaleLocationChart(rollUp = "province") {
     }],
     chart: {
       type: 'bar',
-      height: 600,
-      toolbar: Helper.getChartToolbarOptions(),
+      height: Helper.calculateChartHeight(numberOfRecords, 'bar', true),
+      toolbar: {
+        show: true,
+        offsetX: 0,
+        offsetY: 0,
+        tools: {
+          download: true,
+          selection: true,
+          zoom: true,
+          zoomin: true,
+          zoomout: true,
+          pan: true,
+          reset: true,
+          customIcons: []
+        }
+      },
       zoom: {
         enabled: true,
-        type: 'x',
-        autoScaleYaxis: true,
-        
-      },
+        type: 'x',  
+        autoScaleYaxis: false,  
+        allowMouseWheelZoom: true,  
+        zoomedArea: {
+          fill: {
+            color: '#90CAF9',
+            opacity: 0.4
+          },
+          stroke: {
+            color: '#0D47A1',
+            opacity: 0.4,
+            width: 1
+          }
+        }
+      }
     },
     plotOptions: {
       bar: {
