@@ -2,11 +2,11 @@ const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize('WHHTTTQL', 'sa', '123456', {
   dialect: 'mssql',
-  host: '0.tcp.ap.ngrok.io',
-  port: 17984,
+  host: 'localhost',
+  port: 1433,
   dialectOptions: {
     options: {
-      // instanceName: 'SQLWH',
+      instanceName: 'SERVER_HANOI',
       encrypt: false,
       trustServerCertificate: true,
     }
