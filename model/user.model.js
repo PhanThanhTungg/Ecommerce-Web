@@ -25,7 +25,8 @@ const userSchema = new mongoose.Schema(
     },
     sex: {
       type: String,
-      enum: ["male", "female", "other"]
+      enum: ["male", "female", "other", "unknown"],
+      default: "unknown"
     },
     status:{
       type: String,

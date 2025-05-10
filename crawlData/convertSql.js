@@ -11,7 +11,7 @@ if (!match) {
     console.error('Không tìm thấy cú pháp INSERT hợp lệ!');
     process.exit(1);
 }
-``
+
 const columns = match[1].split(',').map(c => c.trim());
 const valuesBlock = match[2].trim();
 

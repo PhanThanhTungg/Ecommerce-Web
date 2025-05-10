@@ -110,18 +110,26 @@ module.exports.olapFactSale = async (req, res) => {
           WhereConditions.push(`p.product_key IN (${arrProductIdDiceString})`);
         }
       }
+      if(type == "category") {
+        const arrProductCategoryDice = body.productDice.arr;
+        if (arrProductCategoryDice.length > 0) {
+          const arrProductCategoryDiceString = arrProductCategoryDice.map((item) => `'${item}'`).join(",");
+          WhereConditions.push(`c.Category_key IN (${arrProductCategoryDiceString})`);
+        }
+      }
     }
+    
 
     //--------------customer---------------
     //customer rollup
     const customer_level =
-      body.customer == "gender" ? "cu.Gender, cu.Type" :
-        body.customer == "type" ? "cu.Type, cu.Gender" : "";
+      body.customer == "gender" ? "cu.Gender" :
+        body.customer == "type" ? "cu.Type" : "";
     if (customer_level !== "") levelArray.push(customer_level);
 
     const Customer_is_not_null =
-      body.customer == "gender" ? "cu.Gender IS NOT NULL and cu.Type is not null" :
-        body.customer == "type" ? "cu.Type IS NOT NULL and cu.Gender is not null" : "";
+      body.customer == "gender" ? "cu.Gender IS NOT NULL" :
+        body.customer == "type" ? "cu.Type IS NOT NULL" : "";
     if (Customer_is_not_null !== "") havingArray.push(Customer_is_not_null);
 
     //customer dice
