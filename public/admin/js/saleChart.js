@@ -50,7 +50,6 @@ async function getSaleData() {
       })
     })
     const result = await res.json();
-    console.log(result.data)
     return result.data;
   } catch (error) {
     console.log(error)
@@ -283,11 +282,11 @@ async function renderSaleProductChart(rollUp = "category") {
     stroke: {
       width: [1, 4, 4]
     },
-    title: {
-      text: 'XYZ - Stock Analysis (2009 - 2016)',
-      align: 'left',
-      offsetX: 110
-    },
+    // title: {
+    //   text: 'XYZ - Stock Analysis (2009 - 2016)',
+    //   align: 'left',
+    //   offsetX: 110
+    // },
     xaxis: {
       categories: labels,
       labels: {
@@ -376,23 +375,14 @@ async function renderSaleCustomerChart(rollUp = "type") {
   }
   customer = rollUp
   const data = await getSaleData();
-  let newData = {
-    labels: [],
-    Total_Revenue: []
-  }
-  for (let i = 0; i < 12; i += 3) {
-    const sum = data.Total_Revenue[i] + data.Total_Revenue[i + 1] + data.Total_Revenue[i + 2];
-    newData.Total_Revenue.push(sum)
-    newData.labels.push(data.Type[i])
-  }
 
   var saleCustomerChartOptions = {
-    series: newData.Total_Revenue,
+    series: data.Total_Revenue,
     chart: {
       width: 380,
       type: 'pie',
     },
-    labels: newData.labels,
+    labels: data.Type,
     responsive: [{
       breakpoint: 480,
       options: {
@@ -416,25 +406,15 @@ async function renderSaleCustomerChart2(rollUp = "gender") {
     saleCustomerChart2.destroy()
   }
   customer = rollUp
-  const data = await getSaleData();
-  console.log(data)
-  let newData = {
-    labels: [],
-    Total_Revenue: []
-  }
-  for (let i = 0; i < 12; i += 4) {
-    const sum = data.Total_Revenue[i] + data.Total_Revenue[i + 1] + data.Total_Revenue[i + 2] + data.Total_Revenue[i + 3];
-    newData.Total_Revenue.push(sum)
-    newData.labels.push(Helper.capitalize(data.Gender[i]))
-  }
+  const data = await getSaleData(); 
 
   const saleCustomerChartOptions = {
-    series: newData.Total_Revenue,
+    series: data.Total_Revenue,
     chart: {
       width: 380,
       type: 'pie',
     },
-    labels: newData.labels,
+    labels: data.Gender.map(item => Helper.capitalize(item)),
     responsive: [{
       breakpoint: 480,
       options: {
@@ -505,7 +485,6 @@ timeDiceForm.addEventListener('submit', async function (e) {
   timeRollUp = currentTimeRollUp
   const temp = await getSaleData();
   timeRollUp = ""
-  console.log(temp)
   if (Object.keys(temp).length === 0) {
     alert("No data available for this time period. Please enter a different time range.")
     timeDice = "";
@@ -530,9 +509,7 @@ productDiceForm.addEventListener('submit', async function (e) {
     type: currentProductRollUp,
     arr: formData.getAll('sale-product')
   }
-  console.log(productDice)
-  // await renderAllChart()
-  renderSaleProductChart()
+  await renderAllChart()
 })
 
 customerDiceForm.addEventListener('submit', function (e) {
@@ -542,6 +519,10 @@ customerDiceForm.addEventListener('submit', function (e) {
     gender: formData.getAll('gender'),
     type: formData.getAll('type')
   }
+  if (customerDice.gender.length === 0) customerDice.gender = ["male", "female", "other", "unknown"]
+  if (customerDice.type.length === 0) customerDice.type = ["facebook", "google", "github", "normal"]
+
+  console.log(customerDice)
   renderAllChart()
 })
 // END OLAP

@@ -261,6 +261,12 @@ module.exports.olapFactFeedback = async (req, res) => {
           const arrProductIdDiceString = arrProductIdDice.map((item) => `'${item}'`).join(",");
           WhereConditions.push(`p.product_key IN (${arrProductIdDiceString})`);
         }
+      } else if (type == "category") {
+        const arrCategoryIdDice = body.productDice.arr;
+        if (arrCategoryIdDice.length > 0) {
+          const arrCategoryIdDiceString = arrCategoryIdDice.map((item) => `'${item}'`).join(",");
+          WhereConditions.push(`c.category_key IN (${arrCategoryIdDiceString})`);
+        }
       }
     }
 
@@ -307,6 +313,7 @@ module.exports.olapFactFeedback = async (req, res) => {
         Fact_Feedback f
         JOIN Dim_Time t ON f.Time_key = t.Time_key
         JOIN Dim_Product p ON f.Product_key = p.Product_key
+        JOIN Dim_Category c ON p.Category_key = c.Category_key
         JOIN Dim_Customer cu ON f.Customer_key = cu.Customer_key
       ${sql_where ? "WHERE " : ""}${sql_where}
       GROUP BY 
@@ -425,13 +432,13 @@ module.exports.olapFactOrder = async (req, res) => {
     //--------------customer---------------
     //customer rollup
     const customer_level =
-      body.customer == "gender" ? "cu.Gender, cu.Type" :
-        body.customer == "type" ? "cu.Type, cu.Gender" : "";
+      body.customer == "gender" ? "cu.Gender" :
+        body.customer == "type" ? "cu.Type" : "";
     if (customer_level !== "") levelArray.push(customer_level);
 
     const Customer_is_not_null =
-      body.customer == "gender" ? "cu.Gender IS NOT NULL and cu.Type is not null" :
-        body.customer == "type" ? "cu.Type IS NOT NULL and cu.Gender is not null" : "";
+      body.customer == "gender" ? "cu.Gender IS NOT NULL" :
+        body.customer == "type" ? "cu.Type IS NOT NULL" : "";
     if (Customer_is_not_null !== "") havingArray.push(Customer_is_not_null);
 
     //customer dice
@@ -496,7 +503,7 @@ module.exports.olapFactOrder = async (req, res) => {
       GROUP BY 
         ROLLUP (${sql_level})
       HAVING ${sql_having}
-      ORDER BY ${sql_level};
+      ORDER BY ${body.sort?"Total_Order "+body.sort:sql_level};
     `);
 
     const keys = Object.keys(factOrder[0] || {});
