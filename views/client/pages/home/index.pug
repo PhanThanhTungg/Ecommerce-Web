@@ -8,47 +8,20 @@ include ../../mixins/pagination.pug
 
 block main
   .home 
-    <swiper-container class="mySwiper" pagination="true" pagination-dynamic-bullets="true" loop="true">
-      <swiper-slide>
-        .container
+    swiper-container(class="mySwiper" pagination="true" pagination-dynamic-bullets="true" loop="true")
+      each item in settingsGeneral.banner
+        swiper-slide
+          .container
             .inner-content
               .row
                 .col-6
                   .inner-box-1
-                    .inner-sub-title Uncover the latest trends just for you
-                    .inner-title Discover And Find Your new product
+                    .inner-sub-title #{item.subTitle}
+                    .inner-title #{item.title}
                     button.button-slide Shop Now
                 .col-6
                   .inner-box-2
-                    img(src="/image/slide/img-slide-1.png")
-      </swiper-slide>
-      <swiper-slide>
-        .container
-          .inner-content
-            .row
-              .col-6
-                .inner-box-1
-                  .inner-sub-title A Modern Touch for Your Desk or Nightstand
-                  .inner-title Mainstays Modern table lamp
-                  button.button-slide Shop Now
-              .col-6
-                .inner-box-2
-                  img(src="/image/slide/img-slide-2.png")
-      </swiper-slide>
-      <swiper-slide>
-        .container
-          .inner-content
-            .row
-              .col-6
-                .inner-box-1
-                  .inner-sub-title A Statement Piece for Your Living Space
-                  .inner-title Eclipse Modern Coffee Table
-                  button.button-slide Shop Now
-              .col-6
-                .inner-box-2
-                  img(src="/image/slide/img-slide-3.png")
-      </swiper-slide>
-    </swiper-container>
+                    img(src=item.image)
 
     section.section-policy
       .container

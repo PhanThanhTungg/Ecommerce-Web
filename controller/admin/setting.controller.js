@@ -13,6 +13,20 @@ module.exports.general = async (req, res) => {
 
 module.exports.generalPatch = async (req, res) => {
   const settingsGeneral = await SettingGeneral.findOne({})
+  if (req.body.logo) {
+    req.body.logo = req.body.logo[0]
+  }
+  let bannerObject;
+  if (req.body.bannerImage) req.body.bannerImage = req.body.bannerImage[0];
+
+  const { bannerImage, bannerTitle, bannerSubtitle } = req.body;
+  if (bannerImage && bannerTitle && bannerSubtitle) {
+    bannerObject = {
+      image: bannerImage,
+      title: bannerTitle,
+      subTitle: bannerSubtitle
+    };
+  }
 
   req.body.shippingFee = {
     freeShippingThreshold: req.body.freeShippingThreshold,
@@ -23,10 +37,23 @@ module.exports.generalPatch = async (req, res) => {
     interProvincialFee: req.body.interProvincialFee,
   }
   req.body.apiKey = {
-    apiOpenStreetMap : req.body.apiOpenStreetMap
+    apiOpenStreetMap: req.body.apiOpenStreetMap
   }
 
-  if(settingsGeneral) {
+  console.log(req.body);
+  console.log(bannerObject);
+  if (settingsGeneral) {
+    if (bannerObject) {
+      await SettingGeneral.updateOne(
+        { _id: settingsGeneral.id },
+        {
+          $push: {
+            banner: bannerObject
+          }
+        }
+      );
+    }
+
     await SettingGeneral.updateOne({
       _id: settingsGeneral.id
     }, req.body)

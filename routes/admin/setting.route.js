@@ -12,8 +12,11 @@ router.get("/general", controller.general)
 
 router.patch(
   "/general",
-  upload.single("logo"),
-  uploadCloud.upload,
+  upload.fields([
+    { name: "logo", maxCount: 1 },
+    { name: "bannerImage", maxCount: 1 }
+  ]),
+  uploadCloud.uploadMutiple,
   controller.generalPatch
 )
 

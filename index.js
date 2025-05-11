@@ -20,6 +20,12 @@ database.connect() // connect toi dtb
 const app = express()
 const port = process.env.PORT
 
+const settingGeneral = require("./model/settings-general.model");
+(async()=>{
+  const settingsGeneral = await settingGeneral.findOne({});
+  app.locals.settingsGeneral = settingsGeneral;
+})(); 
+
 app.use(express.static(`${__dirname}/public`))  // nhúng file tĩnh
 
 // parse application/x-www-form-urlencoded
@@ -47,8 +53,8 @@ app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
 
 // cron
-const dwhAction = require("./DWH/dwh.js");
-dwhAction();
+// const dwhAction = require("./DWH/dwh.js");
+// dwhAction();
 
 route(app) //gọi đến route
 routeAdmin(app)
@@ -60,7 +66,6 @@ app.get("*", (req, res) => {
     pageTitle: "404 Not Found",
   });
 });
-
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
