@@ -3,147 +3,149 @@ extends ../../layouts/default.pug
 block main
   h1(class=`mb-7 ml-2 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-4xl
     dark:text-white`) Dashboard
-  .container-custom
-    .fact-sale
+  .container-custom.dashboard
+    .fact-sale.mb-8
       h2(class=`mb-5 ml-5 text-xl font-medium leading-none tracking-tight text-gray-900 md:text-2xl
       dark:text-white`) Sales report
-      .options(class="grid gap-6 mb-6 md:grid-cols-4")
+      .options(class="grid gap-5 mb-6 md:grid-cols-4")
         .time-option
           h3 Time
-          .time-rollup.flex
-            label
-              input(
-                type="radio"
-                name="saleTime"
-                value="day"
+          .flex.justify-between
+            .time-rollup.flex.flex-col.gap-3
+              label
+                input(
+                  type="radio"
+                  name="saleTime"
+                  value="day"
+                )
+                span Day
+              label
+                input(
+                  type="radio"
+                  name="saleTime"
+                  value="month"
+                  checked
+                )
+                span Month
+              label
+                input(
+                  type="radio"
+                  name="saleTime"
+                  value="year"
+                )
+                span Year
+            .time-dice.flex.justify-around
+              button(
+                type="button" data-dropdown-toggle="sale-time-dice" data-dropdown-placement="bottom"
               )
-              span Day
-            label
-              input(
-                type="radio"
-                name="saleTime"
-                value="month"
-                checked
-              )
-              span Month
-            label
-              input(
-                type="radio"
-                name="saleTime"
-                value="year"
-              )
-              span Year
-          .time-dice.mb-6.flex.justify-around
-            button(
-              type="button" data-dropdown-toggle="sale-time-dice" data-dropdown-placement="bottom" 
-              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            )
-              | Filter
-              svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
-                path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
+                | Filter
+                svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
+                  path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
 
-            div#sale-time-dice(class="z-10 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
-              form.time-dice-form
-                .list-time
-                button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
-                  | OK
+              div#sale-time-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
+                form.time-dice-form
+                  .list-time.w-full
+                  button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
+                    | OK
+
         .location-option
-          h3 Location   
-          .location-rollup.flex
-            label
-              input(
-                type="radio"
-                name="saleLocation"
-                value="commune"
+          h3 Location
+          .flex.justify-between
+            .location-rollup.flex.flex-col.gap-3
+              label
+                input(
+                  type="radio"
+                  name="saleLocation"
+                  value="commune"
+                )
+                span Commune
+              label
+                input(
+                  type="radio"
+                  name="saleLocation"
+                  value="district"
+                )
+                span District
+              label
+                input(
+                  type="radio"
+                  name="saleLocation"
+                  value="province"
+                  checked
+                )
+                span Province
+            .location-dice.mb-6
+              button(
+                type="button" data-dropdown-toggle="sale-location-dice" data-dropdown-placement="bottom" 
               )
-              span Commune
-            label
-              input(
-                type="radio"
-                name="saleLocation"
-                value="district"
-              )
-              span District
-            label
-              input(
-                type="radio"
-                name="saleLocation"
-                value="province"
-                checked
-              )
-              span Province
-          .location-dice.mb-6
-            button(
-              type="button" data-dropdown-toggle="sale-location-dice" data-dropdown-placement="bottom" 
-              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            )
-              | Filter
-              svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
-                path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
+                | Filter
+                svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
+                  path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
 
-            div#sale-location-dice(class="z-10 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
-              div(class="p-3")
-                label(for="input-group-search" class="sr-only") Search
-                div(class="relative")
-                  div(class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none")
-                    svg(class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20")
-                      path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z")
-                  input(type="search" placeholder="Search location" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500")
-              form.location-dice-form
-                ul.list-location(class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
-                button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
-                  | OK
+              div#sale-location-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
+                div(class="p-3")
+                  label(for="input-group-search" class="sr-only") Search
+                  div(class="relative")
+                    div(class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none")
+                      svg(class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20")
+                        path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z")
+                    input(type="search" placeholder="Search location" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500")
+                form.location-dice-form
+                  ul.list-location(class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
+                  button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
+                    | OK
+
         .product-option
           h3 Product
-          .product-rollup.flex
-            label
-              input(
-                type="radio"
-                name="saleProduct"
-                value="product"
+          .flex.justify-between
+            .product-rollup.flex.flex-col.gap-3
+              label
+                input(
+                  type="radio"
+                  name="saleProduct"
+                  value="product"
+                )
+                span Product
+              label
+                input(
+                  type="radio"
+                  name="saleProduct"
+                  value="category"
+                  checked
+                )
+                span Category
+            .product-dice.mb-6
+              button(
+                type="button" data-dropdown-toggle="sale-product-dice" data-dropdown-placement="bottom" 
               )
-              span Product
-            label
-              input(
-                type="radio"
-                name="saleProduct"
-                value="category"
-                checked
-              )
-              span Category
-          .product-dice.mb-6
-            button(
-              type="button" data-dropdown-toggle="sale-product-dice" data-dropdown-placement="bottom" 
-              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            )
-              | Filter
-              svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
-                path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
+                | Filter
+                svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
+                  path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
 
-            div#sale-product-dice(class="z-10 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
-              div(class="p-3")
-                label(for="input-group-search" class="sr-only") Search
-                div(class="relative")
-                  div(class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none")
-                    svg(class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20")
-                      path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z")
-                  input(type="search" placeholder="Search product/category" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500")
-              form.product-dice-form
-                ul.list-product(class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
-                button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
-                  | OK
+              div#sale-product-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
+                div(class="p-3")
+                  label(for="input-group-search" class="sr-only") Search
+                  div(class="relative")
+                    div(class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none")
+                      svg(class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20")
+                        path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z")
+                    input(type="search" placeholder="Search product/category" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500")
+                form.product-dice-form
+                  ul.list-product(class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
+                  button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
+                    | OK
+
         .customer-option
           h3 Customer
           .customer-dice.mb-6
             button(
               type="button" data-dropdown-toggle="sale-customer-dice" data-dropdown-placement="bottom" 
-              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             )
               | Filter
               svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
                 path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
 
-            div#sale-customer-dice(class="z-10 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
+            div#sale-customer-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
               form.customer-dice-form
                 .flex
                   ul.list-gender(class="h-fit px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200") Gender
@@ -228,261 +230,267 @@ block main
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                           )
                           span.ml-2 Normal 
-                button(class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
+                button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
                   | OK
-          
+
       .inner-chart
-        .time-chart
-        .location-chart
-        .product-chart
-        .flex
-          .customer-chart
-          .customer-chart2
-    .fact-feedback
+        .time-chart.wrapper-chart
+        .flex.gap-5.w-full.mt-5
+          .flex.flex-col.gap-5.w-185
+            .location-chart.wrapper-chart
+            .product-chart.wrapper-chart
+          .flex.gap-5.flex-col
+            .customer-chart.wrapper-chart
+            .customer-chart2.wrapper-chart
+    
+    .fact-feedback.mb-8
       h2(class=`mb-5 ml-5 text-xl font-medium leading-none tracking-tight text-gray-900 md:text-2xl
       dark:text-white`) Feedback report
       .options(class="grid gap-6 mb-6 md:grid-cols-4")
         .time-option
           h3 Time
-          .time-rollup.flex
-            label
-              input(
-                type="radio"
-                name="feedbackTime"
-                value="day"
+          .flex.justify-between
+            .time-rollup.flex.flex-col.gap-3
+              label
+                input(
+                  type="radio"
+                  name="feedbackTime"
+                  value="day"
+                )
+                span Day
+              label
+                input(
+                  type="radio"
+                  name="feedbackTime"
+                  value="month"
+                  checked
+                )
+                span Month
+              label
+                input(
+                  type="radio"
+                  name="feedbackTime"
+                  value="year"
+                )
+                span Year
+            .time-dice.mb-6.flex.justify-around
+              button(
+                type="button" data-dropdown-toggle="feedback-time-dice" data-dropdown-placement="bottom" 
               )
-              span Day
-            label
-              input(
-                type="radio"
-                name="feedbackTime"
-                value="month"
-                checked
-              )
-              span Month
-            label
-              input(
-                type="radio"
-                name="feedbackTime"
-                value="year"
-              )
-              span Year
-          .time-dice.mb-6.flex.justify-around
-            button(
-              type="button" data-dropdown-toggle="feedback-time-dice" data-dropdown-placement="bottom" 
-              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            )
-              | Filter
-              svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
-                path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
+                | Filter
+                svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
+                  path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
 
-            div#feedback-time-dice(class="z-10 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
-              form.time-dice-form
-                .list-time
-                button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
-                  | OK
+              div#feedback-time-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
+                form.time-dice-form
+                  .list-time
+                  button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
+                    | OK
 
         .product-option
           h3 Product
-          .product-rollup.flex
-            label
-              input(
-                type="radio"
-                name="feedbackProduct"
-                value="product"
+          .flex.justify-between
+            .product-rollup.flex.flex-col.gap-3
+              label
+                input(
+                  type="radio"
+                  name="feedbackProduct"
+                  value="product"
+                )
+                span Product
+              label
+                input(
+                  type="radio"
+                  name="feedbackProduct"
+                  value="category"
+                  checked
+                )
+                span Category
+            .product-dice.mb-6
+              button(
+                type="button" data-dropdown-toggle="feedback-product-dice" data-dropdown-placement="bottom" 
               )
-              span Product
-            label
-              input(
-                type="radio"
-                name="feedbackProduct"
-                value="category"
-                checked
-              )
-              span Category
-          .product-dice.mb-6
-            button(
-              type="button" data-dropdown-toggle="feedback-product-dice" data-dropdown-placement="bottom" 
-              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            )
-              | Filter
-              svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
-                path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
+                | Filter
+                svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
+                  path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
 
-            div#feedback-product-dice(class="z-10 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
-              div(class="p-3")
-                label(for="input-group-search" class="sr-only") Search
-                div(class="relative")
-                  div(class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none")
-                    svg(class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20")
-                      path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z")
-                  input(type="search" placeholder="Search product/category" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500")
-              form.product-dice-form
-                ul.list-product(class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
-                button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
-                  | OK
-      
+              div#feedback-product-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
+                div(class="p-3")
+                  label(for="input-group-search" class="sr-only") Search
+                  div(class="relative")
+                    div(class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none")
+                      svg(class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20")
+                        path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z")
+                    input(type="search" placeholder="Search product/category" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500")
+                form.product-dice-form
+                  ul.list-product(class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
+                  button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
+                    | OK
+
       .inner-chart
-        .time-chart
-        .product-chart
+        .time-chart.wrapper-chart.mb-5
+        .product-chart.wrapper-chart
+
     .fact-order
       h2(class=`mb-5 ml-5 text-xl font-medium leading-none tracking-tight text-gray-900 md:text-2xl
       dark:text-white`) Order report
       .options(class="grid gap-6 mb-6 md:grid-cols-4")
         .time-option
           h3 Time
-          .time-rollup.flex
-            label
-              input(
-                type="radio"
-                name="orderTime"
-                value="day"
+          .flex.justify-between
+            .time-rollup.flex.flex-col.gap-3
+              label
+                input(
+                  type="radio"
+                  name="orderTime"
+                  value="day"
+                )
+                span Day
+              label
+                input(
+                  type="radio"
+                  name="orderTime"
+                  value="month"
+                  checked
+                )
+                span Month
+              label
+                input(
+                  type="radio"
+                  name="orderTime"
+                  value="year"
+                )
+                span Year
+            .time-dice.mb-6.flex.justify-around
+              button(
+                type="button" data-dropdown-toggle="order-time-dice" data-dropdown-placement="bottom" 
               )
-              span Day
-            label
-              input(
-                type="radio"
-                name="orderTime"
-                value="month"
-                checked
-              )
-              span Month
-            label
-              input(
-                type="radio"
-                name="orderTime"
-                value="year"
-              )
-              span Year
-          .time-dice.mb-6.flex.justify-around
-            button(
-              type="button" data-dropdown-toggle="order-time-dice" data-dropdown-placement="bottom" 
-              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            )
-              | Filter
-              svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
-                path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
+                | Filter
+                svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
+                  path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
 
-            div#order-time-dice(class="z-10 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
-              form.time-dice-form
-                .list-time
-                button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
-                  | OK
+              div#order-time-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
+                form.time-dice-form
+                  .list-time
+                  button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
+                    | OK
 
         .location-option
           h3 Location
-          .location-rollup.flex            
-            label
-              input(
-                type="radio"
-                name="orderLocation"
-                value="commune"
+          .flex.justify-between
+            .location-rollup.flex.flex-col.gap-3
+              label
+                input(
+                  type="radio"
+                  name="orderLocation"
+                  value="commune"
+                )
+                span Commune
+              label
+                input(
+                  type="radio"
+                  name="orderLocation"
+                  value="district"
+                )
+                span District            
+              label
+                input(
+                  type="radio"
+                  name="orderLocation"
+                  value="province"
+                  checked
+                )
+                span Province
+            .location-dice.mb-6
+              button(
+                type="button" data-dropdown-toggle="order-location-dice" data-dropdown-placement="bottom" 
               )
-              span Commune
-            label
-              input(
-                type="radio"
-                name="orderLocation"
-                value="district"
-              )
-              span District            
-            label
-              input(
-                type="radio"
-                name="orderLocation"
-                value="province"
-                checked
-              )
-              span Province
-          .location-dice.mb-6
-            button(
-              type="button" data-dropdown-toggle="order-location-dice" data-dropdown-placement="bottom" 
-              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            )
-              | Filter
-              svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
-                path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
+                | Filter
+                svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
+                  path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
 
-            div#order-location-dice(class="z-10 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
-              form.location-dice-form
-                ul.list-location(class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
-                button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
-                  | OK
+              div#order-location-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
+                form.location-dice-form
+                  ul.list-location(class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
+                  button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
+                    | OK
 
         .order-option
           h3 Order
-          .order-rollup.flex
-            label
-              input(
-                type="radio"
-                name="orderOrder"
-                value="delivery"
-                checked
+          .flex.justify-between
+            .order-rollup.flex.flex-col.gap-3
+              label
+                input(
+                  type="radio"
+                  name="orderOrder"
+                  value="delivery"
+                  checked
+                )
+                span Delivery method
+              label
+                input(
+                  type="radio"
+                  name="orderOrder"
+                  value="payment"
+                )
+                span Payment method            
+            .order-dice.mb-6
+              button(
+                type="button" data-dropdown-toggle="order-order-dice" data-dropdown-placement="bottom" 
               )
-              span Delivery method
-            label
-              input(
-                type="radio"
-                name="orderOrder"
-                value="payment"
-              )
-              span Payment method            
-          .order-dice.mb-6
-            button(
-              type="button" data-dropdown-toggle="order-order-dice" data-dropdown-placement="bottom" 
-              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            )
-              | Filter
-              svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
-                path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
+                | Filter
+                svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
+                  path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
 
-            div#order-order-dice(class="z-10 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
-              form.order-dice-form
-                ul.list-order(class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
-                button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
-                  | OK
+              div#order-order-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
+                form.order-dice-form
+                  ul.list-order(class="h-fit px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
+                  button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
+                    | OK
 
         .customer-option
           h3 Customer
-          .customer-rollup.flex
-            label
-              input(
-                type="radio"
-                name="orderCustomer"
-                value="type"
-                checked
-              )
-              span Type
-            label
-              input(
-                type="radio"
-                name="orderCustomer"
-                value="gender"
-              )
-              span Gender
+          .flex.justify-between
+            .customer-rollup.flex.flex-col.gap-3
+              label
+                input(
+                  type="radio"
+                  name="orderCustomer"
+                  value="type"
+                  checked
+                )
+                span Type
+              label
+                input(
+                  type="radio"
+                  name="orderCustomer"
+                  value="gender"
+                )
+                span Gender
 
-          .customer-dice.mb-6
-            button(
-              type="button" data-dropdown-toggle="order-customer-dice" data-dropdown-placement="bottom" 
-              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            )
-              | Filter
-              svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
-                path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
+            .customer-dice.mb-6
+              button(
+                type="button" data-dropdown-toggle="order-customer-dice" data-dropdown-placement="bottom" 
+              )
+                | Filter
+                svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
+                  path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
 
-            div#order-customer-dice(class="z-10 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
-              form.customer-dice-form
-                ul.list-customer(class="h-fit px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
-                button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
-                  | OK
-      
+              div#order-customer-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
+                form.customer-dice-form
+                  ul.list-customer(class="h-fit px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
+                  button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
+                    | OK
+
       .inner-chart
-        .time-chart
-        .location-chart
-        .flex
-          .order-chart
-          .customer-chart
-    
+        .flex.gap-5
+          .flex.flex-col.gap-5
+            .order-chart.wrapper-chart
+            .customer-chart.wrapper-chart
+          .flex.flex-col.gap-5.w-185
+            .time-chart.wrapper-chart
+            .location-chart.wrapper-chart
+
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="js/helper.js"></script>
   script(type="module" src="/admin/js/saleChart.js")

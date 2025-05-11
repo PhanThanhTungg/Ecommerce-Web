@@ -85,7 +85,7 @@ async function renderSaleTimeChart(rollUp = "month") {
     dataLabels: {
       enabled: false
     },
-    colors: ['#99C2A2', '#66C7F4'],
+    colors: ['#66C7F4', '#7E3AF2'],
     series: [
       {
         name: 'Product quantity',
@@ -99,7 +99,8 @@ async function renderSaleTimeChart(rollUp = "month") {
       },
     ],
     stroke: {
-      width: [4, 4, 4]
+      width: 5,
+      curve: 'smooth'
     },
     plotOptions: {
       bar: {
@@ -445,8 +446,12 @@ async function renderAllChart() {
 timeInputRadios.forEach(item => {
   item.addEventListener('change', async function () {
     currentTimeRollUp = item.value
-    timeDice = ''
-    await renderSaleTimeChart(item.value)
+    if (timeDice != "") {
+      timeDice = ''
+      await renderAllChart()
+    } else {
+      await renderSaleTimeChart(item.value)
+    }
     renderTimeDice(item.value);
   })
 })
@@ -454,8 +459,12 @@ timeInputRadios.forEach(item => {
 locationInputRadios.forEach(item => {
   item.addEventListener('change', async function () {
     currentLocationRollUp = item.value
-    locationDice = ''
-    await renderSaleLocationChart(item.value)
+    if (locationDice != "") {
+      locationDice = ''
+      await renderAllChart()
+    } else {
+      await renderSaleLocationChart(item.value)
+    }
     renderLocationDice()
   })
 })
@@ -463,8 +472,12 @@ locationInputRadios.forEach(item => {
 productInputRadios.forEach(item => {
   item.addEventListener('change', async function () {
     currentProductRollUp = item.value
-    productDice = ''
-    await renderSaleProductChart(item.value)
+    if (productDice != "") {
+      productDice = ''
+      await renderAllChart()
+    } else {
+      await renderSaleProductChart(item.value)
+    }
     renderProductDice()
   })
 })
@@ -536,7 +549,7 @@ function renderTimeDice(unit = "month") {
   }
   inputTimeDice.innerHTML = ''
   inputTimeDice.innerHTML = `
-    <div class="flex flex-col items-start p-3">
+    <div class="flex flex-col items-start">
       <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Start ${unit}</label>
       <div class="relative">
         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -544,7 +557,7 @@ function renderTimeDice(unit = "month") {
               <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
             </svg>
         </div>
-        <input name="start" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-18 ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="${placeholder}">
+        <input name="start" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="${placeholder}">
       </div>
       <span class="mx-2 text-gray-500 dark:text-gray-400">to</span>
       <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">End ${unit}</label>
@@ -554,7 +567,7 @@ function renderTimeDice(unit = "month") {
               <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
             </svg>
         </div>
-        <input name="end" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-18 ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="${placeholder}">
+        <input name="end" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="${placeholder}">
       </div>
     </div>
   `

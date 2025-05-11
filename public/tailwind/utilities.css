@@ -1,0 +1,43 @@
+@layer utilities {
+  .dashboard label {
+    @apply flex items-center gap-2;
+  }
+
+  .dashboard form {
+    @apply flex flex-col gap-3 p-3;
+  }
+
+  .dashboard .options > * {
+    @apply bg-white rounded-lg p-4;
+    box-shadow: 2px 3px 3px 2px rgb(0 0 0 / 0.1);
+  }
+
+  .wrapper-chart {
+    @apply bg-white rounded-lg p-4;
+    box-shadow: 2px 3px 3px 2px rgb(0 0 0 / 0.1);
+  }
+
+  .time-dice-form {
+    @apply w-54
+  }
+  
+  .dashboard h3 {
+    @apply text-xl font-bold dark:text-white mb-4;
+  }
+
+  .dashboard button[type="button"] {
+    @apply h-fit
+      text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center 
+      inline-flex items-center dark:hover:text-white
+  }
+
+  .dashboard button[type="submit"] {
+    @apply self-end m-0
+  }
+
+  
+
+
+}
+
+
