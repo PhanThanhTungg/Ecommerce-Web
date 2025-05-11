@@ -53,7 +53,7 @@ app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
 
 // cron
-const dwhAction = require("./DWH/dwh.js");
+// const dwhAction = require("./DWH/dwh.js");
 // dwhAction();
 
 route(app) //gọi đến route
@@ -66,7 +66,6 @@ app.get("*", (req, res) => {
     pageTitle: "404 Not Found",
   });
 });
-
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

@@ -75,19 +75,22 @@ block main
             if(settingsGeneral.banner.length > 0)
               #indicators-carousel.relative.w-full(data-carousel='static')
                 .relative.h-56.overflow-hidden.rounded-lg(class='md:h-96')
-                  for item in settingsGeneral.banner
-                    button.button-edit-banner(class="button-1")
-                      span Edit
-                    .hidden.duration-700.ease-in-out(data-carousel-item='active' class="bg-[#F8F8F8] p-4")
-                      div(class="grid grid-cols-2 bg-[#F8F8F8]")
-                        div(class="bg-[#F8F8F8] flex justify-center items-center")
-                          div(class="flex flex-col")
-                            div(class="text-gray-500") #{item.subTitle}
-                            div(class="font-bold text-2xl") #{item.title}
-                        div(class="w-[400px] h-full")
-                          img(src=item.image class=`
-                            max-w-[100%] max-h-[100%] object-contain` 
-                          alt='...')
+                  for item, i in settingsGeneral.banner
+                    div
+                      button.button-edit-banner(class="button-1 absolute z-100000 w-[70px]")
+                        span.text-black(class="hover:text-white") Edit
+                      .hidden.duration-700.ease-in-out(data-carousel-item=`${i==0&&'active'}` 
+                        class="bg-[#F8F8F8] p-4"
+                      )
+                        div.edit-area(class="grid grid-cols-2 bg-[#F8F8F8]")
+                          div(class="bg-[#F8F8F8] flex justify-center items-center")
+                            div(class="flex flex-col")  
+                              div(class="text-gray-500") #{item.subTitle}
+                              div(class="font-bold text-2xl") #{item.title}
+                          div(class="w-[400px] h-full")
+                            img(src=item.image class=`
+                              max-w-[100%] max-h-[100%] object-contain` 
+                            alt='...')
 
                 .absolute.z-30.flex.space-x-3.bottom-5(class='-translate-x-1/2 rtl:space-x-reverse left-1/2')
                   for item, index in settingsGeneral.banner
@@ -107,7 +110,7 @@ block main
                       path(stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m1 9 4-4-4-4')
                     span.sr-only Next
 
-                
+
 
         div(class="grid gap-6 mb-6 md:grid-cols-2")
           div
@@ -261,5 +264,5 @@ block main
             text-white bg-gray-800 rounded-sm hover:bg-gray-900
             dark:bg-gray-700 dark:hover:bg-gray-600`
           ) Update
-  
+
   script(src="/admin/js/setting.js")

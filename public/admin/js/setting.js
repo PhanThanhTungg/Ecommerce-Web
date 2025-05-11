@@ -6,3 +6,14 @@ if(buttonAddBanner) {
     bannerArea.classList.toggle('hidden');
   });
 }
+
+const buttonEditBanners = document.querySelectorAll('.button-edit-banner');
+if(buttonEditBanners) {
+  buttonEditBanners.forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      const editArea = button.parentElement.querySelector('.edit-area');
+      console.log(editArea);
+    });
+  });
+}
