@@ -20,6 +20,12 @@ database.connect() // connect toi dtb
 const app = express()
 const port = process.env.PORT
 
+const settingGeneral = require("./model/settings-general.model");
+(async()=>{
+  const settingsGeneral = await settingGeneral.findOne({});
+  app.locals.settingsGeneral = settingsGeneral;
+})(); 
+
 app.use(express.static(`${__dirname}/public`))  // nhúng file tĩnh
 
 // parse application/x-www-form-urlencoded

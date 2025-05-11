@@ -1,5 +1,5 @@
 // darkmode
-if(!localStorage.getItem('color-theme')) {
+if (!localStorage.getItem('color-theme')) {
   localStorage.setItem('color-theme', 'dark');
 }
 if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -255,20 +255,22 @@ if (showAlert) {
 
 //upload-image-preview
 
-const uploadImage = document.querySelector("[upload-image]");
-if (uploadImage) {
-  const uploadImageInput = document.querySelector("[upload-image-input]");
-  uploadImageInput.addEventListener("change", function(e) {
-    const imagesPreview = document.querySelector(".images-preview");
-    imagesPreview.innerHTML = "";
-    const files = e.target.files;
-    if (files) {
-      for (const file of files) {
-        const img = `<img class="image-preview w-[20%] rounded-sm" 
+const uploadImages = document.querySelectorAll("[upload-image]");
+if (uploadImages) {
+  uploadImages.forEach(uploadImage => {
+    const uploadImageInput = uploadImage.querySelector("[upload-image-input]");
+    uploadImageInput.addEventListener("change", function (e) {
+      const imagesPreview = uploadImage.querySelector(".images-preview");
+      imagesPreview.innerHTML = "";
+      const files = e.target.files;
+      if (files) {
+        for (const file of files) {
+          const img = `<img class="image-preview w-[20%] rounded-sm" 
           src="${URL.createObjectURL(file)}"/>`;
-        imagesPreview.innerHTML += img;
+          imagesPreview.innerHTML += img;
+        }
       }
-    }
+    })
   })
 }
 //end-upload-image-preview
@@ -278,7 +280,7 @@ const avatarInput = document.getElementById("avatar");
 if (avatarInput) {
   const avatarPreview = document.querySelector(".avatar-preview");
   currentSrc = avatarPreview.src;
-  avatarInput.addEventListener("change", function(e) {
+  avatarInput.addEventListener("change", function (e) {
     const file = e.target.files[0];
     if (file) {
       avatarPreview.src = URL.createObjectURL(file);
@@ -293,7 +295,7 @@ const logoInput = document.getElementById("logo");
 if (logoInput) {
   const logoPreview = document.getElementById("logo-preview");
   currentSrc = logoPreview.src;
-  logoInput.addEventListener("change", function(e) {
+  logoInput.addEventListener("change", function (e) {
     const file = e.target.files[0];
     if (file) {
       logoPreview.src = URL.createObjectURL(file);
@@ -352,7 +354,7 @@ const checkboxStatus = document.getElementById("statusActive");
 if (checkboxStatus) {
   checkboxStatus.addEventListener("change", function () {
     const secondaryCheckbox = document.getElementById("input-hidden");
-    if(!this.checked) {
+    if (!this.checked) {
       secondaryCheckbox.innerHTML = `<input type="hidden" name="status" value="inactive">`;
     } else {
       secondaryCheckbox.innerHTML = "";

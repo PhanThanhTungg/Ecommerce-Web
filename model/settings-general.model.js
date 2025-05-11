@@ -22,7 +22,14 @@ const settingGeneralSchema = new mongoose.Schema(
       urbanFee: Number,
       suburbanFee: Number,
       interProvincialFee: Number,
-    }
+    },
+    banner: [
+      {
+        image: String,
+        subTitle: String,
+        title: String
+      }
+    ]
   },
   {
     timestamps: true,
