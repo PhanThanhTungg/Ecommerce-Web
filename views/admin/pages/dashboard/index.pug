@@ -7,146 +7,7 @@ block main
     .fact-sale.mb-8
       h2(class=`mb-5 ml-5 text-[16px] font-medium leading-none tracking-tight text-gray-900 md:text-2xl
       dark:text-white`) Sales report
-      .options(class="grid gap-5 mb-6 md:grid-cols-4")
-        
-        .product-option
-          h3 Product
-          .flex.justify-between
-            .product-rollup.flex.flex-col.gap-3
-              label
-                input(
-                  type="radio"
-                  name="saleProduct"
-                  value="product"
-                )
-                span Product
-              label
-                input(
-                  type="radio"
-                  name="saleProduct"
-                  value="category"
-                  checked
-                )
-                span Category
-            .product-dice.mb-6
-              button(
-                type="button" data-dropdown-toggle="sale-product-dice" data-dropdown-placement="bottom" 
-              )
-                | Filter
-                svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
-                  path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
-
-              div#sale-product-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
-                div(class="p-3")
-                  label(for="input-group-search" class="sr-only") Search
-                  div(class="relative")
-                    div(class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none")
-                      svg(class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20")
-                        path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z")
-                    input(type="search" placeholder="Search product/category" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500")
-                form.product-dice-form
-                  ul.list-product(class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
-                  button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
-                    | OK
-
-        .customer-option
-          h3 Customer
-          .customer-dice.mb-6
-            button(
-              type="button" data-dropdown-toggle="sale-customer-dice" data-dropdown-placement="bottom" 
-            )
-              | Filter
-              svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
-                path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
-
-            div#sale-customer-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
-              form.customer-dice-form
-                .flex
-                  ul.list-gender(class="h-fit px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200") Gender
-                    li
-                      div(class="flex items-center ps-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600")
-                        label(class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded-sm dark:text-gray-300")
-                          input(
-                            type="checkbox"
-                            name="gender"
-                            value="male"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                          )
-                          span.ml-2 Male
-                    li
-                      div(class="flex items-center ps-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600")
-                        label(class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded-sm dark:text-gray-300")
-                          input(
-                            type="checkbox"
-                            name="gender"
-                            value="female"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                          )
-                          span.ml-2 Female
-                    li
-                      div(class="flex items-center ps-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600")
-                        label(class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded-sm dark:text-gray-300")
-                          input(
-                            type="checkbox"
-                            name="gender"
-                            value="other"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                          )
-                          span.ml-2 Other
-                    li
-                      div(class="flex items-center ps-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600")
-                        label(class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded-sm dark:text-gray-300")
-                          input(
-                            type="checkbox"
-                            name="gender"
-                            value="unknown"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                          )
-                          span.ml-2 Unknown
-                  ul.list-type(class="h-fit px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200") Type
-                    li
-                      div(class="flex items-center ps-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600")
-                        label(class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded-sm dark:text-gray-300")
-                          input(
-                            type="checkbox"
-                            name="type"
-                            value="facebook"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                          )
-                          span.ml-2 Facebook
-                    li
-                      div(class="flex items-center ps-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600")
-                        label(class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded-sm dark:text-gray-300")
-                          input(
-                            type="checkbox"
-                            name="type"
-                            value="google"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                          )
-                          span.ml-2 Google
-                    li
-                      div(class="flex items-center ps-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600")
-                        label(class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded-sm dark:text-gray-300")
-                          input(
-                            type="checkbox"
-                            name="type"
-                            value="github"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                          )
-                          span.ml-2 Github
-                    li
-                      div(class="flex items-center ps-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600")
-                        label(class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded-sm dark:text-gray-300")
-                          input(
-                            type="checkbox"
-                            name="type"
-                            value="normal"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                          )
-                          span.ml-2 Normal 
-                button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
-                  | OK
-
+      //- .options(class="grid gap-5 mb-6 md:grid-cols-4")   
       .inner-chart
         div.time-area(class="border-1 border-gray-200 pt-5 rounded-2xl")
           .time-option
@@ -245,12 +106,151 @@ block main
                         button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
                           | OK
               .location-chart
-            //- .customer-chart.wrapper-chart
-            //- .customer-chart2.wrapper-chart
             
           .flex.gap-5.flex-col.w-full
-            .product-chart.wrapper-chart
-            
+            div.product-area(class="border-1 border-gray-200 pt-5 rounded-2xl")
+              .product-option
+                .flex
+                  .product-rollup.flex.ml-3.mr-5
+                    label
+                      input(
+                        type="radio"
+                        name="saleProduct"
+                        value="product"
+                        class="hidden"
+                      )
+                      span(class="px-4 py-[2px] rounded-[5px] border-1 border-gray-200 text-gray-600") Product
+                    label
+                      input(
+                        type="radio"
+                        name="saleProduct"
+                        value="category"
+                        class="hidden"
+                        checked
+                      )
+                      span(class="px-4 py-[2px] rounded-[5px] border-1 border-gray-200 text-gray-600 active bg-gray-500 text-white") Category
+                  .product-dice
+                    button(
+                      type="button" data-dropdown-toggle="sale-product-dice" data-dropdown-placement="bottom" 
+                      class='px-4 py-[4px] rounded-[5px] border-1 border-gray-200 text-gray-600' 
+                    )
+                      | Filter
+                      svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
+                        path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
+
+                    div#sale-product-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
+                      div(class="p-3")
+                        label(for="input-group-search" class="sr-only") Search
+                        div(class="relative")
+                          div(class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none")
+                            svg(class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20")
+                              path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z")
+                          input(type="search" placeholder="Search product/category" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500")
+                      form.product-dice-form
+                        ul.list-product(class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
+                        button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
+                          | OK
+              .product-chart
+            .customer-option
+              h3 Customer
+              .customer-dice.mb-6
+                button(
+                  type="button" data-dropdown-toggle="sale-customer-dice" data-dropdown-placement="bottom" 
+                )
+                  | Filter
+                  svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
+                    path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
+
+                div#sale-customer-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
+                  form.customer-dice-form
+                    .flex
+                      ul.list-gender(class="h-fit px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200") Gender
+                        li
+                          div(class="flex items-center ps-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600")
+                            label(class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded-sm dark:text-gray-300")
+                              input(
+                                type="checkbox"
+                                name="gender"
+                                value="male"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                              )
+                              span.ml-2 Male
+                        li
+                          div(class="flex items-center ps-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600")
+                            label(class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded-sm dark:text-gray-300")
+                              input(
+                                type="checkbox"
+                                name="gender"
+                                value="female"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                              )
+                              span.ml-2 Female
+                        li
+                          div(class="flex items-center ps-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600")
+                            label(class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded-sm dark:text-gray-300")
+                              input(
+                                type="checkbox"
+                                name="gender"
+                                value="other"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                              )
+                              span.ml-2 Other
+                        li
+                          div(class="flex items-center ps-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600")
+                            label(class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded-sm dark:text-gray-300")
+                              input(
+                                type="checkbox"
+                                name="gender"
+                                value="unknown"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                              )
+                              span.ml-2 Unknown
+                      ul.list-type(class="h-fit px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200") Type
+                        li
+                          div(class="flex items-center ps-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600")
+                            label(class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded-sm dark:text-gray-300")
+                              input(
+                                type="checkbox"
+                                name="type"
+                                value="facebook"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                              )
+                              span.ml-2 Facebook
+                        li
+                          div(class="flex items-center ps-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600")
+                            label(class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded-sm dark:text-gray-300")
+                              input(
+                                type="checkbox"
+                                name="type"
+                                value="google"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                              )
+                              span.ml-2 Google
+                        li
+                          div(class="flex items-center ps-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600")
+                            label(class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded-sm dark:text-gray-300")
+                              input(
+                                type="checkbox"
+                                name="type"
+                                value="github"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                              )
+                              span.ml-2 Github
+                        li
+                          div(class="flex items-center ps-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600")
+                            label(class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded-sm dark:text-gray-300")
+                              input(
+                                type="checkbox"
+                                name="type"
+                                value="normal"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                              )
+                              span.ml-2 Normal 
+                    button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
+                      | OK
+        .customer-area.flex
+          .customer-chart
+          .customer-chart2
     
     .fact-feedback.mb-8
       h2(class=`mb-5 ml-5 text-xl font-medium leading-none tracking-tight text-gray-900 md:text-2xl

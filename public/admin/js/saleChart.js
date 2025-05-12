@@ -54,6 +54,19 @@ if(saleLocationInputs){
     });
   });
 }
+const saleProductInputs = document.querySelectorAll('input[name="saleProduct"]');
+if(saleProductInputs){
+  saleProductInputs.forEach((input) => {
+    input.addEventListener('change', function () {
+      document.querySelectorAll('input[name="saleProduct"]').forEach((el) => {
+        el.nextElementSibling.classList.remove('active', 'bg-gray-500', 'text-white');
+      });
+      if (this.checked) {
+        this.nextElementSibling.classList.add('active','bg-gray-500','text-white');
+      }
+    });
+  });
+}
 
 const saleAPI = "/api/dashboard/olap/fact_sale";
 
