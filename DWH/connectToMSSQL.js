@@ -3,10 +3,10 @@ const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize('WHHTTTQL', 'sa', '123456', {
   dialect: 'mssql',
   host: 'localhost',
-  port: 1433,
+  port: 1609,
   dialectOptions: {
     options: {
-      instanceName: 'SERVER_HANOI',
+      // instanceName: 'SERVER_HANOI',
       encrypt: false,
       trustServerCertificate: true,
     }

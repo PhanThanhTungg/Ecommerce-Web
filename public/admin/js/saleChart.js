@@ -17,16 +17,43 @@ const locationInputRadios = document.querySelectorAll('input[name="saleLocation"
 const productInputRadios = document.querySelectorAll('input[name="saleProduct"]')
 const customerInputRadios = document.querySelectorAll('input[name="saleCustomer"]')
 
-const inputTimeDice = document.querySelector('.fact-sale .options .list-time');
-const inputLocationDice = document.querySelector('.fact-sale .options ul.list-location');
-const inputProductDice = document.querySelector('.fact-sale .options ul.list-product');
-const inputCustomerDice = document.querySelector('.fact-sale .options ul.list-customer')
+const inputTimeDice = document.querySelector('.fact-sale .list-time');
+const inputLocationDice = document.querySelector('.fact-sale ul.list-location');
+const inputProductDice = document.querySelector('.fact-sale ul.list-product');
+const inputCustomerDice = document.querySelector('.fact-sale ul.list-customer')
 
 let saleTimeChart = null
 let saleLocationChart = null
 let saleProductChart = null
 let saleCustomerChart = null
 let saleCustomerChart2 = null
+
+const saleTimeInputs = document.querySelectorAll('input[name="saleTime"]');
+if(saleTimeInputs){
+  saleTimeInputs.forEach((input) => {
+    input.addEventListener('change', function () {
+      document.querySelectorAll('input[name="saleTime"]').forEach((el) => {
+        el.nextElementSibling.classList.remove('active', 'bg-gray-500', 'text-white');
+      });
+      if (this.checked) {
+        this.nextElementSibling.classList.add('active','bg-gray-500','text-white');
+      }
+    });
+  });
+}
+const saleLocationInputs = document.querySelectorAll('input[name="saleLocation"]');
+if(saleLocationInputs){
+  saleLocationInputs.forEach((input) => {
+    input.addEventListener('change', function () {
+      document.querySelectorAll('input[name="saleLocation"]').forEach((el) => {
+        el.nextElementSibling.classList.remove('active', 'bg-gray-500', 'text-white');
+      });
+      if (this.checked) {
+        this.nextElementSibling.classList.add('active','bg-gray-500','text-white');
+      }
+    });
+  });
+}
 
 const saleAPI = "/api/dashboard/olap/fact_sale";
 
