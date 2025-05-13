@@ -122,31 +122,52 @@ async function renderSaleForecastChart() {
     saleForecastChart.destroy();
   }
 
-  const data = await getForecastData({ day: 15 });
+  let reqbody = ""
+  if (currentTimeRollUp === "month") {
+    reqbody = { month: true }
+  } else if (currentTimeRollUp === "day") {
+    reqbody = { day: 30 }
+  }
+  const data = await getForecastData(reqbody);
+  let dataRange = []
+  let dataMedian = []
+  if (currentTimeRollUp === "month") {
+    Object.keys(data).forEach(key => {
+      dataRange.push({
+        x: data[key].month,
+        y: [data[key].yhat_lower, data[key].yhat_upper]
+      })
+      dataMedian.push({
+        x: data[key].month,
+        y: data[key].yhat
+      })
+    })
+  } else if (currentTimeRollUp === "day") {
+    data.forEach(item => {
+      dataRange.push({
+        x: Helper.formatDate(item.ds),
+        y: [item.yhat_lower, item.yhat_upper]
+      })
+      dataMedian.push({
+        x: Helper.formatDate(item.ds),
+        y: item.yhat
+      })
+    })
+  }
+  
 
   let saleForecastChartOptions = {
     series: [
       {
         type: 'rangeArea',
-        name: 'Team B Range',
+        name: 'Revenue range',
 
-        data: data?.map(item => {
-          return {
-            x: Helper.formatDate(item.ds),
-            y: [item.yhat_lower, item.yhat_upper]
-          }
-        })
+        data: dataRange
       },
-
       {
         type: 'line',
-        name: 'Team B Median',
-        data: data?.map(item => {
-          return {
-            x: Helper.formatDate(item.ds),
-            y: item.yhat
-          }
-        })
+        name: 'Revenue',
+        data: dataMedian
       }
     ],
     chart: {
@@ -601,8 +622,8 @@ timeInputRadios.forEach(item => {
           text: 'The annual revenue cannot be predicted.'
         }
       })
-    } else if (item.value === 'month') {
-      const data = await getForecastData({ month: true })
+    } else {
+      await renderSaleForecastChart()
     }
 
     renderTimeDice(item.value);
@@ -771,8 +792,8 @@ function renderProductDice() {
 }
 
 async function action() {
-  await renderSaleForecastChart()
   await renderAllChart()
+  await renderSaleForecastChart()
   renderTimeDice()
   renderLocationDice()
   renderProductDice()
