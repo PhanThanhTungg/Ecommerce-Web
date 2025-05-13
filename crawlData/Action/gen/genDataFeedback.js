@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker';
 import { readJson } from "../../Action/fileHandle.js";
-export default async () => {
+export default async (yearMonth) => {
 
-  const orders = await readJson("./DataFakeGen/Order/T4.json");
+  const orders = await readJson(`./DataFakeGen/Order/${yearMonth}.json`);
   const orderProducts = orders.map(order => {
     let orderProducts = order.orderProducts;
     if (order.userId) {
@@ -26,8 +26,8 @@ export default async () => {
       productId: orderProduct.product_id,
       userId: orderProduct.user_id,
       rating: faker.helpers.weightedArrayElement([
-        { value: 5, weight: 70 },
-        { value: 4, weight: 5 },
+        { value: 5, weight: 60 },
+        { value: 4, weight: 15 },
         { value: 3, weight: 10 },
         { value: 2, weight: 4 },
         { value: 1, weight: 6 }

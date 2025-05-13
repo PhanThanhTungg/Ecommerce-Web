@@ -1,11 +1,13 @@
 import { faker } from '@faker-js/faker';
 import bcrypt from "bcrypt";
 
-export default async () => {
+export default async (yearMonth) => {
   const users = [];
-  for (let i = 0; i < 153; i++) {
+  const irandom = Math.floor(Math.random() * (280 - 148 + 1)) + 148;
+  for (let i = 0; i < irandom; i++) {
     try {
       const user = {};
+      //type
       const typeLogin = Math.ceil(Math.random() * 4);
       if (typeLogin === 1) {
         user.facebookId = faker.string.uuid();
@@ -15,25 +17,58 @@ export default async () => {
         user.githubId = faker.string.uuid();
       }
 
+      //fullName
       user.fullName = faker.person.fullName();
+
+      // email
       user.email = faker.internet.email();
+
+      //password
       if (typeLogin === 4)
         user.password = bcrypt.hashSync(faker.internet.password(), 10);
+
+      // phone
       user.phone = faker.phone.number();
+
+      //thumbnail
       user.thumbnail = faker.image.avatar;
+
+      //sex
+      const minUnknown = 1;
+      const minOther = 1;
+      const minFemale = 1;
+      const minMale = 1;
+
+      const total = 100;
+      const minTotal = minUnknown + minOther + minFemale + minMale;
+      const remaining = total - minTotal;
+
+      const otherWeight = minOther + Math.floor(Math.random() * (remaining + 1));
+      const femaleWeight = minFemale + Math.floor(Math.random() * (remaining - (otherWeight - minOther) + 1));
+      const maleWeight = minMale + (remaining - (otherWeight - minOther) - (femaleWeight - minFemale));
+      const unknownWeight = minUnknown; 
+
       user.sex = faker.helpers.weightedArrayElement([
-        { value: 'male', weight: 80 },
-        { value: 'female', weight: 15 },
-        { value: 'other', weight: 5 }
+        { value: 'male', weight: maleWeight },
+        { value: 'female', weight: femaleWeight },
+        { value: 'other', weight: otherWeight },
+        { value: 'unknown', weight: unknownWeight },
       ]);
+
+      // other
       user.status = "active";
       user.deleted = false;
-      // user.createdAt trong khoảng từ từ 01/02/2025 đến 28/02/2025 và bản ghi sau có thời gian lớn hơn hoăc bằng bản ghi trước
-      user.createdAt = faker.date.between({ from: '2025-04-01', to: '2025-04-30' });
+
+      const [year, month] = yearMonth.split('-');
+      const from = `${year}-${month}-01`;
+      const to = new Date(year, month, 0); // ngày cuối cùng của tháng
+      const toStr = to.toISOString().slice(0, 10);
+      user.createdAt = faker.date.between({ from, to: toStr });
+
       users.push(user);
     } catch (error) {
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      console.log("Error: ");
+      console.log("Error: ", error);
       continue;
     }
   }
