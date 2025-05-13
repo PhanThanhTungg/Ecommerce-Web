@@ -5,8 +5,8 @@ block main
   //-   dark:text-white`) Dashboard
   .container-custom.dashboard
     .fact-sale.mb-8
-      h2(class=`mb-5 ml-5 text-[16px] font-medium leading-none tracking-tight text-gray-900 md:text-2xl
-      dark:text-white`) Sales report
+      h2(class=`mb-5 text-[24px] font-medium leading-none tracking-tight md:text-xl
+      dark:text-white border-1 border-gray-300 rounded-xl px-5 py-3 text-black`) Sale report
       //- .options(class="grid gap-5 mb-6 md:grid-cols-4")   
       .inner-chart
         .flex.gap-5.w-full
@@ -109,7 +109,7 @@ block main
                         button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
                           | OK
               .location-chart
-            
+          
           .flex.gap-5.flex-col.w-full
             div.product-area(class="border-1 border-gray-200 pt-5 rounded-2xl")
               .product-option
@@ -154,11 +154,14 @@ block main
                         button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
                           | OK
               .product-chart
+            
+        .customer-area.mt-5
+          div.product-area(class="inline-flex border-1 border-gray-200 pt-5 rounded-2xl")
             .customer-option
-              h3 Customer
               .customer-dice.mb-6
                 button(
                   type="button" data-dropdown-toggle="sale-customer-dice" data-dropdown-placement="bottom" 
+                  class='px-4 py-[4px] rounded-[5px] border-1 border-gray-200 text-gray-600 ml-5'
                 )
                   | Filter
                   svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
@@ -251,10 +254,175 @@ block main
                               span.ml-2 Normal 
                     button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
                       | OK
-        .customer-area.flex
-          .customer-chart
-          .customer-chart2
+            .customer-chart
+            .customer-chart2
     
+    .fact-order
+      h2(class=`mb-5 text-[24px] font-medium leading-none tracking-tight md:text-xl
+      dark:text-white border-1 border-gray-300 rounded-xl px-5 py-3 text-black`) Order report
+      .options(class="grid gap-6 mb-6 md:grid-cols-4")
+        .order-option
+          h3 Order
+          .flex.justify-between
+            .order-rollup.flex.flex-col.gap-3
+              label
+                input(
+                  type="radio"
+                  name="orderOrder"
+                  value="delivery"
+                  checked
+                )
+                span Delivery method
+              label
+                input(
+                  type="radio"
+                  name="orderOrder"
+                  value="payment"
+                )
+                span Payment method            
+            .order-dice.mb-6
+              button(
+                type="button" data-dropdown-toggle="order-order-dice" data-dropdown-placement="bottom" 
+              )
+                | Filter
+                svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
+                  path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
+
+              div#order-order-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
+                form.order-dice-form
+                  ul.list-order(class="h-fit px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
+                  button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
+                    | OK
+
+        .customer-option
+          h3 Customer
+          .flex.justify-between
+            .customer-rollup.flex.flex-col.gap-3
+              label
+                input(
+                  type="radio"
+                  name="orderCustomer"
+                  value="type"
+                  checked
+                )
+                span Type
+              label
+                input(
+                  type="radio"
+                  name="orderCustomer"
+                  value="gender"
+                )
+                span Gender
+
+            .customer-dice.mb-6
+              button(
+                type="button" data-dropdown-toggle="order-customer-dice" data-dropdown-placement="bottom" 
+              )
+                | Filter
+                svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
+                  path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
+
+              div#order-customer-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
+                form.customer-dice-form
+                  ul.list-customer(class="h-fit px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
+                  button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
+                    | OK
+
+      .inner-chart
+        .flex.gap-5
+          .flex.flex-col.gap-5
+            .order-chart.wrapper-chart
+            .customer-chart.wrapper-chart
+          .flex.flex-col.gap-5.w-185
+            div(class="border-1 border-gray-200 pt-5 rounded-2xl")
+              .time-option.ml-5
+                .flex(class="items-center")
+                  .time-rollup.flex.mr-5
+                    label
+                      input(
+                        type="radio"
+                        name="orderTime"
+                        value="day"
+                        class="hidden"
+                      )
+                      span(class="px-4 py-[2px] rounded-[5px] border-1 border-gray-200 text-gray-600 ") Day
+                    label
+                      input(
+                        type="radio"
+                        name="orderTime"
+                        value="month"
+                        class="hidden"
+                        checked
+                      )
+                      span(class="px-4 py-[2px] rounded-[5px] border-1 border-gray-200 text-gray-600 active bg-gray-500 text-white") Month
+                    label
+                      input(
+                        type="radio"
+                        name="orderTime"
+                        value="year"
+                        class="hidden"
+                      )
+                      span(class="px-4 py-[2px] rounded-[5px] border-1 border-gray-200 text-gray-600 ") Year
+                  .time-dice.flex.justify-around
+                    button(
+                      type="button" data-dropdown-toggle="order-time-dice" data-dropdown-placement="bottom" 
+                      class='px-4 py-[4px] rounded-[5px] border-1 border-gray-200 text-gray-600'
+                    )
+                      | Filter
+                      svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
+                        path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
+
+                    div#order-time-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
+                      form.time-dice-form
+                        .list-time
+                        button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
+                          | OK
+              .time-chart
+            div(class="border-1 border-gray-200 pt-5 rounded-2xl")
+              .location-option.ml-5
+                .flex.items-center
+                  .location-rollup.flex.mr-5
+                    label
+                      input(
+                        type="radio"
+                        name="orderLocation"
+                        value="commune"
+                        class="hidden"
+                      )
+                      span(class="px-4 py-[2px] rounded-[5px] border-1 border-gray-200 text-gray-600") Commune
+                    label
+                      input(
+                        type="radio"
+                        name="orderLocation"
+                        value="district"
+                        class="hidden"
+                      )
+                      span(class="px-4 py-[2px] rounded-[5px] border-1 border-gray-200 text-gray-600") District            
+                    label
+                      input(
+                        type="radio"
+                        name="orderLocation"
+                        value="province"
+                        class="hidden"
+                        checked
+                      )
+                      span(class="px-4 py-[2px] rounded-[5px] border-1 border-gray-200 text-gray-600 active bg-gray-500 text-white") Province
+                  .location-dice
+                    button(
+                      type="button" data-dropdown-toggle="order-location-dice" data-dropdown-placement="bottom"
+                      class='px-4 py-[4px] rounded-[5px] border-1 border-gray-200 text-gray-600' 
+                    )
+                      | Filter
+                      svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
+                        path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
+
+                    div#order-location-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
+                      form.location-dice-form
+                        ul.list-location(class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
+                        button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
+                          | OK
+              .location-chart
+
     .fact-feedback.mb-8
       h2(class=`mb-5 ml-5 text-xl font-medium leading-none tracking-tight text-gray-900 md:text-2xl
       dark:text-white`) Feedback report
@@ -343,166 +511,7 @@ block main
         .time-chart.wrapper-chart.mb-5
         .product-chart.wrapper-chart
 
-    .fact-order
-      h2(class=`mb-5 ml-5 text-xl font-medium leading-none tracking-tight text-gray-900 md:text-2xl
-      dark:text-white`) Order report
-      .options(class="grid gap-6 mb-6 md:grid-cols-4")
-        .time-option
-          h3 Time
-          .flex.justify-between
-            .time-rollup.flex.flex-col.gap-3
-              label
-                input(
-                  type="radio"
-                  name="orderTime"
-                  value="day"
-                )
-                span Day
-              label
-                input(
-                  type="radio"
-                  name="orderTime"
-                  value="month"
-                  checked
-                )
-                span Month
-              label
-                input(
-                  type="radio"
-                  name="orderTime"
-                  value="year"
-                )
-                span Year
-            .time-dice.mb-6.flex.justify-around
-              button(
-                type="button" data-dropdown-toggle="order-time-dice" data-dropdown-placement="bottom" 
-              )
-                | Filter
-                svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
-                  path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
-
-              div#order-time-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
-                form.time-dice-form
-                  .list-time
-                  button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
-                    | OK
-
-        .location-option
-          h3 Location
-          .flex.justify-between
-            .location-rollup.flex.flex-col.gap-3
-              label
-                input(
-                  type="radio"
-                  name="orderLocation"
-                  value="commune"
-                )
-                span Commune
-              label
-                input(
-                  type="radio"
-                  name="orderLocation"
-                  value="district"
-                )
-                span District            
-              label
-                input(
-                  type="radio"
-                  name="orderLocation"
-                  value="province"
-                  checked
-                )
-                span Province
-            .location-dice.mb-6
-              button(
-                type="button" data-dropdown-toggle="order-location-dice" data-dropdown-placement="bottom" 
-              )
-                | Filter
-                svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
-                  path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
-
-              div#order-location-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
-                form.location-dice-form
-                  ul.list-location(class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
-                  button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
-                    | OK
-
-        .order-option
-          h3 Order
-          .flex.justify-between
-            .order-rollup.flex.flex-col.gap-3
-              label
-                input(
-                  type="radio"
-                  name="orderOrder"
-                  value="delivery"
-                  checked
-                )
-                span Delivery method
-              label
-                input(
-                  type="radio"
-                  name="orderOrder"
-                  value="payment"
-                )
-                span Payment method            
-            .order-dice.mb-6
-              button(
-                type="button" data-dropdown-toggle="order-order-dice" data-dropdown-placement="bottom" 
-              )
-                | Filter
-                svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
-                  path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
-
-              div#order-order-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
-                form.order-dice-form
-                  ul.list-order(class="h-fit px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
-                  button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
-                    | OK
-
-        .customer-option
-          h3 Customer
-          .flex.justify-between
-            .customer-rollup.flex.flex-col.gap-3
-              label
-                input(
-                  type="radio"
-                  name="orderCustomer"
-                  value="type"
-                  checked
-                )
-                span Type
-              label
-                input(
-                  type="radio"
-                  name="orderCustomer"
-                  value="gender"
-                )
-                span Gender
-
-            .customer-dice.mb-6
-              button(
-                type="button" data-dropdown-toggle="order-customer-dice" data-dropdown-placement="bottom" 
-              )
-                | Filter
-                svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
-                  path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
-
-              div#order-customer-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
-                form.customer-dice-form
-                  ul.list-customer(class="h-fit px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
-                  button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
-                    | OK
-
-      .inner-chart
-        .flex.gap-5
-          .flex.flex-col.gap-5
-            .order-chart.wrapper-chart
-            .customer-chart.wrapper-chart
-          .flex.flex-col.gap-5.w-185
-            .time-chart.wrapper-chart
-            .location-chart.wrapper-chart
-
+    
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="js/helper.js"></script>
   script(type="module" src="/admin/js/saleChart.js")

@@ -33,6 +33,35 @@ const locationDiceForm = document.querySelector('.fact-order .location-dice-form
 const orderDiceForm = document.querySelector('.fact-order .order-dice-form')
 const customerDiceForm = document.querySelector('.fact-order .customer-dice-form')
 
+
+const orderTimeInputs = document.querySelectorAll('input[name="orderTime"]');
+if (orderTimeInputs) {
+  orderTimeInputs.forEach((input) => {
+    input.addEventListener('change', function () {
+      document.querySelectorAll('input[name="orderTime"]').forEach((el) => {
+        el.nextElementSibling.classList.remove('active', 'bg-gray-500', 'text-white');
+      });
+      if (this.checked) {
+        this.nextElementSibling.classList.add('active', 'bg-gray-500', 'text-white');
+      }
+    });
+  });
+}
+
+const orderLocationInputs = document.querySelectorAll('input[name="orderLocation"]');
+if (orderLocationInputs) {
+  orderLocationInputs.forEach((input) => {
+    input.addEventListener('change', function () {
+      document.querySelectorAll('input[name="orderLocation"]').forEach((el) => {
+        el.nextElementSibling.classList.remove('active', 'bg-gray-500', 'text-white');
+      });
+      if (this.checked) {
+        this.nextElementSibling.classList.add('active', 'bg-gray-500', 'text-white');
+      }
+    });
+  });
+}
+
 const orderAPI = "/api/dashboard/olap/fact_order"
 
 async function getOrderData(reqBody) {

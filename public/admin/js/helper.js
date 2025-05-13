@@ -47,7 +47,7 @@ Helper.getChartToolbarOptions = function() {
 Helper.calculateChartHeight = function(dataLength, chartType = 'bar', horizontal = false) {
   const minHeight = 350;
   if (chartType === 'bar' && horizontal) {
-    const calculatedHeight = Math.max(dataLength * 30, minHeight);
+    const calculatedHeight = Math.max(dataLength * 20, minHeight);
     
     return calculatedHeight;
   }
