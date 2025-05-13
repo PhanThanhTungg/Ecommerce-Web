@@ -5,7 +5,7 @@ import { faker } from '@faker-js/faker';
 import { fetchDistrict, fetchProvince, fetchWard } from "../../helper/fetchLocation.js";
 
 export default async (yearMonth) => {
-  const listUserId = await User.find({}).select("_id").lean();
+  const listUserId = await User.find({}).select("_id createdAt").lean();
 
   const listProduct = await Product.find({}).select("_id title listSize._id listSize.size listSize.price discountPercentage").lean()
 
@@ -18,10 +18,22 @@ export default async (yearMonth) => {
       // orderId
       order._id = new mongoose.Types.ObjectId();
 
-      // cartId or userId
+      // createdAt
+      const [year, month] = yearMonth.split('-');
+      const from = `${year}-${month}-01`;
+      const to = new Date(year, month, 0); // ngày cuối cùng của tháng
+      const toStr = to.toISOString().slice(0, 10);
+      order.createdAt = faker.date.between({ from, to: toStr });
 
-      const randomIndex = Math.floor(Math.random() * listUserId.length);
-      order.userId = listUserId[randomIndex]._id.toString();
+
+      // cartId or userId
+      const filterListUserId = listUserId.filter(item=>{
+        const createdAt = new Date(item.createdAt);
+        const orderCreatedAt = new Date(order.createdAt);
+        return createdAt.getTime() <= orderCreatedAt.getTime();
+      });
+      const randomIndex = Math.floor(Math.random() * filterListUserId.length);
+      order.userId = filterListUserId[randomIndex]._id.toString();
 
 
       //userInfo
@@ -129,13 +141,6 @@ export default async (yearMonth) => {
         { value: 'qr', weight: qrWeight },
       ]);
       order.paymentMethod = paymentMethod;
-
-      // createdAt
-      const [year, month] = yearMonth.split('-');
-      const from = `${year}-${month}-01`;
-      const to = new Date(year, month, 0); // ngày cuối cùng của tháng
-      const toStr = to.toISOString().slice(0, 10);
-      order.createdAt = faker.date.between({ from, to: toStr });
 
       orders.push(order);
     } catch (error) {

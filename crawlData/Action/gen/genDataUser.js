@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 
 export default async (yearMonth) => {
   const users = [];
-  const irandom = Math.floor(Math.random() * (280 - 148 + 1)) + 148;
+  const irandom = Math.floor(Math.random() * (170 - 148 + 1)) + 148;
   for (let i = 0; i < irandom; i++) {
     try {
       const user = {};

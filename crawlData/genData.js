@@ -37,17 +37,18 @@ const orderAction = async () => {
     const yearMonth = `${year}-${month}`;
     const orders = await genDataOrder(yearMonth);
     await writeJson(`./DataFakeGen/Order/${yearMonth}.json`, orders);
-    // const ordersRead = await readJson("./DataFakeGen/Order/T4.json");
-    // for (const order of ordersRead) {
-    //   const newOrder = new Order(order);
-    //   await newOrder.save();
-    //   for (const item of order.orderProducts) {
-    //     item.createdAt = order.createdAt;
-    //     const orderProduct = new OrderProduct(item);
-    //     await orderProduct.save();
-    //   }
-    // }
-    // console.log("Order data inserted successfully!");
+
+    const ordersRead = await readJson(`./DataFakeGen/Order/${yearMonth}.json`);
+    for (const order of ordersRead) {
+      const newOrder = new Order(order);
+      await newOrder.save();
+      for (const item of order.orderProducts) {
+        item.createdAt = order.createdAt;
+        const orderProduct = new OrderProduct(item);
+        await orderProduct.save();
+      }
+    }
+    console.log("Order data inserted successfully!");
   }
 }
 
@@ -62,12 +63,12 @@ const ProductFeedbackAction = async () => {
     const feedbacks = await genDataFeedback(yearMonth);
     await writeJson(`./DataFakeGen/Product-Feedback/${yearMonth}.json`, feedbacks);
 
-    // const feedbacksRead = await readJson(`./DataFakeGen/Product-Feedback/${yearMonth}.json`);
-    // for (const feedback of feedbacksRead) {
-    //   const newFeedback = new ProductFeedback(feedback);
-    //   await newFeedback.save();
-    // }
-    // console.log("Product feedback data inserted successfully!");
+    const feedbacksRead = await readJson(`./DataFakeGen/Product-Feedback/${yearMonth}.json`);
+    for (const feedback of feedbacksRead) {
+      const newFeedback = new ProductFeedback(feedback);
+      await newFeedback.save();
+    }
+    console.log("Product feedback data inserted successfully!");
   }
 }
 
