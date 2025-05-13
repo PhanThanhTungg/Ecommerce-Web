@@ -9,50 +9,53 @@ block main
       dark:text-white`) Sales report
       //- .options(class="grid gap-5 mb-6 md:grid-cols-4")   
       .inner-chart
-        div.time-area(class="border-1 border-gray-200 pt-5 rounded-2xl")
-          .time-option
-            .flex(class="items-center")
-              .time-rollup.flex.ml-3.mr-5
-                label
-                  input(
-                    type="radio"
-                    name="saleTime"
-                    value="day"
-                    class="hidden"
+        .flex.gap-5.w-full
+          div.time-area(class="border-1 border-gray-200 pt-5 rounded-2xl flex-1")
+            .time-option
+              .flex(class="items-center")
+                .time-rollup.flex.ml-3.mr-5
+                  label
+                    input(
+                      type="radio"
+                      name="saleTime"
+                      value="day"
+                      class="hidden"
+                    )
+                    span(class="px-4 py-[2px] rounded-[5px] border-1 border-gray-200 text-gray-600") Day
+                  label
+                    input(
+                      type="radio"
+                      name="saleTime"
+                      value="month"
+                      class="hidden"
+                      checked
+                    )
+                    span(class="px-4 py-[2px] rounded-[5px] border-1 border-gray-200 text-gray-600 active bg-gray-500 text-white") Month
+                  label
+                    input(
+                      type="radio"
+                      name="saleTime"
+                      value="year"
+                      class="hidden"
+                    )
+                    span(class="px-4 py-[2px] rounded-[5px] border-1 border-gray-200 text-gray-600") Year
+                .time-dice.flex.justify-around
+                  button(
+                    type="button" data-dropdown-toggle="sale-time-dice" data-dropdown-placement="bottom"
+                    class='px-4 py-[4px] rounded-[5px] border-1 border-gray-200 text-gray-600'
                   )
-                  span(class="px-4 py-[2px] rounded-[5px] border-1 border-gray-200 text-gray-600") Day
-                label
-                  input(
-                    type="radio"
-                    name="saleTime"
-                    value="month"
-                    class="hidden"
-                    checked
-                  )
-                  span(class="px-4 py-[2px] rounded-[5px] border-1 border-gray-200 text-gray-600 active bg-gray-500 text-white") Month
-                label
-                  input(
-                    type="radio"
-                    name="saleTime"
-                    value="year"
-                    class="hidden"
-                  )
-                  span(class="px-4 py-[2px] rounded-[5px] border-1 border-gray-200 text-gray-600") Year
-              .time-dice.flex.justify-around
-                button(
-                  type="button" data-dropdown-toggle="sale-time-dice" data-dropdown-placement="bottom"
-                  class='px-4 py-[4px] rounded-[5px] border-1 border-gray-200 text-gray-600'
-                )
-                  | Filter
-                  svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
-                    path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
+                    | Filter
+                    svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
+                      path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
 
-                div#sale-time-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
-                  form.time-dice-form
-                    .list-time.w-full
-                    button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
-                      | OK
-          .time-chart
+                  div#sale-time-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
+                    form.time-dice-form
+                      .list-time.w-full
+                      button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
+                        | OK
+            .time-chart
+          .sale-forecast(class="border-1 border-gray-200 pt-5 rounded-2xl w-100")
+
         .flex.gap-5.w-full.mt-5
           .flex.flex-col.gap-5.w-185
             div.location-area(class="border-1 border-gray-200 pt-5 rounded-2xl")

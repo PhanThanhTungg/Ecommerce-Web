@@ -97,24 +97,14 @@ async function renderFeedbackTimeChart() {
         },
         axisBorder: {
           show: true,
-          color: '#008FFB'
-        },
-        labels: {
-          style: {
-            colors: '#008FFB',
-          }
         },
         title: {
-          text: "AVG Rating",
-          style: {
-            color: '#008FFB',
-          }
+          text: "AVG Rating",          
         },
         tooltip: {
           enabled: false
         },
         min: 0,
-        max: 6
       },
       {
         seriesName: 'Number of Feedback',
@@ -124,18 +114,9 @@ async function renderFeedbackTimeChart() {
         },
         axisBorder: {
           show: true,
-          color: '#00E396'
-        },
-        labels: {
-          style: {
-            colors: '#00E396',
-          }
         },
         title: {
           text: "Number of Feedback",
-          style: {
-            color: '#00E396',
-          }
         },
         tooltip: {
           enabled: true
@@ -285,24 +266,14 @@ async function renderFeedbackProductChart() {
         },
         axisBorder: {
           show: true,
-          color: '#008FFB'
-        },
-        labels: {
-          style: {
-            colors: '#008FFB',
-          }
         },
         title: {
           text: "AVG Rating",
-          style: {
-            color: '#008FFB',
-          }
         },
         tooltip: {
           enabled: false
         },
         min: 0,
-        max: 6
       },
       {
         seriesName: 'Number of Feedback',
@@ -312,18 +283,9 @@ async function renderFeedbackProductChart() {
         },
         axisBorder: {
           show: true,
-          color: '#00E396'
-        },
-        labels: {
-          style: {
-            colors: '#00E396',
-          }
         },
         title: {
           text: "Number of Feedback",
-          style: {
-            color: '#00E396',
-          }
         },
         tooltip: {
           enabled: true
@@ -338,7 +300,7 @@ async function renderFeedbackProductChart() {
       enabled: true,
       shared: true,
       intersect: false,
-    }
+    },
   }
 
   feedbackProductChart = new ApexCharts(

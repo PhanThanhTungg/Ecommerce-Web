@@ -23,46 +23,47 @@ const inputProductDice = document.querySelector('.fact-sale ul.list-product');
 const inputCustomerDice = document.querySelector('.fact-sale ul.list-customer')
 
 let saleTimeChart = null
+let saleForecastChart = null
 let saleLocationChart = null
 let saleProductChart = null
 let saleCustomerChart = null
 let saleCustomerChart2 = null
 
 const saleTimeInputs = document.querySelectorAll('input[name="saleTime"]');
-if(saleTimeInputs){
+if (saleTimeInputs) {
   saleTimeInputs.forEach((input) => {
     input.addEventListener('change', function () {
       document.querySelectorAll('input[name="saleTime"]').forEach((el) => {
         el.nextElementSibling.classList.remove('active', 'bg-gray-500', 'text-white');
       });
       if (this.checked) {
-        this.nextElementSibling.classList.add('active','bg-gray-500','text-white');
+        this.nextElementSibling.classList.add('active', 'bg-gray-500', 'text-white');
       }
     });
   });
 }
 const saleLocationInputs = document.querySelectorAll('input[name="saleLocation"]');
-if(saleLocationInputs){
+if (saleLocationInputs) {
   saleLocationInputs.forEach((input) => {
     input.addEventListener('change', function () {
       document.querySelectorAll('input[name="saleLocation"]').forEach((el) => {
         el.nextElementSibling.classList.remove('active', 'bg-gray-500', 'text-white');
       });
       if (this.checked) {
-        this.nextElementSibling.classList.add('active','bg-gray-500','text-white');
+        this.nextElementSibling.classList.add('active', 'bg-gray-500', 'text-white');
       }
     });
   });
 }
 const saleProductInputs = document.querySelectorAll('input[name="saleProduct"]');
-if(saleProductInputs){
+if (saleProductInputs) {
   saleProductInputs.forEach((input) => {
     input.addEventListener('change', function () {
       document.querySelectorAll('input[name="saleProduct"]').forEach((el) => {
         el.nextElementSibling.classList.remove('active', 'bg-gray-500', 'text-white');
       });
       if (this.checked) {
-        this.nextElementSibling.classList.add('active','bg-gray-500','text-white');
+        this.nextElementSibling.classList.add('active', 'bg-gray-500', 'text-white');
       }
     });
   });
@@ -94,6 +95,104 @@ async function getSaleData() {
   } catch (error) {
     console.log(error)
   }
+
+}
+
+const forecastAPI = "http://localhost:5000/predict";
+async function getForecastData(reqBody) {
+  try {
+    const data = await fetch(forecastAPI, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(reqBody)
+    })
+    const result = await data.json();
+    console.log(result.predictions)
+    console.log(reqBody)
+    return result.predictions;
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+async function renderSaleForecastChart() {
+  if (saleForecastChart) {
+    saleForecastChart.destroy();
+  }
+
+  const data = await getForecastData({ day: 15 });
+
+  let saleForecastChartOptions = {
+    series: [
+      {
+        type: 'rangeArea',
+        name: 'Team B Range',
+
+        data: data?.map(item => {
+          return {
+            x: Helper.formatDate(item.ds),
+            y: [item.yhat_lower, item.yhat_upper]
+          }
+        })
+      },
+
+      {
+        type: 'line',
+        name: 'Team B Median',
+        data: data?.map(item => {
+          return {
+            x: Helper.formatDate(item.ds),
+            y: item.yhat
+          }
+        })
+      }
+    ],
+    chart: {
+      height: 350,
+      type: 'rangeArea',
+      animations: {
+        speed: 500
+      }
+    },
+    yaxis: {
+      labels: {
+        formatter: function (value) {
+          return Helper.formatLargeNumber(value)
+        }
+      }
+    },
+    colors: ['#d4526e', '#d4526e'],
+    dataLabels: {
+      enabled: false
+    },
+    fill: {
+      opacity: [0.24, 1]
+    },
+    stroke: {
+      curve: 'smooth',
+      width: [0, 2]
+    },
+    legend: {
+      show: true,
+      customLegendItems: ['Revenue'],
+      inverseOrder: true
+    },
+    title: {
+      text: 'Sale Forecast Chart'
+    },
+    tooltip: {
+      enabled: true,
+      shared: true,
+      intersect: false,
+    }
+  };
+
+  saleForecastChart = new ApexCharts(
+    document.querySelector(".fact-sale .sale-forecast"),
+    saleForecastChartOptions);
+  saleForecastChart.render();
 
 }
 
@@ -447,7 +546,7 @@ async function renderSaleCustomerChart2(rollUp = "gender") {
     saleCustomerChart2.destroy()
   }
   customer = rollUp
-  const data = await getSaleData(); 
+  const data = await getSaleData();
 
   const saleCustomerChartOptions = {
     series: data.Total_Revenue,
@@ -492,6 +591,20 @@ timeInputRadios.forEach(item => {
     } else {
       await renderSaleTimeChart(item.value)
     }
+
+    saleForecastChart.updateOptions({
+      series: []
+    });
+    if (item.value === 'year') {
+      saleForecastChart.updateOptions({
+        noData: {
+          text: 'The annual revenue cannot be predicted.'
+        }
+      })
+    } else if (item.value === 'month') {
+      const data = await getForecastData({ month: true })
+    }
+
     renderTimeDice(item.value);
   })
 })
@@ -658,6 +771,7 @@ function renderProductDice() {
 }
 
 async function action() {
+  await renderSaleForecastChart()
   await renderAllChart()
   renderTimeDice()
   renderLocationDice()
