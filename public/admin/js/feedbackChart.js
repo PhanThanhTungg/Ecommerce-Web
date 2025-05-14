@@ -14,6 +14,33 @@ const inputProductDice = document.querySelector('.fact-feedback .list-product');
 let feedbackTimeChart = null;
 let feedbackProductChart = null;
 
+const feedbackTimeInputs = document.querySelectorAll('input[name="feedbackTime"]');
+if (feedbackTimeInputs) {
+  feedbackTimeInputs.forEach((input) => {
+    input.addEventListener('change', function () {
+      document.querySelectorAll('input[name="feedbackTime"]').forEach((el) => {
+        el.nextElementSibling.classList.remove('active', 'bg-gray-500', 'text-white');
+      });
+      if (this.checked) {
+        this.nextElementSibling.classList.add('active', 'bg-gray-500', 'text-white');
+      }
+    });
+  });
+}
+const feedbackProductInputs = document.querySelectorAll('input[name="feedbackProduct"]');
+if (feedbackProductInputs) {
+  feedbackProductInputs.forEach((input) => {
+    input.addEventListener('change', function () {
+      document.querySelectorAll('input[name="feedbackProduct"]').forEach((el) => {
+        el.nextElementSibling.classList.remove('active', 'bg-gray-500', 'text-white');
+      });
+      if (this.checked) {
+        this.nextElementSibling.classList.add('active', 'bg-gray-500', 'text-white');
+      }
+    });
+  });
+}
+
 const feedbackAPI = "/api/dashboard/olap/fact_feedback";
 
 async function getFeedbackData(reqBody) {
