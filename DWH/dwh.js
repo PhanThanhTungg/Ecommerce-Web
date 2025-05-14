@@ -28,47 +28,51 @@ module.exports = async () => {
   //   true,
   //   'Asia/Ho_Chi_Minh'
   // );
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = now.getMonth() + 1;
+  let now = new Date();
+  let year = now.getFullYear();
+  let month = now.getMonth() + 1;
   let date = now.getDate();
   if (date < 10) date = "0" + ("" + date);
+
+  year = "2025";
+  month = "05";
+  date = "13";
 
   const t = await sequelize.transaction();
   try {
     //etl customer
-    const customers = await User.find({});
-    for (const customer of customers) {
-      const DimCustomer = await Dim_Customer.upsert({
-        Customer_key: customer._id.toString(),
-        Customer_name: customer.fullName,
-        Gender: customer.sex ? customer.sex : 'Unknown',
-        Type: customer.facebookId ? 'Facebook' : customer.googleId ? 'Google' : customer.githubId ? 'Github' : 'Normal',
-      }, { transaction: t });
-    }
+    // const customers = await User.find({});
+    // for (const customer of customers) {
+    //   const DimCustomer = await Dim_Customer.upsert({
+    //     Customer_key: customer._id.toString(),
+    //     Customer_name: customer.fullName,
+    //     Gender: customer.sex ? customer.sex : 'Unknown',
+    //     Type: customer.facebookId ? 'Facebook' : customer.googleId ? 'Google' : customer.githubId ? 'Github' : 'Normal',
+    //   }, { transaction: t });
+    // }
 
-    //etl category  
-    const categories = await Category.find({});
-    for (const category of categories) {
-      const DimCategory = await Dim_Category.upsert({
-        Category_key: category._id.toString(),
-        Category_name: category.title,
-        Category_parent_key: category.parent_id ? category.parent_id.toString() : null,
-        Featured: category.featured
-      }, { transaction: t });
-    }
+    // //etl category  
+    // const categories = await Category.find({});
+    // for (const category of categories) {
+    //   const DimCategory = await Dim_Category.upsert({
+    //     Category_key: category._id.toString(),
+    //     Category_name: category.title,
+    //     Category_parent_key: category.parent_id ? category.parent_id.toString() : null,
+    //     Featured: category.featured
+    //   }, { transaction: t });
+    // }
 
-    //etl product
-    const products = await Product.find({});
-    for (const product of products) {
-      const DimProduct = await Dim_Product.upsert({
-        Product_key: product._id.toString(),
-        Category_key: product.product_category_id.toString(),
-        Product_name: product.title,
-        Featured: product.featured,
-        Position: product.position,
-      }, { transaction: t });
-    }
+    // //etl product
+    // const products = await Product.find({});
+    // for (const product of products) {
+    //   const DimProduct = await Dim_Product.upsert({
+    //     Product_key: product._id.toString(),
+    //     Category_key: product.product_category_id.toString(),
+    //     Product_name: product.title,
+    //     Featured: product.featured,
+    //     Position: product.position,
+    //   }, { transaction: t });
+    // }
     const lastDay = new Date(year, month, 0).getDate();
 
     //etl time

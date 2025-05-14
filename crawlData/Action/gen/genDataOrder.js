@@ -11,7 +11,7 @@ export default async (yearMonth) => {
 
   const listProvince = await fetchProvince();
   const orders = [];
-  const irandom = Math.floor(Math.random() * (325 - 160 + 1)) + 160;
+  const irandom = Math.floor(Math.random() * (150 - 100 + 1)) + 100;
   for (let i = 0; i < irandom; i++) {
     try {
       const order = {};
@@ -22,12 +22,12 @@ export default async (yearMonth) => {
       const [year, month] = yearMonth.split('-');
       const from = `${year}-${month}-01`;
       const to = new Date(year, month, 0); // ngày cuối cùng của tháng
-      const toStr = to.toISOString().slice(0, 10);
+      const toStr = `${year}-${month}-13`;
       order.createdAt = faker.date.between({ from, to: toStr });
 
 
       // cartId or userId
-      const filterListUserId = listUserId.filter(item=>{
+      const filterListUserId = listUserId.filter(item => {
         const createdAt = new Date(item.createdAt);
         const orderCreatedAt = new Date(order.createdAt);
         return createdAt.getTime() <= orderCreatedAt.getTime();
@@ -60,11 +60,11 @@ export default async (yearMonth) => {
       order.userInfo = userInfo;
 
       // order-product
-      const maxNum = Math.floor(Math.random() * 10) + 68; 
-      const num1 = Math.floor(Math.random() * 10)+1 ;
-      const num2 = Math.floor(Math.random() * 5)+1 ;
+      const maxNum = Math.floor(Math.random() * 10) + 68;
+      const num1 = Math.floor(Math.random() * 10) + 1;
+      const num2 = Math.floor(Math.random() * 5) + 1;
       const num3 = 100 - maxNum - num1 - num2;
-   
+
       const orderProducts = [];
       const quantity = faker.helpers.weightedArrayElement([
         { value: 1, weight: maxNum },
@@ -131,8 +131,8 @@ export default async (yearMonth) => {
 
       // paymentMethod
       const cashWeight = Math.floor(Math.random() * 20 + 50);
-      const momoWeight = Math.floor(Math.random() * 10)+1 ;
-      const zalopayWeight = Math.floor(Math.random() * 10)+1 ;
+      const momoWeight = Math.floor(Math.random() * 10) + 1;
+      const zalopayWeight = Math.floor(Math.random() * 10) + 1;
       const qrWeight = 100 - cashWeight - momoWeight - zalopayWeight;
       const paymentMethod = faker.helpers.weightedArrayElement([
         { value: 'momo', weight: momoWeight },
