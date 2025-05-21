@@ -24,14 +24,14 @@ module.exports.index = async (req, res) => {
 
   res.render("client/pages/discount/index", {
     pageTitle: "Discount",
-    discounts: discounts
+    discounts: discounts,
+    type
   })
 }
 
 module.exports.getDiscount = async (req, res) => {
   try {
     const { userId, discountId } = req.body;
-    console.log(userId, discound);
     const discount = new DiscountUser({
       userId,
       discountId

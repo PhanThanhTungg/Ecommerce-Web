@@ -10,11 +10,14 @@ block main
         .row
           .col-2 Code: #{discount.code}
           .col-2 value: #{discount.value}%
-          .col-3 quantity: #{discount.quantity}
-          .col-3 condition: > <span class="format-money">#{discount.condition}</span>
+          if (type === "myDiscount")
+            .col-2 Type: #{discount.type}
+          else
+            .col-2 quantity: #{discount.quantity}
+          .col-4 condition: > <span class="format-money">#{discount.condition}</span>
           .col-2
             form(action="/discount/getDiscount" method="POST")
-              input(type="hidden" name="userId" value=user.id)
-              input(type="hidden" name="discountId" value=discount.id)
+              input(type="hidden" name="userId" value=user._id)
+              input(type="hidden" name="discountId" value=discount._id)
               button get
       
