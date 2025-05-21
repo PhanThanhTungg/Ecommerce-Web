@@ -1,8 +1,10 @@
 extends ../../layouts/default.pug
 include ../../mixins/moment.pug
+include ../../mixins/discount.pug
 
 block main
   .container-custom
+    +modalCUDiscount()
     div.relative.overflow-x-auto.shadow-md(class="sm:rounded-xl")
       table(class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400" check-box-multi)
         thead(class=`text-xs text-gray-700 uppercase bg-gray-100 
@@ -16,6 +18,7 @@ block main
             th(scope="col" class="pr-6 py-3") Code
             th(scope="col" class="px-6 py-3") Type
             th(scope="col" class="px-6 py-3") Value
+            th(scope="col" class="px-6 py-3") Start
             th(scope="col" class="px-6 py-3") Expire
             th(scope="col" class="px-6 py-3") Quantity
             th(scope="col" class="px-6 py-3") Condition
@@ -34,7 +37,9 @@ block main
                 td(class="px-6 py-4") 
                   span #{item.value}
                 td(class="px-6 py-4") 
-                  +formatDate(item.endDate)
+                  +formatDateTime(item.startDate)
+                td(class="px-6 py-4") 
+                  +formatDateTime(item.endDate)
                 td(class="px-6 py-4") 
                   span #{item.quantity}
                 td(class="px-6 py-4") 
@@ -44,3 +49,4 @@ block main
                     span(class="text-green-600 dark:text-green-400") Active
                   else
                     span(class="text-red-600 dark:text-red-400") Inactive
+  script(src="/admin/js/discount.js")
