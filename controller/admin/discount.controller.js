@@ -1,0 +1,65 @@
+const Discount = require("../../model/discount.model");
+module.exports.index = async (req, res) => {
+  const discounts = await Discount.find({ deleted: false }).sort({ createdAt: -1 });
+
+  res.render("admin/pages/discount/index", {
+    pageTitle: "Discount",
+    discounts
+  })
+}
+
+module.exports.create = async (req, res) => {
+  try {
+    const { type, value, condition, startDate, endDate } = req.body;
+    const discount = new Discount({
+      type,
+      value,
+      condition,
+      startDate,
+      endDate
+    });
+    discount.code = discount._id.toString().slice(-6).toUpperCase();
+
+    await discount.save();
+
+    res.json({
+      message: "Create discount successfully",
+      discount
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Create discount failed",
+      error: error.message
+    })
+  }
+}
+
+module.exports.edit = async (req, res) => {
+  try {
+    const discountId = req.body.discountId;
+    await Discount.updateOne(
+      { _id: discountId },
+      {
+        $set: {
+          type: req.body.type,
+          value: req.body.value,
+          condition: req.body.condition,
+          startDate: req.body.startDate,
+          endDate: req.body.endDate
+        }
+      }
+    )
+    res.json({
+      code: 200,
+      message: "Edit discount successfully"
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      code: 500,
+      message: "Edit discount failed",
+      error: error.message
+    })
+  }
+}

@@ -20,6 +20,10 @@ aside#logo-sidebar.fixed.left-0.z-40.w-64.h-screen.transition-transform.-transla
           a.flex.items-center.p-2.text-gray-900.rounded-lg.group(href=`${prefixAdmin}/orders` class='dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700')
             <i class="fa-solid fa-cart-shopping"></i>
             span.ms-3 Orders
+      li(sider="Sider-discount")
+        a.flex.items-center.p-2.text-gray-900.rounded-lg.group(href=`${prefixAdmin}/discount` class='dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700')
+          <i class="fa-solid fa-tags"></i>
+          span.ms-3 Discounts
       if(role.permissions.includes("roles_view"))
         li(sider="Sider-Role")
           a.flex.items-center.p-2.text-gray-900.rounded-lg.group(href=`${prefixAdmin}/roles` class='dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700')
