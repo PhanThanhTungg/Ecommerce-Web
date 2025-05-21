@@ -1,7 +1,9 @@
 const Cart = require("../../model/cart.model");
 const Product = require("../../model/product.model");
 const Order = require("../../model/order.model");
-const OrderProduct = require("../../model/order-product.model")
+const Discount = require("../../model/discount.model");
+const DiscountUser = require("../../model/discount-user.model");
+const OrderProduct = require("../../model/order-product.model");
 const axios = require("axios");
 const CryptoJS = require('crypto-js');
 const crypto = require('crypto');
@@ -39,11 +41,36 @@ module.exports.index = async (req, res) => {
       totalPriceItem
     })
   };
+  let discountCoupon = [];
+  let discountShipping = [];
+  if(res.locals.user){
+    const discountUsers = await DiscountUser.find({userId: res.locals.user._id, deleted: false});
+    for (const item of discountUsers) {
+      const discountItem = await Discount.findOne({
+        _id: item.discountId,
+        startDate: { $lte: new Date() },
+        endDate: { $gte: new Date() },
+        isActive: true,
+        deleted: false
+      })
+      if (discountItem) {
+        if (discountItem.type == "coupon") {
+          discountCoupon.push(discountItem);
+        }
+        else if (discountItem.type == "shipping") {
+          discountShipping.push(discountItem);
+        }
+      }
+    }
+  }
+
   res.render("client/pages/checkout/index", {
     page: "checkoutIndex",
     pageTitle: "Đặt hàng",
     orderProducts,
     totalPrice,
+    discountCoupon,
+    discountShipping,
   });
 };
 
