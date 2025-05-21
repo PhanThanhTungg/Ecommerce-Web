@@ -10,8 +10,8 @@ import ProductFeedback from "./model/product-feedback.model.js";
 
 const userAction = async () => {
   const year = 2025;
-  const strMonth = 1;
-  const endMonth = 4;
+  const strMonth = 5;
+  const endMonth = 5;
   for (let i = strMonth; i <= endMonth; i++) {
     const month = i < 10 ? `0${i}` : `${i}`;
     const yearMonth = `${year}-${month}`;
@@ -30,8 +30,8 @@ const userAction = async () => {
 
 const orderAction = async () => {
   const year = 2025;
-  const strMonth = 1;
-  const endMonth = 4;
+  const strMonth = 5;
+  const endMonth = 5;
   for (let i = strMonth; i <= endMonth; i++) {
     const month = i < 10 ? `0${i}` : `${i}`;
     const yearMonth = `${year}-${month}`;
@@ -76,7 +76,7 @@ const main = async () => {
   await connect();
   // await userAction();
   // await orderAction();
-  await ProductFeedbackAction();
+  // await ProductFeedbackAction();
 
 }
 main();

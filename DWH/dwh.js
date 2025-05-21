@@ -28,119 +28,130 @@ module.exports = async () => {
   //   true,
   //   'Asia/Ho_Chi_Minh'
   // );
-  const year = "2025";
-  for (let imonth = 1; imonth <= 4; imonth++) {
-    const month = imonth < 10 ? `0${imonth}` : `${imonth}`;
-    const t = await sequelize.transaction();
+  let now = new Date();
+  let year = now.getFullYear();
+  let month = now.getMonth() + 1;
+  let date = now.getDate();
+  if (date < 10) date = "0" + ("" + date);
 
-    try {
-      const customers = await User.find({});
-      for (const customer of customers) {
-        const DimCustomer = await Dim_Customer.upsert({
-          Customer_key: customer._id.toString(),
-          Customer_name: customer.fullName,
-          Gender: customer.sex ? customer.sex : 'Unknown',
-          Type: customer.facebookId ? 'Facebook' : customer.googleId ? 'Google' : customer.githubId ? 'Github' : 'Normal',
-        }, { transaction: t });
-      }
-      const categories = await Category.find({});
-      for (const category of categories) {
-        const DimCategory = await Dim_Category.upsert({
-          Category_key: category._id.toString(),
-          Category_name: category.title,
-          Category_parent_key: category.parent_id ? category.parent_id.toString() : null,
-          Featured: category.featured
-        }, { transaction: t });
-      }
+  year = "2025";
+  month = "05";
+  date = "13";
 
-      const products = await Product.find({});
-      for (const product of products) {
-        const DimProduct = await Dim_Product.upsert({
-          Product_key: product._id.toString(),
-          Category_key: product.product_category_id.toString(),
-          Product_name: product.title,
-          Featured: product.featured,
-          Position: product.position,
-        }, { transaction: t });
-      }
-      const lastDay = new Date(year, month, 0).getDate();
-      for (let date = 1; date <= lastDay; date++) {
-        if (date < 10) date = "0" + ("" + date);
-        const startTime = new Date(`${year}-${month}-${date}T00:00:00+07:00`);
-        const endTime = new Date(`${year}-${month}-${date}T23:59:59+07:00`);
-        const fullData = await getFullDataMongoDB(startTime, endTime);
-        const DimTime = await Dim_Time.create({
-          Time_key: startTime.toISOString(),
-          Day: startTime.getDate(),
-          Month: startTime.getMonth() + 1,
-          Year: startTime.getFullYear(),
-        }, { transaction: t });
+  const t = await sequelize.transaction();
+  try {
+    //etl customer
+    // const customers = await User.find({});
+    // for (const customer of customers) {
+    //   const DimCustomer = await Dim_Customer.upsert({
+    //     Customer_key: customer._id.toString(),
+    //     Customer_name: customer.fullName,
+    //     Gender: customer.sex ? customer.sex : 'Unknown',
+    //     Type: customer.facebookId ? 'Facebook' : customer.googleId ? 'Google' : customer.githubId ? 'Github' : 'Normal',
+    //   }, { transaction: t });
+    // }
 
-        const orders = fullData.orders;
-        for (const order of orders) {
-          const DimLocation = await Dim_Location.create({
-            Location_key: new Date().toISOString(),
-            Province: order.userInfo.province.toString().trim().toLowerCase(),
-            District: order.userInfo.district.toString().trim().toLowerCase(),
-            Commune: order.userInfo.commune.toString().trim().toLowerCase(),
-            Detail: order.userInfo.detail.toString().trim().toLowerCase(),
-          }, { transaction: t })
+    // //etl category  
+    // const categories = await Category.find({});
+    // for (const category of categories) {
+    //   const DimCategory = await Dim_Category.upsert({
+    //     Category_key: category._id.toString(),
+    //     Category_name: category.title,
+    //     Category_parent_key: category.parent_id ? category.parent_id.toString() : null,
+    //     Featured: category.featured
+    //   }, { transaction: t });
+    // }
 
-          const DimOrder = await Dim_Order.create({
-            Order_key: order._id.toString(),
-            Delivery_method: order.deliveryMethod.toString().trim().toLowerCase(),
-            Payment_method: order.paymentMethod.toString().trim().toLowerCase(),
-            Status: order.paymentStatus ? order.paymentStatus.status.toString().trim().toLowerCase() : null,
-          }, { transaction: t })
+    // //etl product
+    // const products = await Product.find({});
+    // for (const product of products) {
+    //   const DimProduct = await Dim_Product.upsert({
+    //     Product_key: product._id.toString(),
+    //     Category_key: product.product_category_id.toString(),
+    //     Product_name: product.title,
+    //     Featured: product.featured,
+    //     Position: product.position,
+    //   }, { transaction: t });
+    // }
+    const lastDay = new Date(year, month, 0).getDate();
 
-          const totalProduct = await OrderProduct.find({ order_id: order.id }).countDocuments();
-          const FactOrder = await Fact_Order.create({
-            Order_key: order._id.toString(),
-            Customer_key: order.userId,
-            Location_key: DimLocation.Location_key,
-            Time_key: DimTime.Time_key,
-            Total_qty_product: totalProduct,
-            Shipping_fee: order.shippingFee,
-            Total_price: order.totalProductPrice,
-          }, { transaction: t })
+    //etl time
+    const startTime = new Date(`${year}-${month}-${date}T00:00:00+07:00`);
+    const endTime = new Date(`${year}-${month}-${date}T23:59:59+07:00`);
+    const fullData = await getFullDataMongoDB(startTime, endTime);
+    const DimTime = await Dim_Time.create({
+      Time_key: startTime.toISOString(),
+      Day: startTime.getDate(),
+      Month: startTime.getMonth() + 1,
+      Year: startTime.getFullYear(),
+    }, { transaction: t });
 
-          const factOrderObj = FactOrder.get({ plain: true }); // Chuyển thành object JS
-          order.factOrderObj = factOrderObj;
-        }
+    //etl order
+    const orders = fullData.orders;
+    for (const order of orders) {
+      const DimLocation = await Dim_Location.create({
+        Location_key: new Date().toISOString(),
+        Province: order.userInfo.province.toString().trim().toLowerCase(),
+        District: order.userInfo.district.toString().trim().toLowerCase(),
+        Commune: order.userInfo.commune.toString().trim().toLowerCase(),
+        Detail: order.userInfo.detail.toString().trim().toLowerCase(),
+      }, { transaction: t })
 
-        const orderProducts = fullData.orderProducts;
-        for (const orderProduct of orderProducts) {
-          const orderFind = orders.find(item => item._id.toString() === orderProduct.order_id);
-          console.log('OrderFind:', orderFind);
-          const FactSale = await Fact_Sale.upsert({
-            Customer_key: orderFind.factOrderObj.Customer_key,
-            Product_key: orderProduct.product_id,
-            Location_key: orderFind.factOrderObj.Location_key,
-            Time_key: DimTime.Time_key,
-            Quantity: orderProduct.quantity,
-            Discount_percent: orderProduct.discountPercentage,
-            Revenue: Math.round(orderProduct.price * (1 - orderProduct.discountPercentage / 100)) * orderProduct.quantity,
-          }, { transaction: t });
-        }
+      const DimOrder = await Dim_Order.create({
+        Order_key: order._id.toString(),
+        Delivery_method: order.deliveryMethod.toString().trim().toLowerCase(),
+        Payment_method: order.paymentMethod.toString().trim().toLowerCase(),
+        Status: order.paymentStatus ? order.paymentStatus.status.toString().trim().toLowerCase() : null,
+      }, { transaction: t })
 
-        const feedbacks = fullData.productFeedbacks;
-        if (feedbacks.length > 0) {
-          for (const feedback of feedbacks) {
-            const FactFeedback = await Fact_Feedback.create({
-              Feedback_key: feedback._id.toString(),
-              Product_key: feedback.productId.toString(),
-              Customer_key: feedback.userId.toString(),
-              Time_key: DimTime.Time_key,
-              Rating: feedback.rating,
-            }, { transaction: t });
-          }
-        }
-      }
-      await t.commit();
-      console.log('Data inserted to DWH successfully!');
-    } catch (error) {
-      console.error('Error inserting data to DWH:', error);
-      await t.rollback();
+      const totalProduct = await OrderProduct.find({ order_id: order.id }).countDocuments();
+      const FactOrder = await Fact_Order.create({
+        Order_key: order._id.toString(),
+        Customer_key: order.userId,
+        Location_key: DimLocation.Location_key,
+        Time_key: DimTime.Time_key,
+        Total_qty_product: totalProduct,
+        Shipping_fee: order.shippingFee,
+        Total_price: order.totalProductPrice,
+      }, { transaction: t })
+
+      const factOrderObj = FactOrder.get({ plain: true }); // convert to object JS
+      order.factOrderObj = factOrderObj;
     }
+
+    const orderProducts = fullData.orderProducts;
+    for (const orderProduct of orderProducts) {
+      const orderFind = orders.find(item => item._id.toString() === orderProduct.order_id);
+      console.log('OrderFind:', orderFind);
+      const FactSale = await Fact_Sale.upsert({
+        Customer_key: orderFind.factOrderObj.Customer_key,
+        Product_key: orderProduct.product_id,
+        Location_key: orderFind.factOrderObj.Location_key,
+        Time_key: DimTime.Time_key,
+        Quantity: orderProduct.quantity,
+        Discount_percent: orderProduct.discountPercentage,
+        Revenue: Math.round(orderProduct.price * (1 - orderProduct.discountPercentage / 100)) * orderProduct.quantity,
+      }, { transaction: t });
+    }
+
+    const feedbacks = fullData.productFeedbacks;
+    if (feedbacks.length > 0) {
+      for (const feedback of feedbacks) {
+        const FactFeedback = await Fact_Feedback.create({
+          Feedback_key: feedback._id.toString(),
+          Product_key: feedback.productId.toString(),
+          Customer_key: feedback.userId.toString(),
+          Time_key: DimTime.Time_key,
+          Rating: feedback.rating,
+        }, { transaction: t });
+      }
+    }
+
+    await t.commit();
+    console.log('Data inserted to DWH successfully!');
+  } catch (error) {
+    console.error('Error inserting data to DWH:', error);
+    await t.rollback();
   }
+
 }

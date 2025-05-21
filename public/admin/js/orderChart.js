@@ -62,6 +62,33 @@ if (orderLocationInputs) {
   });
 }
 
+const orderOrderInputs = document.querySelectorAll('input[name="orderOrder"]');
+if (orderOrderInputs) {
+  orderOrderInputs.forEach((input) => {
+    input.addEventListener('change', function () {
+      document.querySelectorAll('input[name="orderOrder"]').forEach((el) => {
+        el.nextElementSibling.classList.remove('active', 'bg-gray-500', 'text-white');
+      });
+      if (this.checked) {
+        this.nextElementSibling.classList.add('active', 'bg-gray-500', 'text-white');
+      }
+    });
+  });
+}
+const orderCustomerInputs = document.querySelectorAll('input[name="orderCustomer"]');
+if (orderCustomerInputs) {
+  orderCustomerInputs.forEach((input) => {
+    input.addEventListener('change', function () {
+      document.querySelectorAll('input[name="orderCustomer"]').forEach((el) => {
+        el.nextElementSibling.classList.remove('active', 'bg-gray-500', 'text-white');
+      });
+      if (this.checked) {
+        this.nextElementSibling.classList.add('active', 'bg-gray-500', 'text-white');
+      }
+    });
+  });
+}
+
 const orderAPI = "/api/dashboard/olap/fact_order"
 
 async function getOrderData(reqBody) {
@@ -97,7 +124,7 @@ async function renderTimeChart() {
   let orderTimeChartOptions = {
     series: [],
     chart: {
-      height: 350,
+      height: 260,
       type: 'line',
       stacked: true,
       zoom: {
@@ -207,7 +234,7 @@ async function renderLocationChart() {
   let orderLocationChartOptions = {
     series: [],
     chart: {
-      height: 350,
+      height: 260,
       type: 'line',
       stacked: true,
       zoom: {

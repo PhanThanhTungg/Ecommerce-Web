@@ -8,6 +8,7 @@ const myAccountRoutes = require("./my-account.route")
 const settingRoutes = require("./setting.route")
 const orderRoutes = require("./order.route")
 const userRoutes = require("./user.route")
+const discountRoutes = require("./discount.route")
 
 const authMiddleware = require("../../middlewares/admin/auth.middleware")
 
@@ -28,6 +29,7 @@ module.exports = (app)=>{
     app.use(pathAdmin + "/my-account", authMiddleware.requireAuth, myAccountRoutes)
     app.use(pathAdmin + "/settings", authMiddleware.requireAuth, settingRoutes)
     app.use(pathAdmin + "/orders", authMiddleware.requireAuth, orderRoutes)
-    app.use(pathAdmin + "/orders", authMiddleware.requireAuth, orderRoutes)
+    app.use(pathAdmin + "/discount", authMiddleware.requireAuth, discountRoutes)
+    // app.use(pathAdmin + "/orders", authMiddleware.requireAuth, orderRoutes)
     app.use(pathAdmin + "/users", authMiddleware.requireAuth, userRoutes)
 }

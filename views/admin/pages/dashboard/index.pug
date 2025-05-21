@@ -260,79 +260,82 @@ block main
     .fact-order
       h2(class=`mb-5 text-[24px] font-medium leading-none tracking-tight md:text-xl
       dark:text-white border-1 border-gray-300 rounded-xl px-5 py-3 text-black`) Order report
-      .options(class="grid gap-6 mb-6 md:grid-cols-4")
-        .order-option
-          h3 Order
-          .flex.justify-between
-            .order-rollup.flex.flex-col.gap-3
-              label
-                input(
-                  type="radio"
-                  name="orderOrder"
-                  value="delivery"
-                  checked
-                )
-                span Delivery method
-              label
-                input(
-                  type="radio"
-                  name="orderOrder"
-                  value="payment"
-                )
-                span Payment method            
-            .order-dice.mb-6
-              button(
-                type="button" data-dropdown-toggle="order-order-dice" data-dropdown-placement="bottom" 
-              )
-                | Filter
-                svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
-                  path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
-
-              div#order-order-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
-                form.order-dice-form
-                  ul.list-order(class="h-fit px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
-                  button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
-                    | OK
-
-        .customer-option
-          h3 Customer
-          .flex.justify-between
-            .customer-rollup.flex.flex-col.gap-3
-              label
-                input(
-                  type="radio"
-                  name="orderCustomer"
-                  value="type"
-                  checked
-                )
-                span Type
-              label
-                input(
-                  type="radio"
-                  name="orderCustomer"
-                  value="gender"
-                )
-                span Gender
-
-            .customer-dice.mb-6
-              button(
-                type="button" data-dropdown-toggle="order-customer-dice" data-dropdown-placement="bottom" 
-              )
-                | Filter
-                svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
-                  path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
-
-              div#order-customer-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
-                form.customer-dice-form
-                  ul.list-customer(class="h-fit px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
-                  button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
-                    | OK
-
       .inner-chart
         .flex.gap-5
           .flex.flex-col.gap-5
-            .order-chart.wrapper-chart
-            .customer-chart.wrapper-chart
+            div(class="border-1 border-gray-200 pt-5 rounded-2xl")
+              .order-option
+                .flex(class="items-center")
+                  .order-rollup.flex.ml-5.mr-5
+                    label
+                      input(
+                        type="radio"
+                        name="orderOrder"
+                        value="delivery"
+                        class="hidden"
+                        checked
+                      )
+                      span(class="px-4 py-[2px] rounded-[5px] border-1 border-gray-200 text-gray-600 active bg-gray-500 text-white") Delivery method
+                    label
+                      input(
+                        type="radio"
+                        name="orderOrder"
+                        value="payment"
+                        class="hidden"
+                      )
+                      span(class="px-4 py-[2px] rounded-[5px] border-1 border-gray-200 text-gray-600") Payment method
+                  .order-dice.mr-5
+                    button(
+                      type="button" data-dropdown-toggle="order-order-dice" data-dropdown-placement="bottom"
+                      class='px-4 py-[4px] rounded-[5px] border-1 border-gray-200 text-gray-600' 
+                    )
+                      | Filter
+                      svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
+                        path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
+
+                    div#order-order-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
+                      form.order-dice-form
+                        ul.list-order(class="h-fit px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
+                        button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
+                          | OK
+              .order-chart
+            div(class="border-1 border-gray-200 pt-5 rounded-2xl")
+              .customer-option
+                .flex
+                  .customer-rollup.flex.mr-5.ml-5
+                    label
+                      input(
+                        type="radio"
+                        name="orderCustomer"
+                        value="type"
+                        class="hidden"
+                        checked
+                      )
+                      span(class="px-4 py-[2px] rounded-[5px] border-1 border-gray-200 text-gray-600 active bg-gray-500 text-white") Type
+                    label
+                      input(
+                        type="radio"
+                        name="orderCustomer"
+                        value="gender"
+                        class="hidden"
+                      )
+                      span(class="px-4 py-[2px] rounded-[5px] border-1 border-gray-200 text-gray-600") Gender
+
+                  .customer-dice.mr-5
+                    button(
+                      type="button" data-dropdown-toggle="order-customer-dice" data-dropdown-placement="bottom" 
+                      class='px-4 py-[4px] rounded-[5px] border-1 border-gray-200 text-gray-600'
+                    )
+                      | Filter
+                      svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
+                        path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
+
+                    div#order-customer-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
+                      form.customer-dice-form
+                        ul.list-customer(class="h-fit px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
+                        button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
+                          | OK
+              .customer-chart
           .flex.flex-col.gap-5.w-185
             div(class="border-1 border-gray-200 pt-5 rounded-2xl")
               .time-option.ml-5
@@ -424,92 +427,97 @@ block main
               .location-chart
 
     .fact-feedback.mb-8
-      h2(class=`mb-5 ml-5 text-xl font-medium leading-none tracking-tight text-gray-900 md:text-2xl
-      dark:text-white`) Feedback report
-      .options(class="grid gap-6 mb-6 md:grid-cols-4")
-        .time-option
-          h3 Time
-          .flex.justify-between
-            .time-rollup.flex.flex-col.gap-3
-              label
-                input(
-                  type="radio"
-                  name="feedbackTime"
-                  value="day"
-                )
-                span Day
-              label
-                input(
-                  type="radio"
-                  name="feedbackTime"
-                  value="month"
-                  checked
-                )
-                span Month
-              label
-                input(
-                  type="radio"
-                  name="feedbackTime"
-                  value="year"
-                )
-                span Year
-            .time-dice.mb-6.flex.justify-around
-              button(
-                type="button" data-dropdown-toggle="feedback-time-dice" data-dropdown-placement="bottom" 
-              )
-                | Filter
-                svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
-                  path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
-
-              div#feedback-time-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
-                form.time-dice-form
-                  .list-time
-                  button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
-                    | OK
-
-        .product-option
-          h3 Product
-          .flex.justify-between
-            .product-rollup.flex.flex-col.gap-3
-              label
-                input(
-                  type="radio"
-                  name="feedbackProduct"
-                  value="product"
-                )
-                span Product
-              label
-                input(
-                  type="radio"
-                  name="feedbackProduct"
-                  value="category"
-                  checked
-                )
-                span Category
-            .product-dice.mb-6
-              button(
-                type="button" data-dropdown-toggle="feedback-product-dice" data-dropdown-placement="bottom" 
-              )
-                | Filter
-                svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
-                  path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
-
-              div#feedback-product-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
-                div(class="p-3")
-                  label(for="input-group-search" class="sr-only") Search
-                  div(class="relative")
-                    div(class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none")
-                      svg(class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20")
-                        path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z")
-                    input(type="search" placeholder="Search product/category" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500")
-                form.product-dice-form
-                  ul.list-product(class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
-                  button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
-                    | OK
-
+      h2(class=`mb-5 mt-5 text-[24px] font-medium leading-none tracking-tight md:text-xl
+      dark:text-white border-1 border-gray-300 rounded-xl px-5 py-3 text-black`) Feedback report
       .inner-chart
-        .time-chart.wrapper-chart.mb-5
-        .product-chart.wrapper-chart
+        div(class="border-1 border-gray-200 pt-5 rounded-2xl.mb-5")
+          .time-option.ml-5
+            .flex(class="items-center")
+              .time-rollup.flex.mr-5
+                label
+                  input(
+                    type="radio"
+                    name="feedbackTime"
+                    value="day"
+                    class="hidden"
+                  )
+                  span(class="px-4 py-[2px] rounded-[5px] border-1 border-gray-200 text-gray-600") Day
+                label
+                  input(
+                    type="radio"
+                    name="feedbackTime"
+                    value="month"
+                    checked
+                    class="hidden"
+                  )
+                  span(class="px-4 py-[2px] rounded-[5px] border-1 border-gray-200 text-gray-600 active bg-gray-500 text-white") Month
+                label
+                  input(
+                    type="radio"
+                    name="feedbackTime"
+                    value="year"
+                    class="hidden"
+                  )
+                  span(class="px-4 py-[2px] rounded-[5px] border-1 border-gray-200 text-gray-600") Year
+              .time-dice.flex.justify-around
+                button(
+                  type="button" data-dropdown-toggle="feedback-time-dice" data-dropdown-placement="bottom" 
+                  class='px-4 py-[4px] rounded-[5px] border-1 border-gray-200 text-gray-600'
+                )
+                  | Filter
+                  svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
+                    path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
+
+                div#feedback-time-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
+                  form.time-dice-form
+                    .list-time
+                    button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
+                      | OK
+          .time-chart
+        div(class="border-1 border-gray-200 pt-5 rounded-2xl")
+          .product-option
+            .flex(class="items-center")
+              .product-rollup.flex.mr-5.ml-5
+                label
+                  input(
+                    type="radio"
+                    name="feedbackProduct"
+                    value="product"
+                    class="hidden"
+                  )
+                  span(class="px-4 py-[2px] rounded-[5px] border-1 border-gray-200 text-gray-600") Product
+                label
+                  input(
+                    type="radio"
+                    name="feedbackProduct"
+                    value="category"
+                    checked
+                    class="hidden"
+                  )
+                  span(class="px-4 py-[2px] rounded-[5px] border-1 border-gray-200 text-gray-600 active bg-gray-500 text-white") Category
+              .product-dice
+                button(
+                  type="button" data-dropdown-toggle="feedback-product-dice" data-dropdown-placement="bottom" 
+                  class='px-4 py-[4px] rounded-[5px] border-1 border-gray-200 text-gray-600'
+                )
+                  | Filter
+                  svg(class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6")
+                    path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4")
+
+                div#feedback-product-dice(class="z-50 hidden bg-white rounded-lg shadow-sm w-fit dark:bg-gray-700")
+                  div(class="p-3")
+                    label(for="input-group-search" class="sr-only") Search
+                    div(class="relative")
+                      div(class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none")
+                        svg(class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20")
+                          path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z")
+                      input(type="search" placeholder="Search product/category" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500")
+                  form.product-dice-form
+                    ul.list-product(class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200")
+                    button(type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800")
+                      | OK
+          .product-chart
+        
 
     
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
