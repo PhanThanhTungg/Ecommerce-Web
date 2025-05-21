@@ -2,7 +2,7 @@ extends ../../layout/default.pug
 include ../../mixins/alert.pug
 
 block main
-
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   .auth-page
     .form
       .container.my-5
@@ -21,8 +21,10 @@ block main
                     class="form-control"
                     id="email"
                     name="email"
+                    autocomplete="off"
                     required
                   )
+                  span.notice
               div(class="form-group")
                 label(for="phone") Phone
                 .input
@@ -34,6 +36,7 @@ block main
                     name="phone"
                     required
                   )
+                  span.notice
               div(class="form-group")
                 label(for="fullName") Display Name
                 .input
@@ -45,6 +48,7 @@ block main
                     name="fullName"
                     required
                   )
+                  p.notice
               div(class="form-group form-group-password")
                 label(for="password") Password
                 .input
@@ -56,9 +60,9 @@ block main
                     name="password"
                     required
                   )
-
+                  p.notice
               div(class="form-group form-group-password")
-                label(for="check-password") Password
+                label(for="check-password") Confirm Password
                 .input
                   <i class="fa-solid fa-unlock-keyhole"></i>
                   input(
@@ -68,9 +72,12 @@ block main
                     name="checkPassword"
                     required
                   )
-              div(class="form-group mt-5  ")
+                  p.notice
+              div.d-flex.justify-content-center.mt-3(class="g-recaptcha" data-sitekey="6LclhkIrAAAAALXLWhm7WgTnFRkS9T4DzoI2wnIx")
+              div(class="form-group mt-4")
                 button(
                   class ="button button-1"
                   type="submit"
                   class="btn btn-primary btn-block"
                 ) Resgister
+  script(src="/js/validate.js")
