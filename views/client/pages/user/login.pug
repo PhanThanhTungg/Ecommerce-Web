@@ -2,7 +2,7 @@ extends ../../layout/default.pug
 include ../../mixins/alert.pug
 
 block main
-
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   .auth-page
     .form
       .container.my-5
@@ -43,7 +43,7 @@ block main
                   input.remember-input.mr-2(type="checkbox")
                   span Remember me
                 a(href="/user/password/forgot") Forgot password?
-
+              div.d-flex.mb-3(class="g-recaptcha" data-sitekey="6LclhkIrAAAAALXLWhm7WgTnFRkS9T4DzoI2wnIx")
               div(class="form-group")
                 button(
                   class = "button button-1"
@@ -72,5 +72,3 @@ block main
               )
                 button(type="submit") <i class="fa-brands fa-github mr-2"></i> Github  
 
-            
-            
