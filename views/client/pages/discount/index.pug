@@ -6,18 +6,21 @@ block main
     a(href="/discount/shipping") shipping
     a(href="/discount/myDiscount") myDiscount
     each discount in discounts
-      div(class="discount-item")
+      div(class="discount-item" data-id = discount._id)
         .row
           .col-2 Code: #{discount.code}
           .col-2 value: #{discount.value}%
           if (type === "myDiscount")  
             .col-2 Type: #{discount.type}
           else
-            .col-2 quantity: #{discount.quantity}
+            .col-2 quantity: <span class="discount-quantity">#{discount.quantity}</span> 
           .col-4 condition: > <span class="format-money">#{discount.condition}</span>
           .col-2
-            form(action="/discount/getDiscount" method="POST")
+            form.form-get-discount(action="/discount/getDiscount" method="POST")
               input(type="hidden" name="userId" value=user._id)
               input(type="hidden" name="discountId" value=discount._id)
               button get
-      
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src = "/js/socket.js"></script>
+  <script src = "/js/discount.js"></script>
