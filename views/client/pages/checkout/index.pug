@@ -153,6 +153,13 @@ block main
           .shipping
             .name Shipping
             .value #{totalPrice >= settingsGeneral.shippingFee.freeShippingThreshold ? "Free":"Undefined"} 
+          .discount
+            .discount-coupon
+              label(for="discount-coupon") Discount code
+              select(name="discount-coupon")
+            .discount-shipping
+              label(for="discount-shipping") Shipping discount  
+              select(name="discount-shipping")
           p.mt-5 Free shipping for any orders above <span class="format-money">#{settingsGeneral.shippingFee.freeShippingThreshold}</span>
           
           .total-price.total
