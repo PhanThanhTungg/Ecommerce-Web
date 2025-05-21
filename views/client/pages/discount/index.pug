@@ -1,0 +1,20 @@
+extends ../../layout/default.pug
+
+block main
+  .container
+    a(href="/discount/coupon") coupon 
+    a(href="/discount/shipping") shipping
+    a(href="/discount/myDiscount") myDiscount
+    each discount in discounts
+      div(class="discount-item")
+        .row
+          .col-2 Code: #{discount.code}
+          .col-2 value: #{discount.value}%
+          .col-3 quantity: #{discount.quantity}
+          .col-3 condition: > <span class="format-money">#{discount.condition}</span>
+          .col-2
+            form(action="/discount/getDiscount" method="POST")
+              input(type="hidden" name="userId" value=user.id)
+              input(type="hidden" name="discountId" value=discount.id)
+              button get
+      

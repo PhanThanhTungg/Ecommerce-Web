@@ -75,6 +75,10 @@ header.header
             a(href=pathProduct) Category
             +sub-menu(layoutProductsCategory, pathProduct) 
 
+          if(user)
+            li
+              a(href="/discount/coupon") Discount
+
           li
             a(href="/about") About
 

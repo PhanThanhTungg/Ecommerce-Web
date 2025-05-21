@@ -10,11 +10,12 @@ module.exports.index = async (req, res) => {
 
 module.exports.create = async (req, res) => {
   try {
-    const { type, value, condition, startDate, endDate } = req.body;
+    const { type, value, condition, startDate, endDate , quantity} = req.body;
     const discount = new Discount({
       type,
       value,
       condition,
+      quantity,
       startDate,
       endDate
     });
@@ -46,7 +47,8 @@ module.exports.edit = async (req, res) => {
           value: req.body.value,
           condition: req.body.condition,
           startDate: req.body.startDate,
-          endDate: req.body.endDate
+          endDate: req.body.endDate,
+          quantity: req.body.quantity
         }
       }
     )

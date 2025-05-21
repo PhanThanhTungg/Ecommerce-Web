@@ -30,6 +30,10 @@ const discountSchema = new mongoose.Schema(
       type: Date,
       required: true
     },
+    quantity: {
+      type: Number,
+      required: true
+    },
     isActive: {
       type: Boolean,
       default: true
