@@ -64,3 +64,7 @@ module.exports.edit = async (req, res) => {
     })
   }
 }
+
+module.exports.delete = async (req, res)=>{
+  
+}
