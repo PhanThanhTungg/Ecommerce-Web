@@ -1,4 +1,46 @@
 extends ../../layouts/default.pug
+include ../../mixins/moment.pug
 
 block main
-  div(class="text-white") #{discounts}
+  .container-custom
+    div.relative.overflow-x-auto.shadow-md(class="sm:rounded-xl")
+      table(class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400" check-box-multi)
+        thead(class=`text-xs text-gray-700 uppercase bg-gray-100 
+          dark:bg-dark-navy-3 dark:text-gray-400`
+        )
+          tr
+            th(scope="col" class="px-6 py-4")
+              .flex.items-center
+                input#checkbox-all-search(type="checkbox" name="checkall" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-black-blur dark:focus:ring-offset-black-blur focus:ring-2 dark:bg-black-1 dark:border-gray-600")
+                label.sr-only(for="checkbox-all-search") checkbox
+            th(scope="col" class="pr-6 py-3") Code
+            th(scope="col" class="px-6 py-3") Type
+            th(scope="col" class="px-6 py-3") Value
+            th(scope="col" class="px-6 py-3") Expire
+            th(scope="col" class="px-6 py-3") Quantity
+            th(scope="col" class="px-6 py-3") Condition
+            th(scope="col" class="px-6 py-3") 
+          tbody
+            each item, index in discounts
+              tr(class="h-fit bg-white border-b dark:bg-dark-navy-2 dark:border-black-1 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600")
+                td(class="w-4 px-6 py-4")
+                  .flex.items-center
+                    input#checkbox-table-search-1(type="checkbox" name="id" value=item.id class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-black-blur dark:focus:ring-offset-black-blur focus:ring-2 dark:bg-black-1 dark:border-gray-600")
+                    label.sr-only(for="checkbox-table-search-1") checkbox
+                th(scope="row" class="pr-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white")
+                  span #{item.code}
+                td(class="px-6 py-4") 
+                  span #{item.type}
+                td(class="px-6 py-4") 
+                  span #{item.value}
+                td(class="px-6 py-4") 
+                  +formatDate(item.endDate)
+                td(class="px-6 py-4") 
+                  span #{item.quantity}
+                td(class="px-6 py-4") 
+                  span #{item.condition}
+                td(class="px-6 py-4") 
+                  if (item.isActive)
+                    span(class="text-green-600 dark:text-green-400") Active
+                  else
+                    span(class="text-red-600 dark:text-red-400") Inactive

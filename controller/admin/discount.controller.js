@@ -1,7 +1,6 @@
 const Discount = require("../../model/discount.model");
 module.exports.index = async (req, res) => {
-  const discounts = await Discount.find({ deleted: false }).sort({ createdAt: -1 });
-
+  const discounts = await Discount.find({ deleted: false }).sort({ createdAt: -1 });;
   res.render("admin/pages/discount/index", {
     pageTitle: "Discount",
     discounts
