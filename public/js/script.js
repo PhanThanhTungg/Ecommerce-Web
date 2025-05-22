@@ -160,7 +160,39 @@ maxWidth767.addEventListener('change', handleResize767);
 handleResize767(maxWidth767);
   
 
-
+// search product
+const searchInput = document.getElementById("header-search__input");
+const displayResult = document.querySelector('.header-search__result-content')
+if (searchInput) {
+  searchInput.addEventListener("input", (e)=>{
+    let keyword = e.target.value;
+    if (keyword.length > 3) {
+      fetch(`/api/products/search/${keyword}`)
+      .then(res=>res.json())
+      .then(data=>{
+        console.log(data);
+        if (data.message === "success") {
+          if (data.data.length === 0) {
+            displayResult.innerHTML = ""
+          }
+          else {
+            displayResult.innerHTML = ""
+            data.data.forEach(item=>{
+              displayResult.innerHTML += `
+              <div class="header-search__result-item">
+                <a href="/product/${item.slug}">${item.name}</a>
+              </div>
+              `
+            })
+          }
+        }
+      })
+      .catch(err=>{
+        console.log(err);
+      })
+    }
+  })
+}
 
 
 

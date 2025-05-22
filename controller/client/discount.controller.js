@@ -1,6 +1,14 @@
 const Discount = require("../../model/discount.model");
 const DiscountUser = require("../../model/discount-user.model");
 module.exports.index = async (req, res) => {
+
+  _io.once("connection", (socket) => {
+    console.log('a user connected1 ' + socket.id);
+    socket.on("client-get-discount", (data)=>{
+      console.log(data);
+    })
+  });
+
   const type = req.params.type;
   const now = new Date();
 
@@ -37,6 +45,22 @@ module.exports.getDiscount = async (req, res) => {
       discountId
     })
     await discount.save();
+
+    const discountFound = await Discount.findOne({ _id: discountId });
+    if(discountFound.quantity == 0){
+      req.flash("error", "Get discount failed");
+      return res.redirect("back");
+    }
+
+    await Discount.updateOne({ _id: discountId }, { $inc: { quantity: -1 } });
+
+    _io.once('connection', (socket) => {
+      _io.emit("sub-quantity-discount", {
+        discountId: discountFound.id,
+        quantity: discountFound.quantity - 1
+      })
+    })
+
     req.flash("success", "Get discount successfully");
     res.redirect("back");
   } catch (error) {

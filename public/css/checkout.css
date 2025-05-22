@@ -882,6 +882,11 @@ button[data-target="#discountModal"] {
   align-items: center;
 }
 
+#discountModal label[disabled = "disabled"] {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}
+
 #discountModal .wrapper, .discount-page .wrapper {
   display: flex;
   flex: 1;

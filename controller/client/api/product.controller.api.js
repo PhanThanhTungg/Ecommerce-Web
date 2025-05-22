@@ -2,10 +2,36 @@ const Category = require("../../../model/product-category.model");
 const Product = require("../../../model/product.model");
 const Feedback = require("../../../model/product-feedback.model")
 const paginationHelper = require("../../../helpers/pagination")
+const unidecode = require("unidecode");
+
+module.exports.productApiSearch = async (req, res) => {
+  try {
+    let keyword = req.params.keyword.toString().trim();
+    let key = keyword.replace(/\s+/g, "-");
+    key = unidecode(key);
+    const regex = new RegExp(key, "i");
+    const products = await Product.find({
+      slug: regex,
+      status: "active",
+      deleted: false
+    }).select("title slug thumbnail")
+    res.status(200).json({
+      message: "success",
+      data: products
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "error",
+      detail_message: error
+    })
+  }
+}
+
 module.exports.productApiGetData = async (req, res) => {
   try {
     let find = { status: "active", deleted: false };
-    
+
     if (req.params.slugCategory) {
       const slugCategory = req.params.slugCategory;
       const category = await Category.findOne({
@@ -132,23 +158,23 @@ module.exports.productApiGettype = async (req, res) => {
     const type = req.params.type;
     let products;
     let sort = {}
-    switch (type){
+    switch (type) {
       case "featured":
         find.featured = "1";
         break;
       case "saleoff":
-        find.discountPercentage = {$gt: 0};
+        find.discountPercentage = { $gt: 0 };
         sort.discountPercentage = "desc";
         break;
       case "sales":
         sort.sales = "desc"
     }
 
-     //Pagigation
-     let objectPagination = await paginationHelper(req, await Product.countDocuments(find), 1, Number(req.query.limit) || 8);
-     
+    //Pagigation
+    let objectPagination = await paginationHelper(req, await Product.countDocuments(find), 1, Number(req.query.limit) || 8);
+
     products = await Product.find(find).sort(sort).skip(objectPagination.skip).limit(objectPagination.limit)
-    .select("title listSize discountPercentage images ratingNumber sales featured slug");
+      .select("title listSize discountPercentage images ratingNumber sales featured slug");
     res.status(200).json({
       products: products,
       objectPagination
@@ -164,7 +190,7 @@ module.exports.productApiGettype = async (req, res) => {
 
 module.exports.productApiAddFeedback = async (req, res) => {
   try {
-    if(!res.locals.user){
+    if (!res.locals.user) {
       return res.json({
         code: 401,
         message: "unauthorized!"
@@ -184,7 +210,7 @@ module.exports.productApiAddFeedback = async (req, res) => {
       message: "Feedback added successfully",
       data: feedback,
     });
-    
+
   } catch (error) {
     res.json({
       code: 400,

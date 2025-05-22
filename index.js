@@ -7,7 +7,6 @@ const cookieParser = require("cookie-parser") // Thư viện liên quan đến e
 const session = require("express-session") // Thư viện liên quan đến express-flash
 var methodOverride = require('method-override') // thu vien methodOverride de thay doi phuong thuc gui fom
 
-
 const moment = require("moment") // convert time
 
 require("dotenv").config() // Cấu hình env
@@ -56,6 +55,14 @@ app.use(flash());
 // const dwhAction = require("./DWH/dwh.js");
 // dwhAction();
 
+
+const { createServer } = require('node:http');
+const { join } = require('node:path');
+const { Server } = require('socket.io');
+const server = createServer(app);
+const io = new Server(server);
+global._io = io; 
+
 route(app) //gọi đến route
 routeAdmin(app)
 const clientApiRoute = require("./routes/client/api/index.route.api");
@@ -67,6 +74,6 @@ app.get("*", (req, res) => {
   });
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })

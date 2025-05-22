@@ -9,7 +9,7 @@ block main
       a(href="/discount/myDiscount" active=type == "myDiscount") My Discount
     div(class="inner-discount")
       each discount in discounts
-        div(class="discount-item")
+        div(class="discount-item" data-id=discount._id)
           .inner-img
             if (discount.type == "coupon")
               img(src="https://thumbs.dreamstime.com/b/discount-stamp-vector-clip-art-33305813.jpg" alt="Coupon")
@@ -24,9 +24,13 @@ block main
             .expired
               +expires(discount.endDate)
               if (type != "myDiscount")
-                .quantity.ml-5 Only #{discount.quantity} left
+                .quantity.ml-5 Only 
+                  <span class="discount-quantity"> #{discount.quantity} </span> left 
           if (type != "myDiscount")
             form(action="/discount/getDiscount" method="POST")
               input(type="hidden" name="userId" value=user._id)
               input(type="hidden" name="discountId" value=discount._id)
               button.get-discount Get
+  <script src="/socket.io/socket.io.js"></script>
+  <script src = "/js/socket.js"></script>
+  <script src = "/js/discount.js"></script>
