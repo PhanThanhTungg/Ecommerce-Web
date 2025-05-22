@@ -43,8 +43,8 @@ module.exports.index = async (req, res) => {
   };
   let discountCoupon = [];
   let discountShipping = [];
-  if(res.locals.user){
-    const discountUsers = await DiscountUser.find({userId: res.locals.user._id, deleted: false});
+  if (res.locals.user) {
+    const discountUsers = await DiscountUser.find({ userId: res.locals.user._id, deleted: false });
     for (const item of discountUsers) {
       const discountItem = await Discount.findOne({
         _id: item.discountId,
@@ -109,17 +109,26 @@ module.exports.order = async (req, res) => {
       }
     }
 
-    if(res.locals.user){
+    if (res.locals.user) {
       orderData.userId = res.locals.user?.id;
     }
-    else{
+    else {
       orderData.cartId = req.cookies?.cartId;
     }
 
     const order = new Order(orderData);
     await order.save();
-
+    const baseUrl = `${req.protocol}://${req.get('host')}`;
     for (const item of orderProducts) {
+      const cartId = res.locals.miniCart.id;
+      const productId = item.product._id;
+      const sizeId = item.size._id;
+
+      await Cart.updateOne({
+        _id: cartId
+      }, {
+        $pull: { products: { product_id: productId, sizeId: sizeId } }  
+      })
       const orderProduct = new OrderProduct({
         order_id: order.id,
         product_id: item.product._id,
