@@ -15,7 +15,9 @@ CUDiscountForm.addEventListener("submit", (e) => {
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
+      if (data.message = "Create discount successfully") {
+        window.location.href = "/admin/discount";
+      }
     })
     .catch((err) => {
       console.log(err);

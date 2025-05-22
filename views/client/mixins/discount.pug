@@ -1,0 +1,57 @@
+include ../mixins/moment.pug
+
+mixin select-discount-modal(couponList, shippingList, totalPrice)
+  button(data-toggle="modal" data-target="#discountModal") Choose Discount
+
+  .modal.fade(id="discountModal" tabindex="-1" aria-labelledby="discountModalLabel" aria-hidden="true")
+    .modal-dialog.modal-dialog-centered.modal-lg
+      .modal-content
+        .modal-header
+          h5.modal-title Discount
+        .modal-body
+          .coupon-list
+            .main-title Coupon discount
+            each coupon in couponList
+              label.coupon-item.mb-3
+                input(
+                  type="radio" 
+                  name="coupon"
+                  value=coupon.id
+                  disabled=coupon.condition > totalPrice
+                )
+                .inner-img
+                  img(src="https://thumbs.dreamstime.com/b/discount-stamp-vector-clip-art-33305813.jpg" alt="Free shipping")
+                .wrapper
+                  .d-flex.justify-content-between
+                    .title
+                      span #{coupon.value}% off
+                    .code #{coupon.code}                  
+                  .condition Order must be over
+                    span.format-money #{coupon.condition}
+                  .expired.d-flex.align-items-center
+                    span Expired:
+                    +formatDateTime(coupon.endDate)
+          .shipping-list
+            .main-title Shipping discount
+            each shipping in shippingList
+              label.shipping-item.mb-3
+                input(
+                  type="radio" 
+                  name="shipping" 
+                  value=shipping.id
+                  disabled=shipping.condition > totalPrice
+                )
+                .inner-img
+                  img(src="https://cf.shopee.vn/file/vn-11134207-7qukw-lhskeaic2j5xbd" alt="Free shipping")
+                .wrapper
+                  .d-flex.justify-content-between
+                    .title
+                      span.value #{shipping.value}% off
+                    .code #{shipping.code}
+                  .condition Order must be over 
+                    span.format-money #{shipping.condition}
+                  .expired.d-flex.align-items-center
+                    span Expired:
+                    +formatDateTime(shipping.endDate)
+          div.spacer  
+          button#accept-discount(type="button" data-dismiss="modal") Accept
