@@ -34,7 +34,7 @@ mixin select-discount-modal(couponList, shippingList, totalPrice)
           .shipping-list
             .main-title Shipping discount
             each shipping in shippingList
-              label.shipping-item.mb-3
+              label.shipping-item.mb-3(disabled=shipping.condition > totalPrice)
                 input(
                   type="radio" 
                   name="shipping" 

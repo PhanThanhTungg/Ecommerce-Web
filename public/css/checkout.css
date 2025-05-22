@@ -873,7 +873,7 @@ button[data-target="#discountModal"] {
   margin-bottom: 10px;
 }
 
-#discountModal .modal-body > * label {
+#discountModal .modal-body > * label, .discount-page .discount-item {
   padding: 15px;
   border-radius: 5px;
   border: 1px solid var(--border-color);
@@ -882,40 +882,41 @@ button[data-target="#discountModal"] {
   align-items: center;
 }
 
-#discountModal .wrapper {
+#discountModal .wrapper, .discount-page .wrapper {
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: 8px;
 }
 
-#discountModal .wrapper .title {
+#discountModal .wrapper .title, .discount-page .wrapper .title {
   font-weight: 500;
 }
 
-#discountModal .wrapper .code {
+#discountModal .wrapper .code, .discount-page .wrapper .code {
   color: var(--secondary-color-text);
   font-style: italic;
 }
 
-#discountModal .wrapper .condition {
+#discountModal .wrapper .condition, .discount-page .wrapper .condition {
   font-size: 1.3rem;
   color: var(--secondary-color-text);
 }
 
-#discountModal .wrapper .expired {
+#discountModal .wrapper .expired, .discount-page .wrapper .expired {
   gap: 5px;
   color: var(--danger-color);
   font-size: 1.4rem;
 }
 
-#discountModal .inner-img {
+#discountModal .inner-img, .discount-page .inner-img {
   height: 100px;
   width: 100px;
   overflow: hidden;
   border-radius: 8px;
 }
 
-#discountModal .inner-img img {
+#discountModal .inner-img img, .discount-page .inner-img img {
   width: 100%;
   aspect-ratio: 1/1;
   object-fit: cover;
@@ -931,6 +932,48 @@ button[data-target="#discountModal"] {
   border-radius: 5px;
 }
 
+.discount-page .inner-tab {
+  width: fit-content;
+  display: flex;
+  padding: 5px 5px;
+  margin: 30px 0;
+  border-radius: 5px;
+  background-color: var(--main-bg-color);
+}
+
+.discount-page .inner-tab > * {
+  width: 110px;
+  text-align: center;
+  padding: 10px 0;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.discount-page .inner-tab a[active] {
+  background-color: white;
+}
+
+.discount-page .inner-discount {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.discount-page .expired {
+  display: flex;
+  gap: 50px;
+  align-items: center;
+}
+
+.discount-page .get-discount {
+  background-color: var(--color-orange);
+  color: white;
+  padding: 7px 20px;
+  display: block;
+  width: fit-content;
+  margin-left: 15px;
+  border-radius: 5px;
+}
 /* end discount */
 
 @keyframes move {
