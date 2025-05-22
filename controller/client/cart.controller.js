@@ -115,10 +115,8 @@ module.exports.addPost = async (req, res) => {
 
 module.exports.delete = async (req, res) => {
   const cartId = res.locals.miniCart.id;
-  const productId = req.params.productId
-  const sizeId = req.params.sizeId
-
-  console.log(cartId, productId, sizeId);
+  const productId = req.params.productId;
+  const sizeId = req.params.sizeId;
 
   await Cart.updateOne({
     _id: cartId
@@ -141,7 +139,6 @@ module.exports.delete = async (req, res) => {
     totalItem: cart.products.length
   })
 }
-
 
 module.exports.update = async (req, res) => {
   const cartId = res.locals.miniCart.id;

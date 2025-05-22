@@ -9,6 +9,7 @@ const CryptoJS = require('crypto-js');
 const crypto = require('crypto');
 const moment = require("moment");
 const momoConfig = require("../../config/momo.config")
+const mongoose = require("mongoose");
 
 module.exports.index = async (req, res) => {
   const orderProducts = [];
@@ -78,8 +79,9 @@ module.exports.order = async (req, res) => {
   try {
     let { orderProducts, fullName, phone, province, district,
       commune, detail, locationX, locationY, deliveryMethod, paymentMethod, shippingFee, note } = req.body;
-
+    
     orderProducts = JSON.parse(orderProducts);
+
 
     let totalProductPrice = orderProducts.reduce((val1, val2) => {
       return val1 + val2.totalPriceItem;
@@ -129,6 +131,13 @@ module.exports.order = async (req, res) => {
       }, {
         $pull: { products: { product_id: productId, sizeId: sizeId } }  
       })
+
+      const sizeIdObject = new mongoose.Types.ObjectId(sizeId);
+
+      const productFound = await Product.findOne({
+        _id: productId
+      })
+      
       const orderProduct = new OrderProduct({
         order_id: order.id,
         product_id: item.product._id,

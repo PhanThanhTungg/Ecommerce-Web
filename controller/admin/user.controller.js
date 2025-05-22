@@ -41,7 +41,21 @@ module.exports.index = async (req,res)=>{
     const filterStatus = filterStatusHelper(req.query)
 
     const records = await User.find(find).select("-password").sort(sort).limit(objectPagination.limit)
-    .skip(objectPagination.skip)
+    .skip(objectPagination.skip).lean();
+
+    for(const record of records){
+        const successOrderCount = await Order.countDocuments({userId: record._id, deliveryStatus: "delivered"});
+        const unrecieveOrderCount = await Order.countDocuments({userId: record._id, deliveryStatus: "cancelled"});
+
+        const successOrder = await Order.find({userId: record._id, deliveryStatus: "delivered"}).lean();
+        const totalPurchase = successOrder.reduce((total, order) => {
+            return total + Number(order.totalProductPrice);
+        }, 0);
+
+        record.successOrderCount = successOrderCount;
+        record.unrecieveOrderCount = unrecieveOrderCount; 
+        record.totalPurchase = totalPurchase;
+    }
 
     
     res.render("admin/pages/users/index",{

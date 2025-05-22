@@ -60,9 +60,9 @@ block main
                     .info.flex.flex-col.gap-1
                       div(class="font-medium text-gray-900 whitespace-nowrap dark:text-white") #{item.fullName}
                       div(class="font-normal" title=item.email) #{item.email}
-                td(class="px-1.5 md:px-2.5 py-3 text-center") #{item.cntSuccess}
-                td(class="px-1.5 md:px-2.5 py-3 text-center") #{item.cntFail}
-                td(class="px-1.5 md:px-2.5 py-3 text-center") #{item.totalValue}
+                td(class="px-1.5 md:px-2.5 py-3 text-center") #{item.successOrderCount}
+                td(class="px-1.5 md:px-2.5 py-3 text-center") #{item.unrecieveOrderCount}
+                td(class="px-1.5 md:px-2.5 py-3 text-center") <span class="formatMoney">#{item.totalPurchase}</span>
                 td(class="px-1.5 md:px-2.5 py-3") 
                   +formatDate(item.createdAt)
                   +formatTime(item.createdAt)
