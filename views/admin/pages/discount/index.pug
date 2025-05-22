@@ -25,7 +25,9 @@ block main
             th(scope="col" class="px-6 py-3") 
           tbody
             each item, index in discounts
-              tr(class="h-fit bg-white border-b dark:bg-dark-navy-2 dark:border-black-1 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600")
+              tr(class="h-fit bg-white border-b dark:bg-dark-navy-2 dark:border-black-1 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
+                data-id=item._id
+              )
                 td(class="w-4 px-6 py-4")
                   .flex.items-center
                     input#checkbox-table-search-1(type="checkbox" name="id" value=item.id class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-black-blur dark:focus:ring-offset-black-blur focus:ring-2 dark:bg-black-1 dark:border-gray-600")
@@ -41,7 +43,7 @@ block main
                 td(class="px-6 py-4") 
                   +formatDateTime(item.endDate)
                 td(class="px-6 py-4") 
-                  span #{item.quantity}
+                  span(class="discount-quantity") #{item.quantity}
                 td(class="px-6 py-4") 
                   span #{item.condition}
                 td(class="px-6 py-4") 
@@ -49,4 +51,6 @@ block main
                     span(class="text-green-600 dark:text-green-400") Active
                   else
                     span(class="text-red-600 dark:text-red-400") Inactive
+  <script src="/socket.io/socket.io.js"></script>
+  <script src = "/js/socket.js"></script>
   script(src="/admin/js/discount.js")
