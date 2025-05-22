@@ -7,6 +7,10 @@ const searchHelper = require("../../helpers/search")
 module.exports.index = async (req, res) => {
   const user = res.locals.user;
   const query = user ? { userId: user.id } : { cartId: req.cookies.cartId };
+  const queryDeliveryStatus = req.query.deliveryStatus;
+  if(queryDeliveryStatus) {
+    query.deliveryStatus = queryDeliveryStatus;
+  }
 
   let orders = await Order.aggregate([
     { $match: query },

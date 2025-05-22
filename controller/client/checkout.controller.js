@@ -71,15 +71,15 @@ module.exports.index = async (req, res) => {
     orderProducts,
     totalPrice,
     discountCoupon,
-    discountShipping,
+    discountShipping
   });
 };
 
 module.exports.order = async (req, res) => {
   try {
     let { orderProducts, fullName, phone, province, district,
-      commune, detail, locationX, locationY, deliveryMethod, paymentMethod, shippingFee, note } = req.body;
-    
+      commune, detail, locationX, locationY, deliveryMethod, paymentMethod, shippingFee, note, discountCoupon, discountShipping } = req.body;
+
     orderProducts = JSON.parse(orderProducts);
 
 
@@ -99,6 +99,8 @@ module.exports.order = async (req, res) => {
       },
       shippingFee,
       totalProductPrice,
+      discountCoupon,
+      discountShipping,
       note,
       deliveryMethod,
       deliveryStatus: paymentMethod == "cash" ? "pending" : "pending-payment",
@@ -360,6 +362,8 @@ module.exports.success = async (req, res) => {
       order: order,
       products,
       totalPrice,
+      discountCoupon: order.discountCoupon,
+      discountShipping: order.discountShipping,
       bankId: process.env.QR_BANK_ID,
       bankAccount: process.env.QR_BANK_ACC
     })

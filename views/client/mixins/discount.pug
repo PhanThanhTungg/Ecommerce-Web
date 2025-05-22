@@ -17,6 +17,7 @@ mixin select-discount-modal(couponList, shippingList, totalPrice)
                   type="radio" 
                   name="coupon"
                   value=coupon.id
+                  data-value=coupon.value
                   disabled=coupon.condition > totalPrice
                 )
                 .inner-img
@@ -39,6 +40,7 @@ mixin select-discount-modal(couponList, shippingList, totalPrice)
                   type="radio" 
                   name="shipping" 
                   value=shipping.id
+                  data-value=shipping.value
                   disabled=shipping.condition > totalPrice
                 )
                 .inner-img

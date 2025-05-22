@@ -61,9 +61,15 @@ block main
             .shipping.d-flex.align-items-center
               span.name Shipping
               span.value.format-money #{order.shippingFee}
+            .shipping.d-flex.align-items-center
+              span.name Discount coupon
+              span.value - #{order.discountCoupon} %
+            .shipping.d-flex.align-items-center
+              span.name Shipping discount
+              span.value - #{order.discountShipping} %
             .totalPrice.d-flex.align-items-center
               span.name TOTAL 
-              span.value.format-money #{totalPrice+order.shippingFee}
+              span.value.format-money #{totalPrice*(1-order.discountCoupon/100)+order.shippingFee*(1-order.discountShipping/100)}
           .inner-button
             a.continue-shopping(href="/products") Continue Shopping
             a.history(href="/history") Track Your Order

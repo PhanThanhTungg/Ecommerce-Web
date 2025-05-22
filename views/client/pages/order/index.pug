@@ -91,6 +91,9 @@ block main
                       span.text-error Unpaid
                     else if order.paymentStatus.status == "ok"
                       span.text-paid Paid
+                
+                .col-3 
+                  div Total price: <span class="format-money">#{(order.totalProductPrice*(1-order.discountCoupon/100)+order.shippingFee*(1-order.discountShipping/100)).toFixed(0)}</span> 
 
               - status = order.paymentStatus?.status
               .orderProducts.d-none.w-100.row(data-order-id = order.id data-payment-method=order.paymentMethod data-payment-status=status)

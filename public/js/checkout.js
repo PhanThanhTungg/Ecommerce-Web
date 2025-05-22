@@ -7,6 +7,9 @@ const freeShip = totalPrice >= shippingFee.freeShippingThreshold ? true : false;
 let shippingFeeValue = 0;
 let checkMap = false;
 
+let discountCoupon = 0;
+let discountShipping = 0;
+
 
 const displayProvince = document.querySelector('.checkout .info .address-info .display-province');
 const displayDistrict = document.querySelector('.checkout .info .address-info .display-district');
@@ -431,6 +434,19 @@ if (formCheckout) {
     textArea.name = "note";
     textArea.style.display = "none";
     textArea.value = document.querySelector(".input-note textarea").value;
+
+    const inputDiscountCoupon = document.createElement("input");
+    inputDiscountCoupon.type = "hidden";
+    inputDiscountCoupon.name = "discountCoupon";
+    inputDiscountCoupon.value = discountCoupon;
+
+    const inputDiscountShipping = document.createElement("input");
+    inputDiscountShipping.type = "hidden";
+    inputDiscountShipping.name = "discountShipping";
+    inputDiscountShipping.value = discountShipping;
+
+    formCheckout.appendChild(inputDiscountCoupon);
+    formCheckout.appendChild(inputDiscountShipping);
     formCheckout.appendChild(textArea);
 
     e.target.submit();
@@ -473,4 +489,45 @@ if (form) {
       event.preventDefault();
     }
   });
+}
+
+
+// handle user choose discount
+const radioCoupons = document.querySelectorAll("input[name=coupon]");
+const radioShipping = document.querySelectorAll("input[name=shipping]");
+
+
+const updateTotalPrice = ()=>{
+  const totalPriceValues = document.querySelectorAll(".total-price .value");
+  totalPriceValues.forEach((totalPriceValue) => {
+    totalPriceValue.innerText = Math.floor(parseInt(totalPrice)*(100-discountCoupon)/100 + shippingFeeValue*(100-discountShipping)/100).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+  })
+}
+
+
+if(radioCoupons){
+  radioCoupons.forEach((radio) => {
+    radio.addEventListener("change", (e) => {
+      const discountValue = e.target.getAttribute("data-value");
+      const input = document.querySelector("input[name=discount-coupon-number]");
+      if(input){
+        input.value = discountValue;
+        discountCoupon = +discountValue.trim();
+        updateTotalPrice()
+      }
+    })
+  })
+}
+if(radioShipping){
+  radioShipping.forEach((radio) => {
+    radio.addEventListener("change", (e) => {
+      const shippingValue = e.target.getAttribute("data-value");
+      const input = document.querySelector("input[name=discount-shipping-number]");
+      if(input){
+        input.value = shippingValue;
+        discountShipping = +shippingValue.trim();
+        updateTotalPrice()
+      }
+    })
+  })
 }

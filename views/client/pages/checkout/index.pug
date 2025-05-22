@@ -87,6 +87,7 @@ block main
             div.input-location
               input.locationX(type="text" name="locationX" value="13")
               input.locationY(type="text" name="locationY" value="1232")
+            
         
         h3 Delivery method
         .delivery-method.payment-method.mb-5
@@ -156,7 +157,24 @@ block main
             .value #{totalPrice >= settingsGeneral.shippingFee.freeShippingThreshold ? "Free":"Undefined"} 
           .d-flex.justify-content-between.align-items-center.mt-5
             +select-discount-modal(discountCoupon, discountShipping, totalPrice)
-            
+          .input-discount-Coupon(class="d-flex mt-3")
+            span Discount voucher: - 
+            input(
+              type="text" 
+              name="discount-coupon-number" 
+              value="0"
+              style="background: transparent; width: 35px; text-align: center"
+            )
+            span %
+          .input-discount-shipping(class="d-flex")
+            span Discount shipping: - 
+            input(
+              type="text" 
+              name="discount-shipping-number" 
+              value="0"
+              style="background: transparent; width: 35px; text-align: center"
+            )
+            span % 
           p.mt-5 Free shipping for any orders above <span class="format-money">#{settingsGeneral.shippingFee.freeShippingThreshold}</span>
           .total-price.total
             .title TOTAL

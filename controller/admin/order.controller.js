@@ -117,6 +117,11 @@ module.exports.index = async (req, res) => {
 module.exports.changeStatus = async (req, res) => {
   try {
     await Order.updateOne({_id: req.params.orderId }, { deliveryStatus: req.params.value });
+    if(req.params.value=="delivered"){
+      await Order.updateOne({_id: req.params.orderId }, 
+        { paymentStatus: { status: "ok", lack: 0 } }
+      );
+    }
     req.flash('success', 'Change status order successfully');
     res.redirect("back");
   } catch (error) {
