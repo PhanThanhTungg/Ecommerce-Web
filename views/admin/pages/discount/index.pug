@@ -58,12 +58,12 @@ block main
                       class="button-edit cursor-pointer"
                       
                     ) <i class="fa-regular fa-pen-to-square text-lg text-black-1 dark:text-white"></i>
-
-                    a(
-                      class="button-delete cursor-pointer"
-                      button-delete
-                      data-id=item.id
-                    ) <i class="fa-solid fa-trash text-lg text-red-400 dark:text-red-600"></i>
+                    form(action = `${prefixAdmin}/discount/delete/${item.id}?_method=DELETE` method="POST")
+                      button(
+                        class="button-delete cursor-pointer"
+                        button-delete
+                        data-id=item.id
+                      ) <i class="fa-solid fa-trash text-lg text-red-400 dark:text-red-600"></i>
   <script src="/socket.io/socket.io.js"></script>
   <script src = "/js/socket.js"></script>
   script(src="/admin/js/discount.js")

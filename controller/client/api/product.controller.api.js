@@ -133,6 +133,11 @@ module.exports.productApiGetData = async (req, res) => {
     console.log(newProducts.length)
 
     for (const item of newProducts) {
+      const feedbacksFound = await Feedback.find({
+        productId: item._id,
+      })
+      const averageRating = Math.round(feedbacksFound.reduce((acc, feedback) => acc + feedback.rating, 0) / feedbacksFound.length);
+      item.ratingNumber = averageRating;
       for (const size of item.listSize) {
         size.priceNew = (size.price * (100 - item.discountPercentage) / 100).toFixed(0);
       }
@@ -174,7 +179,16 @@ module.exports.productApiGettype = async (req, res) => {
     let objectPagination = await paginationHelper(req, await Product.countDocuments(find), 1, Number(req.query.limit) || 8);
 
     products = await Product.find(find).sort(sort).skip(objectPagination.skip).limit(objectPagination.limit)
-      .select("title listSize discountPercentage images ratingNumber sales featured slug");
+      .select("title listSize discountPercentage images ratingNumber sales featured slug").lean();
+    
+    for (const item of products) {
+      const feedbacksFound = await Feedback.find({
+        productId: item._id,
+      })
+      const averageRating = Math.round(feedbacksFound.reduce((acc, feedback) => acc + feedback.rating, 0) / feedbacksFound.length);
+      item.ratingNumber = averageRating;
+    }
+    console.log(products)
     res.status(200).json({
       products: products,
       objectPagination

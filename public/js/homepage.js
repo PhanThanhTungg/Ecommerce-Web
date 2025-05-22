@@ -1,11 +1,11 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
   let type = 'featured';
   let page = 1;
   let totalPage = 1;
   const boxProduct = document.querySelector(".home .section-products-featured .box-product");
   const buttonPrev = document.querySelector('.home .section-products-featured button.prev');
   const buttonNext = document.querySelector('.home .section-products-featured button.next');
-  
+
   async function fetchAPI() {
     fetch(`/api/products/type/${type}?page=${page}`)
       .then(res => res.json())
@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const products = data.products;
-        
+
         if (page <= 1) {
           buttonPrev.disabled = true;
         } else {
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
               </a>
             `
           });
-          
+
           const rating_wrappers = document.querySelectorAll(".inner-rating");
           if (rating_wrappers) {
             rating_wrappers.forEach(rating => {
@@ -105,10 +105,19 @@ document.addEventListener("DOMContentLoaded", function () {
             })
           }
           const moneyObject = document.querySelectorAll(".formatMoney")
-          moneyObject.forEach(item =>{
-            const moneyN = Number(item.innerHTML.slice(0,-1))
-            const moneyS = moneyN.toLocaleString('vi', {style : 'currency', currency : 'VND'})
+          moneyObject.forEach(item => {
+            const moneyN = Number(item.innerHTML.slice(0, -1))
+            const moneyS = moneyN.toLocaleString('vi', { style: 'currency', currency: 'VND' })
             item.innerHTML = moneyS
+          })
+        }
+
+        const rating_wrappers = document.querySelectorAll(".inner-rating");
+        if (rating_wrappers) {
+          rating_wrappers.forEach(rating => {
+            const ratingNumber = rating.dataset.rating;
+            const ratingInput = rating.querySelector(`input[value="${ratingNumber}"]`);
+            if (ratingNumber > 0) ratingInput.checked = true;
           })
         }
 
@@ -117,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error(error);
       })
   }
-  fetchAPI();
+  await fetchAPI();
 
   const buttonGroup = document.querySelectorAll(".home .section-products-featured .inner-button button");
   buttonGroup.forEach(item => {
@@ -130,15 +139,15 @@ document.addEventListener("DOMContentLoaded", function () {
       fetchAPI();
     })
   })
-  
-  buttonPrev.addEventListener('click', function() {
-    page = page > 1? page - 1 : 1;
+
+  buttonPrev.addEventListener('click', function () {
+    page = page > 1 ? page - 1 : 1;
     fetchAPI();
   });
-  buttonNext.addEventListener('click', function() {
-    page = page < totalPage? page + 1 : totalPage;
+  buttonNext.addEventListener('click', function () {
+    page = page < totalPage ? page + 1 : totalPage;
     fetchAPI();
   });
-
-
 })
+
+

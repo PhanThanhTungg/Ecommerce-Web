@@ -1,5 +1,6 @@
 const Cart = require("../../model/cart.model");
 const Product = require("../../model/product.model");
+const Feedback = require("../../model/product-feedback.model");
 module.exports.index = async (req, res) => {
   const cartId = res.locals.miniCart.id;
   const cart = await Cart.findOne({
@@ -42,6 +43,11 @@ module.exports.index = async (req, res) => {
   }).sort({ sales: "desc" });
 
   for (const item of relatedProducts) {
+    const feedbacksFound = await Feedback.find({
+      productId: item._id,
+    })
+    const averageRating = Math.round(feedbacksFound.reduce((acc, feedback) => acc + feedback.rating, 0) / feedbacksFound.length);
+    item.ratingNumber = averageRating;
     for (const size of item.listSize) {
       size.priceNew = (size.price * (100 - item.discountPercentage) / 100).toFixed(0);
     }
@@ -119,16 +125,16 @@ module.exports.delete = async (req, res) => {
     $pull: { products: { product_id: productId, sizeId: sizeId } }  //$pull: xóa đi
   })
 
-  const cart = await Cart.findOne({_id: cartId});
+  const cart = await Cart.findOne({ _id: cartId });
   let totalPrice = 0;
-  for(const product of cart.products){
-    const productItem = await Product.findOne({_id: product.product_id});
+  for (const product of cart.products) {
+    const productItem = await Product.findOne({ _id: product.product_id });
     const size = productItem.listSize.find(item => item.id == product.sizeId);
-    totalPrice += +(size.price * (100-productItem.discountPercentage) / 100).toFixed(0)*product.quantity;
+    totalPrice += +(size.price * (100 - productItem.discountPercentage) / 100).toFixed(0) * product.quantity;
   }
 
   res.json({
-    code : 200,
+    code: 200,
     mess: "delete successfully",
     totalPrice,
     totalItem: cart.products.length
@@ -142,11 +148,11 @@ module.exports.update = async (req, res) => {
   let quantity = req.params.quantity
   const sizeId = req.params.sizeId
 
-  const productItem = await Product.findOne({_id: productId});
-  const size = productItem.listSize.find(item=>item.id == sizeId);
-  quantity = Math.max(1,quantity);
+  const productItem = await Product.findOne({ _id: productId });
+  const size = productItem.listSize.find(item => item.id == sizeId);
+  quantity = Math.max(1, quantity);
   quantity = Math.min(quantity, size.stock);
-  
+
 
   await Cart.updateOne({
     _id: cartId,
@@ -156,12 +162,12 @@ module.exports.update = async (req, res) => {
     $set: { "products.$.quantity": quantity }
   });
 
-  const cart = await Cart.findOne({_id: cartId});
+  const cart = await Cart.findOne({ _id: cartId });
   let totalPrice = 0;
-  for(const product of cart.products){
-    const productItem = await Product.findOne({_id: product.product_id});
+  for (const product of cart.products) {
+    const productItem = await Product.findOne({ _id: product.product_id });
     const size = productItem.listSize.find(item => item.id == product.sizeId);
-    totalPrice += +(size.price * (100-productItem.discountPercentage) / 100).toFixed(0)*product.quantity;
+    totalPrice += +(size.price * (100 - productItem.discountPercentage) / 100).toFixed(0) * product.quantity;
   }
 
   res.json({

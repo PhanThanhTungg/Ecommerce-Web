@@ -9,7 +9,7 @@ module.exports.index = async (req, res) => {
 
 module.exports.create = async (req, res) => {
   try {
-    const { type, value, condition, startDate, endDate , quantity} = req.body;
+    const { type, value, condition, startDate, endDate, quantity } = req.body;
     const discount = new Discount({
       type,
       value,
@@ -65,6 +65,23 @@ module.exports.edit = async (req, res) => {
   }
 }
 
-module.exports.delete = async (req, res)=>{
-  
+module.exports.delete = async (req, res) => {
+  try {
+    const discountId = req.params.discountId;
+    console.log(discountId);
+    await Discount.updateOne(
+      { _id: discountId },
+      {
+        $set: {
+          deleted: true
+        }
+      })
+    req.flash("success", "Delete discount successfully");
+    res.redirect("back");
+  } catch (error) {
+    console.log(error);
+    req.flash("error", "Delete discount failed");
+    res.redirect("back");
+  }
+
 }

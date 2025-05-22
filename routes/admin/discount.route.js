@@ -9,7 +9,7 @@ router.post("/create", controller.create)
 
 router.patch("/edit", controller.edit)
 
-router.delete("/delete", controller.delete)
+router.delete("/delete/:discountId", controller.delete)
 
 
 module.exports = router
