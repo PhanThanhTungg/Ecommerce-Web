@@ -8,4 +8,4 @@ mixin formatTime(time)
   p #{moment(time).format("HH:mm:ss")}
 
 mixin expires(time)
-  p #{moment(time).fromNow()}
+  span Expires #{moment(time).fromNow()}

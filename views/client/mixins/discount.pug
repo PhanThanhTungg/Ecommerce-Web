@@ -12,7 +12,7 @@ mixin select-discount-modal(couponList, shippingList, totalPrice)
           .coupon-list
             .main-title Coupon discount
             each coupon in couponList
-              label.coupon-item.mb-3
+              label.coupon-item.mb-3(disabled=coupon.condition > totalPrice)
                 input(
                   type="radio" 
                   name="coupon"
@@ -26,7 +26,7 @@ mixin select-discount-modal(couponList, shippingList, totalPrice)
                     .title
                       span #{coupon.value}% off
                     .code #{coupon.code}                  
-                  .condition Order must be over
+                  .condition Order must be over 
                     span.format-money #{coupon.condition}
                   .expired.d-flex.align-items-center
                     span Expired:
@@ -34,7 +34,7 @@ mixin select-discount-modal(couponList, shippingList, totalPrice)
           .shipping-list
             .main-title Shipping discount
             each shipping in shippingList
-              label.shipping-item.mb-3
+              label.shipping-item.mb-3(disabled=shipping.condition > totalPrice)
                 input(
                   type="radio" 
                   name="shipping" 

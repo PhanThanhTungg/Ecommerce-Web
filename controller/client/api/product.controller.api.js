@@ -14,7 +14,7 @@ module.exports.productApiSearch = async (req, res) => {
       slug: regex,
       status: "active",
       deleted: false
-    }).select("title")
+    }).select("title slug thumbnail")
     res.status(200).json({
       message: "success",
       data: products
