@@ -167,7 +167,7 @@ function deleteAvailabilityFilter() {
 }
 
 function deletePriceFilter() {
-  priceRange.noUiSlider.set([0, 500]);
+  priceRange.noUiSlider.set([0, 800000000]);
   filterPrice.innerHTML = "";
 }
 
@@ -210,11 +210,11 @@ const minPrice = document.getElementById("min-price");
 const maxPrice = document.getElementById("max-price");
 
 noUiSlider.create(priceRange, {
-  start: [0, 550000000],
+  start: [0, 800000000],
   connect: true,
   range: {
     'min': 0,
-    'max': 550000000
+    'max': 800000000
   }
 });
 

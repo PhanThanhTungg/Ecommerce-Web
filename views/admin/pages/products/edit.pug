@@ -90,6 +90,9 @@ block main
                 multiple
               )          
           .images-preview.flex.flex-wrap.gap-2
+            if(product.images)
+              each image in product.images
+                img(class="image-preview w-[20%] rounded-sm" src=image alt=product.title)
 
         .mb-6
           label.block.mb-2.text-sm.font-medium.text-gray-900(
