@@ -163,9 +163,16 @@ handleResize767(maxWidth767);
 // search product
 const searchInput = document.getElementById("header-search__input");
 const displayResult = document.querySelector('.header-search__result-content')
+const displayResultWrapper = document.querySelector('.header-search__result')
+
 if (searchInput) {
   searchInput.addEventListener("input", (e)=>{
     let keyword = e.target.value;
+    if (keyword.length === 0) {
+      displayResultWrapper.classList.remove("active")
+    } else {
+      displayResultWrapper.classList.add("active")
+    }
     if (keyword.length > 3) {
       fetch(`/api/products/search/${keyword}`)
       .then(res=>res.json())
@@ -173,18 +180,29 @@ if (searchInput) {
         console.log(data);
         if (data.message === "success") {
           if (data.data.length === 0) {
-            displayResult.innerHTML = ""
+            displayResult.innerHTML = `
+              <div class="no-result">
+                <p>No product found</p>
+              </div>
+            `
           }
           else {
             displayResult.innerHTML = ""
-            data.data.forEach(item=>{
+            data.data.forEach(item => {
               displayResult.innerHTML += `
-              <div class="header-search__result-item">
-                <a href="/product/${item.slug}">${item.name}</a>
-              </div>
+                <a class="header-search__result-item" href="/products/detail/${item.slug}">
+                  <div class="inner-image">
+                    <img alt="${item.title}" src="${item.thumbnail}">
+                  </div>
+                  <div class="header-search__result-item-name">
+                    <p>${item.title}</p>
+                  </div>
+                </a>
               `
             })
           }
+        } else {
+          displayResult.innerHTML = ""
         }
       })
       .catch(err=>{
