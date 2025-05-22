@@ -2,12 +2,12 @@ extends ../../layout/default.pug
 include ../../mixins/alert.pug
 
 block main
-  .login-page
+  .login-page.contact-page
     .form
       .container.my-5
         .row.justify-content-center
           .col-8
-            h1(class="text-center") Feedback
+            h1(class="text-center") Write to us
             form(
               action="/contact"
               method="POST"
@@ -30,7 +30,7 @@ block main
                   required
                 )
               div(class="form-group")
-                label(for="feedback") Your Feedback
+                label(for="feedback") Your Opinion
                 textarea(
                   class="form-control"
                   id="feedback"
