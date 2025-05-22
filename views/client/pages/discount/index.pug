@@ -2,24 +2,36 @@ extends ../../layout/default.pug
 
 block main
   .container
-    a(href="/discount/coupon") coupon 
-    a(href="/discount/shipping") shipping
-    a(href="/discount/myDiscount") myDiscount
-    each discount in discounts
-      div(class="discount-item" data-id = discount._id)
-        .row
-          .col-2 Code: #{discount.code}
-          .col-2 value: #{discount.value}%
-          if (type === "myDiscount")  
-            .col-2 Type: #{discount.type}
-          else
-            .col-2 quantity: <span class="discount-quantity">#{discount.quantity}</span> 
-          .col-4 condition: > <span class="format-money">#{discount.condition}</span>
-          .col-2
-            form.form-get-discount(action="/discount/getDiscount" method="POST")
-              input(type="hidden" name="userId" value=user._id)
-              input(type="hidden" name="discountId" value=discount._id)
-              button get
+    .inner-button
+      a(href="/discount/coupon" active=type == "coupon") Coupon 
+      a(href="/discount/shipping" active=type == "shipping") Shipping
+      a(href="/discount/myDiscount" active=type == "myDiscount") My Discount
+    div(class="inner-discount")
+      each discount in discounts
+        div(class="discount-item")
+          .inner-img
+            img(src="https://thumbs.dreamstime.com/b/discount-stamp-vector-clip-art-33305813.jpg" alt="Free shipping")
+          .wrapper
+            .d-flex.justify-content-between
+              .title
+                span #{discount.value}% off
+              .code #{discount.code}                  
+            .condition Order must be over
+              span.format-money #{discount.condition}
+            .expired.d-flex.align-items-center
+              span Expired in
+              +formatDateTime(discount.endDate)
+  //- if (type === "myDiscount")  
+  //-   .col-2 Type: #{discount.type}
+  //- else
+  //-   .col-2 quantity: #{discount.quantity}
+  //- .col-4 condition: > <span class="format-money">#{discount.condition}</span>
+  //- if (type != "myDiscount")
+  //-   .col-2
+  //-     form(action="/discount/getDiscount" method="POST")
+  //-       input(type="hidden" name="userId" value=user._id)
+  //-       input(type="hidden" name="discountId" value=discount._id)
+  //-       button get
 
   <script src="/socket.io/socket.io.js"></script>
   <script src = "/js/socket.js"></script>

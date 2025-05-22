@@ -2,6 +2,7 @@ extends ../../layout/default.pug
 include ../../mixins/box-head.pug
 include ../../mixins/alert.pug
 include ../../mixins/product-item-template.pug
+include ../../mixins/discount.pug
 
 block main
   //- responsive 
@@ -153,15 +154,10 @@ block main
           .shipping
             .name Shipping
             .value #{totalPrice >= settingsGeneral.shippingFee.freeShippingThreshold ? "Free":"Undefined"} 
-          .discount
-            .discount-coupon
-              label(for="discount-coupon") Discount code
-              select(name="discount-coupon")
-            .discount-shipping
-              label(for="discount-shipping") Shipping discount  
-              select(name="discount-shipping")
+          .d-flex.justify-content-between.align-items-center.mt-5
+            +select-discount-modal(discountCoupon, discountShipping, totalPrice)
+            
           p.mt-5 Free shipping for any orders above <span class="format-money">#{settingsGeneral.shippingFee.freeShippingThreshold}</span>
-          
           .total-price.total
             .title TOTAL
             .value 

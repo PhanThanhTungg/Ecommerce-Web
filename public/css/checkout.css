@@ -840,6 +840,99 @@ table {
   transform: translate(calc(-50vw), calc(-50vh));;
 }
 
+/* discount */
+button[data-target="#discountModal"] {
+  background: transparent;
+  padding: 0;
+  color: var(--color-green);
+}
+
+#discountModal h5 {
+  font-size: 1.8rem;
+  margin: 10px 0
+}
+
+#discountModal .modal-header {
+  padding: 1rem 2rem;
+}
+
+#discountModal .modal-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  padding: 1rem 2rem
+}
+
+#discountModal .modal-body > * {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+#discountModal .modal-body > * .main-title {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+#discountModal .modal-body > * label {
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+#discountModal .wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#discountModal .wrapper .title {
+  font-weight: 500;
+}
+
+#discountModal .wrapper .code {
+  color: var(--secondary-color-text);
+  font-style: italic;
+}
+
+#discountModal .wrapper .condition {
+  font-size: 1.3rem;
+  color: var(--secondary-color-text);
+}
+
+#discountModal .wrapper .expired {
+  gap: 5px;
+  color: var(--danger-color);
+  font-size: 1.4rem;
+}
+
+#discountModal .inner-img {
+  height: 100px;
+  width: 100px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+#discountModal .inner-img img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+
+#discountModal button[type="button"] {
+  background: var(--color-blue);
+  color: white;
+  padding: 10px 18px;
+  display: block;
+  width: fit-content;
+  margin-left: auto;
+  border-radius: 5px;
+}
+
+/* end discount */
+
 @keyframes move {
   0% {
     background-position: 200% 0;
