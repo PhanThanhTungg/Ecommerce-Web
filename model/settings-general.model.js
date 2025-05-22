@@ -29,7 +29,9 @@ const settingGeneralSchema = new mongoose.Schema(
         subTitle: String,
         title: String
       }
-    ]
+    ],
+    hostMSSQL: String,
+    portMSSQL: String
   },
   {
     timestamps: true,
