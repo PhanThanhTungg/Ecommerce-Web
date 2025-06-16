@@ -91,5 +91,24 @@ Helper.formatDate = function(dateStr) {
   return `${day}-${month}-${year}`;
 }
 
+Helper.translate = function(key) {
+  const translation = {
+    "day": "ngày",
+    "month": "tháng",
+    "year": "năm",
+    "province": "tỉnh/thành",
+    "district": "quận/huyện",
+    "commune": "phường/xã",
+    "category": "danh mục sản phẩm",
+    "product": "sản phẩm",
+    "customer": "khách hàng",
+    "gender": "giới tính",
+    "type": "mạng xã hội",
+    "delivery": "phương thức giao hàng",
+    "payment": "phương thức thanh toán",
+  }
+  return translation[key] || key;
+}
+
 // Thêm Helper vào window để các script khác có thể sử dụng
 window.Helper = Helper;

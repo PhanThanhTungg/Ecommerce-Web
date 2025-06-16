@@ -109,14 +109,13 @@ async function getForecastData(reqBody) {
       body: JSON.stringify(reqBody)
     })
     const result = await data.json();
-    console.log(result.predictions)
-    console.log(reqBody)
     return result.predictions;
   } catch (error) {
     console.log(error)
   }
 }
 
+let saleForecastData = []
 async function renderSaleForecastChart() {
   if (saleForecastChart) {
     saleForecastChart.destroy();
@@ -129,8 +128,10 @@ async function renderSaleForecastChart() {
     reqbody = { day: 30 }
   }
   const data = await getForecastData(reqbody);
+  saleForecastData = Object.values(data);
   let dataRange = []
   let dataMedian = []
+
   if (currentTimeRollUp === "month") {
     Object.keys(data).forEach(key => {
       dataRange.push({
@@ -154,7 +155,7 @@ async function renderSaleForecastChart() {
       })
     })
   }
-  
+
 
   let saleForecastChartOptions = {
     series: [
@@ -217,6 +218,7 @@ async function renderSaleForecastChart() {
 
 }
 
+let saleTimeData = []
 async function renderSaleTimeChart(rollUp = "month") {
   if (saleTimeChart) {
     saleTimeChart.destroy();
@@ -235,6 +237,7 @@ async function renderSaleTimeChart(rollUp = "month") {
     }
     labels.push(label)
   }
+  saleTimeData = [labels, data.Total_Quantity, data.Total_Revenue];
 
   const optionsSaleTimeChart = {
     chart: {
@@ -322,6 +325,7 @@ async function renderSaleTimeChart(rollUp = "month") {
   timeRollUp = "";
 }
 
+let saleLocationData = []
 async function renderSaleLocationChart(rollUp = "province") {
   if (saleLocationChart) {
     saleLocationChart.destroy();
@@ -352,6 +356,7 @@ async function renderSaleLocationChart(rollUp = "province") {
     }
     labels.push(label);
   }
+  saleLocationData = [labels, data.Total_Quantity, data.Total_Revenue];
 
   const saleLocationChartOptions = {
     series: [{
@@ -390,6 +395,7 @@ async function renderSaleLocationChart(rollUp = "province") {
   locationDiceValue = labels
 }
 
+let saleProductData = []
 async function renderSaleProductChart(rollUp = "category") {
   if (saleProductChart) {
     saleProductChart.destroy()
@@ -420,6 +426,7 @@ async function renderSaleProductChart(rollUp = "category") {
     }
     labels.push(label)
   }
+  saleProductData = [labels, data.Total_Quantity, data.Total_Revenue];
 
   const saleProductChartOptions = {
     series: [{
@@ -530,6 +537,7 @@ async function renderSaleProductChart(rollUp = "category") {
   sort = ""
 }
 
+let saleCustomerData = []
 async function renderSaleCustomerChart(rollUp = "type") {
   if (saleCustomerChart) {
     saleCustomerChart.destroy()
@@ -537,6 +545,7 @@ async function renderSaleCustomerChart(rollUp = "type") {
   customer = rollUp
   const data = await getSaleData();
 
+  saleCustomerData = [data.Type, data.Total_Revenue];
   var saleCustomerChartOptions = {
     series: data.Total_Revenue,
     chart: {
@@ -709,7 +718,6 @@ customerDiceForm.addEventListener('submit', function (e) {
   if (customerDice.gender.length === 0) customerDice.gender = ["male", "female", "other", "unknown"]
   if (customerDice.type.length === 0) customerDice.type = ["facebook", "google", "github", "normal"]
 
-  console.log(customerDice)
   renderAllChart()
 })
 // END OLAP
@@ -799,3 +807,237 @@ async function action() {
   renderProductDice()
 }
 action()
+
+// export PDF
+
+const getChartImage = async (chart) => {
+  return await chart.dataURI().then(({ imgURI }) => {
+    return imgURI;
+  });
+};
+
+async function layoutHTML(template) {
+  if (template == 2) {
+    const timeChartImage = await getChartImage(saleTimeChart)
+    const locationChartImage = await getChartImage(saleLocationChart)
+    const productChartImage = await getChartImage(saleProductChart)
+    const customerChartImage = await getChartImage(saleCustomerChart)
+    const saleForecastChartImage = await getChartImage(saleForecastChart)
+    
+    return `
+      <div class="font-semibold">1. Doanh thu bán hàng và số lượng theo thời gian</div>
+      <div class="flex justify-center w-[80%]">
+        <img src="${timeChartImage}" alt="Time Chart">
+      </div>
+      <div class="font-semibold">2. Doanh thu bán hàng và số lượng theo khu vực</div>
+      <div class="flex justify-center w-[80%]">
+        <img src="${locationChartImage}" alt="Location Chart">
+      </div>
+      <div class="font-semibold">3. Doanh thu bán hàng và số lượng theo danh mục sản phẩm</div>
+      <div class="flex justify-center w-[80%]">
+        <img src="${productChartImage}" alt="Product Chart">
+      </div>
+      <div class="font-semibold">4. Doanh thu bán hàng và số lượng theo tệp khách hàng</div>
+      <div class="flex justify-center w-[80%]">
+        <img src="${customerChartImage}" alt="Customer Chart">
+      </div>
+      ${currentTimeRollUp !== "year" ? `
+        <div class="font-semibold">5. Dự báo doanh thu</div>
+        <div class="flex justify-center w-[80%]">
+          <img src="${saleForecastChartImage}" alt="Sale Forecast Chart">
+        </div>
+      ` : ``}
+    `
+  } else {
+    let saleTimeTable = `
+      <table class="w-full border-collapse">
+        <thead>
+          <tr>
+            <th class="border p-2 capitalize">${Helper.translate(currentTimeRollUp)}</th>
+            <th class="border p-2 capitalize">Số lượng bán ra</th>
+            <th class="border p-2 capitalize">Doanh thu</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${saleTimeData[0].map((item, index) => {
+            return `
+              <tr>
+                <td class="border p-2 text-center">${item}</td>
+                <td class="border p-2 text-center">${saleTimeData[1][index]}</td>
+                <td class="border p-2 text-center">${Helper.formatLargeNumber(saleTimeData[2][index])}</td>
+              </tr>
+            `
+          }).join('')}
+        </tbody>
+      </table>
+    `
+
+    let saleLocationTable = `
+      <table class="w-full border-collapse">
+        <thead>
+          <tr>
+            <th class="border p-2 capitalize">${Helper.translate(currentLocationRollUp)}</th>
+            <th class="border p-2 capitalize">Số lượng bán ra</th>
+            <th class="border p-2 capitalize">Doanh thu</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${saleLocationData[0].map((item, index) => {
+            return `
+              <tr>
+                <td class="border p-2 text-center">${item}</td>
+                <td class="border p-2 text-center">${saleLocationData[1][index]}</td>
+                <td class="border p-2 text-center">${Helper.formatLargeNumber(saleLocationData[2][index])}</td>
+              </tr>
+            `
+          }).join('')}
+        </tbody>
+      </table>
+    `
+
+    let saleProductTable = `
+      <table class="w-full border-collapse">
+        <thead>
+          <tr>
+            <th class="border p-2 capitalize">${Helper.translate(currentProductRollUp)}</th>
+            <th class="border p-2 capitalize">Số lượng bán ra</th>
+            <th class="border p-2 capitalize">Doanh thu</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${saleProductData[0].map((item, index) => {
+            return `
+              <tr>
+                <td class="border p-2 text-center">${item}</td>
+                <td class="border p-2 text-center">${saleProductData[1][index]}</td>
+                <td class="border p-2 text-center">${Helper.formatLargeNumber(saleProductData[2][index])}</td>
+              </tr>
+            `
+          }).join('')}
+        </tbody>
+      </table>
+    `
+
+    let saleCustomerTable = `
+      <table class="w-full border-collapse">
+        <thead>
+          <tr>
+            <th class="border p-2 capitalize">Mạng xã hội</th>
+            <th class="border p-2 capitalize">Doanh thu</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${saleCustomerData[0].map((item, index) => {
+            return `
+              <tr>
+                <td class="border p-2 text-center">${item}</td>
+                <td class="border p-2 text-center">${Helper.formatLargeNumber(saleCustomerData[1][index])}</td>
+              </tr>
+            `
+          }).join('')}
+        </tbody>
+      </table>
+    `
+
+    let saleForecastTable = `
+      <table class="w-full border-collapse">
+        <thead>
+          <tr>
+            <th class="border p-2 capitalize">${Helper.translate(currentTimeRollUp)}</th>
+            <th class="border p-2 capitalize">Bi quan nhất</th>
+            <th class="border p-2 capitalize">Lạc quan nhất</th>
+            <th class="border p-2 capitalize">Khả năng cao nhất</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${saleForecastData.map((item) => {
+            let timeLabel = item[currentTimeRollUp];
+            if (currentTimeRollUp === "day") {
+              timeLabel = Helper.formatDate(item.ds);
+            }
+            return `
+              <tr>
+                <td class="border p-2 text-center">${timeLabel}</td>
+                <td class="border p-2 text-center">${Helper.formatLargeNumber(item.yhat_lower)}</td>
+                <td class="border p-2 text-center">${Helper.formatLargeNumber(item.yhat_upper)}</td>
+                <td class="border p-2 text-center">${Helper.formatLargeNumber(item.yhat)}</td>
+              </tr>
+            `
+          }).join('')}
+        </tbody>
+      </table>
+    `
+
+    const result = `
+      <div class="font-semibold">1. Doanh thu bán hàng và số lượng theo thời gian</div>
+      <div class="flex justify-center w-[90%] mb-2">
+        ${saleTimeTable}
+      </div>
+      <div class="font-semibold">2. Doanh thu bán hàng và số lượng theo khu vực</div>
+      <div class="flex justify-center w-[90%] mb-2">
+        ${saleLocationTable}
+      </div>
+      <div class="font-semibold">3. Doanh thu bán hàng và số lượng theo danh mục sản phẩm</div>
+      <div class="flex justify-center w-[90%] mb-2">
+        ${saleProductTable}
+      </div>
+      <div class="font-semibold">4. Doanh thu bán hàng và số lượng theo tệp khách hàng</div>
+      <div class="flex justify-center w-[90%] mb-2">
+        ${saleCustomerTable}
+      </div>
+      ${currentTimeRollUp !== "year" ? `
+        <div class="font-semibold">5. Dự báo doanh thu</div>
+        <div class="flex justify-center w-[90%] mb-2">
+          ${saleForecastTable}
+        </div>
+      `: ``}
+    `
+    return result;
+  }
+}
+
+const contentReportElement = document.querySelector('#content-report')
+
+const toggleButton = document.querySelector('button[data-modal-target="pdf-modal"]')
+toggleButton.addEventListener('click', async function () {
+  contentReportElement.innerHTML = await layoutHTML(1)
+})
+
+const templates = document.querySelectorAll('input[name="template"]')
+templates.forEach(template => {
+  template.addEventListener('change', async function () {
+    
+    contentReportElement.innerHTML = await layoutHTML(this.value)
+  })
+})
+
+const downloadPDFBtn = document.querySelector('#download-pdf-btn')
+const opt = {
+  margin: [20, 30, 20, 20],
+  filename: 'Sale Report.pdf',
+  image: { type: 'jpeg', quality: 0.8 },
+  html2canvas: {
+    scale: 1.5,
+    logging: false,
+    useCORS: true,
+    dpi: 96,
+    letterRendering: true
+  },
+  jsPDF: {
+    unit: 'mm',
+    format: 'a4',
+    orientation: 'portrait',
+    hotfixes: ['px_scaling'],
+    putOnlyUsedFonts: true,
+    compress: true
+  },
+  pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
+  onclone: function(clonedDoc) {
+      clonedDoc.body.style.fontFamily = '"Times New Roman", Times, serif';
+  }
+}
+
+downloadPDFBtn.addEventListener('click', function () {
+  const preparePDF = document.querySelector('#export-content')
+  html2pdf().set(opt).from(preparePDF).save()
+})

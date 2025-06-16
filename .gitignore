@@ -15,7 +15,8 @@ public/tailwind/output.css
 # production
 /build
 
-
+# connectToMSSQL
+DWH/connectToMSSQL.js
 
 # misc
 .DS_Store

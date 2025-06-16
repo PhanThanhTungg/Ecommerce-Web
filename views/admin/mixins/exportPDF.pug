@@ -1,0 +1,239 @@
+mixin exportPDF()
+  // Modal toggle
+  button(
+    class="block text-white bg-blue-500 hover:bg-blue-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:hover:bg-blue-600 dark:text-white"
+    data-modal-target="pdf-modal" 
+    data-modal-toggle="pdf-modal"
+  ) Export PDF
+
+  // Main modal
+  div(id="pdf-modal" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full" tabindex="-1" aria-hidden="true")
+    div(class="relative p-4 w-full max-w-4xl max-h-full")
+      div(class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700")
+        div(class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200")
+          div(class="text-xl font-semibold text-gray-900 dark:text-white")
+            | Create report
+          button(class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="pdf-modal")
+            svg(class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14")
+              path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6")
+            span(class="sr-only") Close modal
+        
+        // Modal body
+        div(class="p-4 md:p-5 space-y-4")
+          ul(class="grid w-full gap-6 md:grid-cols-4")
+            li
+              input(type="radio" id="template-1" name="template" value='1' class="hidden peer" checked)
+              label(for="template-1" class="inline-flex items-center justify-between w-full px-4 py-2 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 dark:peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700")
+                div(class="w-full font-semibold") Table
+            li
+              input(type="radio" id="template-2" name="template" value='2' class="hidden peer")
+              label(for="template-2" class="inline-flex items-center justify-between w-full px-4 py-2 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 dark:peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700")
+                div(class="w-full font-semibold") Chart         
+          
+          h3 Preview
+          div(class="border p-4")
+            div(id="export-content" class="text-sm font-serif")
+              div(class="text-center font-semibold flex justify-between mb-2")
+                div.flex.flex-col.items-start
+                  p Đơn vị: Nhóm 3 lớp 3
+                  p Địa chỉ: Học viện Công nghệ Bưu chính Viễn thông
+                div.flex.flex-col.items-center
+                  p Mẫu số B 02 – DN
+                  p.font-normal (Ban hành theo QĐ số 15/2006/QĐ-BTC)
+              div.text-right.italic.mb-5 Ngày 19 tháng 6 năm 2025
+              div(class="text-center font-bold text-lg mb-5") BÁO CÁO DOANH THU
+              div.font-semibold Kế toán: Phan Thanh Tùng
+              div.font-semibold I.Nội dung bao gồm:
+              ul
+                li - Doanh thu bán hàng và số lượng theo thời gian
+                li - Doanh thu bán hàng và số lượng theo khu vực
+                li - Doanh thu bán hàng và số lượng theo danh mục sản phẩm
+                li - Doanh thu bán hàng và số lượng theo tệp khách hàng
+                li - Dự báo doanh thu
+              div.font-semibold II. Kỳ kế toán, đơn vị tiền tệ:
+              ul
+                li#time-range - Số liệu tính trên toàn thời gian hệ thống
+                li - Đơn vị tiền tệ: VNĐ
+                li - Nguồn số liệu: Hệ thống kho dữ liệu bán hàng
+              div.font-semibold III. Chế độ kế toán áp dụng:
+              ol
+                li 1. Chế độ kế toán áp dụng: Công ty áp dụng Chế độ Kế toán doanh nghiệp ban hành theo Thông tư số 200/2014/TT-BTC ngày 22/12/2014 của Bộ Tài chính																																																										
+                li 2. Tuyên bố về việc tuân thủ Chuẩn mực kế toán và Chế độ kế toán: Công ty đã áp dụng các Chuẩn mực kế toán Việt Nam và các văn bản hướng dẫn Chuẩn mực do Nhà nước đã ban hành. Các báo cáo tài chính được lập và trình bày theo đúng mọi quy định của từng chuẩn mực, thông tư hướng dẫn thực hiện chuẩn mực và Chế độ kế toán hiện hành																																																										
+              div.font-semibold IV. Chi tiết báo cáo
+              div#content-report.mb-5
+              div.font-semibold.flex.justify-between
+                div.flex.flex-col.items-center
+                  p.mb-10 Người lập biểu
+                  p.font-normal Phan Thanh Tùng
+                div.flex.flex-col.items-center
+                  p Kế toán trưởng
+                  p.font-normal (Ký, họ tên)
+                div.flex.flex-col.items-center
+                  p Giám đốc
+                  p.font-normal (Ký, họ tên)
+
+        // Modal footer
+        div(class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600")
+          button(
+            id="download-pdf-btn"
+            class="block ml-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
+            data-modal-hide="pdf-modal"
+          ) Download
+
+mixin exportPDFOrder()
+  // Modal toggle
+  button(
+    class="block text-white bg-blue-500 hover:bg-blue-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:hover:bg-blue-600 dark:text-white"
+    data-modal-target="pdf-modal-order" 
+    data-modal-toggle="pdf-modal-order"
+  ) Export PDF
+
+  // Main modal
+  div(id="pdf-modal-order" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full" tabindex="-1" aria-hidden="true")
+    div(class="relative p-4 w-full max-w-4xl max-h-full")
+      div(class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700")
+        div(class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200")
+          div(class="text-xl font-semibold text-gray-900 dark:text-white")
+            | Create report
+          button(class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="pdf-modal-order")
+            svg(class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14")
+              path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6")
+            span(class="sr-only") Close modal
+        
+        // Modal body
+        div(class="p-4 md:p-5 space-y-4")
+          ul(class="grid w-full gap-6 md:grid-cols-4")
+            li
+              input(type="radio" id="order-template-1" name="order-template" value='1' class="hidden peer" checked)
+              label(for="order-template-1" class="inline-flex items-center justify-between w-full px-4 py-2 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 dark:peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700")
+                div(class="w-full font-semibold") Table
+            li
+              input(type="radio" id="order-template-2" name="order-template" value='2' class="hidden peer")
+              label(for="order-template-2" class="inline-flex items-center justify-between w-full px-4 py-2 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 dark:peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700")
+                div(class="w-full font-semibold") Chart         
+          
+          h3 Preview
+          div(class="border p-4")
+            div.content-to-export(class="text-sm !font-serif")
+              div(class="text-center font-semibold flex justify-between mb-2")
+                div.flex.flex-col.items-start
+                  p Đơn vị: Nhóm 3 lớp 3
+                  p Địa chỉ: Học viện Công nghệ Bưu chính Viễn thông
+                div.flex.flex-col.items-center
+                  p Mẫu số B 02 – DN
+                  p.font-normal (Ban hành theo QĐ số 15/2006/QĐ-BTC)
+              div.text-right.italic.mb-5 Ngày 19 tháng 6 năm 2025
+              div(class="text-center font-bold text-lg mb-5") BÁO CÁO SỐ ĐƠN HÀNG
+              div.font-semibold Người lập: Phan Thanh Tùng
+              div.font-semibold I.Nội dung bao gồm:
+              ul
+                li - Số lượng đơn đặt hàng theo thời gian
+                li - Số lượng đơn đặt hàng theo khu vực
+                li - Số lượng đơn đặt hàng theo phương thức vận chuyển/thanh toán
+                li - Số lượng đơn đặt hàng theo tệp khách hàng
+              div.font-semibold II. Kỳ kế toán, đơn vị tiền tệ:
+              ul
+                li - Số liệu tính trên toàn thời gian hệ thống
+                li - Đơn vị tiền tệ: VNĐ
+                li - Nguồn số liệu: Hệ thống kho dữ liệu bán hàng
+              div.font-semibold III. Chế độ kế toán áp dụng:
+              ol
+                li 1. Chế độ kế toán áp dụng: Công ty áp dụng Chế độ Kế toán doanh nghiệp ban hành theo Thông tư số 200/2014/TT-BTC ngày 22/12/2014 của Bộ Tài chính																																																										
+                li 2. Tuyên bố về việc tuân thủ Chuẩn mực kế toán và Chế độ kế toán: Công ty đã áp dụng các Chuẩn mực kế toán Việt Nam và các văn bản hướng dẫn Chuẩn mực do Nhà nước đã ban hành. Các báo cáo tài chính được lập và trình bày theo đúng mọi quy định của từng chuẩn mực, thông tư hướng dẫn thực hiện chuẩn mực và Chế độ kế toán hiện hành																																																										
+              div.font-semibold IV. Chi tiết báo cáo
+              div.content-report.mb-5
+              div.font-semibold.flex.justify-between
+                div.flex.flex-col.items-center
+                  p.mb-10 Người lập biểu
+                  p.font-normal Phan Thanh Tùng
+                div.flex.flex-col.items-center
+                  p Kế toán trưởng
+                  p.font-normal (Ký, họ tên)
+                div.flex.flex-col.items-center
+                  p Giám đốc
+                  p.font-normal (Ký, họ tên)
+
+        // Modal footer
+        div(class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600")
+          button.download-pdf-btn(
+            class="block ml-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
+            data-modal-hide="pdf-modal-order"
+          ) Download
+
+mixin exportPDFFeedback()
+  // Modal toggle
+  button(
+    class="block text-white bg-blue-500 hover:bg-blue-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:hover:bg-blue-600 dark:text-white"
+    data-modal-target="pdf-modal-feedback" 
+    data-modal-toggle="pdf-modal-feedback"
+  ) Export PDF
+
+  // Main modal
+  div(id="pdf-modal-feedback" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full" tabindex="-1" aria-hidden="true")
+    div(class="relative p-4 w-full max-w-4xl max-h-full")
+      div(class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700")
+        div(class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200")
+          div(class="text-xl font-semibold text-gray-900 dark:text-white")
+            | Create report
+          button(class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="pdf-modal-feedback")
+            svg(class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14")
+              path(stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6")
+            span(class="sr-only") Close modal
+        
+        // Modal body
+        div(class="p-4 md:p-5 space-y-4")
+          ul(class="grid w-full gap-6 md:grid-cols-4")
+            li
+              input(type="radio" id="feedback-template-1" name="feedback-template" value='1' class="hidden peer" checked)
+              label(for="feedback-template-1" class="inline-flex items-center justify-between w-full px-4 py-2 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 dark:peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700")
+                div(class="w-full font-semibold") Table
+            li
+              input(type="radio" id="feedback-template-2" name="feedback-template" value='2' class="hidden peer")
+              label(for="feedback-template-2" class="inline-flex items-center justify-between w-full px-4 py-2 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 dark:peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700")
+                div(class="w-full font-semibold") Chart         
+          
+          h3 Preview
+          div(class="border p-4")
+            div#feedback-export-content(class="text-sm !font-serif")
+              div(class="text-center font-semibold flex justify-between mb-2")
+                div.flex.flex-col.items-start
+                  p Đơn vị: Nhóm 3 lớp 3
+                  p Địa chỉ: Học viện Công nghệ Bưu chính Viễn thông
+                div.flex.flex-col.items-center
+                  p Mẫu số B 02 – DN
+                  p.font-normal (Ban hành theo QĐ số 15/2006/QĐ-BTC)
+              div.text-right.italic.mb-5 Ngày 19 tháng 6 năm 2025
+              div(class="text-center font-bold text-lg mb-5") BÁO CÁO ĐÁNH GIÁ KHÁCH HÀNG
+              div.font-semibold Người lập: Phan Thanh Tùng
+              div.font-semibold I.Nội dung bao gồm:
+              ul
+                li - Đánh giá khách hàng theo thời gian
+                li - Đánh giá khách hàng theo sản phẩm
+              div.font-semibold II. Kỳ kế toán:
+              ul
+                li - Số liệu tính trên toàn thời gian hệ thống
+                li - Đơn vị: số sao
+                li - Nguồn số liệu: Hệ thống kho dữ liệu bán hàng
+              div.font-semibold III. Chế độ kế toán áp dụng:
+              ol
+                li 1. Chế độ kế toán áp dụng: Công ty áp dụng Chế độ Kế toán doanh nghiệp ban hành theo Thông tư số 200/2014/TT-BTC ngày 22/12/2014 của Bộ Tài chính																																																										
+                li 2. Tuyên bố về việc tuân thủ Chuẩn mực kế toán và Chế độ kế toán: Công ty đã áp dụng các Chuẩn mực kế toán Việt Nam và các văn bản hướng dẫn Chuẩn mực do Nhà nước đã ban hành. Các báo cáo tài chính được lập và trình bày theo đúng mọi quy định của từng chuẩn mực, thông tư hướng dẫn thực hiện chuẩn mực và Chế độ kế toán hiện hành																																																										
+              div.font-semibold IV. Chi tiết báo cáo
+              div.content-report.mb-5
+              div.font-semibold.flex.justify-between
+                div.flex.flex-col.items-center
+                  p.mb-10 Người lập biểu
+                  p.font-normal Phan Thanh Tùng
+                div.flex.flex-col.items-center
+                  p Kế toán trưởng
+                  p.font-normal (Ký, họ tên)
+                div.flex.flex-col.items-center
+                  p Giám đốc
+                  p.font-normal (Ký, họ tên)
+
+        // Modal footer
+        div(class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600")
+          button#download-feedback-pdf(
+            class="block ml-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
+            data-modal-hide="pdf-modal-feedback"
+          ) Download

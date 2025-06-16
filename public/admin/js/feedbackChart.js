@@ -53,7 +53,6 @@ async function getFeedbackData(reqBody) {
       body: JSON.stringify(reqBody)
     })
     const data = await res.json();
-    console.log(reqBody);
     return data.data;
   } catch (error) {
     console.error("Error fetching feedback data:", error);
@@ -61,6 +60,8 @@ async function getFeedbackData(reqBody) {
   }
 }
 
+let feedbackTimeData = [];
+let feedbackProductData = [];
 async function renderFeedbackTimeChart() {
   if (feedbackTimeChart) {
     feedbackTimeChart.destroy();
@@ -179,6 +180,7 @@ async function renderFeedbackTimeChart() {
     }
     dataLabels.push(label);
   }
+  feedbackTimeData = [dataLabels, data.AVG_Rating, data.Rating_1_Count, data.Rating_2_Count, data.Rating_3_Count, data.Rating_4_Count, data.Rating_5_Count];
   feedbackTimeChart.updateOptions({
     plotOptions: {
       bar: {
@@ -349,6 +351,8 @@ async function renderFeedbackProductChart() {
     category_key: data.category_key?.slice(-34) || null,
     product_key: data.product_key?.slice(-34) || null,
   }
+  let labels = data.category_name || data.product_name
+  feedbackProductData = [labels, data.AVG_Rating, data.Rating_1_Count, data.Rating_2_Count, data.Rating_3_Count, data.Rating_4_Count, data.Rating_5_Count];
 
   feedbackProductChart.updateOptions({
     series: [
@@ -517,7 +521,6 @@ productDiceForm.addEventListener('submit', async function (e) {
     type: productRollUp,
     arr: formData.getAll('feedback-product')
   }
-  console.log(productDice)
   await renderAllFeedbackChart()
 })
 
@@ -557,3 +560,149 @@ async function action() {
   renderProductDice();
 }
 action();
+
+//export PDF
+const getChartImage = async (chart) => {
+  return await chart.dataURI().then(({ imgURI }) => {
+    return imgURI;
+  });
+};
+
+async function layoutHTML(template) {
+  if (template == 2) {
+    const timeChartImage = await getChartImage(feedbackTimeChart)
+    const productChartImage = await getChartImage(feedbackProductChart)
+    
+    return `
+      <div class="font-semibold">1. Đánh giá khách hàng theo thời gian</div>
+      <div class="flex justify-center w-[80%]">
+        <img src="${timeChartImage}" alt="Time Chart">
+      </div>
+      <div class="font-semibold">2. Đánh giá khách hàng theo sản phẩm</div>
+      <div class="flex justify-center w-[80%]">
+        <img src="${productChartImage}" alt="Product Chart">
+      </div>
+    `
+  } else {
+    let feedbackTimeTable = `
+      <table class="w-full border-collapse">
+        <thead>
+          <tr>
+            <th class="border p-2 capitalize">${Helper.translate(timeRollUp)}</th>
+            <th class="border p-2 capitalize">Điểm trung bình</th>
+            <th class="border p-2 capitalize">1 ⭐</th>
+            <th class="border p-2 capitalize">2 ⭐</th>
+            <th class="border p-2 capitalize">3 ⭐</th>
+            <th class="border p-2 capitalize">4 ⭐</th>
+            <th class="border p-2 capitalize">5 ⭐</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${feedbackTimeData[0].map((item, index) => {
+            return `
+              <tr>
+                <td class="border p-2 text-center">${item}</td>
+                <td class="border p-2 text-center">${feedbackTimeData[1][index]}</td>
+                <td class="border p-2 text-center">${feedbackTimeData[2][index]}</td>
+                <td class="border p-2 text-center">${feedbackTimeData[3][index]}</td>
+                <td class="border p-2 text-center">${feedbackTimeData[4][index]}</td>
+                <td class="border p-2 text-center">${feedbackTimeData[5][index]}</td>
+                <td class="border p-2 text-center">${feedbackTimeData[6][index]}</td>
+              </tr>
+            `
+          }).join('')}
+        </tbody>
+      </table>
+    `
+
+    let feedbackProductTable = `
+      <table class="w-full border-collapse">
+        <thead>
+          <tr>
+            <th class="border p-2 capitalize">${Helper.translate(productRollUp)}</th>
+            <th class="border p-2 capitalize">Điểm trung bình</th>
+            <th class="border p-2 capitalize">1 ⭐</th>
+            <th class="border p-2 capitalize">2 ⭐</th>
+            <th class="border p-2 capitalize">3 ⭐</th>
+            <th class="border p-2 capitalize">4 ⭐</th>
+            <th class="border p-2 capitalize">5 ⭐</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${feedbackProductData[0].map((item, index) => {
+            return `
+              <tr>
+                <td class="border p-2 text-center">${item}</td>
+                <td class="border p-2 text-center">${feedbackProductData[1][index]}</td>
+                <td class="border p-2 text-center">${feedbackProductData[2][index]}</td>
+                <td class="border p-2 text-center">${feedbackProductData[3][index]}</td>
+                <td class="border p-2 text-center">${feedbackProductData[4][index]}</td>
+                <td class="border p-2 text-center">${feedbackProductData[5][index]}</td>
+                <td class="border p-2 text-center">${feedbackProductData[6][index]}</td>
+              </tr>
+            `
+          }).join('')}
+        </tbody>
+      </table>
+    `
+
+    const result = `
+      <div class="font-semibold">1. Đánh giá khách hàng theo thời gian</div>
+      <div class="flex justify-center w-[90%] mb-2">
+        ${feedbackTimeTable}
+      </div>
+      <div class="font-semibold">2. Đánh giá khách hàng theo sản phẩm</div>
+      <div class="flex justify-center w-[90%] mb-2">
+        ${feedbackProductTable}
+      </div>
+    `
+    return result;
+  }
+}
+
+const contentReportElement = document.querySelector('.fact-feedback .content-report');
+
+const toggleButton = document.querySelector('button[data-modal-target="pdf-modal-feedback"]')
+toggleButton.addEventListener('click', async function () {
+  contentReportElement.innerHTML = await layoutHTML(1)
+})
+
+const templates = document.querySelectorAll('input[name="feedback-template"]');
+templates.forEach(template => {
+  template.addEventListener('change', async function () {
+    
+    contentReportElement.innerHTML = await layoutHTML(this.value)
+  })
+})
+
+const downloadPDFButton3 = document.querySelector('#download-feedback-pdf');
+const opt = {
+  margin: [20, 30, 20, 20],
+  filename: 'Feedback Report.pdf',
+  image: { type: 'jpeg', quality: 0.8 },
+  html2canvas: {
+    scale: 1.5,
+    logging: false,
+    useCORS: true,
+    dpi: 96,
+    letterRendering: true
+  },
+  jsPDF: {
+    unit: 'mm',
+    format: 'a4',
+    orientation: 'portrait',
+    hotfixes: ['px_scaling'],
+    putOnlyUsedFonts: true,
+    compress: true
+  },
+  pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
+  onclone: function(clonedDoc) {
+      clonedDoc.body.style.fontFamily = '"Times New Roman", Times, serif';
+  }
+}
+
+downloadPDFButton3.addEventListener('click', async function () {
+  const prepareExport = document.getElementById('feedback-export-content')
+  console.log(prepareExport)
+  html2pdf().set(opt).from(prepareExport).save()
+})

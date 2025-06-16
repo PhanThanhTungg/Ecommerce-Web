@@ -1,12 +1,15 @@
 extends ../../layouts/default.pug
+include ../../mixins/exportPDF.pug
 
 block main
   //- h1(class=`mb-7 ml-2 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-4xl
   //-   dark:text-white`) Dashboard
   .container-custom.dashboard
     .fact-sale.mb-8
-      h2(class=`mb-5 text-[24px] font-medium leading-none tracking-tight md:text-xl
-      dark:text-white border-1 border-gray-300 rounded-xl px-5 py-3 text-black`) Sale report
+      .flex.gap-2.items-center.mb-5
+        h2(class=`flex-1 text-[24px] font-medium leading-none tracking-tight md:text-xl
+        dark:text-white border-1 border-gray-300 rounded-xl px-5 py-3 text-black`) Sale report
+        +exportPDF()
       //- .options(class="grid gap-5 mb-6 md:grid-cols-4")   
       .inner-chart
         .flex.gap-5.w-full
@@ -258,8 +261,11 @@ block main
             .customer-chart2
     
     .fact-order
-      h2(class=`mb-5 text-[24px] font-medium leading-none tracking-tight md:text-xl
-      dark:text-white border-1 border-gray-300 rounded-xl px-5 py-3 text-black`) Order report
+      div(class="flex gap-2 items-center mb-5")
+        h2(class=`flex-1 text-[24px] font-medium leading-none tracking-tight md:text-xl
+        dark:text-white border-1 border-gray-300 rounded-xl px-5 py-3 text-black`) Order report
+        +exportPDFOrder()
+      
       .inner-chart
         .flex.gap-5
           .flex.flex-col.gap-5
@@ -427,8 +433,10 @@ block main
               .location-chart
 
     .fact-feedback.mb-8
-      h2(class=`mb-5 mt-5 text-[24px] font-medium leading-none tracking-tight md:text-xl
-      dark:text-white border-1 border-gray-300 rounded-xl px-5 py-3 text-black`) Feedback report
+      .flex.gap-2.items-center.my-5
+        h2(class=`flex-1 text-[24px] font-medium leading-none tracking-tight md:text-xl
+        dark:text-white border-1 border-gray-300 rounded-xl px-5 py-3 text-black`) Feedback report
+        +exportPDFFeedback()
       .inner-chart
         div(class="border-1 border-gray-200 pt-5 rounded-2xl.mb-5")
           .time-option.ml-5
@@ -521,7 +529,9 @@ block main
 
     
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="js/helper.js"></script>
   script(type="module" src="/admin/js/saleChart.js")
-  script(type="module" src="/admin/js/feedbackChart.js")
   script(type="module" src="/admin/js/orderChart.js")
+  script(type="module" src="/admin/js/feedbackChart.js")

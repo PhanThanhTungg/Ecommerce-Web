@@ -101,13 +101,16 @@ async function getOrderData(reqBody) {
       body: JSON.stringify(reqBody)
     })
     const data = await res.json()
-    console.log(reqBody)
-    console.log(data.data)
     return data.data
   } catch (error) {
     console.error("Error fetching order data:", error)
   }
 }
+
+let orderTimeData = []
+let orderLocationData = []
+let orderOrderData = []
+let orderCustomerData = []
 
 async function renderTimeChart() {
   if (timeChart) {
@@ -205,6 +208,7 @@ async function renderTimeChart() {
     }
     dataLabels.push(label)
   }
+  orderTimeData = [dataLabels, data.Total_Order]
   
   timeChart.updateOptions({
     xaxis: {
@@ -306,6 +310,7 @@ async function renderLocationChart() {
     locationDiceValue.push(label)
   }
   locationDiceValue.reverse()
+  orderLocationData = [dataLabels, data.Total_Order]
 
   locationChart.updateOptions({
     xaxis: {
@@ -341,7 +346,11 @@ async function renderOrderChart() {
   }
 
   const data = await getOrderData(reqBody)
-
+  if (orderRollUp === "payment") {
+    orderOrderData = [data.Payment_method, data.Total_Order]
+  } else {
+    orderOrderData = [data.Delivery_method, data.Total_Order]
+  }
   let orderOrderChartOptions = {
     series: data.Total_Order,
     chart: {
@@ -391,6 +400,7 @@ async function renderCustomerChart() {
   }
 
   const data = await getOrderData(reqBody)
+  orderCustomerData = [data.Type || data.Gender, data.Total_Order]
   let orderCustomerChartOptions = {
     series: data.Total_Order,
     chart: {
@@ -666,3 +676,188 @@ async function action() {
 }
 
 action()
+
+// export PDF
+const getChartImage = async (chart) => {
+  return await chart.dataURI().then(({ imgURI }) => {
+    return imgURI;
+  });
+};
+
+async function layoutHTML(template) {
+  if (template == 2) {
+    const timeChartImage = await getChartImage(timeChart)
+    const locationChartImage = await getChartImage(locationChart)
+    const orderChartImage = await getChartImage(orderChart)
+    const customerChartImage = await getChartImage(customerChart)
+    
+    return `
+      <div class="font-semibold">1. Số lượng đơn đặt hàng theo thời gian</div>
+      <div class="flex justify-center w-[80%]">
+        <img src="${timeChartImage}" alt="Time Chart">
+      </div>
+      <div class="font-semibold">2. Số lượng đơn đặt hàng theo khu vực</div>
+      <div class="flex justify-center w-[80%]">
+        <img src="${locationChartImage}" alt="Location Chart">
+      </div>
+      <div class="font-semibold">3. Số lượng đơn đặt hàng theo phương thức vận chuyển/thanh toán</div>
+      <div class="flex justify-center w-[80%]">
+        <img src="${orderChartImage}" alt="Order Chart">
+      </div>
+      <div class="font-semibold">4. Số lượng đơn đặt hàng theo tệp khách hàng</div>
+      <div class="flex justify-center w-[80%]">
+        <img src="${customerChartImage}" alt="Customer Chart">
+      </div>
+    `
+  } else {
+    console.log(orderTimeData, orderLocationData, orderOrderData, orderCustomerData)
+    let orderTimeTable = `
+      <table class="w-full border-collapse">
+        <thead>
+          <tr>
+            <th class="border p-2 capitalize">${Helper.translate(timeRollUp)}</th>
+            <th class="border p-2 capitalize">Số lượng đơn hàng</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${orderTimeData[0].map((item, index) => {
+            return `
+              <tr>
+                <td class="border p-2 text-center">${item}</td>
+                <td class="border p-2 text-center">${orderTimeData[1][index]}</td>
+              </tr>
+            `
+          }).join('')}
+        </tbody>
+      </table>
+    `
+
+    let orderLocationTable = `
+      <table class="w-full border-collapse">
+        <thead>
+          <tr>
+            <th class="border p-2 capitalize">${Helper.translate(locationRollUp)}</th>
+            <th class="border p-2 capitalize">Số lượng đơn hàng</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${orderLocationData[0].map((item, index) => {
+            return `
+              <tr>
+                <td class="border p-2 text-center">${item}</td>
+                <td class="border p-2 text-center">${orderLocationData[1][index]}</td>
+              </tr>
+            `
+          }).join('')}
+        </tbody>
+      </table>
+    `
+
+    let orderOrderTable = `
+      <table class="w-full border-collapse">
+        <thead>
+          <tr>
+            <th class="border p-2 capitalize">${Helper.translate(orderRollUp)}</th>
+            <th class="border p-2 capitalize">Số lượng đơn hàng</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${orderOrderData[0].map((item, index) => {
+            return `
+              <tr>
+                <td class="border p-2 text-center">${item}</td>
+                <td class="border p-2 text-center">${orderOrderData[1][index]}</td>
+              </tr>
+            `
+          }).join('')}
+        </tbody>
+      </table>
+    `
+
+    let orderCustomerTable = `
+      <table class="w-full border-collapse">
+        <thead>
+          <tr>
+            <th class="border p-2 capitalize">${Helper.translate(customerRollUp)}</th>
+            <th class="border p-2 capitalize">Số lượng đơn hàng</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${orderCustomerData[0].map((item, index) => {
+            return `
+              <tr>
+                <td class="border p-2 text-center">${item}</td>
+                <td class="border p-2 text-center">${orderCustomerData[1][index]}</td>
+              </tr>
+            `
+          }).join('')}
+        </tbody>
+      </table>
+    `
+
+    const result = `
+      <div class="font-semibold">1. Số lượng đơn đặt hàng theo thời gian</div>
+      <div class="flex justify-center w-[90%] mb-2">
+        ${orderTimeTable}
+      </div>
+      <div class="font-semibold">2. Số lượng đơn đặt hàng theo khu vực</div>
+      <div class="flex justify-center w-[90%] mb-2">
+        ${orderLocationTable}
+      </div>
+      <div class="font-semibold">3. Số lượng đơn đặt hàng theo phương thức vận chuyển/thanh toán</div>
+      <div class="flex justify-center w-[90%] mb-2">
+        ${orderOrderTable}
+      </div>
+      <div class="font-semibold">4. Số lượng đơn đặt hàng theo tệp khách hàng</div>
+      <div class="flex justify-center w-[90%] mb-2">
+        ${orderCustomerTable}
+      </div>
+    `
+    return result;
+  }
+}
+
+const contentReportElement = document.querySelector('.fact-order .content-report')
+
+const toggleButton = document.querySelector('button[data-modal-target="pdf-modal-order"]')
+toggleButton.addEventListener('click', async function () {
+  contentReportElement.innerHTML = await layoutHTML(1)
+})
+
+const templates = document.querySelectorAll('input[name="order-template"]')
+templates.forEach(template => {
+  template.addEventListener('change', async function () {
+    contentReportElement.innerHTML = await layoutHTML(this.value)
+  })
+})
+
+const downloadPDFBtn = document.querySelector('.fact-order .download-pdf-btn')
+const opt = {
+  margin: [20, 30, 20, 20],
+  filename: 'Order Report.pdf',
+  image: { type: 'jpeg', quality: 0.8 },
+  html2canvas: {
+    scale: 1.5,
+    logging: false,
+    useCORS: true,
+    dpi: 96,
+    letterRendering: true
+  },
+  jsPDF: {
+    unit: 'mm',
+    format: 'a4',
+    orientation: 'portrait',
+    hotfixes: ['px_scaling'],
+    putOnlyUsedFonts: true,
+    compress: true
+  },
+  pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
+  onclone: function(clonedDoc) {
+      clonedDoc.body.style.fontFamily = '"Times New Roman", Times, serif';
+  }
+}
+
+downloadPDFBtn.addEventListener('click', function () {
+  const preparePDF = document.querySelector('.fact-order .content-to-export')
+  html2pdf().set(opt).from(preparePDF).save()
+})
