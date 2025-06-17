@@ -73,6 +73,7 @@ const saleAPI = "/api/dashboard/olap/fact_sale";
 
 async function getSaleData() {
   try {
+    console.log(timeDice, timeRollUp)
     const res = await fetch(saleAPI, {
       method: "POST",
       headers: {
@@ -91,6 +92,9 @@ async function getSaleData() {
       })
     })
     const result = await res.json();
+    console.log({
+    timeDice, timeRollUp, result
+  })
     return result.data;
   } catch (error) {
     console.log(error)
@@ -225,6 +229,7 @@ async function renderSaleTimeChart(rollUp = "month") {
   }
   timeRollUp = rollUp
   const data = await getSaleData();
+  console.log(data);
 
   const numberOfRecords = data.Total_Revenue.length;
   let labels = []
@@ -545,14 +550,14 @@ async function renderSaleCustomerChart(rollUp = "type") {
   customer = rollUp
   const data = await getSaleData();
 
-  saleCustomerData = [data.Type, data.Total_Revenue];
+  saleCustomerData = [data.type, data.Total_Revenue];
   var saleCustomerChartOptions = {
     series: data.Total_Revenue,
     chart: {
       width: 380,
       type: 'pie',
     },
-    labels: data.Type,
+    labels: data.type,
     responsive: [{
       breakpoint: 480,
       options: {
@@ -584,7 +589,7 @@ async function renderSaleCustomerChart2(rollUp = "gender") {
       width: 380,
       type: 'pie',
     },
-    labels: data.Gender.map(item => Helper.capitalize(item)),
+    labels: data.gender.map(item => Helper.capitalize(item)),
     responsive: [{
       breakpoint: 480,
       options: {
@@ -823,7 +828,7 @@ async function layoutHTML(template) {
     const productChartImage = await getChartImage(saleProductChart)
     const customerChartImage = await getChartImage(saleCustomerChart)
     const saleForecastChartImage = await getChartImage(saleForecastChart)
-    
+
     return `
       <div class="font-semibold">1. Doanh thu bán hàng và số lượng theo thời gian</div>
       <div class="flex justify-center w-[80%]">
@@ -860,14 +865,14 @@ async function layoutHTML(template) {
         </thead>
         <tbody>
           ${saleTimeData[0].map((item, index) => {
-            return `
+      return `
               <tr>
                 <td class="border p-2 text-center">${item}</td>
                 <td class="border p-2 text-center">${saleTimeData[1][index]}</td>
                 <td class="border p-2 text-center">${Helper.formatLargeNumber(saleTimeData[2][index])}</td>
               </tr>
             `
-          }).join('')}
+    }).join('')}
         </tbody>
       </table>
     `
@@ -883,14 +888,14 @@ async function layoutHTML(template) {
         </thead>
         <tbody>
           ${saleLocationData[0].map((item, index) => {
-            return `
+      return `
               <tr>
                 <td class="border p-2 text-center">${item}</td>
                 <td class="border p-2 text-center">${saleLocationData[1][index]}</td>
                 <td class="border p-2 text-center">${Helper.formatLargeNumber(saleLocationData[2][index])}</td>
               </tr>
             `
-          }).join('')}
+    }).join('')}
         </tbody>
       </table>
     `
@@ -906,14 +911,14 @@ async function layoutHTML(template) {
         </thead>
         <tbody>
           ${saleProductData[0].map((item, index) => {
-            return `
+      return `
               <tr>
                 <td class="border p-2 text-center">${item}</td>
                 <td class="border p-2 text-center">${saleProductData[1][index]}</td>
                 <td class="border p-2 text-center">${Helper.formatLargeNumber(saleProductData[2][index])}</td>
               </tr>
             `
-          }).join('')}
+    }).join('')}
         </tbody>
       </table>
     `
@@ -928,13 +933,13 @@ async function layoutHTML(template) {
         </thead>
         <tbody>
           ${saleCustomerData[0].map((item, index) => {
-            return `
+      return `
               <tr>
                 <td class="border p-2 text-center">${item}</td>
                 <td class="border p-2 text-center">${Helper.formatLargeNumber(saleCustomerData[1][index])}</td>
               </tr>
             `
-          }).join('')}
+    }).join('')}
         </tbody>
       </table>
     `
@@ -951,11 +956,11 @@ async function layoutHTML(template) {
         </thead>
         <tbody>
           ${saleForecastData.map((item) => {
-            let timeLabel = item[currentTimeRollUp];
-            if (currentTimeRollUp === "day") {
-              timeLabel = Helper.formatDate(item.ds);
-            }
-            return `
+      let timeLabel = item[currentTimeRollUp];
+      if (currentTimeRollUp === "day") {
+        timeLabel = Helper.formatDate(item.ds);
+      }
+      return `
               <tr>
                 <td class="border p-2 text-center">${timeLabel}</td>
                 <td class="border p-2 text-center">${Helper.formatLargeNumber(item.yhat_lower)}</td>
@@ -963,7 +968,7 @@ async function layoutHTML(template) {
                 <td class="border p-2 text-center">${Helper.formatLargeNumber(item.yhat)}</td>
               </tr>
             `
-          }).join('')}
+    }).join('')}
         </tbody>
       </table>
     `
@@ -1006,7 +1011,7 @@ toggleButton.addEventListener('click', async function () {
 const templates = document.querySelectorAll('input[name="template"]')
 templates.forEach(template => {
   template.addEventListener('change', async function () {
-    
+
     contentReportElement.innerHTML = await layoutHTML(this.value)
   })
 })
@@ -1032,12 +1037,27 @@ const opt = {
     compress: true
   },
   pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
-  onclone: function(clonedDoc) {
-      clonedDoc.body.style.fontFamily = '"Times New Roman", Times, serif';
+  onclone: function (clonedDoc) {
+    clonedDoc.body.style.fontFamily = '"Times New Roman", Times, serif';
   }
 }
 
 downloadPDFBtn.addEventListener('click', function () {
   const preparePDF = document.querySelector('#export-content')
   html2pdf().set(opt).from(preparePDF).save()
+})
+
+
+console.log({
+
+  timeRollUp: timeRollUp,
+  timeDice: timeDice,
+  productRollUp: productRollUp,
+  productDice: productDice,
+  locationRollUp: locationRollUp,
+  locationDice: locationDice,
+  customer: customer,
+  customerDice: customerDice,
+  sort: sort
+
 })
