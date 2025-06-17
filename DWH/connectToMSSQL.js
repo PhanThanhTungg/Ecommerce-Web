@@ -2,8 +2,8 @@ const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize('WHHTTTQL', 'sa', process.env.MSSQL_SA_PASSWORD, {
   dialect: 'mssql',
-  host: 'localhost',
-  port: '1609',
+  host: process.env.MSSQL_HOST,
+  port: process.env.MSSQL_PORT,
   dialectOptions: {
     options: {
       encrypt: false,

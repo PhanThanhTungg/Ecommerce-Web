@@ -4,6 +4,7 @@
 crawlData/node_modules
 crawlData/DataFakeGen
 crawlData/Data
+/ModelProfet
 /node_modules
 public/tailwind/output.css
 /.pnp
