@@ -25,6 +25,7 @@ const queryCubejs = async (query) => {
   }
 }
 
+// query from dwh
 // module.exports.olapFactSale = async (req, res)=>{
 //   try {
 
@@ -217,17 +218,32 @@ const queryCubejs = async (query) => {
 
 // }
 
+// query from cubejs
 module.exports.olapFactSale = async (req, res) => {
   try {
 
     const body = req.body;
+    console.log("body", body);
     const dimensions = [];
     const filters = [];
+    const orders = {};
 
     //--------------time---------------
-    if (body.timeRollUp == "year") dimensions.push("dim_time.year");
-    if (body.timeRollUp == "month") dimensions.push("dim_time.month");
-    if (body.timeRollUp == "day") dimensions.push("dim_time.day");
+    if (body.timeRollUp == "year") {
+      dimensions.push("dim_time.year");
+      orders["dim_time.year"] = "asc";
+    }
+    if (body.timeRollUp == "month") {
+      dimensions.push("dim_time.month");
+      orders["dim_time.year"] = "asc";
+      orders["dim_time.month"] = "asc";
+    }
+    if (body.timeRollUp == "day") {
+      dimensions.push("dim_time.day");
+      orders["dim_time.year"] = "asc";
+      orders["dim_time.month"] = "asc";
+      orders["dim_time.day"] = "asc";
+    }
 
     // Time dice
     if (body.timeDice) {
@@ -291,6 +307,35 @@ module.exports.olapFactSale = async (req, res) => {
         body.locationRollUp == "commune" ? "dim_location.commune" : "";
     if (location_level != "") dimensions.push(location_level);
 
+    // location dice
+    if (body.locationDice) {
+      const arrLocationDiceLength = body.locationDice[0].split("-").length;
+      const arrLocationDice = body.locationDice;
+      if (arrLocationDiceLength == 1) {
+        const arrLocationDiceString = arrLocationDice;
+        filters.push({
+          dimension: "dim_location.province",
+          operator: "equals",
+          values: arrLocationDiceString
+        });
+      }
+      if (arrLocationDiceLength == 2) {
+        const arrLocationDiceDistrict = arrLocationDice.map((item) => item.split("-")[1] + "," + item.split("-")[0]);
+        filters.push({
+          dimension: "dim_location.district",
+          operator: "equals",
+          values: arrLocationDiceDistrict
+        });
+      }
+      if (arrLocationDiceLength == 3) {
+        const arrLocationDiceCommune = arrLocationDice.map((item) => item.split("-")[2] + "," + item.split("-")[1] + "," + item.split("-")[0]);
+        filters.push({
+          dimension: "dim_location.commune",
+          operator: "equals",
+          values: arrLocationDiceCommune
+        });
+      }
+    }
 
     //--------------product---------------
     if (body.productRollUp == "category") {
@@ -302,19 +347,58 @@ module.exports.olapFactSale = async (req, res) => {
       dimensions.push("dim_product.product_name");
     }
 
+    //product dice
+    if (body.productDice) {
+      const type = body.productDice.type;
+      if (type == "product") {
+        const arrProductIdDice = body.productDice.arr;
+        if (arrProductIdDice.length > 0) {
+          filters.push({
+            dimension: "dim_product.product_key",
+            operator: "equals",
+            values: arrProductIdDice
+          });
+        }
+      }
+      if (type == "category") {
+        const arrProductCategoryDice = body.productDice.arr;
+        if (arrProductCategoryDice.length > 0) {
+          filters.push({
+            dimension: "dim_category.category_key",
+            operator: "equals",
+            values: arrProductCategoryDice
+          });
+        }
+      }
+    }
+
+
+
     //--------------customer---------------
     const customer_level =
       body.customer == "gender" ? "dim_customer.gender" :
         body.customer == "type" ? "dim_customer.type" : "";
     if (customer_level != "") dimensions.push(customer_level);
 
-    console.log("dimensions", dimensions);
+    //customer dice
+    const customerDice = body.customerDice;
+    if (customerDice) {
+      if (customerDice.gender) {
+        const arrCustomerGenderDice = customerDice.gender.map((item) => `N'${item}'`).join(",");
+        WhereConditions.push(`cu.gender IN (${arrCustomerGenderDice})`);
+      }
+      if (customerDice.type) {
+        const arrCustomerTypeDice = customerDice.type.map((item) => `N'${item}'`).join(",");
+        WhereConditions.push(`cu.type IN (${arrCustomerTypeDice})`);
+      }
+    }
 
     const data = await queryCubejs({
       query: {
         measures: ["fact_sale.quantity", "fact_sale.revenue"],
         dimensions,
-        filters
+        filters,
+        order: { ...orders, "fact_sale.revenue": "desc" },
       }
     });
 
@@ -343,7 +427,7 @@ module.exports.olapFactSale = async (req, res) => {
           dataRes["year"].push(monthArr[0]);
           dataRes["month"].push(monthArr[1]);
         }
-        else if(newKey == "commune"){
+        else if (newKey == "commune") {
           const communeArr = obj[key].split(",");
           dataRes["province"].push(communeArr[0]);
           dataRes["district"].push(communeArr[1]);
@@ -357,9 +441,9 @@ module.exports.olapFactSale = async (req, res) => {
         else if (newKey == "province") {
           dataRes["province"].push(obj[key]);
         }
-        else{
+        else {
           if (!dataRes[newKey]) dataRes[newKey] = [];
-          if(newKey === "Total_Revenue" || newKey === "Total_Quantity") {
+          if (newKey === "Total_Revenue" || newKey === "Total_Quantity") {
             dataRes[newKey].push(+obj[key]);
           }
           else {
@@ -376,7 +460,6 @@ module.exports.olapFactSale = async (req, res) => {
     });
 
     // console.log("dimensions", dimensions);
-    // console.log("filters", filters);
     // console.log("dataRes", dataRes);
 
     return res.status(200).json({

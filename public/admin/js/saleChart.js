@@ -215,6 +215,10 @@ async function renderSaleForecastChart() {
     }
   };
 
+  if (saleForecastChart) {
+    saleForecastChart.destroy();
+  }
+
   saleForecastChart = new ApexCharts(
     document.querySelector(".fact-sale .sale-forecast"),
     saleForecastChartOptions);
@@ -571,6 +575,9 @@ async function renderSaleCustomerChart(rollUp = "type") {
     }]
   };
 
+  if (saleCustomerChart) {
+    saleCustomerChart.destroy()
+  }
   saleCustomerChart = new ApexCharts(document.querySelector(`.fact-sale .customer-chart`), saleCustomerChartOptions);
   saleCustomerChart.render();
   customer = "";
@@ -603,6 +610,9 @@ async function renderSaleCustomerChart2(rollUp = "gender") {
     }]
   };
 
+  if (saleCustomerChart2) {
+    saleCustomerChart2.destroy()
+  }
   saleCustomerChart2 = new ApexCharts(document.querySelector(`.fact-sale .customer-chart2`), saleCustomerChartOptions);
   saleCustomerChart2.render();
   customer = "";
