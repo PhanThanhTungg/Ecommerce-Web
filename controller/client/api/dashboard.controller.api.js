@@ -384,12 +384,20 @@ module.exports.olapFactSale = async (req, res) => {
     const customerDice = body.customerDice;
     if (customerDice) {
       if (customerDice.gender) {
-        const arrCustomerGenderDice = customerDice.gender.map((item) => `N'${item}'`).join(",");
-        WhereConditions.push(`cu.gender IN (${arrCustomerGenderDice})`);
+        const arrCustomerGenderDice = customerDice.gender;
+        filters.push({
+          dimension: "dim_customer.gender",
+          operator: "equals",
+          values: arrCustomerGenderDice
+        });
       }
       if (customerDice.type) {
-        const arrCustomerTypeDice = customerDice.type.map((item) => `N'${item}'`).join(",");
-        WhereConditions.push(`cu.type IN (${arrCustomerTypeDice})`);
+        const arrCustomerTypeDice = customerDice.type;
+        filters.push({
+          dimension: "dim_customer.type",
+          operator: "equals",
+          values: arrCustomerTypeDice
+        });
       }
     }
 
