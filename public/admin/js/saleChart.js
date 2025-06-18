@@ -73,7 +73,6 @@ const saleAPI = "/api/dashboard/olap/fact_sale";
 
 async function getSaleData() {
   try {
-    console.log(timeDice, timeRollUp)
     const res = await fetch(saleAPI, {
       method: "POST",
       headers: {
@@ -92,9 +91,7 @@ async function getSaleData() {
       })
     })
     const result = await res.json();
-    console.log({
-    timeDice, timeRollUp, result
-  })
+    
     return result.data;
   } catch (error) {
     console.log(error)
@@ -233,7 +230,6 @@ async function renderSaleTimeChart(rollUp = "month") {
   }
   timeRollUp = rollUp
   const data = await getSaleData();
-  console.log(data);
 
   const numberOfRecords = data.Total_Revenue.length;
   let labels = []
@@ -823,6 +819,13 @@ async function action() {
 }
 action()
 
+socket.on("dwhDataUpdated", (data)=>{
+  if(data.message == "successfully"){
+    action();
+    console.log("update sale chart successfully")
+  }
+})
+
 // export PDF
 
 const getChartImage = async (chart) => {
@@ -1055,19 +1058,4 @@ const opt = {
 downloadPDFBtn.addEventListener('click', function () {
   const preparePDF = document.querySelector('#export-content')
   html2pdf().set(opt).from(preparePDF).save()
-})
-
-
-console.log({
-
-  timeRollUp: timeRollUp,
-  timeDice: timeDice,
-  productRollUp: productRollUp,
-  productDice: productDice,
-  locationRollUp: locationRollUp,
-  locationDice: locationDice,
-  customer: customer,
-  customerDice: customerDice,
-  sort: sort
-
 })

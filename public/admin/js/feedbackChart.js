@@ -561,6 +561,13 @@ async function action() {
 }
 action();
 
+socket.on("dwhDataUpdated", (data)=>{
+  if(data.message == "successfully"){
+    action();
+    console.log("update feedback chart successfully")
+  }
+})
+
 //export PDF
 const getChartImage = async (chart) => {
   return await chart.dataURI().then(({ imgURI }) => {

@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 
 export default async (yearMonth) => {
   const users = [];
-  const irandom = Math.floor(Math.random() * (80 - 35 + 1)) + 35;
+  const irandom = Math.floor(Math.random() * (60 - 35 + 1)) + 35;
   for (let i = 0; i < irandom; i++) {
     try {
       const user = {};
@@ -62,7 +62,7 @@ export default async (yearMonth) => {
       const [year, month] = yearMonth.split('-');
       const from = `${year}-${month}-01`;
       const to = new Date(year, month, 0); // ngày cuối cùng của tháng
-      const toStr = `${year}-${month}-13`;
+      const toStr = `${year}-${month}-${to.getDate()}`;
       user.createdAt = faker.date.between({ from, to: toStr });
 
       users.push(user);

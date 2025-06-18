@@ -11,7 +11,7 @@ export default async (yearMonth) => {
 
   const listProvince = await fetchProvince();
   const orders = [];
-  const irandom = Math.floor(Math.random() * (150 - 100 + 1)) + 100;
+  const irandom = Math.floor(Math.random() * (130 - 100 + 1)) + 100;
   for (let i = 0; i < irandom; i++) {
     try {
       const order = {};
@@ -22,7 +22,7 @@ export default async (yearMonth) => {
       const [year, month] = yearMonth.split('-');
       const from = `${year}-${month}-01`;
       const to = new Date(year, month, 0); // ngày cuối cùng của tháng
-      const toStr = `${year}-${month}-13`;
+      const toStr = `${year}-${month}-${to.getDate()}`;
       order.createdAt = faker.date.between({ from, to: toStr });
 
 

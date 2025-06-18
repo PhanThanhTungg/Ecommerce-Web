@@ -14,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "@faker-js/faker": "^9.7.0",
-    "bcrypt": "^5.1.1",
+    "bcrypt": "^6.0.0",
     "crawldata": "file:",
     "fs-extra": "^11.3.0",
     "mongoose": "^8.14.1",

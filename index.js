@@ -51,17 +51,20 @@ app.use(cookieParser('Tung cookie'));
 app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
 
-// cron
-// const dwhAction = require("./DWH/dwh.js");
-// dwhAction();
-
-
+// socket 
 const { createServer } = require('node:http');
 const { join } = require('node:path');
 const { Server } = require('socket.io');
 const server = createServer(app);
 const io = new Server(server);
+io.on('connection', (socket) => {
+  console.log('A user connected');
+});
 global._io = io; 
+
+// cron
+const dwhAction = require("./DWH/dwh.js");
+dwhAction();
 
 route(app) //gọi đến route
 routeAdmin(app)

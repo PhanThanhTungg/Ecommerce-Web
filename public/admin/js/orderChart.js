@@ -677,6 +677,62 @@ async function action() {
 
 action()
 
+
+function showAnimatedAlert(message, type = 'success', duration = 3000) {
+  const alertDiv = document.createElement('div');
+  alertDiv.innerHTML = `
+    <span>${message}</span>
+    <button onclick="this.parentElement.remove()" style="margin-left: 10px; background: none; border: none; color: white; cursor: pointer;">&times;</button>
+  `;
+  
+  const colors = {
+    success: '#4CAF50',
+    error: '#f44336',
+    warning: '#ff9800',
+    info: '#2196F3'
+  };
+  
+  alertDiv.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: ${colors[type]};
+    color: white;
+    padding: 15px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    z-index: 9999;
+    font-family: Arial, sans-serif;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+  `;
+  
+  document.body.appendChild(alertDiv);
+  
+  // Animate in
+  setTimeout(() => {
+    alertDiv.style.transform = 'translateX(0)';
+  }, 10);
+  
+  // Auto remove
+  setTimeout(() => {
+    alertDiv.style.transform = 'translateX(100%)';
+    setTimeout(() => {
+      if (alertDiv.parentNode) {
+        alertDiv.parentNode.removeChild(alertDiv);
+      }
+    }, 300);
+  }, duration);
+}
+
+socket.on("dwhDataUpdated", (data)=>{
+  if(data.message == "successfully"){
+    action();
+    console.log("update order chart successfully");
+    showAnimatedAlert('ETL successfully - update chart successfully!', 'success');
+  }
+})
+
 // export PDF
 const getChartImage = async (chart) => {
   return await chart.dataURI().then(({ imgURI }) => {

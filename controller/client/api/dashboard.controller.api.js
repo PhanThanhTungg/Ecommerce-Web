@@ -62,7 +62,6 @@ const queryCubejs = async (query) => {
 //         const startYear = parseInt(timeDiceStartSplit[0]);
 //         const endYear = parseInt(timeDiceEndSplit[0]);
 //         WhereConditions.push(`t.year BETWEEN ${startYear} AND ${endYear}`);
-//         console.log(WhereConditions)
 //       }
 //       else if (timeDiceStartSplit.length == 2) {
 //         const [startMonth, startYear] = timeDiceStartSplit.map(Number);
@@ -202,7 +201,6 @@ const queryCubejs = async (query) => {
 //       resData[key] = factSale.map((item) => item[key]);
 //     });
 
-//     console.log("resData", resData);
 //     res.status(200).json({
 //       status: "success",
 //       data: resData
@@ -223,7 +221,6 @@ module.exports.olapFactSale = async (req, res) => {
   try {
 
     const body = req.body;
-    console.log("body", body);
     const dimensions = [];
     const filters = [];
     const orders = {};
@@ -467,8 +464,6 @@ module.exports.olapFactSale = async (req, res) => {
       }
     });
 
-    // console.log("dimensions", dimensions);
-    // console.log("dataRes", dataRes);
 
     return res.status(200).json({
       status: "success",
@@ -521,7 +516,6 @@ module.exports.olapFactFeedback = async (req, res) => {
         const startYear = parseInt(timeDiceStartSplit[0]);
         const endYear = parseInt(timeDiceEndSplit[0]);
         WhereConditions.push(`t.year BETWEEN ${startYear} AND ${endYear}`);
-        console.log(WhereConditions)
       }
       else if (timeDiceStartSplit.length == 2) {
         const [startMonth, startYear] = timeDiceStartSplit.map(Number);
@@ -673,7 +667,6 @@ module.exports.olapFactOrder = async (req, res) => {
         const startYear = parseInt(timeDiceStartSplit[0]);
         const endYear = parseInt(timeDiceEndSplit[0]);
         WhereConditions.push(`t.year BETWEEN ${startYear} AND ${endYear}`);
-        console.log(WhereConditions)
       }
       else if (timeDiceStartSplit.length == 2) {
         const [startMonth, startYear] = timeDiceStartSplit.map(Number);
