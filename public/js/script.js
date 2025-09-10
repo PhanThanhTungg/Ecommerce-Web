@@ -67,7 +67,6 @@ if (uploadImage) {
   const uploadImagePreview = document.querySelector("[upload-image-preview]");
 
   uploadImageInput.addEventListener("change", (e) => {
-    console.log(e);
     const file = e.target.files[0];
     if (file) {
       uploadImagePreview.src = URL.createObjectURL(file);
@@ -173,11 +172,10 @@ if (searchInput) {
     } else {
       displayResultWrapper.classList.add("active")
     }
-    if (keyword.length > 3) {
+    if (keyword.length > 0) {
       fetch(`/api/products/search/${keyword}`)
       .then(res=>res.json())
       .then(data=>{
-        console.log(data);
         if (data.message === "success") {
           if (data.data.length === 0) {
             displayResult.innerHTML = `
@@ -212,9 +210,13 @@ if (searchInput) {
   })
 }
 
-
-
-
+document.addEventListener("click", (e) => {
+  const target = e.target;
+  if (!target.closest('.header-search__result')) {
+    displayResultWrapper.classList.remove("active");
+    searchInput.value = "";
+  }
+});
 
 
 

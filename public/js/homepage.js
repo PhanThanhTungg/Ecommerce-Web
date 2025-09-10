@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async function () {
           products.forEach(item => {
             boxProduct.innerHTML += `
               <a href="/products/detail/${item.slug}">
-                <div class="col-xl-3 col-md-4 col-sm-6 mb-5">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-6 mb-5">
                   <div class="product-item">
                     <div class="inner-image">
                       <img class="img-product-1" src="${item.images[0]}" alt=${item.title}>

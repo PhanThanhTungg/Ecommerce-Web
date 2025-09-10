@@ -33,7 +33,7 @@ module.exports = async () => {
   //   'Asia/Ho_Chi_Minh'
   // )
   const job = new CronJob(
-    '09 14 * * *', // mm:hh * * *
+    '19 21 * * *', // mm:hh * * *
     async function () {
       let now = new Date();
       let year = now.getFullYear();
@@ -42,8 +42,8 @@ module.exports = async () => {
       if (date < 10) date = "0" + ("" + date);
 
       year = "2025";
-      month = "06";
-      date = "07";
+      month = "05";
+      date = "02";
 
       const t = await sequelize.transaction();
       try {
