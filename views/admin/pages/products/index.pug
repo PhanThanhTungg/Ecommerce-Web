@@ -76,7 +76,7 @@ block main
                     each val, i in item.listPrice
                       option(class="py-1" disabled selected=(i==0?true:false))
                         span(class="font-medium") #{val.size} | 
-                        span(class="ml-2 text-gray-600 dark:text-gray-400 formatMoney") #{val.price}
+                        span(class="ml-2 text-black dark:text-gray-400 formatMoney") #{val.price}
                 td(class="px-6 py-4") #{item.sales}
                 td(class="px-6 py-4") 
                   input(

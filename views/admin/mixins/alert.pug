@@ -1,14 +1,14 @@
 mixin alert-success(time)
   - if (messages.success)
-    .message.info(class="text-white")
+    .message.info(class = "text-black dark:text-white")
       div(
         class="alert alert-success border-2 border-green-600 py-[10px] px-[15px] bg-green-700 flex items-center"
         show-alert 
         data-time=time
       ) 
-        <i class="fa-regular fa-circle-check mr-2"></i> 
-        | #{messages.success}
-        <span close-alert class="ml-3 text-white bg-transparent "> X <span> 
+        <i class="fa-regular fa-circle-check mr-2 text-black dark:text-white"></i> 
+        <span class="text-black dark:text-white">#{messages.success}</span>
+        <span close-alert class="ml-3 text-black dark:text-white bg-transparent "> X <span> 
 
 mixin alert-error(time)
   - if (messages.error)
@@ -19,5 +19,5 @@ mixin alert-error(time)
         data-time=time
       ) 
         <i class="fa-solid fa-circle-exclamation"></i> 
-        | #{messages.error}
-        <span close-alert style="color: black"> X <span> 
+        <span class="text-black dark:text-white">#{messages.error}</span>
+        <span close-alert class="text-black dark:text-white"> X <span> 

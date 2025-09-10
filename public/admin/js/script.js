@@ -1,6 +1,6 @@
 // darkmode
 if (!localStorage.getItem('color-theme')) {
-  localStorage.setItem('color-theme', 'dark');
+  localStorage.setItem('color-theme', 'light');
 }
 if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
   document.documentElement.classList.add('dark');
