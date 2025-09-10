@@ -381,6 +381,10 @@
   flex-grow: 1;
 }
 
+.box-feedback .sticky-top {
+  background-color: var(--color-one);
+}
+
 .box-feedback .create-feedback {
   display: block;
   width: 100%;

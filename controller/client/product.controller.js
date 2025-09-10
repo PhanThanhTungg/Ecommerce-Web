@@ -241,7 +241,7 @@ module.exports.detail = async (req, res) => {
 
     console.log(product[0].feedback[0]);
     res.render("client/pages/products/detail.pug", {
-      pageTitle: product.title,
+      pageTitle: product[0].title,
       product: product[0],
     })
   } catch (error) {

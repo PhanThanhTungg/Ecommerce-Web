@@ -8,7 +8,7 @@ block main
   .product-detail
     .container
       .row
-        .col-md-6.col-sm-12.product-images
+        .col-md-6.col-sm-12.product-images.pt-5
           .swiper.image-detail
             .swiper-wrapper
               each item in product.images
@@ -23,7 +23,7 @@ block main
               each item in product.images
                 .swiper-slide
                   img(src=item)
-        .col-md-6.product-info
+        .col-md-6.product-info.pt-5
           h3(class="inner-title") #{product.title}
           .d-flex.align-items-center
             .inner-rating.mr-5(data-rating=Math.round(product.averageRating * 2) / 2)
