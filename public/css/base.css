@@ -46,18 +46,6 @@ a:hover {
   margin-top: 100px;
 }
 
-.alert.alert-success {
-  background-color: #3a8788 !important;
-  color: white;
-  border-radius: 20px;
-}
-
-.alert.alert-danger {
-  background-color: rgba(255, 0, 0, 0.358) !important;
-  color: white;
-  border-radius: 20px;
-}
-
 .wrapper-flex-column-gap-15 {
   display: flex;
   flex-direction: column;

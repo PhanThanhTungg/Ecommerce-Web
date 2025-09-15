@@ -1,17 +1,25 @@
 mixin alert-success(time)
     - if (messages.success)
-        .message.info
+        .alert-container
             div(
                 class="alert alert-success"
                 show-alert 
                 data-time=time
-            ) #{messages.success} <span close-alert style="color: black"> X <span> 
+            )
+                .alert-content
+                    .alert-icon ✓
+                    .alert-message #{messages.success}
+                    .alert-close(close-alert) ×
 
 mixin alert-error(time)
     - if (messages.error)
-        .message.info
+        .alert-container
             div(
                 class="alert alert-danger"
                 show-alert 
                 data-time=time
-            ) #{messages.error} <span close-alert style="color: black"> X <span> 
+            )
+                .alert-content
+                    .alert-icon !
+                    .alert-message #{messages.error}
+                    .alert-close(close-alert) × 

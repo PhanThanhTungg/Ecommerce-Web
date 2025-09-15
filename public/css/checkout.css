@@ -964,7 +964,7 @@ button[data-target="#discountModal"] {
   gap: 15px;
 }
 
-.discount-page .expired {
+.discount-page .inner-discount .wrapper .expired {
   display: flex;
   gap: 50px;
   align-items: center;
@@ -990,3 +990,63 @@ button[data-target="#discountModal"] {
   }
 }
 
+@media screen and (max-width: 1024px) {
+  .discount-page .inner-discount {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .discount-page .inner-discount .wrapper .expired {
+    gap: 20px;
+    font-size: 1.2rem
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .discount-page .inner-discount {
+    grid-template-columns: 1fr;
+  }
+
+  .discount-page .discount-item {
+    padding: 10px;
+  }
+  
+  .discount-page .inner-discount .wrapper .expired {
+    gap: 20px;
+    font-size: 1.2rem
+  }
+}
+
+@media screen and (max-width: 426px) {
+  #discountModal .inner-img, .discount-page .inner-img {
+    height: 60px;
+    width: 60px;
+  }
+
+  .discount-page .inner-discount .wrapper .expired .quantity {
+    display: none;
+  }
+
+  .discount-page .discount-item {
+    gap: 8px;
+  }
+
+  .discount-page .wrapper {
+    font-size: 1.3rem
+  }
+
+  .discount-page .inner-tab {
+    margin: 15px 0px;
+  }
+
+  .discount-page .inner-tab > * {
+    font-size: 1.3rem;
+    width: fit-content;
+    padding: 5px 10px
+  }
+
+  .discount-page .get-discount {
+    padding: 4px 10px;
+    font-size: 1.3rem;
+    margin-left: 0;
+  }
+}

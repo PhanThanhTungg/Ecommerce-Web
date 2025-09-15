@@ -24,7 +24,7 @@ block main
             .expired
               +expires(discount.endDate)
               if (type != "myDiscount")
-                .quantity.ml-5 Only 
+                .quantity Only 
                   <span class="discount-quantity"> #{discount.quantity} </span> left 
           if (type != "myDiscount")
             form(action="/discount/getDiscount" method="POST")
