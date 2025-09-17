@@ -1,28 +1,31 @@
-const CUDiscountForm = document.getElementById("CUDiscountForm");
-if(CUDiscountForm){
-  CUDiscountForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  
-  const formData = new FormData(CUDiscountForm);
-  const formDataObject = Object.fromEntries(formData);
-  const api = "/admin/discount/create";
-  fetch(api, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formDataObject),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.message = "Create discount successfully") {
-        window.location.href = "/admin/discount";
-      }
+const discountForms = document.querySelectorAll(".Discount-Form");
+if (discountForms) {
+  discountForms.forEach(discountForm => {
+    discountForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const id = discountForm.getAttribute("data-id");
+      const formData = new FormData(discountForm);
+      const formDataObject = Object.fromEntries(formData);
+      formDataObject.discountId = id;
+      const api = id ? "/admin/discount/edit" : "/admin/discount/create";
+      fetch(api, {
+        method: id ? "PATCH" : "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formDataObject),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.message == "Create discount successfully" || data.message == "Edit discount successfully") {
+            window.location.href = "/admin/discount";
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+  })
 }
 
 // --------------- Discount page socket handler ---------------
