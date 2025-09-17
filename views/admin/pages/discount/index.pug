@@ -74,16 +74,7 @@ block main
                         </label>
                 td(class="px-6 py-4")
                   .flex.items-center.gap-6
-                    a(
-                      class="button-edit cursor-pointer"
-                      data-id=item.id
-                      data-type=item.type
-                      data-value=item.value
-                      data-quantity=item.quantity
-                      data-condition=item.condition
-                      data-start=(item.startDate ? item.startDate.toISOString() : "")
-                      data-end=(item.endDate ? item.endDate.toISOString() : "")
-                    ) <i class="fa-regular fa-pen-to-square text-lg text-black-1 dark:text-white"></i>
+                    +modalCUDiscount(item)
                     form(action = `${prefixAdmin}/discount/delete/${item.id}?_method=DELETE` method="POST")
                       button(
                         class="button-delete cursor-pointer"

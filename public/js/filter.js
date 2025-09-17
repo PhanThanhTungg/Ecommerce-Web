@@ -10,10 +10,18 @@ let limit = limitSelect.value;
 let priceBegin = 0;
 let priceEnd = Math.pow(10,12);
 let availability = "";
+let slugCategory = "";
+
+const path = window.location.pathname;
+const match = path.match(/^\/products\/([^\/]+)$/);
+if (match) {
+  slugCategory = "/" + match[1];
+}
 
 function fetchAPIProducts(pageSelected = 1) {
   page = pageSelected;
-  const api = `/api/products?priceBegin=${priceBegin}&priceEnd=${priceEnd}&sortBy=${sortBy}&sortValue=${sortValue}&availability=${availability}&page=${page}&limit=${limit}`;
+  const api = `/api/products${slugCategory}?priceBegin=${priceBegin}&priceEnd=${priceEnd}&sortBy=${sortBy}&sortValue=${sortValue}&availability=${availability}&page=${page}&limit=${limit}`;
+  console.log("API", api);
   fetch(api)
     .then(res => res.json())
     .then(data => {
