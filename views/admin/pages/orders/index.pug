@@ -53,7 +53,7 @@ block main
                 .flex.items-center
                   input#checkbox-table-search-1(type="checkbox" name="id" value=item.id class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-black-blur dark:focus:ring-offset-black-blur focus:ring-2 dark:bg-black-1 dark:border-gray-600")
                   label.sr-only(for="checkbox-table-search-1") checkbox
-              td(class="px-6 py-4 underline text-white") ##{item.orderId}
+              td(class="px-6 py-4 underline text-black dark:text-white") ##{item.orderId}
               td(class="px-6 py-4 flex")
                 div(class="mr-3 min-w-[60px] min-h-[60px] w-[60px] h-[60px] rounded-full overflow-hidden")
                   if item.user.length > 0
@@ -68,8 +68,8 @@ block main
                 div(class="text-white font-[500]")
                   +formatDate(item.createdAt)
                 +formatTime(item.createdAt)
-              td(class="px-6 py-4 text-white") #{item.products.length}
-              td(class="px-6 py-4 formatMoney text-white") #{item.shippingFee+item.totalProductPrice}d
+              td(class="px-6 py-4") #{item.products.length}
+              td(class="px-6 py-4 formatMoney ") #{item.shippingFee+item.totalProductPrice}d
               td(class="px-6 py-4")
                 if item.paymentMethod == "cash"
                   <i class="fa-solid fa-money-bill-1-wave text-[25px]"></i>
