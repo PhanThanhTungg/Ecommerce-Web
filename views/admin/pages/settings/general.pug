@@ -36,82 +36,6 @@ block main
             upload-image-input
           )
 
-        div.mb-3(class='border-1 border-gray-300 rounded-md p-3' upload-image)
-          div(class="flex items-center justify-between")
-            div.block.mb-2.text-gray-900(
-              class="dark:text-white mr-5 font-bold text-2xl"
-              for="banner") Banner
-            button(class="button-1 button-add-banner")
-              span + Add Banner
-          div.area-add-banner(class="max-w-[600px] mx-auto flex border-1 border-gray-300 rounded-md p-3 hidden")
-            div(class="mr-5 w-[50%]")
-              input(
-                type="file"
-                class="file w-full"
-                id="banner"
-                name="bannerImage"
-                accept="image/*"
-                upload-image-input
-              )
-              .images-preview
-            div(class="flex-1")
-              div 
-                label(for="title" class="dark:text-white") Title
-                input(
-                  type="text"
-                  class="file w-full"
-                  id="title"
-                  name="bannerTitle"
-                )
-              div(class="mt-2")
-                label(for="subtitle" class="dark:text-white") Subtitle
-                input(
-                  type="text"
-                  class="file w-full"
-                  id="subtitle"
-                  name="bannerSubtitle"
-                )
-          div.banner-preview.mt-5
-            if(settingsGeneral.banner.length > 0)
-              #indicators-carousel.relative.w-full(data-carousel='static')
-                .relative.h-56.overflow-hidden.rounded-lg(class='md:h-96')
-                  for item, i in settingsGeneral.banner
-                    div
-                      button.button-edit-banner(class="button-1 absolute z-100000 w-[70px]")
-                        span.text-black(class="hover:text-white") Edit
-                      .hidden.duration-700.ease-in-out(data-carousel-item=`${i==0&&'active'}` 
-                        class="bg-[#F8F8F8] p-4"
-                      )
-                        div.edit-area(class="grid grid-cols-2 bg-[#F8F8F8]")
-                          div(class="bg-[#F8F8F8] flex justify-center items-center")
-                            div(class="flex flex-col")  
-                              div(class="text-gray-500") #{item.subTitle}
-                              div(class="font-bold text-2xl") #{item.title}
-                          div(class="w-[400px] h-full")
-                            img(src=item.image class=`
-                              max-w-[100%] max-h-[100%] object-contain` 
-                            alt='...')
-
-                .absolute.z-30.flex.space-x-3.bottom-5(class='-translate-x-1/2 rtl:space-x-reverse left-1/2')
-                  for item, index in settingsGeneral.banner
-                    if(index == 0)
-                      button.w-3.h-3.rounded-full(type='button' aria-current='true' aria-label='Slide 1' data-carousel-slide-to='0')
-                    else
-                      button.w-3.h-3.rounded-full(type='button' aria-current='false' aria-label=`Slide ${index + 1}` data-carousel-slide-to=index)
-
-                button.absolute.top-0.start-0.z-30.flex.items-center.justify-center.h-full.px-4.cursor-pointer.group(type='button' class='focus:outline-none' data-carousel-prev='')
-                  span.inline-flex.items-center.justify-center.w-10.h-10.rounded-full(class='bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none')
-                    svg.w-4.h-4.text-white(class='dark:text-gray-800 rtl:rotate-180' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewbox='0 0 6 10')
-                      path(stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 1 1 5l4 4')
-                    span.sr-only Previous
-                button.absolute.top-0.end-0.z-30.flex.items-center.justify-center.h-full.px-4.cursor-pointer.group(type='button' class='focus:outline-none' data-carousel-next='')
-                  span.inline-flex.items-center.justify-center.w-10.h-10.rounded-full(class='bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none')
-                    svg.w-4.h-4.text-white(class='dark:text-gray-800 rtl:rotate-180' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewbox='0 0 6 10')
-                      path(stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m1 9 4-4-4-4')
-                    span.sr-only Next
-
-
-
         div(class="grid gap-6 mb-6 md:grid-cols-2")
           div
             label.block.mb-2.text-sm.font-medium.text-gray-900(
@@ -288,5 +212,3 @@ block main
             text-white bg-gray-800 rounded-sm hover:bg-gray-900
             dark:bg-gray-700 dark:hover:bg-gray-600`
           ) Update
-
-  script(src="/admin/js/setting.js")
