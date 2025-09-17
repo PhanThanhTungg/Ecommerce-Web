@@ -16,6 +16,7 @@ module.exports.index = async (req, res) => {
     startDate: { $lte: now },
     endDate: { $gte: now },
     quantity: { $gt: 0 },
+    isActive: true,
   }
 
   const listMyDiscount = await DiscountUser.find({ userId: res.locals.user._id }).select("discountId").lean();

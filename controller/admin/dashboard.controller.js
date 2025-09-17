@@ -44,7 +44,7 @@ module.exports.dashboard = async (req,res)=>{
     statistic["Customer-Account"].inactive = await AccountUser.countDocuments({deleted: false, status:"inactive"})
    
     res.render("admin/pages/dashboard/index",{
-        papeTitle: "Trang tổng quan",
+        pageTitle: "Dashboard",
         statistic: statistic
     })
 }

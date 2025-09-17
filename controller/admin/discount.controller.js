@@ -1,9 +1,21 @@
 const Discount = require("../../model/discount.model");
+const paginationHelper = require("../../helpers/pagination");
 module.exports.index = async (req, res) => {
-  const discounts = await Discount.find({ deleted: false }).sort({ createdAt: -1 });;
+  const find = { deleted: false };
+
+  // pagination giống products admin
+  const total = await Discount.countDocuments(find);
+  const objectPagination = await paginationHelper(req, total, 1, 8);
+
+  const discounts = await Discount.find(find)
+    .limit(objectPagination.limit)
+    .skip(objectPagination.skip)
+    .sort({ createdAt: -1 });
+
   res.render("admin/pages/discount/index", {
     pageTitle: "Discount",
-    discounts
+    discounts,
+    pagination: objectPagination
   })
 }
 
@@ -63,6 +75,14 @@ module.exports.edit = async (req, res) => {
       error: error.message
     })
   }
+}
+
+module.exports.changeStatus = async (req, res) => {
+  const status = req.params.status;
+  const id = req.params.id;
+  await Discount.updateOne({ _id: id }, { isActive: status === 'active' });
+  req.flash('success', 'Change status successfully!');
+  res.redirect('back');
 }
 
 module.exports.delete = async (req, res) => {

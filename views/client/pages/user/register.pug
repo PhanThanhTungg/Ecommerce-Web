@@ -11,6 +11,7 @@ block main
             form(
               action="/user/register"
               method="POST"
+              autocomplete="off"
             )
               div(class="form-group")
                 label(for="email") Email
@@ -34,6 +35,7 @@ block main
                     class="form-control"
                     id="phone"
                     name="phone"
+                    autocomplete="off"
                     required
                   )
                   span.notice
@@ -46,6 +48,7 @@ block main
                     class="form-control"
                     id="fullName"
                     name="fullName"
+                    autocomplete="off"
                     required
                   )
                   p.notice
@@ -58,6 +61,7 @@ block main
                     class="form-control input-password"
                     id="password"
                     name="password"
+                    autocomplete="new-password"
                     required
                   )
                   p.notice
@@ -70,10 +74,10 @@ block main
                     class="form-control input-password"
                     id="check-password"
                     name="checkPassword"
+                    autocomplete="new-password"
                     required
                   )
-                  p.notice
-              div.d-flex.justify-content-center.mt-3(class="g-recaptcha" data-sitekey="6LclhkIrAAAAALXLWhm7WgTnFRkS9T4DzoI2wnIx")
+                  p.noticec
               div(class="form-group mt-4")
                 button(
                   class ="button button-1"

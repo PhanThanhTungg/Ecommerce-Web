@@ -6,7 +6,7 @@ include ../../mixins/select-tree.pug
 block main
   if(role.permissions.includes("products_create"))
     h1(class=`mb-7 ml-7 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-4xl
-    dark:text-white`) Create new product
+    dark:text-white`) Create
     .container-custom-sm
       form(
         action=`${prefixAdmin}/products/create`

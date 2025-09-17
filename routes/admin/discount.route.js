@@ -9,6 +9,8 @@ router.post("/create", controller.create)
 
 router.patch("/edit", controller.edit)
 
+router.patch("/change-status/:status/:id", controller.changeStatus)
+
 router.delete("/delete/:discountId", controller.delete)
 
 

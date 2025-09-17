@@ -1,20 +1,20 @@
 const express = require('express')
 const database = require('./config/database.js')
-var path = require('path');// cua tinymce
-const bodyParser = require("body-parser") // nhan data cua searchMulti
-const flash = require("express-flash") // thư hiện express-flash: dùng để hiện thông báo tạm thời
-const cookieParser = require("cookie-parser") // Thư viện liên quan đến express-flash
-const session = require("express-session") // Thư viện liên quan đến express-flash
-var methodOverride = require('method-override') // thu vien methodOverride de thay doi phuong thuc gui fom
+var path = require('path');
+const bodyParser = require("body-parser") 
+const flash = require("express-flash") 
+const cookieParser = require("cookie-parser") 
+const session = require("express-session") 
+var methodOverride = require('method-override') 
 
-const moment = require("moment") // convert time
+const moment = require("moment") 
 
-require("dotenv").config() // Cấu hình env
+require("dotenv").config() 
 
-const route = require('./routes/client/index.route') // lấy route
+const route = require('./routes/client/index.route') 
 const routeAdmin = require('./routes/admin/index.route.js')
 
-database.connect() // connect toi dtb
+database.connect() 
 
 const app = express()
 const port = process.env.PORT
@@ -25,33 +25,28 @@ const settingGeneral = require("./model/settings-general.model");
   app.locals.settingsGeneral = settingsGeneral;
 })(); 
 
-app.use(express.static(`${__dirname}/public`))  // nhúng file tĩnh
+app.use(express.static(`${__dirname}/public`))  
 
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 
-app.use(express.json()); // Middleware để parse JSON body
-app.use(express.urlencoded({ extended: true })); // Nếu có dữ liệu form
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true })); 
 
-app.locals.prefixAdmin = require("./config/system.js").prefixAdmin // Khai báo biến toàn cục prefixAdmin
+app.locals.prefixAdmin = require("./config/system.js").prefixAdmin 
 app.locals.moment = moment
-//li thuyết express: app.locals dùng để tạo biến toàn cục mà file pug nào cũng dùng được
 
-//tinymce
 app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
-//Cấu hình pug
 app.set('views', `${__dirname}/views`)
 app.set('view engine', 'pug')
 
 app.use(methodOverride('_method'))
 
-//Cấu hình express-flash
 app.use(cookieParser('Tung cookie'));
 app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
 
-// socket 
+
 const { createServer } = require('node:http');
 const { join } = require('node:path');
 const { Server } = require('socket.io');
@@ -62,11 +57,11 @@ io.on('connection', (socket) => {
 });
 global._io = io; 
 
-// cron
+
 const dwhAction = require("./DWH/dwh.js");
 dwhAction();
 
-route(app) //gọi đến route
+route(app) 
 routeAdmin(app)
 const clientApiRoute = require("./routes/client/api/index.route.api");
 clientApiRoute(app);

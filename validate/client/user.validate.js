@@ -19,8 +19,41 @@ module.exports.registerPost = async (req, res, next) => {
     return;
   }
 
+  // Check password strength
+  const password = req.body.password;
+  
+  if (password.length < 8) {
+    req.flash("error", `Password must be at least 8 characters long!`);
+    res.redirect("back");
+    return;
+  }
+
+  if (!/(?=.*[a-z])/.test(password)) {
+    req.flash("error", `Password must contain at least 1 lowercase letter!`);
+    res.redirect("back");
+    return;
+  }
+
+  if (!/(?=.*[A-Z])/.test(password)) {
+    req.flash("error", `Password must contain at least 1 uppercase letter!`);
+    res.redirect("back");
+    return;
+  }
+
+  if (!/(?=.*\d)/.test(password)) {
+    req.flash("error", `Password must contain at least 1 number!`);
+    res.redirect("back");
+    return;
+  }
+
+  if (!/(?=.*[@$!%*?&])/.test(password)) {
+    req.flash("error", `Password must contain at least 1 special character (@$!%*?&)!`);
+    res.redirect("back");
+    return;
+  }
+
   if (req.body.password != req.body.checkPassword) {
-    req.flash("error", `Passwords don't match`);
+    req.flash("error", `Passwords do not match!`);
     res.redirect("back");
     return;
   }

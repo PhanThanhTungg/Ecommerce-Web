@@ -172,17 +172,15 @@ block main
                     textarea(type='text' rows='4' name="comment" placeholder="WRITE  YOUR COMMENT HERE" required)
                   button(type='submit') Submit
           .col-lg-8.col-sm-12.main-content
-            each feedback in product.feedback
-              .feedback-item.wrapper-flex-gap-15
-                .user-info
-                  .inner-image
-                    img(src=feedback.userDetail.thumbnail.replace('upload/', 'upload/c_limit,w_80/f_auto/'))
-                  .name(title=feedback.userDetail.fullName) #{feedback.userDetail.fullName}
-                  +formatDate(feedback.createdAt)
-                .content
-                  .inner-rating(data-rating = feedback.rating)
-                    +rating-1
-                  p.comment(style="white-space: pre-line;") #{feedback.comment}
+            // feedback list + pagination
+            .feedback-list(data-feedback=JSON.stringify(product.feedback))
+            nav.pagination-product
+              ul
+                li.btn.prev(disabled)
+                  i.fi.fi-rr-angle-left
+                // dynamic numbers insert by JS
+                li.btn.next
+                  i.fi.fi-rr-angle-right
   if (user)
     input.d-none(id="avatar" value=user.thumbnail.replace('upload/', 'upload/c_limit,w_80/f_auto/'))
     input.d-none(id="userName" value=user.fullName)
