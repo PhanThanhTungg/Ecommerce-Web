@@ -5,6 +5,7 @@ const paginationHelper = require("../../../helpers/pagination")
 const unidecode = require("unidecode");
 const Order = require("../../../model/order.model");
 const OrderProduct = require("../../../model/order-product.model");
+const { default: mongoose } = require("mongoose");
 
 module.exports.productApiSearch = async (req, res) => {
   try {
@@ -238,6 +239,18 @@ module.exports.productApiAddFeedback = async (req, res) => {
       })
     }
 
+    const feedbackFound = await Feedback.findOne({
+      productId: new mongoose.Types.ObjectId(req.body.productId),
+      userId: res.locals.user._id,
+    });
+
+    if (feedbackFound) {
+      return res.json({
+        code: 403,
+        message: "you have already commented on this product!"
+      })
+    }
+
     const data = {
       productId: req.body.productId,
       userId: res.locals.user.id,
@@ -246,7 +259,6 @@ module.exports.productApiAddFeedback = async (req, res) => {
     }
     const feedback = new Feedback(data);
     await feedback.save();
-
     res.json({
       code: 200,
       message: "feedback added successfully",
@@ -254,6 +266,7 @@ module.exports.productApiAddFeedback = async (req, res) => {
     });
 
   } catch (error) {
+    console.log(error);
     res.json({
       code: 400,
       error

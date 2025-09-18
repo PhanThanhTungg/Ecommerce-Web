@@ -239,10 +239,24 @@ module.exports.detail = async (req, res) => {
       return res.redirect("/products")
     }
 
-    console.log(product[0].feedback[0]);
+    const currentUser = res.locals.user;
+    let hasMyFeedback = false;
+    let myFeedback = null;
+    if (currentUser && Array.isArray(product[0].feedback)) {
+      const idx = product[0].feedback.findIndex((fb) => String(fb.userId) === String(currentUser._id));
+      if (idx > -1) {
+        myFeedback = product[0].feedback[idx];
+        hasMyFeedback = true;
+        product[0].feedback.splice(idx, 1);
+        product[0].feedback.unshift(myFeedback);
+      }
+    }
+
     res.render("client/pages/products/detail.pug", {
       pageTitle: product[0].title,
       product: product[0],
+      hasMyFeedback,
+      myFeedback,
     })
   } catch (error) {
     console.log(error)

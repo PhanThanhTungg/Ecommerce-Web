@@ -156,22 +156,35 @@ block main
             if !user
               a.create-feedback(href="/user/login") Please login to write comment!
             else
-              button.create-feedback(
-                type="button" 
-                data-toggle="collapse" 
-                data-target="#collapse-createFeedback" 
-                aria-expanded="false" 
-                aria-controls="collapse-createFeedback"
-              ) Write comment
-              .collapse#collapse-createFeedback
-                form.add-feedback
-                  input.d-none(name="productId" value=product._id)
-                  .star-rating
-                    +star-rating
-                  .input-comment                
-                    textarea(type='text' rows='4' name="comment" placeholder="WRITE  YOUR COMMENT HERE" required)
-                  button(type='submit') Submit
+              if hasMyFeedback
+                // do not render write-comment UI when user already commented
+              else
+                button.create-feedback(
+                  type="button" 
+                  data-toggle="collapse" 
+                  data-target="#collapse-createFeedback" 
+                  aria-expanded="false" 
+                  aria-controls="collapse-createFeedback"
+                ) Write comment
+                .collapse#collapse-createFeedback
+                  form.add-feedback
+                    input.d-none(name="productId" value=product._id)
+                    .star-rating
+                      +star-rating
+                    .input-comment                
+                      textarea(type='text' rows='4' name="comment" placeholder="WRITE  YOUR COMMENT HERE" required)
+                    button(type='submit') Submit
           .col-lg-8.col-sm-12.main-content
+            // filter select for feedback stars
+            .feedback-filter.wrapper-flex-gap-10(style="margin-bottom:10px;align-items:center;justify-content:flex-end;")
+              label(for="feedback-star-filter" style="margin:0 8px 0 0;white-space:nowrap;") Filter by star:
+              select#feedback-star-filter(name="star" style="min-width:150px;")
+                option(value="all" selected) All stars
+                option(value="5") 5 stars
+                option(value="4") 4 stars
+                option(value="3") 3 stars
+                option(value="2") 2 stars
+                option(value="1") 1 star
             // feedback list + pagination
             .feedback-list(data-feedback=JSON.stringify(product.feedback))
             nav.pagination-product
@@ -184,6 +197,7 @@ block main
   if (user)
     input.d-none(id="avatar" value=user.thumbnail.replace('upload/', 'upload/c_limit,w_80/f_auto/'))
     input.d-none(id="userName" value=user.fullName)
+    input.d-none(id="currentUserId" value=user._id)
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   script(src="/js/detailProduct.js")

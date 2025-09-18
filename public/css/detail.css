@@ -410,6 +410,50 @@
   align-items: flex-start;
 }
 
+/* feedback filter select */
+.box-feedback .feedback-filter label {
+  color: var(--secondary-color-text);
+  font-size: 1.3rem;
+}
+
+.box-feedback #feedback-star-filter {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #fff;
+  color: var(--color-text);
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  padding: 8px 34px 8px 12px;
+  font-size: 1.35rem;
+  line-height: 1.2;
+  transition: border-color .2s, box-shadow .2s;
+  position: relative;
+}
+
+.box-feedback #feedback-star-filter:focus {
+  outline: none;
+  border-color: var(--color-text);
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+}
+
+/* custom chevron */
+.box-feedback .feedback-filter {
+  position: relative;
+}
+
+.box-feedback .feedback-filter::after {
+  content: "\f107"; /* fa-chevron-down */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--secondary-color-text);
+}
+
 .box-feedback .main-content :last-child {
   padding-bottom: 0;
   border: none;
@@ -556,3 +600,10 @@
 /* end progress bar */
 
 /* end feedback  */
+
+/* separator below my feedback */
+.my-feedback-separator {
+  height: 1px;
+  background: #e6e6e6;
+  margin: 8px 0 16px;
+}
