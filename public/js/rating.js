@@ -3,10 +3,9 @@ if(rating_wrappers){
   rating_wrappers.forEach(rating=>{
     const ratingNumber = rating.dataset.rating;
     const ratingInput = rating.querySelector(`input[value="${ratingNumber}"]`);
-    if (ratingNumber > 0) ratingInput.checked = true;
+    if (ratingNumber > 0 && ratingInput) ratingInput.checked = true;
   })
 }
-
 document.querySelector('form.add-feedback').addEventListener('submit', function(e) {
   e.preventDefault();
   const formData = new FormData(this);

@@ -108,7 +108,6 @@ module.exports.index = async (req, res) => {
 
   const fiterStatusOrder = filterStatusOrderHelper(req.query);
 
-  console.log(objectPagination);
   res.render("admin/pages/orders/index", {
     pageTitle: "Order Management",
     orders, pagination: objectPagination , fiterStatusOrder, keySearch

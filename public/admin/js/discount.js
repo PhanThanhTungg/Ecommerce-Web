@@ -28,6 +28,25 @@ if (discountForms) {
   })
 }
 
+// change status (like products page)
+const buttonChangeStatus = document.querySelectorAll('[button-change-status]');
+if (buttonChangeStatus.length > 0) {
+  const formChangeStatus = document.getElementById('form-change-status');
+  if (formChangeStatus) {
+    const path = formChangeStatus.getAttribute('data-path');
+    buttonChangeStatus.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const statusCurrent = btn.getAttribute('data-status');
+        const id = btn.getAttribute('data-id');
+        const changeStatus = statusCurrent === 'active' ? 'inactive' : 'active';
+        const action = `${path}/${changeStatus}/${id}?_method=PATCH`;
+        formChangeStatus.action = action;
+        formChangeStatus.submit();
+      });
+    });
+  }
+}
+
 // --------------- Discount page socket handler ---------------
 socket.on("sub-quantity-discount", (data) => {
   const { discountId, quantity } = data;

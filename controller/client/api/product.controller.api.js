@@ -3,6 +3,8 @@ const Product = require("../../../model/product.model");
 const Feedback = require("../../../model/product-feedback.model")
 const paginationHelper = require("../../../helpers/pagination")
 const unidecode = require("unidecode");
+const Order = require("../../../model/order.model");
+const OrderProduct = require("../../../model/order-product.model");
 
 module.exports.productApiSearch = async (req, res) => {
   try {
@@ -210,6 +212,32 @@ module.exports.productApiAddFeedback = async (req, res) => {
         message: "unauthorized!"
       })
     }
+    const userOrders = await Order.find({
+      userId: res.locals.user._id.toString(),
+      deliveryStatus: "delivered" 
+    });
+    
+
+    if (userOrders.length === 0) {
+      return res.json({
+        code: 403,
+        message: "you need to buy this product before you can comment!"
+      })
+    }
+
+    const orderIds = userOrders.map(order => order._id);
+    const hasPurchased = await OrderProduct.findOne({
+      order_id: { $in: orderIds },
+      product_id: req.body.productId
+    });
+
+    if (!hasPurchased) {
+      return res.json({
+        code: 403,
+        message: "you need to buy this product before you can comment!"
+      })
+    }
+
     const data = {
       productId: req.body.productId,
       userId: res.locals.user.id,
@@ -221,7 +249,7 @@ module.exports.productApiAddFeedback = async (req, res) => {
 
     res.json({
       code: 200,
-      message: "Feedback added successfully",
+      message: "feedback added successfully",
       data: feedback,
     });
 
