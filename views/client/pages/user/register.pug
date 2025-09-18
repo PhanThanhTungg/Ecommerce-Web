@@ -55,7 +55,7 @@ block main
               div(class="form-group form-group-password")
                 label(for="password") Password
                 .input
-                  <i class="fa-solid fa-unlock"></i>
+                  <i class="fa-solid fa-eye-slash toggle-password" id="toggle-password"></i>
                   input(
                     type="password"
                     class="form-control input-password"
@@ -68,7 +68,7 @@ block main
               div(class="form-group form-group-password")
                 label(for="check-password") Confirm Password
                 .input
-                  <i class="fa-solid fa-unlock-keyhole"></i>
+                  <i class="fa-solid fa-eye-slash toggle-password" id="toggle-check-password"></i>
                   input(
                     type="password"
                     class="form-control input-password"
@@ -77,7 +77,7 @@ block main
                     autocomplete="new-password"
                     required
                   )
-                  p.noticec
+                  p.notice
               div(class="form-group mt-4")
                 button(
                   class ="button button-1"

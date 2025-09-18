@@ -46,7 +46,7 @@ module.exports.registerPost = async (req, res, next) => {
     return;
   }
 
-  if (!/(?=.*[@$!%*?&])/.test(password)) {
+  if (!/[^A-Za-z0-9]/.test(password)) {
     req.flash("error", `Password must contain at least 1 special character (@$!%*?&)!`);
     res.redirect("back");
     return;
