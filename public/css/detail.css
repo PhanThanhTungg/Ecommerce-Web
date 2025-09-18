@@ -383,6 +383,7 @@
 
 .box-feedback .sticky-top {
   background-color: var(--color-one);
+  top: 20px
 }
 
 .box-feedback .create-feedback {
@@ -410,51 +411,47 @@
   align-items: flex-start;
 }
 
-/* feedback filter select */
+/* feedback filter */
 .box-feedback .feedback-filter label {
   color: var(--secondary-color-text);
   font-size: 1.3rem;
 }
 
-.box-feedback #feedback-star-filter {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-color: #fff;
+.box-feedback .feedback-filter .star-filter-buttons {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.box-feedback .feedback-filter .btn-star {
+  background: #fff;
   color: var(--color-text);
   border: 1px solid #dcdcdc;
-  border-radius: 6px;
-  padding: 8px 34px 8px 12px;
-  font-size: 1.35rem;
-  line-height: 1.2;
-  transition: border-color .2s, box-shadow .2s;
-  position: relative;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease;
 }
 
-.box-feedback #feedback-star-filter:focus {
-  outline: none;
+.box-feedback .feedback-filter .btn-star i {
+  color: #FFD700
+}
+
+.box-feedback .feedback-filter .btn-star:hover {
+  background: #f8f8f8;
+  border-color: #d0d0d0;
+}
+
+.box-feedback .feedback-filter .btn-star.active {
+  background: var(--color-text);
   border-color: var(--color-text);
-  box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+  color: #fff;
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.04);
 }
 
-/* custom chevron */
-.box-feedback .feedback-filter {
-  position: relative;
-}
-
-.box-feedback .feedback-filter::after {
-  content: "\f107"; /* fa-chevron-down */
-  font-family: "Font Awesome 6 Free";
-  font-weight: 900;
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  color: var(--secondary-color-text);
-}
-
-.box-feedback .main-content :last-child {
+.box-feedback .main-content .pagination-product {
   padding-bottom: 0;
   border: none;
 }
@@ -606,4 +603,159 @@
   height: 1px;
   background: #e6e6e6;
   margin: 8px 0 16px;
+}
+
+/* replies */
+.box-feedback .main-content .replies {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.box-feedback .main-content .reply-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.box-feedback .main-content .reply-item .inner-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.box-feedback .main-content .reply-item .inner-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.box-feedback .main-content .reply-item .reply-body {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 10px 12px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  max-width: 100%;
+}
+
+.box-feedback .main-content .reply-item .reply-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.box-feedback .main-content .reply-item .reply-meta .name {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* hide reply time if not needed */
+.box-feedback .main-content .reply-item .reply-meta .time {
+  display: none;
+  color: var(--secondary-color-text);
+  font-size: 1.2rem;
+}
+
+.box-feedback .main-content .reply-item .reply-comment {
+  color: var(--secondary-color-text);
+  font-size: 1.35rem;
+  line-height: 1.5;
+}
+
+/* reply action buttons and toggle */
+.box-feedback .main-content .actions {
+  display: flex;
+  gap: 10px;
+}
+
+.box-feedback .main-content .actions .btn-like,
+.box-feedback .main-content .actions .btn-reply-toggle {
+  background: transparent;
+  border: 1px solid #e5e5e5;
+  color: var(--color-text);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 1.3rem;
+  line-height: 1;
+  transition: background-color .2s ease, border-color .2s ease, color .2s ease;
+}
+
+.box-feedback .main-content .actions .btn-like:hover,
+.box-feedback .main-content .actions .btn-reply-toggle:hover {
+  background: #f8f8f8;
+  border-color: #dcdcdc;
+}
+
+/* reply form */
+.box-feedback .main-content form.reply-form {
+  margin-top: 10px;
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.box-feedback .main-content form.reply-form textarea {
+  width: 100%;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 1.35rem;
+  resize: vertical;
+  min-height: 70px;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.box-feedback .main-content form.reply-form textarea:focus {
+  outline: none;
+  border-color: var(--color-text);
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.04);
+}
+
+.box-feedback .main-content form.reply-form .reply-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.box-feedback .main-content form.reply-form .reply-actions button[type="submit"] {
+  background-color: var(--color-text);
+  color: #fff;
+  border: 1px solid var(--color-text);
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+
+.box-feedback .main-content form.reply-form .reply-actions button[type="submit"]:hover {
+  background-color: transparent;
+  color: var(--color-text);
+}
+
+.box-feedback .main-content form.reply-form .reply-actions .btn-cancel {
+  background: transparent;
+  border: 1px solid #e0e0e0;
+  color: var(--secondary-color-text);
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: background-color .2s ease, border-color .2s ease, color .2s ease;
+}
+
+.box-feedback .main-content form.reply-form .reply-actions .btn-cancel:hover {
+  background: #f5f5f5;
+  border-color: #dcdcdc;
+}
+
+/* responsive */
+@media (max-width: 820px) {
+  .box-feedback .sticky-top {
+    top: 0px;
+  }
 }

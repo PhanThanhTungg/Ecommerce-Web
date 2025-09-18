@@ -18,6 +18,13 @@
   const paginationNav = document.querySelector('.pagination-product ul');
   const prevBtn = paginationNav?.querySelector('.prev');
   const nextBtn = paginationNav?.querySelector('.next');
+  const starFilterGroup = document.querySelector('.star-filter-buttons');
+
+  function getSelectedStar() {
+    const activeBtn = starFilterGroup?.querySelector('.btn-star.active');
+    const value = activeBtn?.getAttribute('data-star') || 'all';
+    return value;
+  }
 
   // build custom star icons for list (independent from existing rating UI)
   function buildStars(ratingValue) {
@@ -38,9 +45,8 @@
     // slice data
     const start = (currentPage - 1) * pageSize;
     const end = start + pageSize;
-    // filter by selected star
-    const selectEl = document.getElementById('feedback-star-filter');
-    const selected = selectEl ? selectEl.value : 'all';
+    // filter by selected star (buttons)
+    const selected = getSelectedStar();
     const list = Array.isArray(feedbackData) ? (
       selected === 'all' ? feedbackData : feedbackData.filter((fb) => Number(fb?.rating || 0) === Number(selected))
     ) : [];
@@ -56,7 +62,7 @@
       let createdAtText = '';
       try {
         const d = new Date(createdAt);
-        createdAtText = d.toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' });
+        createdAtText = d.toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' });
       } catch (e) { createdAtText = ''; }
       const stars = buildStars(rating);
       const replies = Array.isArray(fb?.replies) ? fb.replies : [];
@@ -64,7 +70,7 @@
         const rName = rp?.userDetail?.fullName || '';
         const rAvatar = (rp?.userDetail?.thumbnail || '').replace('upload/', 'upload/c_limit,w_60/f_auto/');
         let rTime = '';
-        try { rTime = new Date(rp?.createdAt).toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' }); } catch {}
+        try { rTime = new Date(rp?.createdAt).toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' }); } catch {}
         const rComment = (rp?.comment || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         return `
           <div class="reply-item wrapper-flex-gap-10">
@@ -90,17 +96,17 @@
             ${stars}
             <p class="comment" style="white-space: pre-line;">${comment}</p>
             <div class="actions">
-              <button class="btn-like" data-id="${fb?._id}"><i class="fa-regular fa-thumbs-up"></i> Hữu ích (<span class="likes">${fb?.likesCount || 0}</span>)</button>
-              <button class="btn-reply-toggle" data-id="${fb?._id}"><i class="fa-regular fa-comment"></i> Trả lời</button>
+              <button class="btn-like" data-id="${fb?._id}"><i class="fa-regular fa-thumbs-up"></i> Like (<span class="likes">${fb?.likesCount || 0}</span>)</button>
+              <button class="btn-reply-toggle" data-id="${fb?._id}"><i class="fa-regular fa-comment"></i> Reply</button>
             </div>
             <div class="replies">
               ${repliesHtml}
             </div>
             <form class="reply-form d-none" data-id="${fb?._id}">
-              <textarea rows="2" placeholder="Nhập nội dung trả lời..."></textarea>
+              <textarea rows="2" placeholder="Type your reply..."></textarea>
               <div class="reply-actions">
-                <button type="submit">Gửi</button>
-                <button type="button" class="btn-cancel">Hủy</button>
+                <button type="submit">Send</button>
+                <button type="button" class="btn-cancel">Cancel</button>
               </div>
             </form>
           </div>
@@ -136,8 +142,7 @@
     // cleanup numbers except prev/next
     paginationNav.querySelectorAll('li.numb, li.dots').forEach((n) => n.remove());
 
-    const selectEl = document.getElementById('feedback-star-filter');
-    const selected = selectEl ? selectEl.value : 'all';
+    const selected = getSelectedStar();
     const list = Array.isArray(feedbackData) ? (
       selected === 'all' ? feedbackData : feedbackData.filter((fb) => Number(fb?.rating || 0) === Number(selected))
     ) : [];
@@ -181,8 +186,7 @@
     if (currentPage > 1) renderPage(currentPage - 1);
   });
   nextBtn?.addEventListener('click', () => {
-    const selectEl = document.getElementById('feedback-star-filter');
-    const selected = selectEl ? selectEl.value : 'all';
+    const selected = getSelectedStar();
     const list = Array.isArray(feedbackData) ? (
       selected === 'all' ? feedbackData : feedbackData.filter((fb) => Number(fb?.rating || 0) === Number(selected))
     ) : [];
@@ -190,11 +194,19 @@
     if (currentPage < totalPages) renderPage(currentPage + 1);
   });
 
-  // handle select change
-  document.getElementById('feedback-star-filter')?.addEventListener('change', () => {
-    currentPage = 1;
-    renderPage(1);
-  });
+  // handle star filter buttons
+  if (starFilterGroup) {
+    starFilterGroup.querySelectorAll('.btn-star').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const currentActive = starFilterGroup.querySelector('.btn-star.active');
+        if (currentActive === btn) return; // no change
+        currentActive?.classList.remove('active');
+        btn.classList.add('active');
+        currentPage = 1;
+        renderPage(1);
+      });
+    });
+  }
 
   // initial render
   renderPage(1);
@@ -204,7 +216,7 @@
     // like
     document.querySelectorAll('.feedback-list .btn-like').forEach((btn) => {
       btn.addEventListener('click', () => {
-        if (!userId) return window.createClientAlert && window.createClientAlert('error', 'Vui lòng đăng nhập.');
+        if (!userId) return window.createClientAlert && window.createClientAlert('error', 'Please sign in.');
         const id = btn.getAttribute('data-id');
         fetch(`/api/products/detail/feedback/${id}/like`, { method: 'POST' })
           .then((r) => r.json())
@@ -213,10 +225,10 @@
               const likesEl = btn.querySelector('.likes');
               if (likesEl) likesEl.textContent = String(d.data.likesCount || 0);
             } else {
-              window.createClientAlert && window.createClientAlert('error', d.message || 'Không thể like.');
+              window.createClientAlert && window.createClientAlert('error', d.message || 'Unable to like this review.');
             }
           })
-          .catch(() => window.createClientAlert && window.createClientAlert('error', 'Lỗi mạng.'))
+          .catch(() => window.createClientAlert && window.createClientAlert('error', 'Network error.'))
       })
     });
 
@@ -233,7 +245,7 @@
     document.querySelectorAll('.feedback-list form.reply-form').forEach((form) => {
       form.addEventListener('submit', (e) => {
         e.preventDefault();
-        if (!userId) return window.createClientAlert && window.createClientAlert('error', 'Vui lòng đăng nhập.');
+        if (!userId) return window.createClientAlert && window.createClientAlert('error', 'Please sign in.');
         const id = form.getAttribute('data-id');
         const ta = form.querySelector('textarea');
         const comment = (ta?.value || '').trim();
@@ -246,7 +258,7 @@
             const replies = form.previousElementSibling; // .replies
             const avatar = document.getElementById('avatar')?.value || '';
             const userName = document.getElementById('userName')?.value || '';
-            const time = new Date(d.data.createdAt).toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' });
+            const time = new Date(d.data.createdAt).toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' });
             const div = document.createElement('div');
             div.className = 'reply-item wrapper-flex-gap-10';
             div.innerHTML = `

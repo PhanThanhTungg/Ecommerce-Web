@@ -21,7 +21,6 @@ if (match) {
 function fetchAPIProducts(pageSelected = 1) {
   page = pageSelected;
   const api = `/api/products${slugCategory}?priceBegin=${priceBegin}&priceEnd=${priceEnd}&sortBy=${sortBy}&sortValue=${sortValue}&availability=${availability}&page=${page}&limit=${limit}`;
-  console.log("API", api);
   fetch(api)
     .then(res => res.json())
     .then(data => {
@@ -175,7 +174,7 @@ function deleteAvailabilityFilter() {
 }
 
 function deletePriceFilter() {
-  priceRange.noUiSlider.set([0, 800000000]);
+  priceRange.noUiSlider.set([0, 450000000]);
   filterPrice.innerHTML = "";
 }
 
@@ -218,11 +217,11 @@ const minPrice = document.getElementById("min-price");
 const maxPrice = document.getElementById("max-price");
 
 noUiSlider.create(priceRange, {
-  start: [0, 800000000],
+  start: [0, 450000000],
   connect: true,
   range: {
     'min': 0,
-    'max': 800000000
+    'max': 450000000
   }
 });
 
@@ -234,6 +233,9 @@ priceRange.noUiSlider.on('update', function (values, handle) {
   }
 });
 
+function formatMoney(number) {
+  return number.toLocaleString('vi', {style : 'currency', currency : 'VND'})
+}
 priceRange.noUiSlider.on('set', function (values, handle) {
   if (handle === 0) {
     priceBegin = Math.round(values[0]);
@@ -242,8 +244,9 @@ priceRange.noUiSlider.on('set', function (values, handle) {
     priceEnd = Math.round(values[1]);
     fetchAPIProducts();
   }
+  console.log(values);
   filterPrice.innerHTML = `
-    <span>Price: ${Math.round(values[0])}$ - ${Math.round(values[1])}$</span>
+    <span>Price: ${formatMoney(Math.round(values[0]))} - ${formatMoney(Math.round(values[1]))}</span>
     <button onclick="deletePriceFilter()"><i class="fi fi-rr-cross-small"></i></button>
   `;
 })

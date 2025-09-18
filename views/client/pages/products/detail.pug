@@ -140,9 +140,9 @@ block main
             .inner-content Lorem Ipsum is simply dummy text of the printing and typeset ting industry lorem Ipsum
     section.box-feedback#box-feedback
       .container
-        h4.title Customer Reviews
         .row
-          .col-lg-4.col-sm-12.sticky-top(style="top: 20px;")         
+          .col-lg-4.col-sm-12.sticky-top         
+            h4.title Customer Reviews
             .inner-rating.averageRating(data-rating=Math.round(product.averageRating * 2) / 2)
               span #{product.averageRating.toFixed(2)}
               +rating-1
@@ -175,16 +175,15 @@ block main
                       textarea(type='text' rows='4' name="comment" placeholder="WRITE  YOUR COMMENT HERE" required)
                     button(type='submit') Submit
           .col-lg-8.col-sm-12.main-content
-            // filter select for feedback stars
+            // filter buttons for feedback stars
             .feedback-filter.wrapper-flex-gap-10(style="margin-bottom:10px;align-items:center;justify-content:flex-end;")
-              label(for="feedback-star-filter" style="margin:0 8px 0 0;white-space:nowrap;") Filter by star:
-              select#feedback-star-filter(name="star" style="min-width:150px;")
-                option(value="all" selected) All stars
-                option(value="5") 5 stars
-                option(value="4") 4 stars
-                option(value="3") 3 stars
-                option(value="2") 2 stars
-                option(value="1") 1 star
+              .star-filter-buttons
+                button.btn-star.active(type="button" data-star="all") All
+                button.btn-star(type="button" data-star="5") 5 <i class="fa-solid fa-star" aria-hidden="true"></i>
+                button.btn-star(type="button" data-star="4") 4 <i class="fa-solid fa-star" aria-hidden="true"></i>
+                button.btn-star(type="button" data-star="3") 3 <i class="fa-solid fa-star" aria-hidden="true"></i>
+                button.btn-star(type="button" data-star="2") 2 <i class="fa-solid fa-star" aria-hidden="true"></i>
+                button.btn-star(type="button" data-star="1") 1 <i class="fa-solid fa-star" aria-hidden="true"></i>
             // feedback list + pagination
             .feedback-list(data-feedback=JSON.stringify(product.feedback))
             nav.pagination-product
