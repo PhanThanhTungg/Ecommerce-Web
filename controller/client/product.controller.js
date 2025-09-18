@@ -124,6 +124,49 @@ module.exports.detail = async (req, res) => {
         }
       },
       {
+        // enrich replies with userDetail as well
+        $addFields: {
+          feedback: {
+            $map: {
+              input: "$feedback",
+              as: "fb",
+              in: {
+                $mergeObjects: [
+                  "$$fb",
+                  {
+                    replies: {
+                      $map: {
+                        input: { $ifNull: ["$$fb.replies", []] },
+                        as: "rp",
+                        in: {
+                          $mergeObjects: [
+                            "$$rp",
+                            {
+                              userDetail: {
+                                $arrayElemAt: [
+                                  {
+                                    $filter: {
+                                      input: "$SEARCH_OBJECTS",
+                                      as: "u",
+                                      cond: { $eq: ["$$u._id", "$$rp.userId"] }
+                                    }
+                                  },
+                                  0
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
         $lookup: {
           from: "categorys",
           localField: "_id_product_category",

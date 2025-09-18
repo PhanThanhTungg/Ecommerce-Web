@@ -274,3 +274,57 @@ module.exports.productApiAddFeedback = async (req, res) => {
   }
 }
 
+// toggle like (useful) for a feedback
+module.exports.productApiToggleLikeFeedback = async (req, res) => {
+  try {
+    if (!res.locals.user) {
+      return res.json({ code: 401, message: "unauthorized!" });
+    }
+    const feedbackId = req.params.id;
+    const userId = res.locals.user._id;
+    const feedback = await Feedback.findById(feedbackId);
+    if (!feedback) {
+      return res.json({ code: 404, message: "feedback not found" });
+    }
+    const uid = String(userId);
+    const idx = feedback.likedBy.findIndex((u) => String(u) === uid);
+    if (idx > -1) {
+      feedback.likedBy.splice(idx, 1);
+    } else {
+      feedback.likedBy.push(userId);
+    }
+    feedback.likesCount = feedback.likedBy.length;
+    await feedback.save();
+    return res.json({ code: 200, message: "ok", data: { likesCount: feedback.likesCount, liked: idx === -1 } });
+  } catch (error) {
+    console.log(error);
+    return res.json({ code: 400, message: "error", error });
+  }
+}
+
+// add reply to a feedback
+module.exports.productApiReplyFeedback = async (req, res) => {
+  try {
+    if (!res.locals.user) {
+      return res.json({ code: 401, message: "unauthorized!" });
+    }
+    const feedbackId = req.params.id;
+    const { comment } = req.body;
+    if (!comment || String(comment).trim().length === 0) {
+      return res.json({ code: 422, message: "comment is required" });
+    }
+    const feedback = await Feedback.findById(feedbackId);
+    if (!feedback) {
+      return res.json({ code: 404, message: "feedback not found" });
+    }
+    const reply = { userId: res.locals.user._id, comment: String(comment) };
+    feedback.replies.push(reply);
+    await feedback.save();
+    const created = feedback.replies[feedback.replies.length - 1];
+    return res.json({ code: 200, message: "ok", data: created });
+  } catch (error) {
+    console.log(error);
+    return res.json({ code: 400, message: "error", error });
+  }
+}
+

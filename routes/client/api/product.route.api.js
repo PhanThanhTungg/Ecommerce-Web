@@ -12,6 +12,10 @@ router.get("/type/:type", controller.productApiGettype)
 
 router.post("/detail/feedback", controller.productApiAddFeedback)
 
+// like & reply feedback
+router.post("/detail/feedback/:id/like", controller.productApiToggleLikeFeedback)
+router.post("/detail/feedback/:id/reply", controller.productApiReplyFeedback)
+
 
 
 module.exports = router;
