@@ -1,8 +1,8 @@
 # EcommerceWeb (ExpressJS)
 
-source prediction model server: <a href="https://github.com/PhanThanhTungg/ModelProfetHTTTQL.git">github</a>
-source cube.js server: <a href="https://github.com/PhanThanhTungg/CubeHTTTQL">github</a>
-source data Crawling server: <a href="https://github.com/PhanThanhTungg/crawl_data_ecommerce.git">github</a>
+source prediction model server: <a href="https://github.com/PhanThanhTungg/ModelProfetHTTTQL.git">github</a><br>
+source cube.js server: <a href="https://github.com/PhanThanhTungg/CubeHTTTQL">github</a><br>
+source data Crawling server: <a href="https://github.com/PhanThanhTungg/crawl_data_ecommerce.git">github</a><br>
 
 
 Dự án website thương mại điện tử (bán đồ nội thất) xây dựng bằng Node.js/Express, MongoDB (OLTP), tích hợp Data Warehouse (MSSQL) và Pug cho server-side rendering. Hỗ trợ đăng nhập OAuth (Google/Facebook/GitHub), Socket.io realtime, Tailwind CSS và thanh toán online.
